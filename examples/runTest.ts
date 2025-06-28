@@ -89,7 +89,7 @@ async function runTest(testFileName: string) {
       if (i === 0) {
         renderer.render(slideLayout);
       } else {
-        renderer.addSlide();
+        //renderer.addSlide();
         renderer.render(slideLayout);
       }
     }

@@ -35,14 +35,30 @@ npm run typecheck
 ```
 src/
 ├── index.ts              # エントリーポイント
-├── grid/                 # 8pxグリッドシステム
-├── layout/               # css-layoutラッパー
-├── renderer/             # PPTXGenJS統合
+├── data/                 # データローダー
+│   └── SlideDataLoader.ts
 ├── elements/             # 要素定義・バリデーション
+│   └── validator.ts
+├── grid/                 # 8pxグリッドシステム
+│   └── GridSystem.ts
+├── layout/               # レイアウトエンジン
+│   ├── ILayoutEngine.ts  # インターフェース定義
+│   ├── LayoutEngine.ts   # メインレイアウトエンジン
+│   ├── CSSLayoutEngine.ts # css-layoutラッパー
+│   ├── YogaLayoutEngine.ts # Yogaレイアウトエンジン
+│   ├── css-layout-debug.js # デバッグ用
+│   ├── css-layout-debug.d.ts
+│   └── __tests__/
+│       └── LayoutEngine.test.ts
+├── renderer/             # PPTXGenJS統合
+│   └── PPTXRenderer.ts
 └── types/                # TypeScript型定義
+    ├── elements.ts       # 要素型定義
+    └── css-layout.d.ts   # css-layout型定義
 
-tests/                    # テストファイル
+tests/                    # テストファイル  
 docs/                     # ドキュメント
+output/                   # 生成されたPPTXファイル
 ```
 
 ## 開発方針
