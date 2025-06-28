@@ -172,7 +172,7 @@ export class YogaLayoutEngine implements ILayoutEngine {
 
       // フォントメトリクス計算（言語別文字幅係数適用）
       const charWidth = this.getCharWidth(content, fontSize);
-      const lineHeight = fontSize * 1.4;
+      const lineHeight = fontSize * 1.0;
       const naturalWidth = content.length * charWidth;
 
       let resultWidth = naturalWidth;
@@ -192,9 +192,10 @@ export class YogaLayoutEngine implements ILayoutEngine {
         }
       }
 
-      // グリッド整列
-      const alignedWidth = Math.ceil(resultWidth / 8) * 8;
-      const alignedHeight = Math.ceil(resultHeight / 8) * 8;
+      // グリッド整列（textとheadingのみオフ）
+      const isTextElement = element.type === 'text' || element.type === 'heading';
+      const alignedWidth = isTextElement ? resultWidth : Math.ceil(resultWidth / 8) * 8;
+      const alignedHeight = isTextElement ? resultHeight : Math.ceil(resultHeight / 8) * 8;
 
       return {
         width: alignedWidth,

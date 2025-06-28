@@ -170,7 +170,7 @@ export class CSSLayoutEngine implements ILayoutEngine {
           
           // フォントメトリクス計算
           const charWidth = fontSize * 0.8; // 文字幅
-          const lineHeight = fontSize * 1.4; // 行高
+          const lineHeight = fontSize * 1.0; // 行高
 
           // このテキストの自然な幅（制約なしの場合）
           const naturalWidth = content.length * charWidth;
@@ -182,8 +182,10 @@ export class CSSLayoutEngine implements ILayoutEngine {
             !isFinite(constraintWidth)
           ) {
             console.log(`  ❌ Invalid constraint -> using natural width`);
-            const alignedWidth = Math.ceil(naturalWidth / 8) * 8;
-            const alignedHeight = Math.ceil(lineHeight / 8) * 8;
+            // グリッド整列（textとheadingのみオフ）
+            const isTextElement = element.type === 'text' || element.type === 'heading';
+            const alignedWidth = isTextElement ? naturalWidth : Math.ceil(naturalWidth / 8) * 8;
+            const alignedHeight = isTextElement ? lineHeight : Math.ceil(lineHeight / 8) * 8;
             console.log(`  result: ${alignedWidth} x ${alignedHeight}`);
             return {
               width: alignedWidth,
@@ -193,8 +195,10 @@ export class CSSLayoutEngine implements ILayoutEngine {
 
           if (naturalWidth <= constraintWidth) {
             console.log(`  ✅ Fits within constraint -> using natural width`);
-            const alignedWidth = Math.ceil(naturalWidth / 8) * 8;
-            const alignedHeight = Math.ceil(lineHeight / 8) * 8;
+            // グリッド整列（textとheadingのみオフ）
+            const isTextElement = element.type === 'text' || element.type === 'heading';
+            const alignedWidth = isTextElement ? naturalWidth : Math.ceil(naturalWidth / 8) * 8;
+            const alignedHeight = isTextElement ? lineHeight : Math.ceil(lineHeight / 8) * 8;
             console.log(`  result: ${alignedWidth} x ${alignedHeight}`);
             return {
               width: alignedWidth,
@@ -203,7 +207,10 @@ export class CSSLayoutEngine implements ILayoutEngine {
           } else {
             console.log(`  ⚠️ Exceeds constraint -> constraining to ${constraintWidth}`);
             const estimatedLines = Math.ceil(naturalWidth / constraintWidth);
-            const alignedHeight = Math.ceil((lineHeight * estimatedLines) / 8) * 8;
+            const wrappedHeight = lineHeight * estimatedLines;
+            // グリッド整列（textとheadingのみオフ）
+            const isTextElement = element.type === 'text' || element.type === 'heading';
+            const alignedHeight = isTextElement ? wrappedHeight : Math.ceil(wrappedHeight / 8) * 8;
             console.log(`  result: ${constraintWidth} x ${alignedHeight} (${estimatedLines} lines)`);
             return {
               width: constraintWidth,
