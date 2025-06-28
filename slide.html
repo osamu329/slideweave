@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>広告運用レポート - StyleHub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #111827;
+            color: white;
+            overflow: hidden;
+        }
+
+        .slide-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: all 1s ease-in-out;
+            background: linear-gradient(135deg, #4F46E5, #7C3AED);
+        }
+
+        .slide-background.bg-title { background: linear-gradient(135deg, #4F46E5, #7C3AED); }
+        .slide-background.bg-summary { background: linear-gradient(135deg, #10B981, #0D9488); }
+        .slide-background.bg-performance { background: linear-gradient(135deg, #F59E0B, #DC2626); }
+        .slide-background.bg-channels { background: linear-gradient(135deg, #8B5CF6, #EC4899); }
+        .slide-background.bg-strategy { background: linear-gradient(135deg, #6366F1, #3B82F6); }
+
+        .slide-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px;
+            z-index: 10;
+            position: relative;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .play-button {
+            padding: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .play-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .indicators {
+            display: flex;
+            gap: 8px;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .indicator.active {
+            background: white;
+        }
+
+        .slide-content {
+            flex: 1;
+            padding: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        .content-wrapper {
+            width: 100%;
+            max-width: 1200px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease-out;
+        }
+
+        .content-wrapper.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-title {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .slide-icon {
+            width: 48px;
+            height: 48px;
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .kpi-card {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .kpi-label {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .kpi-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .kpi-change {
+            font-size: 0.875rem;
+        }
+
+        .kpi-change.positive { color: #86EFAC; }
+        .kpi-change.negative { color: #FCA5A5; }
+
+        .highlights {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .highlights h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .highlights ul {
+            list-style: none;
+        }
+
+        .highlights li {
+            font-size: 1.125rem;
+            margin-bottom: 8px;
+        }
+
+        .performance-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        .chart-container {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .chart-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .chart-data {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .chart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chart-month {
+            font-weight: 600;
+        }
+
+        .chart-values {
+            text-align: right;
+        }
+
+        .chart-value {
+            font-size: 1.125rem;
+            font-weight: bold;
+        }
+
+        .chart-roas {
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+
+        .improvements {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .improvements h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .improvements ul {
+            list-style: none;
+        }
+
+        .improvements li {
+            font-size: 0.875rem;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .channel-table {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+            margin-bottom: 32px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th,
+        .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .table th {
+            background: rgba(255, 255, 255, 0.1);
+            font-weight: 600;
+        }
+
+        .channel-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            margin-right: 12px;
+            display: inline-block;
+        }
+
+        .channel-color.google { background: #3B82F6; }
+        .channel-color.meta { background: #1D4ED8; }
+        .channel-color.yahoo { background: #F59E0B; }
+        .channel-color.youtube { background: #DC2626; }
+
+        .change-positive { color: #86EFAC; }
+
+        .insights {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .insights h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .insights ul {
+            list-style: none;
+        }
+
+        .insights li {
+            font-size: 0.875rem;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        .strategy-section {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .strategy-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .strategy-item {
+            border-left: 4px solid;
+            padding-left: 16px;
+            margin-bottom: 16px;
+        }
+
+        .strategy-item.implemented {
+            border-color: #10B981;
+        }
+
+        .strategy-item.upcoming {
+            border-color: #F59E0B;
+        }
+
+        .strategy-item-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .strategy-item-result {
+            font-size: 0.875rem;
+            color: #86EFAC;
+        }
+
+        .strategy-item-desc {
+            font-size: 0.75rem;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px;
+            z-index: 10;
+            position: relative;
+        }
+
+        .nav-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background: rgba(0, 0, 0, 0.2);
+            width: 100%;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: rgba(255, 255, 255, 0.6);
+            transition: width 0.3s;
+        }
+
+        .title-slide {
+            text-align: center;
+        }
+
+        .title-slide .slide-icon {
+            width: 96px;
+            height: 96px;
+            margin: 0 auto 32px;
+            opacity: 0.8;
+        }
+
+        .title-slide h1 {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+
+        .title-slide h2 {
+            font-size: 2rem;
+            margin-bottom: 16px;
+            opacity: 0.9;
+        }
+
+        .title-slide p {
+            font-size: 1.25rem;
+            opacity: 0.8;
+        }
+
+        .slide-counter {
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <!-- Background -->
+        <div class="slide-background bg-title" id="slideBackground"></div>
+        <div class="slide-overlay"></div>
+
+        <!-- Header -->
+        <div class="header">
+            <div class="controls">
+                <button class="play-button" id="playButton" onclick="toggleAutoPlay()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                </button>
+                <span id="playStatus">オートプレイ停止</span>
+            </div>
+            
+            <div class="indicators">
+                <div class="indicator active" onclick="goToSlide(0)"></div>
+                <div class="indicator" onclick="goToSlide(1)"></div>
+                <div class="indicator" onclick="goToSlide(2)"></div>
+                <div class="indicator" onclick="goToSlide(3)"></div>
+                <div class="indicator" onclick="goToSlide(4)"></div>
+            </div>
+        </div>
+
+        <!-- Slide Content -->
+        <div class="slide-content">
+            <!-- Slide 1: Title -->
+            <div class="content-wrapper active title-slide" id="slide0">
+                <div class="slide-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3 3v18h18v-18h-18zm16 16h-14v-14h14v14zm-10-8h8v2h-8v-2zm0 4h6v2h-6v-2z"/>
+                    </svg>
+                </div>
+                <h1>広告運用レポート</h1>
+                <h2>ファッションECサイト「StyleHub」</h2>
+                <p>2025年5月実績</p>
+            </div>
+
+            <!-- Slide 2: Summary -->
+            <div class="content-wrapper hidden" id="slide1">
+                <div>
+                    <h2 class="slide-title">
+                        <span class="slide-icon">📊</span>
+                        月次サマリー
+                    </h2>
+                    
+                    <div class="kpi-grid">
+                        <div class="kpi-card">
+                            <div class="kpi-label">売上</div>
+                            <div class="kpi-value">¥12,500,000</div>
+                            <div class="kpi-change positive">+15.2%</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-label">広告費</div>
+                            <div class="kpi-value">¥2,800,000</div>
+                            <div class="kpi-change negative">+8.3%</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-label">ROAS</div>
+                            <div class="kpi-value">4.46</div>
+                            <div class="kpi-change positive">+0.32pt</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-label">CPA</div>
+                            <div class="kpi-value">¥3,200</div>
+                            <div class="kpi-change positive">-12.5%</div>
+                        </div>
+                    </div>
+
+                    <div class="highlights">
+                        <h3>ハイライト</h3>
+                        <ul>
+                            <li>✅ 母の日キャンペーンが大成功</li>
+                            <li>✅ リターゲティング施策でROAS改善</li>
+                            <li>✅ 新規顧客獲得数が過去最高を記録</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: Performance -->
+            <div class="content-wrapper hidden" id="slide2">
+                <div>
+                    <h2 class="slide-title">
+                        <span class="slide-icon">📈</span>
+                        パフォーマンス推移
+                    </h2>
+                    
+                    <div class="performance-grid">
+                        <div class="chart-container">
+                            <h3 class="chart-title">売上・ROAS推移</h3>
+                            <div class="chart-data">
+                                <div class="chart-item">
+                                    <span class="chart-month">3月</span>
+                                    <div class="chart-values">
+                                        <div class="chart-value">980万円</div>
+                                        <div class="chart-roas">ROAS: 3.85</div>
+                                    </div>
+                                </div>
+                                <div class="chart-item">
+                                    <span class="chart-month">4月</span>
+                                    <div class="chart-values">
+                                        <div class="chart-value">1,085万円</div>
+                                        <div class="chart-roas">ROAS: 4.14</div>
+                                    </div>
+                                </div>
+                                <div class="chart-item">
+                                    <span class="chart-month">5月</span>
+                                    <div class="chart-values">
+                                        <div class="chart-value">1,250万円</div>
+                                        <div class="chart-roas">ROAS: 4.46</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="improvements">
+                            <h3>主要改善要因</h3>
+                            <ul>
+                                <li>• 商品ラインナップ最適化: 春夏商品の早期投入</li>
+                                <li>• ターゲティング精度向上: 類似オーディエンス活用</li>
+                                <li>• クリエイティブテスト: 動画広告のCTR +25%</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4: Channels -->
+            <div class="content-wrapper hidden" id="slide3">
+                <div>
+                    <h2 class="slide-title">
+                        <span class="slide-icon">🎯</span>
+                        チャネル別分析
+                    </h2>
+                    
+                    <div class="channel-table">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>チャネル</th>
+                                    <th>広告費(万円)</th>
+                                    <th>売上(万円)</th>
+                                    <th>ROAS</th>
+                                    <th>前月比</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="channel-color google"></span>Google検索</td>
+                                    <td>120</td>
+                                    <td>600</td>
+                                    <td>5.00</td>
+                                    <td class="change-positive">+0.45</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="channel-color meta"></span>Meta広告</td>
+                                    <td>80</td>
+                                    <td>320</td>
+                                    <td>4.00</td>
+                                    <td class="change-positive">+0.28</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="channel-color yahoo"></span>Yahoo!検索</td>
+                                    <td>50</td>
+                                    <td>210</td>
+                                    <td>4.20</td>
+                                    <td class="change-positive">+0.15</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="channel-color youtube"></span>YouTube</td>
+                                    <td>30</td>
+                                    <td>120</td>
+                                    <td>4.00</td>
+                                    <td class="change-positive">+0.80</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="insights">
+                        <h3>📌 チャネル別insights</h3>
+                        <ul>
+                            <li>Google検索: ブランドキーワードが好調</li>
+                            <li>Meta広告: リール動画のエンゲージメント向上</li>
+                            <li>YouTube: 認知拡大効果で間接効果も増加</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 5: Strategy -->
+            <div class="content-wrapper hidden" id="slide4">
+                <div>
+                    <h2 class="slide-title">
+                        <span class="slide-icon">🚀</span>
+                        実施施策と今後の戦略
+                    </h2>
+                    
+                    <div class="strategy-grid">
+                        <div class="strategy-section">
+                            <h3 class="strategy-title">5月実施施策</h3>
+                            <div class="strategy-item implemented">
+                                <div class="strategy-item-title">母の日特集ページ制作</div>
+                                <div class="strategy-item-result">CVR +18%</div>
+                            </div>
+                            <div class="strategy-item implemented">
+                                <div class="strategy-item-title">リターゲティング配信強化</div>
+                                <div class="strategy-item-result">ROAS +0.6pt</div>
+                            </div>
+                            <div class="strategy-item implemented">
+                                <div class="strategy-item-title">商品レビュー活用クリエイティブ</div>
+                                <div class="strategy-item-result">CTR +22%</div>
+                            </div>
+                        </div>
+
+                        <div class="strategy-section">
+                            <h3 class="strategy-title">6月の重点施策</h3>
+                            <div class="strategy-item upcoming">
+                                <div class="strategy-item-title">父の日キャンペーン準備</div>
+                                <div class="strategy-item-desc">メンズアイテム訴求強化・ギフト需要に合わせた配信設計</div>
+                            </div>
+                            <div class="strategy-item upcoming">
+                                <div class="strategy-item-title">夏物商品プロモーション</div>
+                                <div class="strategy-item-desc">季節商品の早期露出・気温連動型配信テスト</div>
+                            </div>
+                            <div class="strategy-item upcoming">
+                                <div class="strategy-item-title">新規顧客獲得強化</div>
+                                <div class="strategy-item-desc">拡張配信の精度向上・動画クリエイティブ拡充</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <button class="nav-button" onclick="prevSlide()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                </svg>
+                前へ
+            </button>
+
+            <div class="slide-counter">
+                <span id="currentSlide">1</span> / 5
+            </div>
+
+            <button class="nav-button" onclick="nextSlide()">
+                次へ
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 20%"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlideIndex = 0;
+        let isAutoPlay = false;
+        let autoPlayInterval = null;
+        const totalSlides = 5;
+        
+        const backgrounds = ['bg-title', 'bg-summary', 'bg-performance', 'bg-channels', 'bg-strategy'];
+
+        function updateSlide() {
+            // Hide all slides
+            for (let i = 0; i < totalSlides; i++) {
+                const slide = document.getElementById(`slide${i}`);
+                slide.classList.add('hidden');
+                slide.classList.remove('active');
+            }
+
+            // Show current slide
+            const currentSlide = document.getElementById(`slide${currentSlideIndex}`);
+            currentSlide.classList.remove('hidden');
+            setTimeout(() => {
+                currentSlide.classList.add('active');
+            }, 50);
+
+            // Update background
+            const background = document.getElementById('slideBackground');
+            background.className = `slide-background ${backgrounds[currentSlideIndex]}`;
+
+            // Update indicators
+            const indicators = document.querySelectorAll('.indicator');
+            indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentSlideIndex);
+            });
+
+            // Update progress
+            const progress = ((currentSlideIndex + 1) / totalSlides) * 100;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+
+            // Update counter
+            document.getElementById('currentSlide').textContent = currentSlideIndex + 1;
+        }
+
+        function nextSlide() {
+            currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
+            updateSlide();
+        }
+
+        function prevSlide() {
+            currentSlideIndex = (currentSlideIndex - 1 + totalSlides) % totalSlides;
+            updateSlide();
+        }
+
+        function goToSlide(index) {
+            currentSlideIndex = index;
+            updateSlide();
+        }
+
+        function toggleAutoPlay() {
+            isAutoPlay = !isAutoPlay;
+            const playButton = document.getElementById('playButton');
+            const playStatus = document.getElementById('playStatus');
+
+            if (isAutoPlay) {
+                autoPlayInterval = setInterval(nextSlide, 5000);
+                playButton.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+                playStatus.textContent = 'オートプレイ中';
+            } else {
+                clearInterval(autoPlayInterval);
+                playButton.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+                playStatus.textContent = 'オートプレイ停止';
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (event) => {
+            switch(event.key) {
+                case 'ArrowRight':
+                case ' ':
+                    nextSlide();
+                    break;
+                case 'ArrowLeft':
+                    prevSlide();
+                    break;
+                case 'Escape':
+                    if (isAutoPlay) toggleAutoPlay();
+                    break;
+            }
+        });
+
+        // Initialize
+        updateSlide();
+    </script>
+</body>
+</html>

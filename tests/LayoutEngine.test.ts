@@ -1,4 +1,4 @@
-import { LayoutEngine } from '../src/layout/LayoutEngine';
+import { renderLayout, flattenLayout } from '../src/layout/LayoutEngine';
 import { Element } from '../src/types/elements';
 
 describe('LayoutEngine', () => {
@@ -9,7 +9,7 @@ describe('LayoutEngine', () => {
         style: { padding: 2 }
       };
 
-      const result = LayoutEngine.render(element, 720, 540);
+      const result = renderLayout(element, 720, 540);
       
       expect(result.left).toBe(0);
       expect(result.top).toBe(0);
@@ -29,7 +29,7 @@ describe('LayoutEngine', () => {
         ]
       };
 
-      const result = LayoutEngine.render(element);
+      const result = renderLayout(element);
       
       expect(result.children).toHaveLength(2);
       
@@ -53,7 +53,7 @@ describe('LayoutEngine', () => {
         ]
       };
 
-      const result = LayoutEngine.render(element);
+      const result = renderLayout(element);
       
       // margin: 3 = 24px, padding: 2 = 16px
       // 子要素は padding分だけ内側に配置される
@@ -66,12 +66,12 @@ describe('LayoutEngine', () => {
         type: 'container',
         style: { direction: 'row' },
         children: [
-          { type: 'text', content: 'Left' },
-          { type: 'text', content: 'Right' }
+          { type: 'text', content: 'Left', fontSize: 14 },
+          { type: 'text', content: 'Right', fontSize: 14 }
         ]
       };
 
-      const result = LayoutEngine.render(element);
+      const result = renderLayout(element);
       
       expect(result.children).toHaveLength(2);
       
@@ -95,7 +95,7 @@ describe('LayoutEngine', () => {
         content: 'Test'
       };
 
-      const result = LayoutEngine.render(element);
+      const result = renderLayout(element);
       
       expect(result).toHaveProperty('left');
       expect(result).toHaveProperty('top');
@@ -113,7 +113,7 @@ describe('LayoutEngine', () => {
         content: 'Test Content'
       };
 
-      const result = LayoutEngine.render(element);
+      const result = renderLayout(element);
       
       expect(result.element).toEqual(element);
       expect(result.element.type).toBe('text');
@@ -137,7 +137,7 @@ describe('LayoutEngine', () => {
         ]
       };
 
-      const result = LayoutEngine.render(element);
+      const result = renderLayout(element);
       
       expect(result.children).toHaveLength(1);
       
@@ -172,8 +172,8 @@ describe('LayoutEngine', () => {
         ]
       };
 
-      const layoutResult = LayoutEngine.render(element);
-      const flattened = LayoutEngine.flattenLayout(layoutResult);
+      const layoutResult = renderLayout(element);
+      const flattened = flattenLayout(layoutResult);
       
       expect(flattened).toHaveLength(3); // root + child container + text
       

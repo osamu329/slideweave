@@ -3,10 +3,10 @@
  * 要素の型チェックとバリデーション機能
  */
 
-import { Element, ElementType } from '../types/elements';
+import { Element, ElementType } from "../types/elements";
 
 export interface ValidationError {
-  type: 'error' | 'warning';
+  type: "error" | "warning";
   message: string;
   elementType?: ElementType;
   property?: string;
@@ -21,9 +21,20 @@ export interface ValidationResult {
 
 export class ElementValidator {
   private static readonly VALID_ELEMENT_TYPES: ElementType[] = [
-    'slide', 'slideHeader', 'slideBody', 'slideFooter',
-    'container', 'text', 'heading', 'list', 'listItem',
-    'table', 'tableRow', 'tableCell', 'img', 'svg'
+    "slide",
+    "slideHeader",
+    "slideBody",
+    "slideFooter",
+    "container",
+    "text",
+    "heading",
+    "list",
+    "listItem",
+    "table",
+    "tableRow",
+    "tableCell",
+    "img",
+    "svg",
   ];
 
   static validate(element: any): ValidationResult {
@@ -32,10 +43,10 @@ export class ElementValidator {
     const validatedElement: Element | undefined = this.applyDefaults(element);
 
     // 基本構造チェック
-    if (!element || typeof element !== 'object') {
+    if (!element || typeof element !== "object") {
       errors.push({
-        type: 'error',
-        message: '要素はオブジェクトである必要があります'
+        type: "error",
+        message: "要素はオブジェクトである必要があります",
       });
       return { isValid: false, errors, warnings };
     }
@@ -43,17 +54,17 @@ export class ElementValidator {
     // type プロパティチェック
     if (!element.type) {
       errors.push({
-        type: 'error',
-        message: 'type プロパティは必須です'
+        type: "error",
+        message: "type プロパティは必須です",
       });
       return { isValid: false, errors, warnings };
     }
 
     if (!this.VALID_ELEMENT_TYPES.includes(element.type)) {
       errors.push({
-        type: 'error',
+        type: "error",
         message: `Unknown element type: ${element.type}`,
-        elementType: element.type
+        elementType: element.type,
       });
       return { isValid: false, errors, warnings };
     }
@@ -75,89 +86,117 @@ export class ElementValidator {
       isValid: errors.length === 0,
       errors,
       warnings,
-      element: validatedElement
+      element: validatedElement,
     };
   }
 
-  private static validateElementType(element: any, errors: ValidationError[], warnings: ValidationError[]): void {
+  private static validateElementType(
+    element: any,
+    errors: ValidationError[],
+    warnings: ValidationError[],
+  ): void {
     switch (element.type) {
-      case 'text':
+      case "text":
         this.validateTextElement(element, errors, warnings);
         break;
-      case 'heading':
+      case "heading":
         this.validateHeadingElement(element, errors, warnings);
         break;
-      case 'img':
+      case "img":
         this.validateImgElement(element, errors, warnings);
         break;
-      case 'listItem':
+      case "listItem":
         this.validateListItemElement(element, errors, warnings);
         break;
     }
   }
 
-  private static validateTextElement(element: any, errors: ValidationError[], _warnings: ValidationError[]): void {
-    if (!element.content || typeof element.content !== 'string') {
+  private static validateTextElement(
+    element: any,
+    errors: ValidationError[],
+    _warnings: ValidationError[],
+  ): void {
+    if (!element.content || typeof element.content !== "string") {
       errors.push({
-        type: 'error',
-        message: 'text要素にはcontentプロパティが必須です',
-        elementType: 'text',
-        property: 'content'
+        type: "error",
+        message: "text要素にはcontentプロパティが必須です",
+        elementType: "text",
+        property: "content",
       });
     }
   }
 
-  private static validateHeadingElement(element: any, errors: ValidationError[], warnings: ValidationError[]): void {
-    if (!element.content || typeof element.content !== 'string') {
+  private static validateHeadingElement(
+    element: any,
+    errors: ValidationError[],
+    warnings: ValidationError[],
+  ): void {
+    if (!element.content || typeof element.content !== "string") {
       errors.push({
-        type: 'error',
-        message: 'heading要素にはcontentプロパティが必須です',
-        elementType: 'heading',
-        property: 'content'
+        type: "error",
+        message: "heading要素にはcontentプロパティが必須です",
+        elementType: "heading",
+        property: "content",
       });
     }
 
     if (element.level !== undefined) {
-      if (!Number.isInteger(element.level) || element.level < 1 || element.level > 6) {
+      if (
+        !Number.isInteger(element.level) ||
+        element.level < 1 ||
+        element.level > 6
+      ) {
         warnings.push({
-          type: 'warning',
-          message: 'heading要素のlevelは1-6の整数である必要があります',
-          elementType: 'heading',
-          property: 'level'
+          type: "warning",
+          message: "heading要素のlevelは1-6の整数である必要があります",
+          elementType: "heading",
+          property: "level",
         });
       }
     }
   }
 
-  private static validateImgElement(element: any, errors: ValidationError[], _warnings: ValidationError[]): void {
-    if (!element.src || typeof element.src !== 'string') {
+  private static validateImgElement(
+    element: any,
+    errors: ValidationError[],
+    _warnings: ValidationError[],
+  ): void {
+    if (!element.src || typeof element.src !== "string") {
       errors.push({
-        type: 'error',
-        message: 'img要素にはsrcプロパティが必須です',
-        elementType: 'img',
-        property: 'src'
+        type: "error",
+        message: "img要素にはsrcプロパティが必須です",
+        elementType: "img",
+        property: "src",
       });
     }
   }
 
-  private static validateListItemElement(element: any, errors: ValidationError[], _warnings: ValidationError[]): void {
-    if (!element.content || typeof element.content !== 'string') {
+  private static validateListItemElement(
+    element: any,
+    errors: ValidationError[],
+    _warnings: ValidationError[],
+  ): void {
+    if (!element.content || typeof element.content !== "string") {
       errors.push({
-        type: 'error',
-        message: 'listItem要素にはcontentプロパティが必須です',
-        elementType: 'listItem',
-        property: 'content'
+        type: "error",
+        message: "listItem要素にはcontentプロパティが必須です",
+        elementType: "listItem",
+        property: "content",
       });
     }
   }
 
-  private static validateStyle(style: any, _errors: ValidationError[], warnings: ValidationError[]): void {
+  private static validateStyle(
+    style: any,
+    _errors: ValidationError[],
+    warnings: ValidationError[],
+  ): void {
     if (style.margin !== undefined) {
       if (!Number.isInteger(style.margin)) {
         warnings.push({
-          type: 'warning',
-          message: 'margin値は8px単位（整数）である必要があります',
-          property: 'style.margin'
+          type: "warning",
+          message: "margin値は8px単位（整数）である必要があります",
+          property: "style.margin",
         });
       }
     }
@@ -165,36 +204,40 @@ export class ElementValidator {
     if (style.padding !== undefined) {
       if (!Number.isInteger(style.padding)) {
         warnings.push({
-          type: 'warning',
-          message: 'padding値は8px単位（整数）である必要があります',
-          property: 'style.padding'
+          type: "warning",
+          message: "padding値は8px単位（整数）である必要があります",
+          property: "style.padding",
         });
       }
     }
   }
 
-  private static validateChildren(children: any, errors: ValidationError[], warnings: ValidationError[]): void {
+  private static validateChildren(
+    children: any,
+    errors: ValidationError[],
+    warnings: ValidationError[],
+  ): void {
     if (!Array.isArray(children)) {
       errors.push({
-        type: 'error',
-        message: 'childrenプロパティは配列である必要があります',
-        property: 'children'
+        type: "error",
+        message: "childrenプロパティは配列である必要があります",
+        property: "children",
       });
       return;
     }
 
     children.forEach((child, index) => {
       const childResult = this.validate(child);
-      childResult.errors.forEach(error => {
+      childResult.errors.forEach((error) => {
         errors.push({
           ...error,
-          message: `children[${index}]: ${error.message}`
+          message: `children[${index}]: ${error.message}`,
         });
       });
-      childResult.warnings.forEach(warning => {
+      childResult.warnings.forEach((warning) => {
         warnings.push({
           ...warning,
-          message: `children[${index}]: ${warning.message}`
+          message: `children[${index}]: ${warning.message}`,
         });
       });
     });
@@ -204,7 +247,7 @@ export class ElementValidator {
     const result = { ...element };
 
     // heading要素のデフォルトlevel設定
-    if (element.type === 'heading' && element.level === undefined) {
+    if (element.type === "heading" && element.level === undefined) {
       result.level = 1;
     }
 

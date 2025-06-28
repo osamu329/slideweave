@@ -3,7 +3,7 @@
  * 全コンポーネントの連携をテストする end-to-end テスト
  */
 
-import { LayoutEngine } from '../src/layout/LayoutEngine';
+import { renderLayout } from '../src/layout/LayoutEngine';
 import { PPTXRenderer } from '../src/renderer/PPTXRenderer';
 import { ElementValidator } from '../src/elements/validator';
 import { GridSystem } from '../src/grid/GridSystem';
@@ -27,7 +27,7 @@ describe('SlideWeave 統合テスト', () => {
       expect(validationResult.errors).toHaveLength(0);
 
       // 2. レイアウト計算
-      const layoutResult = LayoutEngine.render(element, 720, 540);
+      const layoutResult = renderLayout(element, 720, 540);
       
       // レイアウト結果の基本検証
       expect(layoutResult.element.type).toBe('container');
@@ -58,7 +58,7 @@ describe('SlideWeave 統合テスト', () => {
         ]
       };
 
-      const layoutResult = LayoutEngine.render(element, 720, 540);
+      const layoutResult = renderLayout(element, 720, 540);
       const childElement = layoutResult.children![0];
       
       // padding: 2 = 16px が反映されているか確認
@@ -79,12 +79,13 @@ describe('SlideWeave 統合テスト', () => {
           { 
             type: 'text', 
             content: 'Grid Test',
+            fontSize: 16,
             style: { margin: 2 } // 16px
           }
         ]
       };
 
-      const layoutResult = LayoutEngine.render(element, 720, 540);
+      const layoutResult = renderLayout(element, 720, 540);
       const childElement = layoutResult.children![0];
       
       // すべての座標が8の倍数であることを確認
@@ -128,7 +129,7 @@ describe('SlideWeave 統合テスト', () => {
       const startTime = Date.now();
       
       // レイアウト計算
-      const layoutResult = LayoutEngine.render(element, 720, 540);
+      const layoutResult = renderLayout(element, 720, 540);
       
       // PPTX生成
       const renderer = new PPTXRenderer();
@@ -195,7 +196,7 @@ describe('SlideWeave 統合テスト', () => {
       expect(validationResult.isValid).toBe(true);
 
       // レイアウト計算
-      const layoutResult = LayoutEngine.render(element, 720, 540);
+      const layoutResult = renderLayout(element, 720, 540);
       expect(layoutResult.children).toHaveLength(3);
 
       // PPTX生成
@@ -249,7 +250,7 @@ describe('SlideWeave 統合テスト', () => {
       expect(validationResult.isValid).toBe(true);
 
       // 2. レイアウト計算
-      const layoutResult = LayoutEngine.render(element);
+      const layoutResult = renderLayout(element);
       expect(layoutResult).toBeDefined();
       expect(layoutResult.children).toHaveLength(2);
 

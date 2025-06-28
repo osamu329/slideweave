@@ -53,6 +53,10 @@ docs/                     # ドキュメント
 - TypeScript厳格モード
 - テストカバレッジ80%以上
 
+## 実装注意点
+
+- css-layoutの動作は、検索せずに実装を確認すること。
+
 ## Linear Issue管理
 
 - プロジェクトID: 9c6fdc43-13d0-40fb-aec4-b08409d49b60

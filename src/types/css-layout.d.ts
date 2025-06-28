@@ -1,4 +1,4 @@
-declare module 'css-layout' {
+declare module "css-layout" {
   interface CSSLayoutStyle {
     width?: number;
     height?: number;
@@ -12,9 +12,14 @@ declare module 'css-layout' {
     paddingRight?: number;
     paddingBottom?: number;
     paddingLeft?: number;
-    flexDirection?: 'row' | 'column';
-    justifyContent?: 'flex-start' | 'center' | 'flex-end' | 'space-between' | 'space-around';
-    alignItems?: 'flex-start' | 'center' | 'flex-end' | 'stretch';
+    flexDirection?: "row" | "column";
+    justifyContent?:
+      | "flex-start"
+      | "center"
+      | "flex-end"
+      | "space-between"
+      | "space-around";
+    alignItems?: "flex-start" | "center" | "flex-end" | "stretch";
     flex?: number;
   }
 

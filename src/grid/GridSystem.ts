@@ -45,7 +45,7 @@ export class GridSystem {
     return {
       margin: 0,
       isTextBox: true,
-      lineSpacing: 0
+      lineSpacing: 0,
     };
   }
 
@@ -57,12 +57,17 @@ export class GridSystem {
    * @param height 高さ（グリッド単位）
    * @returns PPTXGenJS位置・サイズオプション
    */
-  static getPositionOptions(left: number, top: number, width: number, height: number): object {
+  static getPositionOptions(
+    left: number,
+    top: number,
+    width: number,
+    height: number,
+  ): object {
     return {
       x: this.gridToInches(left),
       y: this.gridToInches(top),
       w: this.gridToInches(width),
-      h: this.gridToInches(height)
+      h: this.gridToInches(height),
     };
   }
 }

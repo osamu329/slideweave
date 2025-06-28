@@ -3,29 +3,39 @@
  * Object記法でのスライド要素定義
  */
 
-export type ElementType = 
-  | 'slide'
-  | 'slideHeader'
-  | 'slideBody'
-  | 'slideFooter'
-  | 'container'
-  | 'text'
-  | 'heading'
-  | 'list'
-  | 'listItem'
-  | 'table'
-  | 'tableRow'
-  | 'tableCell'
-  | 'img'
-  | 'svg';
+export type ElementType =
+  | "slide"
+  | "slideHeader"
+  | "slideBody"
+  | "slideFooter"
+  | "container"
+  | "text"
+  | "heading"
+  | "list"
+  | "listItem"
+  | "table"
+  | "tableRow"
+  | "tableCell"
+  | "img"
+  | "svg";
 
 export interface BaseStyle {
   margin?: number;
+  marginTop?: number;
+  marginRight?: number;
+  marginBottom?: number;
+  marginLeft?: number;
   padding?: number;
-  direction?: 'row' | 'column';
+  paddingTop?: number;
+  paddingRight?: number;
+  paddingBottom?: number;
+  paddingLeft?: number;
+  direction?: "row" | "column";
   backgroundColor?: string;
   borderColor?: string;
   borderWidth?: number;
+  width?: number;
+  height?: number;
 }
 
 export interface BaseElement {
@@ -35,29 +45,29 @@ export interface BaseElement {
 }
 
 export interface SlideElement extends BaseElement {
-  type: 'slide';
+  type: "slide";
   title?: string;
-  layout?: 'title' | 'content' | 'blank';
+  layout?: "title" | "content" | "blank";
 }
 
 export interface SlideHeaderElement extends BaseElement {
-  type: 'slideHeader';
+  type: "slideHeader";
 }
 
 export interface SlideBodyElement extends BaseElement {
-  type: 'slideBody';
+  type: "slideBody";
 }
 
 export interface SlideFooterElement extends BaseElement {
-  type: 'slideFooter';
+  type: "slideFooter";
 }
 
 export interface ContainerElement extends BaseElement {
-  type: 'container';
+  type: "container";
 }
 
 export interface TextElement extends BaseElement {
-  type: 'text';
+  type: "text";
   content: string;
   fontSize?: number;
   fontFamily?: string;
@@ -67,7 +77,7 @@ export interface TextElement extends BaseElement {
 }
 
 export interface HeadingElement extends BaseElement {
-  type: 'heading';
+  type: "heading";
   content: string;
   level?: 1 | 2 | 3 | 4 | 5 | 6;
   fontSize?: number;
@@ -78,35 +88,35 @@ export interface HeadingElement extends BaseElement {
 }
 
 export interface ListElement extends BaseElement {
-  type: 'list';
-  listType?: 'bullet' | 'number';
+  type: "list";
+  listType?: "bullet" | "number";
 }
 
 export interface ListItemElement extends BaseElement {
-  type: 'listItem';
+  type: "listItem";
   content: string;
   indentLevel?: number;
 }
 
 export interface TableElement extends BaseElement {
-  type: 'table';
+  type: "table";
   columns?: number;
   rows?: number;
 }
 
 export interface TableRowElement extends BaseElement {
-  type: 'tableRow';
+  type: "tableRow";
 }
 
 export interface TableCellElement extends BaseElement {
-  type: 'tableCell';
+  type: "tableCell";
   content?: string;
   colSpan?: number;
   rowSpan?: number;
 }
 
 export interface ImgElement extends BaseElement {
-  type: 'img';
+  type: "img";
   src: string;
   alt?: string;
   width?: number;
@@ -114,13 +124,13 @@ export interface ImgElement extends BaseElement {
 }
 
 export interface SvgElement extends BaseElement {
-  type: 'svg';
+  type: "svg";
   content: string;
   width?: number;
   height?: number;
 }
 
-export type Element = 
+export type Element =
   | SlideElement
   | SlideHeaderElement
   | SlideBodyElement

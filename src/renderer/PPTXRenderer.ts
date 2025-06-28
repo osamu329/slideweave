@@ -3,15 +3,18 @@
  * レイアウト計算結果をPPTXGenJSオブジェクトに変換
  */
 
-import PptxGenJS from 'pptxgenjs';
-import { LayoutResult } from '../layout/LayoutEngine';
-import { TextElement, HeadingElement, ContainerElement } from '../types/elements';
-import { GridSystem } from '../grid/GridSystem';
+import PptxGenJS from "pptxgenjs";
+import { LayoutResult, flattenLayout } from "../layout/LayoutEngine";
+import {
+  TextElement,
+  HeadingElement,
+  ContainerElement,
+} from "../types/elements";
 
 export interface PPTXRenderOptions {
-  slideWidth?: number;  // インチ
+  slideWidth?: number; // インチ
   slideHeight?: number; // インチ
-  theme?: 'light' | 'dark';
+  theme?: "light" | "dark";
 }
 
 export class PPTXRenderer {
@@ -20,14 +23,14 @@ export class PPTXRenderer {
 
   constructor(options: PPTXRenderOptions = {}) {
     this.pptx = new PptxGenJS();
-    
+
     // スライドサイズ設定（デフォルト: 10x7.5インチ）
     this.pptx.defineLayout({
-      name: 'SLIDEWEAVE_LAYOUT',
+      name: "SLIDEWEAVE_LAYOUT",
       width: options.slideWidth || 10,
-      height: options.slideHeight || 7.5
+      height: options.slideHeight || 7.5,
     });
-    this.pptx.layout = 'SLIDEWEAVE_LAYOUT';
+    this.pptx.layout = "SLIDEWEAVE_LAYOUT";
   }
 
   /**
@@ -38,42 +41,42 @@ export class PPTXRenderer {
   render(layoutResult: LayoutResult): PptxGenJS {
     // 新しいスライドを作成
     this.currentSlide = this.pptx.addSlide();
-    
-    // レイアウト結果を再帰的にレンダリング
-    this.renderElement(layoutResult);
-    
+
+    // 相対座標を絶対座標に変換して平坦化
+    const flatElements = flattenLayout(layoutResult);
+
+    // 各要素を絶対座標でレンダリング
+    flatElements.forEach((element) => {
+      this.renderFlatElement(element);
+    });
+
     return this.pptx;
   }
 
   /**
-   * 要素をレンダリング
-   * @param layoutResult レイアウト結果
+   * 平坦化された要素を絶対座標でレンダリング
+   * @param layoutResult レイアウト結果（絶対座標）
    */
-  private renderElement(layoutResult: LayoutResult): void {
+  private renderFlatElement(layoutResult: LayoutResult): void {
     if (!this.currentSlide) {
-      throw new Error('スライドが初期化されていません');
+      throw new Error("スライドが初期化されていません");
     }
 
     const element = layoutResult.element;
-    
+
     switch (element.type) {
-      case 'container':
+      case "container":
         this.renderContainer(layoutResult, element as ContainerElement);
         break;
-      case 'text':
+      case "text":
         this.renderText(layoutResult, element as TextElement);
         break;
-      case 'heading':
+      case "heading":
         this.renderHeading(layoutResult, element as HeadingElement);
         break;
       default:
         // 他の要素タイプは現在未実装
         break;
-    }
-
-    // 子要素を再帰的にレンダリング
-    if (layoutResult.children) {
-      layoutResult.children.forEach(child => this.renderElement(child));
     }
   }
 
@@ -82,22 +85,26 @@ export class PPTXRenderer {
    * @param layoutResult レイアウト結果
    * @param element container要素
    */
-  private renderContainer(layoutResult: LayoutResult, element: ContainerElement): void {
+  private renderContainer(
+    _layoutResult: LayoutResult,
+    _element: ContainerElement,
+  ): void {
     if (!this.currentSlide) return;
 
+    // 一時的にコンテナの描画を無効化（テキスト位置をデバッグするため）
     // 背景色が設定されている場合のみ描画
-    if (element.style?.backgroundColor) {
-      const position = this.pixelsToInches(layoutResult);
-      
-      this.currentSlide.addShape('rect', {
-        x: position.x,
-        y: position.y,
-        w: position.w,
-        h: position.h,
-        fill: { color: element.style.backgroundColor },
-        line: { width: 0 } // 境界線なし
-      });
-    }
+    // if (element.style?.backgroundColor) {
+    //   const position = this.pixelsToInches(layoutResult);
+    //
+    //   this.currentSlide.addShape('rect', {
+    //     x: position.x,
+    //     y: position.y,
+    //     w: position.w,
+    //     h: position.h,
+    //     fill: { color: element.style.backgroundColor },
+    //     line: { type: 'none' } // 境界線を完全に無効化
+    //   });
+    // }
   }
 
   /**
@@ -110,13 +117,12 @@ export class PPTXRenderer {
 
     const position = this.pixelsToInches(layoutResult);
     const textOptions = {
-      ...GridSystem.getDefaultTextOptions(),
       ...position,
       fontSize: element.fontSize || 12,
-      fontFace: element.fontFamily || 'Arial',
-      color: element.color || '000000',
+      fontFace: element.fontFamily || "Arial",
+      color: element.color || "000000",
       bold: element.bold || false,
-      italic: element.italic || false
+      italic: element.italic || false,
     };
 
     this.currentSlide.addText(element.content, textOptions);
@@ -127,26 +133,33 @@ export class PPTXRenderer {
    * @param layoutResult レイアウト結果
    * @param element heading要素
    */
-  private renderHeading(layoutResult: LayoutResult, element: HeadingElement): void {
+  private renderHeading(
+    layoutResult: LayoutResult,
+    element: HeadingElement,
+  ): void {
     if (!this.currentSlide) return;
 
     const position = this.pixelsToInches(layoutResult);
-    
+
     // レベルに応じたフォントサイズ
     const fontSizeMap: Record<number, number> = {
-      1: 24, 2: 20, 3: 18, 4: 16, 5: 14, 6: 12
+      1: 24,
+      2: 20,
+      3: 18,
+      4: 16,
+      5: 14,
+      6: 12,
     };
     const level = element.level || 1;
     const fontSize = element.fontSize || fontSizeMap[level] || 16;
 
     const textOptions = {
-      ...GridSystem.getDefaultTextOptions(),
       ...position,
       fontSize,
-      fontFace: element.fontFamily || 'Arial',
-      color: element.color || '000000',
+      fontFace: element.fontFamily || "Arial",
+      color: element.color || "000000",
       bold: element.bold !== undefined ? element.bold : true, // headingはデフォルトでbold
-      italic: element.italic || false
+      italic: element.italic || false,
     };
 
     this.currentSlide.addText(element.content, textOptions);
@@ -157,16 +170,20 @@ export class PPTXRenderer {
    * @param layoutResult レイアウト結果
    * @returns インチ座標
    */
-  private pixelsToInches(layoutResult: LayoutResult): { x: number; y: number; w: number; h: number } {
-    // ピクセル → ポイント → インチ変換
-    const PX_TO_PT = 0.75;
-    const PT_TO_INCH = 1 / 72;
-    
+  private pixelsToInches(layoutResult: LayoutResult): {
+    x: number;
+    y: number;
+    w: number;
+    h: number;
+  } {
+    // ピクセル → インチ変換（72DPI想定）
+    const PX_TO_INCH = 1 / 72;
+
     return {
-      x: layoutResult.left * PX_TO_PT * PT_TO_INCH,
-      y: layoutResult.top * PX_TO_PT * PT_TO_INCH,
-      w: layoutResult.width * PX_TO_PT * PT_TO_INCH,
-      h: layoutResult.height * PX_TO_PT * PT_TO_INCH
+      x: layoutResult.left * PX_TO_INCH,
+      y: layoutResult.top * PX_TO_INCH,
+      w: layoutResult.width * PX_TO_INCH,
+      h: layoutResult.height * PX_TO_INCH,
     };
   }
 
@@ -184,7 +201,7 @@ export class PPTXRenderer {
    * @returns Promise<Buffer>
    */
   async getBuffer(): Promise<Buffer> {
-    return this.pptx.write({ outputType: 'nodebuffer' }) as Promise<Buffer>;
+    return this.pptx.write({ outputType: "nodebuffer" }) as Promise<Buffer>;
   }
 
   /**

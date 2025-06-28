@@ -1,0 +1,84 @@
+{
+  "title": "Test2: 2段組みレイアウトテスト",
+  "description": "左右2段組みレイアウトでのコンテンツ配置検証用テストケース",
+  "slides": [
+    {
+      "type": "slide",
+      "style": {
+        "padding": 4
+      },
+      "children": [
+        {
+          "type": "heading",
+          "content": "2段組みレイアウトデモ",
+          "level": 1,
+          "fontSize": 28,
+          "style": {
+            "marginBottom": 3,
+            "width": 640
+          }
+        },
+        {
+          "type": "container",
+          "style": {
+            "direction": "row",
+            "width": 640,
+            "marginTop": 2
+          },
+          "children": [
+            {
+              "type": "container",
+              "style": {
+                "flex": 1,
+                "marginRight": 1,
+                "padding": 2,
+                "backgroundColor": "#F0F8FF"
+              },
+              "children": [
+                {
+                  "type": "heading",
+                  "content": "左カラム",
+                  "level": 3,
+                  "fontSize": 20,
+                  "style": {
+                    "marginBottom": 2
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "これは左側のカラムです。2段組みレイアウトでは、コンテンツを左右に分割して表示します。この部分では主要な情報を記載します。",
+                  "fontSize": 14
+                }
+              ]
+            },
+            {
+              "type": "container",
+              "style": {
+                "flex": 1,
+                "marginLeft": 1,
+                "padding": 2,
+                "backgroundColor": "#F0FFF0"
+              },
+              "children": [
+                {
+                  "type": "heading",
+                  "content": "右カラム",
+                  "level": 3,
+                  "fontSize": 20,
+                  "style": {
+                    "marginBottom": 2
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "これは右側のカラムです。補足情報や詳細な説明、関連するデータなどを配置します。レイアウトエンジンの横並び配置機能をテストします。",
+                  "fontSize": 14
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

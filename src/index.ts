@@ -1,7 +1,7 @@
-console.log('SlideWeave - PowerPoint slide creation tool');
+console.log("SlideWeave - PowerPoint slide creation tool");
 
 export default function main(): void {
-  console.log('Starting SlideWeave...');
+  console.log("Starting SlideWeave...");
 }
 
 if (require.main === module) {

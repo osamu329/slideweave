@@ -1,5 +1,5 @@
 import { PPTXRenderer } from '../src/renderer/PPTXRenderer';
-import { LayoutEngine } from '../src/layout/LayoutEngine';
+import { renderLayout } from '../src/layout/LayoutEngine';
 import { TextElement, ContainerElement } from '../src/types/elements';
 
 describe('PPTXRenderer', () => {
@@ -16,7 +16,7 @@ describe('PPTXRenderer', () => {
         content: 'Hello World'
       };
 
-      const layoutResult = LayoutEngine.render(element, 720, 540);
+      const layoutResult = renderLayout(element, 720, 540);
       const pptx = renderer.render(layoutResult);
 
       // PPTXGenJSインスタンスが生成されることを確認
@@ -30,7 +30,7 @@ describe('PPTXRenderer', () => {
         content: 'こんにちは世界'
       };
 
-      const layoutResult = LayoutEngine.render(element, 720, 540);
+      const layoutResult = renderLayout(element, 720, 540);
       const pptx = renderer.render(layoutResult);
 
       expect(pptx).toBeDefined();
@@ -51,7 +51,7 @@ describe('PPTXRenderer', () => {
         ]
       };
 
-      const layoutResult = LayoutEngine.render(element, 720, 540);
+      const layoutResult = renderLayout(element, 720, 540);
       const pptx = renderer.render(layoutResult);
 
       expect(pptx).toBeDefined();
@@ -66,7 +66,7 @@ describe('PPTXRenderer', () => {
       };
 
       // 特定位置にレイアウト
-      const layoutResult = LayoutEngine.render(element, 720, 540);
+      const layoutResult = renderLayout(element, 720, 540);
       const pptx = renderer.render(layoutResult);
 
       expect(pptx).toBeDefined();
@@ -80,7 +80,7 @@ describe('PPTXRenderer', () => {
         content: 'No Margin Test'
       };
 
-      const layoutResult = LayoutEngine.render(element, 720, 540);
+      const layoutResult = renderLayout(element, 720, 540);
       const pptx = renderer.render(layoutResult);
 
       // PPTXGenJSのデフォルトオプションが適用されていることを確認
@@ -100,7 +100,7 @@ describe('PPTXRenderer', () => {
         italic: true
       };
 
-      const layoutResult = LayoutEngine.render(element, 720, 540);
+      const layoutResult = renderLayout(element, 720, 540);
       const pptx = renderer.render(layoutResult);
 
       expect(pptx).toBeDefined();
@@ -116,7 +116,7 @@ describe('PPTXRenderer', () => {
       }));
 
       elements.forEach(element => {
-        const layoutResult = LayoutEngine.render(element, 720, 540);
+        const layoutResult = renderLayout(element, 720, 540);
         const pptx = renderer.render(layoutResult);
         expect(pptx).toBeDefined();
       });
@@ -149,7 +149,7 @@ describe('PPTXRenderer', () => {
         ]
       };
 
-      const layoutResult = LayoutEngine.render(element, 720, 540);
+      const layoutResult = renderLayout(element, 720, 540);
       const pptx = renderer.render(layoutResult);
 
       expect(pptx).toBeDefined();
@@ -165,7 +165,7 @@ describe('PPTXRenderer', () => {
         content: 'Export Test'
       };
 
-      const layoutResult = LayoutEngine.render(element, 720, 540);
+      const layoutResult = renderLayout(element, 720, 540);
       renderer.render(layoutResult);
 
       const buffer = await renderer.getBuffer();
