@@ -1,0 +1,137 @@
+/**
+ * SlideWeave要素型定義
+ * Object記法でのスライド要素定義
+ */
+
+export type ElementType = 
+  | 'slide'
+  | 'slideHeader'
+  | 'slideBody'
+  | 'slideFooter'
+  | 'container'
+  | 'text'
+  | 'heading'
+  | 'list'
+  | 'listItem'
+  | 'table'
+  | 'tableRow'
+  | 'tableCell'
+  | 'img'
+  | 'svg';
+
+export interface BaseStyle {
+  margin?: number;
+  padding?: number;
+  direction?: 'row' | 'column';
+  backgroundColor?: string;
+  borderColor?: string;
+  borderWidth?: number;
+}
+
+export interface BaseElement {
+  type: ElementType;
+  style?: BaseStyle;
+  children?: Element[];
+}
+
+export interface SlideElement extends BaseElement {
+  type: 'slide';
+  title?: string;
+  layout?: 'title' | 'content' | 'blank';
+}
+
+export interface SlideHeaderElement extends BaseElement {
+  type: 'slideHeader';
+}
+
+export interface SlideBodyElement extends BaseElement {
+  type: 'slideBody';
+}
+
+export interface SlideFooterElement extends BaseElement {
+  type: 'slideFooter';
+}
+
+export interface ContainerElement extends BaseElement {
+  type: 'container';
+}
+
+export interface TextElement extends BaseElement {
+  type: 'text';
+  content: string;
+  fontSize?: number;
+  fontFamily?: string;
+  color?: string;
+  bold?: boolean;
+  italic?: boolean;
+}
+
+export interface HeadingElement extends BaseElement {
+  type: 'heading';
+  content: string;
+  level?: 1 | 2 | 3 | 4 | 5 | 6;
+  fontSize?: number;
+  fontFamily?: string;
+  color?: string;
+  bold?: boolean;
+  italic?: boolean;
+}
+
+export interface ListElement extends BaseElement {
+  type: 'list';
+  listType?: 'bullet' | 'number';
+}
+
+export interface ListItemElement extends BaseElement {
+  type: 'listItem';
+  content: string;
+  indentLevel?: number;
+}
+
+export interface TableElement extends BaseElement {
+  type: 'table';
+  columns?: number;
+  rows?: number;
+}
+
+export interface TableRowElement extends BaseElement {
+  type: 'tableRow';
+}
+
+export interface TableCellElement extends BaseElement {
+  type: 'tableCell';
+  content?: string;
+  colSpan?: number;
+  rowSpan?: number;
+}
+
+export interface ImgElement extends BaseElement {
+  type: 'img';
+  src: string;
+  alt?: string;
+  width?: number;
+  height?: number;
+}
+
+export interface SvgElement extends BaseElement {
+  type: 'svg';
+  content: string;
+  width?: number;
+  height?: number;
+}
+
+export type Element = 
+  | SlideElement
+  | SlideHeaderElement
+  | SlideBodyElement
+  | SlideFooterElement
+  | ContainerElement
+  | TextElement
+  | HeadingElement
+  | ListElement
+  | ListItemElement
+  | TableElement
+  | TableRowElement
+  | TableCellElement
+  | ImgElement
+  | SvgElement;
