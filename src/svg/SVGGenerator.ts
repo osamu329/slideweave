@@ -1,3 +1,5 @@
+import { Background, LinearGradient, RadialGradient } from '../types/elements.js';
+
 export interface RectOptions {
   x: number;
   y: number;
@@ -12,12 +14,57 @@ export interface FrameSVGOptions {
   width: number;
   height: number;
   backgroundColor?: string;
+  background?: Background;
   borderRadius?: number;
 }
 
 export class SVGGenerator {
+  private gradientId = 0;
+
   createSVG(width: number, height: number): string {
     return `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg"></svg>`;
+  }
+
+  private createLinearGradient(gradient: LinearGradient): { id: string; def: string } {
+    const id = `grad${++this.gradientId}`;
+    
+    // Parse direction
+    let x1 = 0, y1 = 0, x2 = 0, y2 = 0;
+    if (gradient.direction === 'to right') {
+      x2 = 100;
+    } else if (gradient.direction === 'to left') {
+      x1 = 100;
+    } else if (gradient.direction === 'to bottom') {
+      y2 = 100;
+    } else if (gradient.direction === 'to top') {
+      y1 = 100;
+    } else if (gradient.direction.includes('deg')) {
+      // Parse angle (e.g., "45deg")
+      const angle = parseFloat(gradient.direction.replace('deg', ''));
+      const rad = (angle * Math.PI) / 180;
+      x2 = Math.cos(rad) * 100;
+      y2 = Math.sin(rad) * 100;
+    }
+
+    const stops = gradient.stops
+      .map(stop => `<stop offset="${stop.offset * 100}%" stop-color="${stop.color}" />`)
+      .join('');
+
+    const def = `<linearGradient id="${id}" x1="${x1}%" y1="${y1}%" x2="${x2}%" y2="${y2}%" gradientUnits="objectBoundingBox">${stops}</linearGradient>`;
+    
+    return { id, def };
+  }
+
+  private createRadialGradient(gradient: RadialGradient): { id: string; def: string } {
+    const id = `grad${++this.gradientId}`;
+    
+    const stops = gradient.stops
+      .map(stop => `<stop offset="${stop.offset * 100}%" stop-color="${stop.color}" />`)
+      .join('');
+
+    const def = `<radialGradient id="${id}" cx="50%" cy="50%" r="50%" gradientUnits="objectBoundingBox">${stops}</radialGradient>`;
+    
+    return { id, def };
   }
 
   createRect(options: RectOptions): string {
@@ -44,19 +91,34 @@ export class SVGGenerator {
   }
 
   generateFrameSVG(options: FrameSVGOptions): string {
-    const { width, height, backgroundColor, borderRadius } = options;
+    const { width, height, backgroundColor, background, borderRadius } = options;
     
-    // Handle different color formats
-    let fill = backgroundColor || 'none';
-    if (backgroundColor && backgroundColor !== 'none') {
+    let fill = 'none';
+    let gradientDefs = '';
+    
+    // Priority: background > backgroundColor
+    if (background) {
+      if (typeof background === 'string') {
+        // String background color
+        fill = background.startsWith('#') ? background : `#${background}`;
+      } else if (background.type === 'linearGradient') {
+        const { id, def } = this.createLinearGradient(background);
+        fill = `url(#${id})`;
+        gradientDefs = def;
+      } else if (background.type === 'radialGradient') {
+        const { id, def } = this.createRadialGradient(background);
+        fill = `url(#${id})`;
+        gradientDefs = def;
+      }
+    } else if (backgroundColor) {
+      // Fallback to backgroundColor
       if (backgroundColor.startsWith('rgba(') || backgroundColor.startsWith('rgb(')) {
-        // RGBA/RGB format - use as-is
         fill = backgroundColor;
       } else if (!backgroundColor.startsWith('#')) {
-        // Hex color without # prefix - add #
         fill = `#${backgroundColor}`;
+      } else {
+        fill = backgroundColor;
       }
-      // Colors that already start with # are used as-is
     }
     
     const rectOptions: RectOptions = {
@@ -74,7 +136,9 @@ export class SVGGenerator {
 
     const rect = this.createRect(rectOptions);
     
-    // Use viewBox instead of width/height to allow PPTXGenJS to respect addImage size
-    return `<svg viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">${rect}</svg>`;
+    // Include gradient definitions if needed
+    const defs = gradientDefs ? `<defs>${gradientDefs}</defs>` : '';
+    
+    return `<svg viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">${defs}${rect}</svg>`;
   }
 }

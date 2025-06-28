@@ -120,6 +120,7 @@ export class PPTXRenderer {
       width: layoutResult.width,   // 実際のレイアウトサイズ（ピクセル）
       height: layoutResult.height, // 実際のレイアウトサイズ（ピクセル）
       backgroundColor: style?.backgroundColor,
+      background: style?.background, // グラデーション対応
       borderRadius: style?.borderRadius ? style.borderRadius * 8 : undefined // 8px単位をピクセルに変換
     };
 
@@ -150,46 +151,75 @@ export class PPTXRenderer {
     const position = this.pixelsToInches(layoutResult);
     const style = element.style;
 
-    const shapeOptions: Record<string, unknown> = {
-      x: position.x,
-      y: position.y,
-      w: position.w,
-      h: position.h,
-    };
-
-    // 背景色設定
-    if (style?.backgroundColor) {
-      shapeOptions.fill = { color: style.backgroundColor };
-    }
-
-    // ボーダー設定
-    if (style?.borderColor && style?.borderWidth) {
-      shapeOptions.line = {
-        color: style.borderColor,
-        width: style.borderWidth,
-        dashType: style?.borderStyle === "dashed" ? "dash" : "solid",
+    // グラデーション背景がある場合はSVG描画、そうでなければ従来のshape描画
+    if (style?.background && typeof style.background !== 'string') {
+      // SVGを生成してshapeを描画（グラデーション用）
+      const svgOptions = {
+        width: layoutResult.width,
+        height: layoutResult.height,
+        backgroundColor: style?.backgroundColor,
+        background: style?.background,
+        borderRadius: element.shapeType === 'circle' ? Math.min(layoutResult.width, layoutResult.height) / 2 : 0
       };
+
+      const svg = this.svgGenerator.generateFrameSVG(svgOptions);
+      
+      // SVGをBase64エンコード
+      const svgBase64 = Buffer.from(svg).toString('base64');
+      const dataUri = `data:image/svg+xml;base64,${svgBase64}`;
+
+      // addImageでSVGを描画
+      this.currentSlide.addImage({
+        data: dataUri,
+        x: position.x,
+        y: position.y,
+        w: position.w,
+        h: position.h
+      });
     } else {
-      shapeOptions.line = { type: "none" };
-    }
+      // 従来のshape描画（単色背景用）
+      const shapeOptions: Record<string, unknown> = {
+        x: position.x,
+        y: position.y,
+        w: position.w,
+        h: position.h,
+      };
 
-    // shapeTypeに応じてPowerPointシェイプを作成
-    let pptxShapeType: string;
-    switch (element.shapeType) {
-      case "rectangle":
-        pptxShapeType = "rect";
-        break;
-      case "circle":
-        pptxShapeType = "ellipse";
-        break;
-      case "ellipse":
-        pptxShapeType = "ellipse";
-        break;
-      default:
-        pptxShapeType = "rect";
-    }
+      // 背景色設定
+      if (style?.backgroundColor || (style?.background && typeof style.background === 'string')) {
+        const color = style.background && typeof style.background === 'string' ? style.background : style.backgroundColor;
+        shapeOptions.fill = { color };
+      }
 
-    this.currentSlide.addShape(pptxShapeType as any, shapeOptions);
+      // ボーダー設定
+      if (style?.borderColor && style?.borderWidth) {
+        shapeOptions.line = {
+          color: style.borderColor,
+          width: style.borderWidth,
+          dashType: style?.borderStyle === "dashed" ? "dash" : "solid",
+        };
+      } else {
+        shapeOptions.line = { type: "none" };
+      }
+
+      // shapeTypeに応じてPowerPointシェイプを作成
+      let pptxShapeType: string;
+      switch (element.shapeType) {
+        case "rectangle":
+          pptxShapeType = "rect";
+          break;
+        case "circle":
+          pptxShapeType = "ellipse";
+          break;
+        case "ellipse":
+          pptxShapeType = "ellipse";
+          break;
+        default:
+          pptxShapeType = "rect";
+      }
+
+      this.currentSlide.addShape(pptxShapeType as any, shapeOptions);
+    }
   }
 
   /**

@@ -21,6 +21,24 @@ export type ElementType =
   | "img"
   | "svg";
 
+export interface GradientStop {
+  color: string;
+  offset: number;
+}
+
+export interface LinearGradient {
+  type: "linearGradient";
+  direction: string;
+  stops: GradientStop[];
+}
+
+export interface RadialGradient {
+  type: "radialGradient";
+  stops: GradientStop[];
+}
+
+export type Background = string | LinearGradient | RadialGradient;
+
 export interface BaseStyle {
   margin?: number;
   marginTop?: number;
@@ -34,6 +52,7 @@ export interface BaseStyle {
   paddingLeft?: number;
   direction?: "row" | "column";
   backgroundColor?: string;
+  background?: Background;
   borderColor?: string;
   borderWidth?: number;
   width?: number | string;
@@ -71,6 +90,7 @@ export interface ContainerElement extends BaseElement {
 
 export interface FrameStyle {
   backgroundColor?: string;
+  background?: Background;
   borderColor?: string;
   borderWidth?: number;
   borderRadius?: number;
@@ -150,6 +170,7 @@ export type ShapeType = "rectangle" | "circle" | "ellipse";
 
 export interface ShapeStyle {
   backgroundColor?: string;
+  background?: Background;
   borderColor?: string;
   borderWidth?: number;
   borderStyle?: "solid" | "dashed" | "dotted";

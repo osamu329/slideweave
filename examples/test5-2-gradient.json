@@ -1,0 +1,89 @@
+{
+  "title": "test5-2-gradient",
+  "description": "グラデーション背景のテスト",
+  "slides": [
+    {
+      "type": "container",
+      "style": {
+        "width": "960px",
+        "height": "720px",
+        "flexDirection": "column",
+        "padding": 4
+      },
+      "children": [
+        {
+          "type": "text",
+          "content": "Gradient Test",
+          "style": {
+            "fontSize": 24,
+            "fontWeight": "bold",
+            "marginBottom": 2
+          }
+        },
+        {
+          "type": "frame",
+          "style": {
+            "width": 116,
+            "height": 16,
+            "marginBottom": 1,
+            "background": {
+              "type": "linearGradient",
+              "direction": "to right",
+              "stops": [
+                {"color": "#FF0000", "offset": 0},
+                {"color": "#0000FF", "offset": 1}
+              ]
+            }
+          }
+        },
+        {
+          "type": "frame",
+          "style": {
+            "width": 116,
+            "height": 16,
+            "marginBottom": 1,
+            "background": {
+              "type": "linearGradient",
+              "direction": "to bottom",
+              "stops": [
+                {"color": "#00FF00", "offset": 0},
+                {"color": "#FFFF00", "offset": 1}
+              ]
+            }
+          }
+        },
+        {
+          "type": "frame",
+          "style": {
+            "width": 116,
+            "height": 16,
+            "marginBottom": 1,
+            "background": {
+              "type": "radialGradient",
+              "stops": [
+                {"color": "#FFFFFF", "offset": 0},
+                {"color": "#000000", "offset": 1}
+              ]
+            }
+          }
+        },
+        {
+          "type": "frame",
+          "style": {
+            "width": 116,
+            "height": 16,
+            "background": {
+              "type": "linearGradient",
+              "direction": "45deg",
+              "stops": [
+                {"color": "#FF00FF", "offset": 0},
+                {"color": "#00FFFF", "offset": 0.5},
+                {"color": "#FFFF00", "offset": 1}
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
