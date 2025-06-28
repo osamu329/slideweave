@@ -70,6 +70,45 @@ describe('SVGGenerator', () => {
     });
   });
 
+  describe('borderRadius pixel parsing', () => {
+    it('should parse borderRadius string values correctly', () => {
+      const svg = generator.generateFrameSVG({
+        width: 100,
+        height: 100,
+        backgroundColor: '#ff0000',
+        borderRadius: '12px'  // ピクセル指定
+      });
+      
+      expect(svg).toContain('rx="12"');
+      expect(svg).toContain('ry="12"');
+    });
+
+    it('should handle borderRadius string values without px suffix', () => {
+      const svg = generator.generateFrameSVG({
+        width: 100,
+        height: 100,
+        backgroundColor: '#ff0000',
+        borderRadius: '8'  // px無しでも数値として解析
+      });
+      
+      expect(svg).toContain('rx="8"');
+      expect(svg).toContain('ry="8"');
+    });
+
+    it('should limit borderRadius to element size', () => {
+      const svg = generator.generateFrameSVG({
+        width: 20,
+        height: 10,
+        backgroundColor: '#ff0000',
+        borderRadius: '15px'  // 高さ(10px)より大きい値
+      });
+      
+      // 高さの半分(5px)でクランプされるべき
+      expect(svg).toContain('rx="5"');
+      expect(svg).toContain('ry="5"');
+    });
+  });
+
   describe('generateFrameSVG', () => {
     it('should generate SVG for frame with background color', () => {
       const svg = generator.generateFrameSVG({
@@ -100,7 +139,7 @@ describe('SVGGenerator', () => {
         width: 300,
         height: 200,
         backgroundColor: '#00ff00',
-        borderRadius: 16
+        borderRadius: '16px'
       });
       
       expect(svg).toContain('rx="16"');

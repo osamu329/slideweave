@@ -15,11 +15,25 @@ export interface FrameSVGOptions {
   height: number;
   backgroundColor?: string;
   background?: Background;
-  borderRadius?: number;
+  borderRadius?: string;  // "12px"形式の文字列のみ
 }
 
 export class SVGGenerator {
   private gradientId = 0;
+
+  /**
+   * borderRadiusをピクセル値に変換し、要素サイズでクランプ
+   */
+  private parseBorderRadius(borderRadius: string | undefined, width: number, height: number): number {
+    if (borderRadius === undefined) return 0;
+    
+    // "12px" -> 12
+    const radiusValue = parseFloat(borderRadius.replace('px', ''));
+    
+    // 要素の半分以下にクランプ
+    const maxRadius = Math.min(width, height) / 2;
+    return Math.min(radiusValue, maxRadius);
+  }
 
   createSVG(width: number, height: number): string {
     return `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg"></svg>`;
@@ -130,8 +144,9 @@ export class SVGGenerator {
     };
 
     if (borderRadius !== undefined) {
-      rectOptions.rx = borderRadius;
-      rectOptions.ry = borderRadius;
+      const radius = this.parseBorderRadius(borderRadius, width, height);
+      rectOptions.rx = radius;
+      rectOptions.ry = radius;
     }
 
     const rect = this.createRect(rectOptions);

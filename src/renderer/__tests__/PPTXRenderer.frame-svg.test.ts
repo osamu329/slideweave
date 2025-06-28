@@ -97,7 +97,7 @@ describe('PPTXRenderer - Frame SVG rendering', () => {
         type: 'frame',
         style: {
           backgroundColor: '#00ff00',
-          borderRadius: 2, // 16px in 8px units
+          borderRadius: "16px", // 元々16pxの意図
           width: 37.5, // 300px
           height: 25 // 200px
         },

@@ -26,7 +26,7 @@
           "style": {
             "backgroundColor": "f8fafc",
             "padding": 3,
-            "borderRadius": 8,
+            "borderRadius": "8px",
             "marginBottom": 2
           },
           "children": [
@@ -86,7 +86,7 @@
           "style": {
             "backgroundColor": "fef3c7",
             "padding": 4,
-            "borderRadius": 8,
+            "borderRadius": "8px",
             "marginBottom": 2
           },
           "children": [
@@ -146,7 +146,7 @@
           "style": {
             "backgroundColor": "fce7f3",
             "padding": 5,
-            "borderRadius": 8,
+            "borderRadius": "8px",
             "marginBottom": 2
           },
           "children": [
@@ -210,7 +210,7 @@
           "style": {
             "backgroundColor": "ecfdf5",
             "padding": 6,
-            "borderRadius": 8
+            "borderRadius": "8px"
           },
           "children": [
             {

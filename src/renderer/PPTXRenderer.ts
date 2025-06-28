@@ -121,7 +121,7 @@ export class PPTXRenderer {
       height: layoutResult.height, // 実際のレイアウトサイズ（ピクセル）
       backgroundColor: style?.backgroundColor,
       background: style?.background, // グラデーション対応
-      borderRadius: style?.borderRadius ? style.borderRadius * 8 : undefined // 8px単位をピクセルに変換
+      borderRadius: style?.borderRadius // px文字列をそのまま渡す
     };
 
     const svg = this.svgGenerator.generateFrameSVG(svgOptions);
@@ -159,7 +159,7 @@ export class PPTXRenderer {
         height: layoutResult.height,
         backgroundColor: style?.backgroundColor,
         background: style?.background,
-        borderRadius: element.shapeType === 'circle' ? Math.min(layoutResult.width, layoutResult.height) / 2 : 0
+        borderRadius: element.shapeType === 'circle' ? `${Math.min(layoutResult.width, layoutResult.height) / 2}px` : undefined
       };
 
       const svg = this.svgGenerator.generateFrameSVG(svgOptions);
