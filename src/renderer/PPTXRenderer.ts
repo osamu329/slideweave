@@ -65,7 +65,6 @@ export class PPTXRenderer {
     }
 
     const element = layoutResult.element;
-    
 
     switch (element.type) {
       case "container":
@@ -220,7 +219,6 @@ export class PPTXRenderer {
       valign: "top" as const, // 縦位置を上揃えに設定
       fill: element.style?.backgroundColor ? { color: element.style.backgroundColor } : undefined, // 背景色設定（型定義に合わせてオブジェクト形式）
     };
-
 
     this.currentSlide.addText(element.content, textOptions);
   }
