@@ -3,7 +3,7 @@
   "description": "背景色と前景色が正しく適用されるかを確認するテスト",
   "slides": [
     {
-      "type": "container",
+      "type": "frame",
       "style": {
         "width": 960,
         "height": 720,
@@ -25,7 +25,7 @@
       }
     },
     {
-      "type": "container",
+      "type": "frame",
       "style": {
         "backgroundColor": "ff0000",
         "padding": 2,
@@ -42,7 +42,7 @@
       ]
     },
     {
-      "type": "container",
+      "type": "frame",
       "style": {
         "backgroundColor": "0000ff",
         "padding": 2,
@@ -60,7 +60,7 @@
       ]
     },
     {
-      "type": "container",
+      "type": "frame",
       "style": {
         "backgroundColor": "008000",
         "padding": 2,

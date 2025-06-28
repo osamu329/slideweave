@@ -26,6 +26,8 @@ export class ElementValidator {
     "slideBody",
     "slideFooter",
     "container",
+    "frame",
+    "shape",
     "text",
     "heading",
     "list",
@@ -36,6 +38,8 @@ export class ElementValidator {
     "img",
     "svg",
   ];
+
+  private static readonly VALID_SHAPE_TYPES = ["rectangle", "circle", "ellipse"];
 
   static validate(element: any): ValidationResult {
     const errors: ValidationError[] = [];
@@ -107,6 +111,9 @@ export class ElementValidator {
         break;
       case "listItem":
         this.validateListItemElement(element, errors, warnings);
+        break;
+      case "shape":
+        this.validateShapeElement(element, errors, warnings);
         break;
     }
   }
@@ -186,6 +193,38 @@ export class ElementValidator {
     }
   }
 
+  private static validateShapeElement(
+    element: any,
+    errors: ValidationError[],
+    warnings: ValidationError[],
+  ): void {
+    if (!element.shapeType) {
+      errors.push({
+        type: "error",
+        message: "shape要素にはshapeTypeプロパティが必須です",
+        elementType: "shape",
+        property: "shapeType",
+      });
+    } else if (!this.VALID_SHAPE_TYPES.includes(element.shapeType)) {
+      errors.push({
+        type: "error",
+        message: `無効なshapeType: ${element.shapeType}. 有効な値: ${this.VALID_SHAPE_TYPES.join(", ")}`,
+        elementType: "shape",
+        property: "shapeType",
+      });
+    }
+
+    // shape要素は子要素を持つべきではない
+    if (element.children && element.children.length > 0) {
+      warnings.push({
+        type: "warning",
+        message: "shape要素は子要素を持つべきではありません",
+        elementType: "shape",
+        property: "children",
+      });
+    }
+  }
+
   private static validateStyle(
     style: any,
     _errors: ValidationError[],
@@ -249,6 +288,11 @@ export class ElementValidator {
     // heading要素のデフォルトlevel設定
     if (element.type === "heading" && element.level === undefined) {
       result.level = 1;
+    }
+
+    // shape要素のデフォルトshapeType設定
+    if (element.type === "shape" && element.shapeType === undefined) {
+      result.shapeType = "rectangle";
     }
 
     return result as Element;

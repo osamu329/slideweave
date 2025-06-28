@@ -9,6 +9,8 @@ import {
   TextElement,
   HeadingElement,
   ContainerElement,
+  FrameElement,
+  ShapeElement,
 } from "../types/elements";
 
 export interface PPTXRenderOptions {
@@ -68,6 +70,12 @@ export class PPTXRenderer {
       case "container":
         this.renderContainer(layoutResult, element as ContainerElement);
         break;
+      case "frame":
+        this.renderFrame(layoutResult, element as FrameElement);
+        break;
+      case "shape":
+        this.renderShape(layoutResult, element as ShapeElement);
+        break;
       case "text":
         this.renderText(layoutResult, element as TextElement);
         break;
@@ -81,7 +89,7 @@ export class PPTXRenderer {
   }
 
   /**
-   * containerをレンダリング（背景色のみ）
+   * containerをレンダリング（純粋なレイアウト用、PowerPointオブジェクトは作成しない）
    * @param layoutResult レイアウト結果
    * @param element container要素
    */
@@ -89,22 +97,104 @@ export class PPTXRenderer {
     _layoutResult: LayoutResult,
     _element: ContainerElement,
   ): void {
+    // containerは純粋なレイアウト用なので、PowerPointオブジェクトは作成しない
+  }
+
+  /**
+   * frameをレンダリング（装飾付きコンテナ）
+   * @param layoutResult レイアウト結果
+   * @param element frame要素
+   */
+  private renderFrame(layoutResult: LayoutResult, element: FrameElement): void {
     if (!this.currentSlide) return;
 
-    // 一時的にコンテナの描画を無効化（テキスト位置をデバッグするため）
-    // 背景色が設定されている場合のみ描画
-    // if (element.style?.backgroundColor) {
-    //   const position = this.pixelsToInches(layoutResult);
-    //
-    //   this.currentSlide.addShape('rect', {
-    //     x: position.x,
-    //     y: position.y,
-    //     w: position.w,
-    //     h: position.h,
-    //     fill: { color: element.style.backgroundColor },
-    //     line: { type: 'none' } // 境界線を完全に無効化
-    //   });
-    // }
+    const position = this.pixelsToInches(layoutResult);
+    const style = element.style;
+
+    // 背景色またはボーダーがある場合のみ描画
+    if (style?.backgroundColor || style?.borderColor) {
+      const shapeOptions: Record<string, unknown> = {
+        x: position.x,
+        y: position.y,
+        w: position.w,
+        h: position.h,
+      };
+
+      // 背景色設定
+      if (style.backgroundColor) {
+        shapeOptions.fill = { color: style.backgroundColor };
+      } else {
+        shapeOptions.fill = { type: "none" };
+      }
+
+      // ボーダー設定
+      if (style.borderColor && style.borderWidth) {
+        shapeOptions.line = {
+          color: style.borderColor,
+          width: style.borderWidth,
+          dashType: style.borderStyle === "dashed" ? "dash" : "solid",
+        };
+      } else {
+        shapeOptions.line = { type: "none" };
+      }
+
+      // 角丸設定（PowerPointではrectangleの場合のみ）
+      const shapeType = (style as FrameElement['style'])?.borderRadius ? "roundRect" : "rect";
+      this.currentSlide.addShape(shapeType as any, shapeOptions);
+    }
+  }
+
+  /**
+   * shapeをレンダリング（図形のみ）
+   * @param layoutResult レイアウト結果
+   * @param element shape要素
+   */
+  private renderShape(layoutResult: LayoutResult, element: ShapeElement): void {
+    if (!this.currentSlide) return;
+
+    const position = this.pixelsToInches(layoutResult);
+    const style = element.style;
+
+    const shapeOptions: Record<string, unknown> = {
+      x: position.x,
+      y: position.y,
+      w: position.w,
+      h: position.h,
+    };
+
+    // 背景色設定
+    if (style?.backgroundColor) {
+      shapeOptions.fill = { color: style.backgroundColor };
+    }
+
+    // ボーダー設定
+    if (style?.borderColor && style?.borderWidth) {
+      shapeOptions.line = {
+        color: style.borderColor,
+        width: style.borderWidth,
+        dashType: style?.borderStyle === "dashed" ? "dash" : "solid",
+      };
+    } else {
+      shapeOptions.line = { type: "none" };
+    }
+
+    // shapeTypeに応じてPowerPointシェイプを作成
+    let pptxShapeType: string;
+    switch (element.shapeType) {
+      case "rectangle":
+        pptxShapeType = "rect";
+        break;
+      case "circle":
+        pptxShapeType = "ellipse";
+        break;
+      case "ellipse":
+        pptxShapeType = "ellipse";
+        break;
+      default:
+        pptxShapeType = "rect";
+    }
+
+    this.currentSlide.addShape(pptxShapeType as any, shapeOptions);
   }
 
   /**
@@ -125,7 +215,7 @@ export class PPTXRenderer {
       italic: element.italic || false,
       margin: element.style?.margin !== undefined ? element.style.margin * 8 : 0,   // 指定されていない場合は0
       padding: element.style?.padding !== undefined ? element.style.padding * 8 : 0, // 指定されていない場合は0
-      valign: "top" as const, // 縦位置を上揃えに明示的に設定
+      valign: "top" as const, // 縦位置を上揃えに設定
     };
 
     this.currentSlide.addText(element.content, textOptions);
@@ -165,7 +255,7 @@ export class PPTXRenderer {
       italic: element.italic || false,
       margin: element.style?.margin !== undefined ? element.style.margin * 8 : 0,   // 指定されていない場合は0
       padding: element.style?.padding !== undefined ? element.style.padding * 8 : 0, // 指定されていない場合は0
-      valign: "top" as const, // 縦位置を上揃えに明示的に設定
+      valign: "top" as const, // 縦位置を上揃えに設定
     };
 
     this.currentSlide.addText(element.content, textOptions);
@@ -227,11 +317,4 @@ export class PPTXRenderer {
     return this.pptx;
   }
 
-  /**
-   * レイアウト名を設定
-   * @param name レイアウト名
-   */
-  setLayout(name: string): void {
-    (this.pptx as any).layout = name;
-  }
 }

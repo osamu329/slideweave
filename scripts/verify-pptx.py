@@ -47,6 +47,14 @@ def analyze_shape(shape, indent=0):
     # テキストの確認
     if shape.has_text_frame:
         text_frame = shape.text_frame
+        
+        # テキストフレームの垂直位置設定
+        if hasattr(text_frame, 'vertical_anchor'):
+            anchor_map = {0: "top", 1: "middle", 2: "bottom", 3: "mixed"}
+            anchor = anchor_map.get(text_frame.vertical_anchor, "unknown")
+            print(f"{prefix}  Vertical Anchor: {anchor}")
+            info["vertical_anchor"] = anchor
+        
         for paragraph in text_frame.paragraphs:
             for run in paragraph.runs:
                 if run.text.strip():

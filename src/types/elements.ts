@@ -9,6 +9,8 @@ export type ElementType =
   | "slideBody"
   | "slideFooter"
   | "container"
+  | "frame"
+  | "shape"
   | "text"
   | "heading"
   | "list"
@@ -65,6 +67,19 @@ export interface SlideFooterElement extends BaseElement {
 
 export interface ContainerElement extends BaseElement {
   type: "container";
+}
+
+export interface FrameStyle {
+  backgroundColor?: string;
+  borderColor?: string;
+  borderWidth?: number;
+  borderRadius?: number;
+  borderStyle?: "solid" | "dashed" | "dotted";
+}
+
+export interface FrameElement extends BaseElement {
+  type: "frame";
+  style?: BaseStyle & FrameStyle;
 }
 
 export interface TextElement extends BaseElement {
@@ -131,12 +146,29 @@ export interface SvgElement extends BaseElement {
   height?: number;
 }
 
+export type ShapeType = "rectangle" | "circle" | "ellipse";
+
+export interface ShapeStyle {
+  backgroundColor?: string;
+  borderColor?: string;
+  borderWidth?: number;
+  borderStyle?: "solid" | "dashed" | "dotted";
+}
+
+export interface ShapeElement extends BaseElement {
+  type: "shape";
+  shapeType: ShapeType;
+  style?: BaseStyle & ShapeStyle;
+}
+
 export type Element =
   | SlideElement
   | SlideHeaderElement
   | SlideBodyElement
   | SlideFooterElement
   | ContainerElement
+  | FrameElement
+  | ShapeElement
   | TextElement
   | HeadingElement
   | ListElement
