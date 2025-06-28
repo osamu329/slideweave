@@ -92,15 +92,44 @@ output/                   # 生成されたPPTXファイル
 - タスク形式: OSN-141形式のID
 - 受け入れ条件をすべて満たしてからissue完了
 
+### 🚨 必須ルール（Git hookで自動チェック）
+1. **着手時**: Linear issueのstatusを"In Progress"に必ず更新する
+2. **コミット時**: コミットメッセージにissue ID (OSN-XXX)を必ず含める
+3. **完了時**: 受け入れ条件確認後にstatusを"Done"に更新する
 
-## テスト駆動開発
+### Git Hook自動チェック機能
+- **pre-commit**: issue ID未記載でコミット拒否
+- **commit-msg**: status更新リマインダー表示
+- **prepare-commit-msg**: ブランチ名からissue ID自動挿入
 
-1. **examples/にテストケース作成**: JSONファイルで機能の充足性を確認
-2. **機能確認**: `npx tsx examples/runTest.ts test-name.json`で実行
-3. **問題があれば単体テスト作成**: 問題を明確化するための単体テストを追加
-4. **実装修正**: テストがパスするまでコードを修正
-5. **PPTX生成・確認**: 生成されたPPTXを視覚的に確認
-6. **サイクル繰り返し**: 問題がなくなるまで1-5を繰り返す
+### 作業開始時チェックリスト
+- [ ] Linear issueを作成
+- [ ] issueのstatusを"In Progress"に更新
+- [ ] 適切なbranchを作成 (`osamu0329nakamura/osn-XXX-description`)
+- [ ] TodoWriteでタスク管理開始
+
+
+## テスト駆動開発（t-wada TDDベース）
+
+### TDD原則
+1. **Red**: 失敗するテストを先に書く
+2. **Green**: テストが通る最小限の実装
+3. **Refactor**: 重複を排除し、設計を改善
+
+### 開発フロー
+1. **単体テスト作成**: 期待する動作を明確にするテストを先に書く
+2. **テスト実行**: 必ず失敗することを確認（Red）
+3. **最小実装**: テストが通る最小限のコードを書く（Green）
+4. **リファクタリング**: コードの重複排除と設計改善（Refactor）
+5. **examples/確認**: JSONテストケースで統合的な動作確認
+6. **PPTX検証**: `uv run scripts/verify-pptx.py`で実際の出力確認
+7. **サイクル繰り返し**: 次の機能について1-6を繰り返す
+
+### テスト設計原則
+- **1つのテストは1つの仕様のみテスト**
+- **Given-When-Then構造でテストを記述**
+- **境界値・異常系もテスト**
+- **テストが仕様書の役割を果たす**
 
 ### 検証ツール
 - **python-pptx検証**: PPTXの実際の内容を解析（`uv run scripts/verify-pptx.py`）
