@@ -51,6 +51,7 @@ export interface BaseStyle {
   paddingBottom?: number;
   paddingLeft?: number;
   direction?: "row" | "column";
+  gap?: number;
   backgroundColor?: string;
   background?: Background;
   borderColor?: string;

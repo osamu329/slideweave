@@ -5,7 +5,7 @@
     {
       "type": "slide",
       "style": {
-        "padding": 2
+        "padding": 4
       },
       "children": [
         {
@@ -14,7 +14,7 @@
           "level": 1,
           "fontSize": 48,
           "style": {
-            "marginBottom": 2,
+            "marginBottom": 4,
             "width": "100%"
           },
           "color": "000000",
@@ -26,7 +26,7 @@
           "level": 2,
           "fontSize": 28,
           "style": {
-            "marginBottom": 1,
+            "marginBottom": 2,
             "width": "100%"
           },
           "color": "000000"
@@ -36,7 +36,7 @@
           "content": "2025年5月実績",
           "fontSize": 18,
           "style": {
-            "marginBottom": 1,
+            "marginBottom": 2,
             "width": "100%"
           },
           "color": "000000"
@@ -46,7 +46,7 @@
     {
       "type": "slide",
       "style": {
-        "padding": 2,
+        "padding": 4,
         "backgroundColor": "1e40af"
       },
       "children": [
@@ -56,7 +56,7 @@
           "level": 2,
           "fontSize": 32,
           "style": {
-            "marginBottom": 2,
+            "marginBottom": 4,
             "width": "100%"
           },
           "color": "FFFFFF",
@@ -67,13 +67,13 @@
           "style": {
             "direction": "row",
             "width": "100%",
-            "marginBottom": 2
+            "marginBottom": 4
           },
           "children": [
             {
               "type": "container",
               "style": {
-                "flex": 1,
+                "flex": 2,
                 "backgroundColor": "rgba(255,255,255,0.1)"
               },
               "children": [
@@ -81,7 +81,7 @@
                   "type": "container",
                   "style": {
                     "backgroundColor": "rgba(255,255,255,0.2)",
-                    "marginBottom": 1
+                    "marginBottom": 2
                   },
                   "children": [
                     {
@@ -90,7 +90,9 @@
                       "fontSize": 14,
                       "color": "FFFFFF",
                       "bold": true,
-                      "style": { "marginBottom": 1 }
+                      "style": {
+                        "marginBottom": 2
+                      }
                     },
                     {
                       "type": "text",
@@ -98,7 +100,9 @@
                       "fontSize": 24,
                       "color": "FFFFFF",
                       "bold": true,
-                      "style": { "marginBottom": 1 }
+                      "style": {
+                        "marginBottom": 2
+                      }
                     },
                     {
                       "type": "text",
@@ -120,7 +124,9 @@
                       "fontSize": 14,
                       "color": "FFFFFF",
                       "bold": true,
-                      "style": { "marginBottom": 1 }
+                      "style": {
+                        "marginBottom": 2
+                      }
                     },
                     {
                       "type": "text",
@@ -128,7 +134,9 @@
                       "fontSize": 24,
                       "color": "FFFFFF",
                       "bold": true,
-                      "style": { "marginBottom": 1 }
+                      "style": {
+                        "marginBottom": 2
+                      }
                     },
                     {
                       "type": "text",
@@ -143,8 +151,8 @@
             {
               "type": "container",
               "style": {
-                "flex": 1,
-                "marginLeft": 2,
+                "flex": 2,
+                "marginLeft": 4,
                 "backgroundColor": "rgba(255,255,255,0.1)"
               },
               "children": [
@@ -152,7 +160,7 @@
                   "type": "container",
                   "style": {
                     "backgroundColor": "rgba(255,255,255,0.2)",
-                    "marginBottom": 1
+                    "marginBottom": 2
                   },
                   "children": [
                     {
@@ -161,7 +169,9 @@
                       "fontSize": 14,
                       "color": "FFFFFF",
                       "bold": true,
-                      "style": { "marginBottom": 1 }
+                      "style": {
+                        "marginBottom": 2
+                      }
                     },
                     {
                       "type": "text",
@@ -169,7 +179,9 @@
                       "fontSize": 24,
                       "color": "FFFFFF",
                       "bold": true,
-                      "style": { "marginBottom": 1 }
+                      "style": {
+                        "marginBottom": 2
+                      }
                     },
                     {
                       "type": "text",
@@ -191,7 +203,9 @@
                       "fontSize": 14,
                       "color": "FFFFFF",
                       "bold": true,
-                      "style": { "marginBottom": 1 }
+                      "style": {
+                        "marginBottom": 2
+                      }
                     },
                     {
                       "type": "text",
@@ -199,7 +213,9 @@
                       "fontSize": 24,
                       "color": "FFFFFF",
                       "bold": true,
-                      "style": { "marginBottom": 1 }
+                      "style": {
+                        "marginBottom": 2
+                      }
                     },
                     {
                       "type": "text",
@@ -227,21 +243,27 @@
               "fontSize": 18,
               "color": "FFFFFF",
               "bold": true,
-              "style": { "marginBottom": 1 }
+              "style": {
+                "marginBottom": 2
+              }
             },
             {
               "type": "text",
               "content": "✅ 母の日キャンペーンが大成功",
               "fontSize": 14,
               "color": "FFFFFF",
-              "style": { "marginBottom": 1 }
+              "style": {
+                "marginBottom": 2
+              }
             },
             {
               "type": "text",
               "content": "✅ リターゲティング施策でROAS改善",
               "fontSize": 14,
               "color": "FFFFFF",
-              "style": { "marginBottom": 1 }
+              "style": {
+                "marginBottom": 2
+              }
             },
             {
               "type": "text",
@@ -256,7 +278,7 @@
     {
       "type": "slide",
       "style": {
-        "padding": 2,
+        "padding": 4,
         "backgroundColor": "1e40af"
       },
       "children": [
@@ -266,7 +288,7 @@
           "level": 2,
           "fontSize": 32,
           "style": {
-            "marginBottom": 2,
+            "marginBottom": 4,
             "width": "100%"
           },
           "color": "FFFFFF",
@@ -282,7 +304,7 @@
             {
               "type": "container",
               "style": {
-                "flex": 1,
+                "flex": 2,
                 "backgroundColor": "rgba(255,255,255,0.2)"
               },
               "children": [
@@ -293,13 +315,15 @@
                   "fontSize": 18,
                   "color": "FFFFFF",
                   "bold": true,
-                  "style": { "marginBottom": 1 }
+                  "style": {
+                    "marginBottom": 2
+                  }
                 },
                 {
                   "type": "container",
                   "style": {
                     "direction": "row",
-                    "marginBottom": 1
+                    "marginBottom": 2
                   },
                   "children": [
                     {
@@ -308,11 +332,15 @@
                       "fontSize": 16,
                       "bold": true,
                       "color": "FFFFFF",
-                      "style": { "width": "20%" }
+                      "style": {
+                        "width": "20%"
+                      }
                     },
                     {
                       "type": "container",
-                      "style": { "flex": 1 },
+                      "style": {
+                        "flex": 2
+                      },
                       "children": [
                         {
                           "type": "text",
@@ -335,7 +363,7 @@
                   "type": "container",
                   "style": {
                     "direction": "row",
-                    "marginBottom": 1
+                    "marginBottom": 2
                   },
                   "children": [
                     {
@@ -344,11 +372,15 @@
                       "fontSize": 16,
                       "bold": true,
                       "color": "FFFFFF",
-                      "style": { "width": "20%" }
+                      "style": {
+                        "width": "20%"
+                      }
                     },
                     {
                       "type": "container",
-                      "style": { "flex": 1 },
+                      "style": {
+                        "flex": 2
+                      },
                       "children": [
                         {
                           "type": "text",
@@ -379,11 +411,15 @@
                       "fontSize": 16,
                       "bold": true,
                       "color": "FFFFFF",
-                      "style": { "width": "20%" }
+                      "style": {
+                        "width": "20%"
+                      }
                     },
                     {
                       "type": "container",
-                      "style": { "flex": 1 },
+                      "style": {
+                        "flex": 2
+                      },
                       "children": [
                         {
                           "type": "text",
@@ -407,8 +443,8 @@
             {
               "type": "container",
               "style": {
-                "flex": 1,
-                "marginLeft": 2,
+                "flex": 2,
+                "marginLeft": 4,
                 "backgroundColor": "rgba(255,255,255,0.2)"
               },
               "children": [
@@ -419,21 +455,27 @@
                   "fontSize": 18,
                   "color": "FFFFFF",
                   "bold": true,
-                  "style": { "marginBottom": 1 }
+                  "style": {
+                    "marginBottom": 2
+                  }
                 },
                 {
                   "type": "text",
                   "content": "• 商品ラインナップ最適化: 春夏商品の早期投入",
                   "fontSize": 13,
                   "color": "FFFFFF",
-                  "style": { "marginBottom": 1 }
+                  "style": {
+                    "marginBottom": 2
+                  }
                 },
                 {
                   "type": "text",
                   "content": "• ターゲティング精度向上: 類似オーディエンス活用",
                   "fontSize": 13,
                   "color": "FFFFFF",
-                  "style": { "marginBottom": 1 }
+                  "style": {
+                    "marginBottom": 2
+                  }
                 },
                 {
                   "type": "text",
@@ -450,7 +492,7 @@
     {
       "type": "slide",
       "style": {
-        "padding": 2,
+        "padding": 4,
         "backgroundColor": "1e40af"
       },
       "children": [
@@ -460,7 +502,7 @@
           "level": 2,
           "fontSize": 32,
           "style": {
-            "marginBottom": 2,
+            "marginBottom": 4,
             "width": "100%"
           },
           "color": "FFFFFF",
@@ -471,7 +513,7 @@
           "style": {
             "backgroundColor": "rgba(255,255,255,0.2)",
             "width": "100%",
-            "marginBottom": 2
+            "marginBottom": 4
           },
           "children": [
             {
@@ -479,7 +521,7 @@
               "style": {
                 "direction": "row",
                 "backgroundColor": "rgba(255,255,255,0.1)",
-                "marginBottom": 1
+                "marginBottom": 2
               },
               "children": [
                 {
@@ -488,7 +530,9 @@
                   "fontSize": 14,
                   "bold": true,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 },
                 {
                   "type": "text",
@@ -496,7 +540,9 @@
                   "fontSize": 14,
                   "bold": true,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 },
                 {
                   "type": "text",
@@ -504,7 +550,9 @@
                   "fontSize": 14,
                   "bold": true,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 },
                 {
                   "type": "text",
@@ -512,7 +560,9 @@
                   "fontSize": 14,
                   "bold": true,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 },
                 {
                   "type": "text",
@@ -520,7 +570,9 @@
                   "fontSize": 14,
                   "bold": true,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 }
               ]
             },
@@ -528,7 +580,7 @@
               "type": "container",
               "style": {
                 "direction": "row",
-                "marginBottom": 1
+                "marginBottom": 2
               },
               "children": [
                 {
@@ -536,35 +588,45 @@
                   "content": "Google検索",
                   "fontSize": 13,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "120",
                   "fontSize": 13,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "600",
                   "fontSize": 13,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "5.00",
                   "fontSize": 13,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "+0.45",
                   "fontSize": 13,
                   "color": "86EFAC",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 }
               ]
             },
@@ -572,7 +634,7 @@
               "type": "container",
               "style": {
                 "direction": "row",
-                "marginBottom": 1
+                "marginBottom": 2
               },
               "children": [
                 {
@@ -580,35 +642,45 @@
                   "content": "Meta広告",
                   "fontSize": 13,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "80",
                   "fontSize": 13,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "320",
                   "fontSize": 13,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "4.00",
                   "fontSize": 13,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "+0.28",
                   "fontSize": 13,
                   "color": "86EFAC",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 }
               ]
             },
@@ -616,7 +688,7 @@
               "type": "container",
               "style": {
                 "direction": "row",
-                "marginBottom": 1
+                "marginBottom": 2
               },
               "children": [
                 {
@@ -624,35 +696,45 @@
                   "content": "Yahoo!検索",
                   "fontSize": 13,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "50",
                   "fontSize": 13,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "210",
                   "fontSize": 13,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "4.20",
                   "fontSize": 13,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "+0.15",
                   "fontSize": 13,
                   "color": "86EFAC",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 }
               ]
             },
@@ -667,35 +749,45 @@
                   "content": "YouTube",
                   "fontSize": 13,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "30",
                   "fontSize": 13,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "120",
                   "fontSize": 13,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "4.00",
                   "fontSize": 13,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "+0.80",
                   "fontSize": 13,
                   "color": "86EFAC",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 }
               ]
             }
@@ -715,21 +807,27 @@
               "fontSize": 18,
               "color": "FFFFFF",
               "bold": true,
-              "style": { "marginBottom": 1 }
+              "style": {
+                "marginBottom": 2
+              }
             },
             {
               "type": "text",
               "content": "Google検索: ブランドキーワードが好調",
               "fontSize": 13,
               "color": "FFFFFF",
-              "style": { "marginBottom": 1 }
+              "style": {
+                "marginBottom": 2
+              }
             },
             {
               "type": "text",
               "content": "Meta広告: リール動画のエンゲージメント向上",
               "fontSize": 13,
               "color": "FFFFFF",
-              "style": { "marginBottom": 1 }
+              "style": {
+                "marginBottom": 2
+              }
             },
             {
               "type": "text",
@@ -744,7 +842,7 @@
     {
       "type": "slide",
       "style": {
-        "padding": 2,
+        "padding": 4,
         "backgroundColor": "1e40af"
       },
       "children": [
@@ -754,7 +852,7 @@
           "level": 2,
           "fontSize": 32,
           "style": {
-            "marginBottom": 2,
+            "marginBottom": 4,
             "width": "100%"
           },
           "color": "FFFFFF",
@@ -770,7 +868,7 @@
             {
               "type": "container",
               "style": {
-                "flex": 1,
+                "flex": 2,
                 "backgroundColor": "rgba(255,255,255,0.2)"
               },
               "children": [
@@ -781,11 +879,15 @@
                   "fontSize": 18,
                   "color": "FFFFFF",
                   "bold": true,
-                  "style": { "marginBottom": 1 }
+                  "style": {
+                    "marginBottom": 2
+                  }
                 },
                 {
                   "type": "container",
-                  "style": { "marginBottom": 1 },
+                  "style": {
+                    "marginBottom": 2
+                  },
                   "children": [
                     {
                       "type": "text",
@@ -793,7 +895,9 @@
                       "fontSize": 14,
                       "color": "FFFFFF",
                       "bold": true,
-                      "style": { "marginBottom": 1 }
+                      "style": {
+                        "marginBottom": 2
+                      }
                     },
                     {
                       "type": "text",
@@ -805,7 +909,9 @@
                 },
                 {
                   "type": "container",
-                  "style": { "marginBottom": 1 },
+                  "style": {
+                    "marginBottom": 2
+                  },
                   "children": [
                     {
                       "type": "text",
@@ -813,7 +919,9 @@
                       "fontSize": 14,
                       "color": "FFFFFF",
                       "bold": true,
-                      "style": { "marginBottom": 1 }
+                      "style": {
+                        "marginBottom": 2
+                      }
                     },
                     {
                       "type": "text",
@@ -832,7 +940,9 @@
                       "fontSize": 14,
                       "color": "FFFFFF",
                       "bold": true,
-                      "style": { "marginBottom": 1 }
+                      "style": {
+                        "marginBottom": 2
+                      }
                     },
                     {
                       "type": "text",
@@ -847,8 +957,8 @@
             {
               "type": "container",
               "style": {
-                "flex": 1,
-                "marginLeft": 2,
+                "flex": 2,
+                "marginLeft": 4,
                 "backgroundColor": "rgba(255,255,255,0.2)"
               },
               "children": [
@@ -859,11 +969,15 @@
                   "fontSize": 18,
                   "color": "FFFFFF",
                   "bold": true,
-                  "style": { "marginBottom": 1 }
+                  "style": {
+                    "marginBottom": 2
+                  }
                 },
                 {
                   "type": "container",
-                  "style": { "marginBottom": 1 },
+                  "style": {
+                    "marginBottom": 2
+                  },
                   "children": [
                     {
                       "type": "text",
@@ -871,7 +985,9 @@
                       "fontSize": 14,
                       "color": "FFFFFF",
                       "bold": true,
-                      "style": { "marginBottom": 1 }
+                      "style": {
+                        "marginBottom": 2
+                      }
                     },
                     {
                       "type": "text",
@@ -883,7 +999,9 @@
                 },
                 {
                   "type": "container",
-                  "style": { "marginBottom": 1 },
+                  "style": {
+                    "marginBottom": 2
+                  },
                   "children": [
                     {
                       "type": "text",
@@ -891,7 +1009,9 @@
                       "fontSize": 14,
                       "color": "FFFFFF",
                       "bold": true,
-                      "style": { "marginBottom": 1 }
+                      "style": {
+                        "marginBottom": 2
+                      }
                     },
                     {
                       "type": "text",
@@ -910,7 +1030,9 @@
                       "fontSize": 14,
                       "color": "FFFFFF",
                       "bold": true,
-                      "style": { "marginBottom": 1 }
+                      "style": {
+                        "marginBottom": 2
+                      }
                     },
                     {
                       "type": "text",

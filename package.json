@@ -2,6 +2,7 @@
   "name": "slideweave",
   "version": "0.1.0",
   "description": "PowerPoint slide creation tool",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
@@ -32,8 +33,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "css-layout": "^1.1.1",
     "pptxgenjs": "^4.0.1",
-    "yoga-layout-prebuilt": "^1.10.0"
+    "yoga-layout": "^3.2.1"
   }
 }

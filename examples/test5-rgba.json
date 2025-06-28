@@ -4,12 +4,12 @@
     {
       "type": "frame",
       "style": {
-        "width": 960,
-        "height": 720,
+        "width": 3840,
+        "height": 2880,
         "backgroundColor": "f0f0f0",
-        "padding": 4,
+        "padding": 16,
         "flexDirection": "column",
-        "gap": 3
+        "gap": 12
       },
       "children": [
         {
@@ -23,8 +23,8 @@
         {
           "type": "frame",
           "style": {
-            "width": 40,
-            "height": 20,
+            "width": 160,
+            "height": 80,
             "backgroundColor": "rgba(255,0,0,0.5)"
           },
           "children": [
@@ -33,7 +33,7 @@
               "content": "50% Red",
               "style": {
                 "color": "ffffff",
-                "padding": 2
+                "padding": 8
               }
             }
           ]
@@ -41,8 +41,8 @@
         {
           "type": "frame",
           "style": {
-            "width": 40,
-            "height": 20,
+            "width": 160,
+            "height": 80,
             "backgroundColor": "rgba(0,255,0,0.3)"
           },
           "children": [
@@ -51,7 +51,7 @@
               "content": "30% Green",
               "style": {
                 "color": "000000",
-                "padding": 2
+                "padding": 8
               }
             }
           ]
@@ -59,8 +59,8 @@
         {
           "type": "frame",
           "style": {
-            "width": 40,
-            "height": 20,
+            "width": 160,
+            "height": 80,
             "backgroundColor": "rgba(0,0,255,0.8)"
           },
           "children": [
@@ -69,7 +69,7 @@
               "content": "80% Blue",
               "style": {
                 "color": "ffffff",
-                "padding": 2
+                "padding": 8
               }
             }
           ]

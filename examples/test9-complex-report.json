@@ -5,9 +5,9 @@
     {
       "type": "frame",
       "style": {
-        "width": 960,
-        "height": 720,
-        "padding": 4,
+        "width": 3840,
+        "height": 2880,
+        "padding": 16,
         "direction": "column",
         "backgroundColor": "4F46E5",
         "justifyContent": "center",
@@ -20,7 +20,7 @@
           "level": 1,
           "fontSize": 27,
           "style": {
-            "marginBottom": 2,
+            "marginBottom": 8,
             "textAlign": "center"
           },
           "color": "FFFFFF",
@@ -32,7 +32,7 @@
           "level": 2,
           "fontSize": 24,
           "style": {
-            "marginBottom": 2,
+            "marginBottom": 8,
             "textAlign": "center"
           },
           "color": "FFFFFF"
@@ -51,9 +51,9 @@
     {
       "type": "frame",
       "style": {
-        "width": 960,
-        "height": 720,
-        "padding": 4,
+        "width": 3840,
+        "height": 2880,
+        "padding": 16,
         "direction": "column",
         "backgroundColor": "10B981"
       },
@@ -64,8 +64,8 @@
           "level": 2,
           "fontSize": 27,
           "style": {
-            "marginBottom": 3,
-            "gap": 8,
+            "marginBottom": 12,
+            "gap": 32,
             "width": "100%"
           },
           "color": "FFFFFF",
@@ -76,16 +76,16 @@
           "style": {
             "direction": "row",
             "width": "100%",
-            "marginBottom": 3,
-            "gap": 8
+            "marginBottom": 12,
+            "gap": 32
           },
           "children": [
             {
               "type": "frame",
               "style": {
-                "flex": 1,
+                "flex": 4,
                 "backgroundColor": "rgba(255,255,255,0.2)",
-                "padding": 2,
+                "padding": 8,
                 "borderRadius": "12px"
               },
               "children": [
@@ -95,7 +95,9 @@
                   "fontSize": 14,
                   "color": "FFFFFF",
                   "bold": true,
-                  "style": { "marginBottom": 1 }
+                  "style": {
+                    "marginBottom": 4
+                  }
                 },
                 {
                   "type": "text",
@@ -103,7 +105,9 @@
                   "fontSize": 20,
                   "color": "FFFFFF",
                   "bold": true,
-                  "style": { "marginBottom": 1 }
+                  "style": {
+                    "marginBottom": 4
+                  }
                 },
                 {
                   "type": "text",
@@ -116,9 +120,9 @@
             {
               "type": "frame",
               "style": {
-                "flex": 1,
+                "flex": 4,
                 "backgroundColor": "rgba(255,255,255,0.2)",
-                "padding": 2,
+                "padding": 8,
                 "borderRadius": "12px"
               },
               "children": [
@@ -128,7 +132,9 @@
                   "fontSize": 14,
                   "color": "FFFFFF",
                   "bold": true,
-                  "style": { "marginBottom": 1 }
+                  "style": {
+                    "marginBottom": 4
+                  }
                 },
                 {
                   "type": "text",
@@ -136,7 +142,9 @@
                   "fontSize": 20,
                   "color": "FFFFFF",
                   "bold": true,
-                  "style": { "marginBottom": 1 }
+                  "style": {
+                    "marginBottom": 4
+                  }
                 },
                 {
                   "type": "text",
@@ -153,16 +161,16 @@
           "style": {
             "direction": "row",
             "width": "100%",
-            "marginBottom": 3,
-            "gap": 8
+            "marginBottom": 12,
+            "gap": 32
           },
           "children": [
             {
               "type": "frame",
               "style": {
-                "flex": 1,
+                "flex": 4,
                 "backgroundColor": "rgba(255,255,255,0.2)",
-                "padding": 2,
+                "padding": 8,
                 "borderRadius": "12px"
               },
               "children": [
@@ -172,7 +180,9 @@
                   "fontSize": 12,
                   "color": "FFFFFF",
                   "bold": true,
-                  "style": { "marginBottom": 1 }
+                  "style": {
+                    "marginBottom": 4
+                  }
                 },
                 {
                   "type": "text",
@@ -180,7 +190,9 @@
                   "fontSize": 20,
                   "color": "FFFFFF",
                   "bold": true,
-                  "style": { "marginBottom": 1 }
+                  "style": {
+                    "marginBottom": 4
+                  }
                 },
                 {
                   "type": "text",
@@ -193,9 +205,9 @@
             {
               "type": "frame",
               "style": {
-                "flex": 1,
+                "flex": 4,
                 "backgroundColor": "rgba(255,255,255,0.2)",
-                "padding": 2,
+                "padding": 8,
                 "borderRadius": "12px"
               },
               "children": [
@@ -205,7 +217,9 @@
                   "fontSize": 12,
                   "color": "FFFFFF",
                   "bold": true,
-                  "style": { "marginBottom": 1 }
+                  "style": {
+                    "marginBottom": 4
+                  }
                 },
                 {
                   "type": "text",
@@ -213,7 +227,9 @@
                   "fontSize": 20,
                   "color": "FFFFFF",
                   "bold": true,
-                  "style": { "marginBottom": 1 }
+                  "style": {
+                    "marginBottom": 4
+                  }
                 },
                 {
                   "type": "text",
@@ -230,7 +246,7 @@
           "style": {
             "backgroundColor": "rgba(255,255,255,0.2)",
             "width": "100%",
-            "padding": 2,
+            "padding": 8,
             "borderRadius": "12px"
           },
           "children": [
@@ -241,21 +257,27 @@
               "fontSize": 15,
               "color": "FFFFFF",
               "bold": true,
-              "style": { "marginBottom": 2 }
+              "style": {
+                "marginBottom": 8
+              }
             },
             {
               "type": "text",
               "content": "✅ 母の日キャンペーンが大成功",
               "fontSize": 9,
               "color": "FFFFFF",
-              "style": { "marginBottom": 1 }
+              "style": {
+                "marginBottom": 4
+              }
             },
             {
               "type": "text",
               "content": "✅ リターゲティング施策でROAS改善",
               "fontSize": 9,
               "color": "FFFFFF",
-              "style": { "marginBottom": 1 }
+              "style": {
+                "marginBottom": 4
+              }
             },
             {
               "type": "text",
@@ -270,9 +292,9 @@
     {
       "type": "frame",
       "style": {
-        "width": 960,
-        "height": 720,
-        "padding": 4,
+        "width": 3840,
+        "height": 2880,
+        "padding": 16,
         "direction": "column",
         "backgroundColor": "F59E0B"
       },
@@ -283,8 +305,8 @@
           "level": 2,
           "fontSize": 27,
           "style": {
-            "marginBottom": 3,
-            "gap": 8,
+            "marginBottom": 12,
+            "gap": 32,
             "width": "100%"
           },
           "color": "FFFFFF",
@@ -295,15 +317,15 @@
           "style": {
             "direction": "row",
             "width": "100%",
-            "gap": 4
+            "gap": 16
           },
           "children": [
             {
               "type": "frame",
               "style": {
-                "flex": 1,
+                "flex": 4,
                 "backgroundColor": "rgba(255,255,255,0.2)",
-                "padding": 3,
+                "padding": 12,
                 "borderRadius": "12px"
               },
               "children": [
@@ -314,13 +336,15 @@
                   "fontSize": 15,
                   "color": "FFFFFF",
                   "bold": true,
-                  "style": { "marginBottom": 2 }
+                  "style": {
+                    "marginBottom": 8
+                  }
                 },
                 {
                   "type": "container",
                   "style": {
                     "direction": "row",
-                    "marginBottom": 2,
+                    "marginBottom": 8,
                     "justifyContent": "space-between",
                     "alignItems": "center"
                   },
@@ -334,7 +358,9 @@
                     },
                     {
                       "type": "container",
-                      "style": { "alignItems": "flex-end" },
+                      "style": {
+                        "alignItems": "flex-end"
+                      },
                       "children": [
                         {
                           "type": "text",
@@ -357,7 +383,7 @@
                   "type": "container",
                   "style": {
                     "direction": "row",
-                    "marginBottom": 2,
+                    "marginBottom": 8,
                     "justifyContent": "space-between",
                     "alignItems": "center"
                   },
@@ -371,7 +397,9 @@
                     },
                     {
                       "type": "container",
-                      "style": { "alignItems": "flex-end" },
+                      "style": {
+                        "alignItems": "flex-end"
+                      },
                       "children": [
                         {
                           "type": "text",
@@ -407,7 +435,9 @@
                     },
                     {
                       "type": "container",
-                      "style": { "alignItems": "flex-end" },
+                      "style": {
+                        "alignItems": "flex-end"
+                      },
                       "children": [
                         {
                           "type": "text",
@@ -431,9 +461,9 @@
             {
               "type": "frame",
               "style": {
-                "flex": 1,
+                "flex": 4,
                 "backgroundColor": "rgba(255,255,255,0.2)",
-                "padding": 3,
+                "padding": 12,
                 "borderRadius": "12px"
               },
               "children": [
@@ -444,28 +474,38 @@
                   "fontSize": 15,
                   "color": "FFFFFF",
                   "bold": true,
-                  "style": { "marginBottom": 2 }
+                  "style": {
+                    "marginBottom": 8
+                  }
                 },
                 {
                   "type": "text",
                   "content": "• 商品ラインナップ最適化: 春夏商品の早期投入",
                   "fontSize": 10,
                   "color": "FFFFFF",
-                  "style": { "marginBottom": 2, "lineHeight": 1.5 }
+                  "style": {
+                    "marginBottom": 8,
+                    "lineHeight": 1.5
+                  }
                 },
                 {
                   "type": "text",
                   "content": "• ターゲティング精度向上: 類似オーディエンス活用",
                   "fontSize": 10,
                   "color": "FFFFFF",
-                  "style": { "marginBottom": 2, "lineHeight": 1.5 }
+                  "style": {
+                    "marginBottom": 8,
+                    "lineHeight": 1.5
+                  }
                 },
                 {
                   "type": "text",
                   "content": "• クリエイティブテスト: 動画広告のCTR +25%",
                   "fontSize": 10,
                   "color": "FFFFFF",
-                  "style": { "lineHeight": 1.5 }
+                  "style": {
+                    "lineHeight": 1.5
+                  }
                 }
               ]
             }
@@ -476,9 +516,9 @@
     {
       "type": "frame",
       "style": {
-        "width": 960,
-        "height": 720,
-        "padding": 4,
+        "width": 3840,
+        "height": 2880,
+        "padding": 16,
         "direction": "column",
         "backgroundColor": "8B5CF6"
       },
@@ -489,8 +529,8 @@
           "level": 2,
           "fontSize": 27,
           "style": {
-            "marginBottom": 3,
-            "gap": 8,
+            "marginBottom": 12,
+            "gap": 32,
             "width": "100%"
           },
           "color": "FFFFFF",
@@ -501,9 +541,9 @@
           "style": {
             "backgroundColor": "rgba(255,255,255,0.2)",
             "width": "100%",
-            "marginBottom": 3,
-            "gap": 8,
-            "padding": 3,
+            "marginBottom": 12,
+            "gap": 32,
+            "padding": 12,
             "borderRadius": "12px"
           },
           "children": [
@@ -512,8 +552,8 @@
               "style": {
                 "direction": "row",
                 "backgroundColor": "rgba(255,255,255,0.1)",
-                "marginBottom": 1,
-                "padding": 2,
+                "marginBottom": 4,
+                "padding": 8,
                 "borderRadius": "8px"
               },
               "children": [
@@ -523,7 +563,9 @@
                   "fontSize": 9,
                   "bold": true,
                   "color": "FFFFFF",
-                  "style": { "width": "25%" }
+                  "style": {
+                    "width": "25%"
+                  }
                 },
                 {
                   "type": "text",
@@ -531,7 +573,9 @@
                   "fontSize": 9,
                   "bold": true,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 },
                 {
                   "type": "text",
@@ -539,7 +583,9 @@
                   "fontSize": 9,
                   "bold": true,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 },
                 {
                   "type": "text",
@@ -547,7 +593,9 @@
                   "fontSize": 9,
                   "bold": true,
                   "color": "FFFFFF",
-                  "style": { "width": "15%" }
+                  "style": {
+                    "width": "15%"
+                  }
                 },
                 {
                   "type": "text",
@@ -555,7 +603,9 @@
                   "fontSize": 9,
                   "bold": true,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 }
               ]
             },
@@ -563,8 +613,8 @@
               "type": "container",
               "style": {
                 "direction": "row",
-                "marginBottom": 1,
-                "padding": 2,
+                "marginBottom": 4,
+                "padding": 8,
                 "alignItems": "center"
               },
               "children": [
@@ -573,35 +623,45 @@
                   "content": "Google検索",
                   "fontSize": 10,
                   "color": "FFFFFF",
-                  "style": { "width": "25%" }
+                  "style": {
+                    "width": "25%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "120万円",
                   "fontSize": 10,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "600万円",
                   "fontSize": 10,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "5.00",
                   "fontSize": 10,
                   "color": "FFFFFF",
-                  "style": { "width": "15%" }
+                  "style": {
+                    "width": "15%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "+0.45",
                   "fontSize": 10,
                   "color": "86EFAC",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 }
               ]
             },
@@ -609,8 +669,8 @@
               "type": "container",
               "style": {
                 "direction": "row",
-                "marginBottom": 1,
-                "padding": 2,
+                "marginBottom": 4,
+                "padding": 8,
                 "alignItems": "center"
               },
               "children": [
@@ -619,35 +679,45 @@
                   "content": "Meta広告",
                   "fontSize": 10,
                   "color": "FFFFFF",
-                  "style": { "width": "25%" }
+                  "style": {
+                    "width": "25%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "80万円",
                   "fontSize": 10,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "320万円",
                   "fontSize": 10,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "4.00",
                   "fontSize": 10,
                   "color": "FFFFFF",
-                  "style": { "width": "15%" }
+                  "style": {
+                    "width": "15%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "+0.28",
                   "fontSize": 10,
                   "color": "86EFAC",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 }
               ]
             },
@@ -655,8 +725,8 @@
               "type": "container",
               "style": {
                 "direction": "row",
-                "marginBottom": 1,
-                "padding": 2,
+                "marginBottom": 4,
+                "padding": 8,
                 "alignItems": "center"
               },
               "children": [
@@ -665,35 +735,45 @@
                   "content": "Yahoo!検索",
                   "fontSize": 10,
                   "color": "FFFFFF",
-                  "style": { "width": "25%" }
+                  "style": {
+                    "width": "25%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "50万円",
                   "fontSize": 10,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "210万円",
                   "fontSize": 10,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "4.20",
                   "fontSize": 10,
                   "color": "FFFFFF",
-                  "style": { "width": "15%" }
+                  "style": {
+                    "width": "15%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "+0.15",
                   "fontSize": 10,
                   "color": "86EFAC",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 }
               ]
             },
@@ -701,7 +781,7 @@
               "type": "container",
               "style": {
                 "direction": "row",
-                "padding": 2,
+                "padding": 8,
                 "alignItems": "center"
               },
               "children": [
@@ -710,35 +790,45 @@
                   "content": "YouTube",
                   "fontSize": 10,
                   "color": "FFFFFF",
-                  "style": { "width": "25%" }
+                  "style": {
+                    "width": "25%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "30万円",
                   "fontSize": 10,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "120万円",
                   "fontSize": 10,
                   "color": "FFFFFF",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "4.00",
                   "fontSize": 10,
                   "color": "FFFFFF",
-                  "style": { "width": "15%" }
+                  "style": {
+                    "width": "15%"
+                  }
                 },
                 {
                   "type": "text",
                   "content": "+0.80",
                   "fontSize": 10,
                   "color": "86EFAC",
-                  "style": { "width": "20%" }
+                  "style": {
+                    "width": "20%"
+                  }
                 }
               ]
             }
@@ -749,7 +839,7 @@
           "style": {
             "backgroundColor": "rgba(255,255,255,0.2)",
             "width": "100%",
-            "padding": 3,
+            "padding": 12,
             "borderRadius": "12px"
           },
           "children": [
@@ -760,28 +850,38 @@
               "fontSize": 15,
               "color": "FFFFFF",
               "bold": true,
-              "style": { "marginBottom": 2 }
+              "style": {
+                "marginBottom": 8
+              }
             },
             {
               "type": "text",
               "content": "Google検索: ブランドキーワードが好調",
               "fontSize": 10,
               "color": "FFFFFF",
-              "style": { "marginBottom": 1, "lineHeight": 1.5 }
+              "style": {
+                "marginBottom": 4,
+                "lineHeight": 1.5
+              }
             },
             {
               "type": "text",
               "content": "Meta広告: リール動画のエンゲージメント向上",
               "fontSize": 10,
               "color": "FFFFFF",
-              "style": { "marginBottom": 1, "lineHeight": 1.5 }
+              "style": {
+                "marginBottom": 4,
+                "lineHeight": 1.5
+              }
             },
             {
               "type": "text",
               "content": "YouTube: 認知拡大効果で間接効果も増加",
               "fontSize": 10,
               "color": "FFFFFF",
-              "style": { "lineHeight": 1.5 }
+              "style": {
+                "lineHeight": 1.5
+              }
             }
           ]
         }
@@ -790,9 +890,9 @@
     {
       "type": "frame",
       "style": {
-        "width": 960,
-        "height": 720,
-        "padding": 4,
+        "width": 3840,
+        "height": 2880,
+        "padding": 16,
         "direction": "column",
         "backgroundColor": "6366F1"
       },
@@ -803,8 +903,8 @@
           "level": 2,
           "fontSize": 27,
           "style": {
-            "marginBottom": 3,
-            "gap": 8,
+            "marginBottom": 12,
+            "gap": 32,
             "width": "100%"
           },
           "color": "FFFFFF",
@@ -815,15 +915,15 @@
           "style": {
             "direction": "row",
             "width": "100%",
-            "gap": 4
+            "gap": 16
           },
           "children": [
             {
               "type": "frame",
               "style": {
-                "flex": 1,
+                "flex": 4,
                 "backgroundColor": "rgba(255,255,255,0.2)",
-                "padding": 3,
+                "padding": 12,
                 "borderRadius": "12px"
               },
               "children": [
@@ -834,13 +934,15 @@
                   "fontSize": 15,
                   "color": "FFFFFF",
                   "bold": true,
-                  "style": { "marginBottom": 2 }
+                  "style": {
+                    "marginBottom": 8
+                  }
                 },
                 {
                   "type": "frame",
                   "style": {
-                    "marginBottom": 2,
-                    "padding": 2,
+                    "marginBottom": 8,
+                    "padding": 8,
                     "borderLeft": "4px solid #10B981",
                     "backgroundColor": "rgba(16,185,129,0.1)"
                   },
@@ -851,7 +953,9 @@
                       "fontSize": 9,
                       "color": "FFFFFF",
                       "bold": true,
-                      "style": { "marginBottom": 1 }
+                      "style": {
+                        "marginBottom": 4
+                      }
                     },
                     {
                       "type": "text",
@@ -864,8 +968,8 @@
                 {
                   "type": "frame",
                   "style": {
-                    "marginBottom": 2,
-                    "padding": 2,
+                    "marginBottom": 8,
+                    "padding": 8,
                     "borderLeft": "4px solid #10B981",
                     "backgroundColor": "rgba(16,185,129,0.1)"
                   },
@@ -876,7 +980,9 @@
                       "fontSize": 9,
                       "color": "FFFFFF",
                       "bold": true,
-                      "style": { "marginBottom": 1 }
+                      "style": {
+                        "marginBottom": 4
+                      }
                     },
                     {
                       "type": "text",
@@ -889,7 +995,7 @@
                 {
                   "type": "frame",
                   "style": {
-                    "padding": 2,
+                    "padding": 8,
                     "borderLeft": "4px solid #10B981",
                     "backgroundColor": "rgba(16,185,129,0.1)"
                   },
@@ -900,7 +1006,9 @@
                       "fontSize": 9,
                       "color": "FFFFFF",
                       "bold": true,
-                      "style": { "marginBottom": 1 }
+                      "style": {
+                        "marginBottom": 4
+                      }
                     },
                     {
                       "type": "text",
@@ -915,9 +1023,9 @@
             {
               "type": "frame",
               "style": {
-                "flex": 1,
+                "flex": 4,
                 "backgroundColor": "rgba(255,255,255,0.2)",
-                "padding": 3,
+                "padding": 12,
                 "borderRadius": "12px"
               },
               "children": [
@@ -928,13 +1036,15 @@
                   "fontSize": 15,
                   "color": "FFFFFF",
                   "bold": true,
-                  "style": { "marginBottom": 2 }
+                  "style": {
+                    "marginBottom": 8
+                  }
                 },
                 {
                   "type": "frame",
                   "style": {
-                    "marginBottom": 2,
-                    "padding": 2,
+                    "marginBottom": 8,
+                    "padding": 8,
                     "borderLeft": "4px solid #F59E0B",
                     "backgroundColor": "rgba(245,158,11,0.1)"
                   },
@@ -945,22 +1055,26 @@
                       "fontSize": 9,
                       "color": "FFFFFF",
                       "bold": true,
-                      "style": { "marginBottom": 1 }
+                      "style": {
+                        "marginBottom": 4
+                      }
                     },
                     {
                       "type": "text",
                       "content": "メンズアイテム訴求強化・ギフト需要に合わせた配信設計",
                       "fontSize": 9,
                       "color": "E5E7EB",
-                      "style": { "lineHeight": 1.4 }
+                      "style": {
+                        "lineHeight": 1.4
+                      }
                     }
                   ]
                 },
                 {
                   "type": "frame",
                   "style": {
-                    "marginBottom": 2,
-                    "padding": 2,
+                    "marginBottom": 8,
+                    "padding": 8,
                     "borderLeft": "4px solid #F59E0B",
                     "backgroundColor": "rgba(245,158,11,0.1)"
                   },
@@ -971,21 +1085,25 @@
                       "fontSize": 9,
                       "color": "FFFFFF",
                       "bold": true,
-                      "style": { "marginBottom": 1 }
+                      "style": {
+                        "marginBottom": 4
+                      }
                     },
                     {
                       "type": "text",
                       "content": "季節商品の早期露出・気温連動型配信テスト",
                       "fontSize": 9,
                       "color": "E5E7EB",
-                      "style": { "lineHeight": 1.4 }
+                      "style": {
+                        "lineHeight": 1.4
+                      }
                     }
                   ]
                 },
                 {
                   "type": "frame",
                   "style": {
-                    "padding": 2,
+                    "padding": 8,
                     "borderLeft": "4px solid #F59E0B",
                     "backgroundColor": "rgba(245,158,11,0.1)"
                   },
@@ -996,14 +1114,18 @@
                       "fontSize": 9,
                       "color": "FFFFFF",
                       "bold": true,
-                      "style": { "marginBottom": 1 }
+                      "style": {
+                        "marginBottom": 4
+                      }
                     },
                     {
                       "type": "text",
                       "content": "拡張配信の精度向上・動画クリエイティブ拡充",
                       "fontSize": 9,
                       "color": "E5E7EB",
-                      "style": { "lineHeight": 1.4 }
+                      "style": {
+                        "lineHeight": 1.4
+                      }
                     }
                   ]
                 }

@@ -8,77 +8,77 @@
         "width": "960px",
         "height": "720px",
         "backgroundColor": "f0f0f0",
-        "padding": 4,
+        "padding": 16,
         "flexDirection": "column",
         "justifyContent": "flex-start",
         "alignItems": "flex-start",
-        "gap": 2
-      },
-      "children": [
-    {
-      "type": "heading",
-      "level": 1,
-      "content": "色設定のテスト",
-      "color": "000080",
-      "style": {
-        "margin": 2
-      }
-    },
-    {
-      "type": "frame",
-      "style": {
-        "backgroundColor": "ff0000",
-        "padding": 2,
-        "width": "400px",
-        "height": "100px"
-      },
-      "children": [
-        {
-          "type": "text",
-          "content": "赤背景に白文字のテキスト",
-          "color": "ffffff",
-          "fontSize": 14
-        }
-      ]
-    },
-    {
-      "type": "frame",
-      "style": {
-        "backgroundColor": "0000ff",
-        "padding": 2,
-        "width": "400px",
-        "height": "100px",
-        "marginTop": 2
-      },
-      "children": [
-        {
-          "type": "text",
-          "content": "青背景に黄色文字のテキスト",
-          "color": "ffff00",
-          "fontSize": 14
-        }
-      ]
-    },
-    {
-      "type": "frame",
-      "style": {
-        "backgroundColor": "008000",
-        "padding": 2,
-        "width": "400px",
-        "height": "100px",
-        "marginTop": 2
+        "gap": 8
       },
       "children": [
         {
           "type": "heading",
-          "level": 2,
-          "content": "緑背景に白文字の見出し",
-          "color": "ffffff",
-          "bold": true
+          "level": 1,
+          "content": "色設定のテスト",
+          "color": "000080",
+          "style": {
+            "margin": 8
+          }
+        },
+        {
+          "type": "frame",
+          "style": {
+            "backgroundColor": "ff0000",
+            "padding": 8,
+            "width": "400px",
+            "height": "100px"
+          },
+          "children": [
+            {
+              "type": "text",
+              "content": "赤背景に白文字のテキスト",
+              "color": "ffffff",
+              "fontSize": 14
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "style": {
+            "backgroundColor": "0000ff",
+            "padding": 8,
+            "width": "400px",
+            "height": "100px",
+            "marginTop": 8
+          },
+          "children": [
+            {
+              "type": "text",
+              "content": "青背景に黄色文字のテキスト",
+              "color": "ffff00",
+              "fontSize": 14
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "style": {
+            "backgroundColor": "008000",
+            "padding": 8,
+            "width": "400px",
+            "height": "100px",
+            "marginTop": 8
+          },
+          "children": [
+            {
+              "type": "heading",
+              "level": 2,
+              "content": "緑背景に白文字の見出し",
+              "color": "ffffff",
+              "bold": true
+            }
+          ]
         }
       ]
-    }
-  ]
     }
   ]
 }

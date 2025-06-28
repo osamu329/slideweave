@@ -2,12 +2,11 @@
 
 ## 現在進行中
 
-### OSN-155: test9-complex-reportの背景色をcontainerからframeに変更
-- [x] TDDテスト作成（frame背景色）
-- [ ] test9-complex-report.jsonの背景色指定をcontainer→frameに変更
-- [ ] 変更後のPPTX生成で背景色が正しく表示される確認
-- [ ] python-pptx検証で背景色確認
-- [ ] レイアウト構造に影響しないことを確認
+### OSN-158: YogaLayoutEngineにgapプロパティのサポートを実装
+- [ ] YogaLayoutEngineで`gap`プロパティを処理できること
+- [ ] 8px単位での指定が可能であること (例: `gap: 2` → 16px)
+- [ ] flexDirection: "row"と"column"の両方で動作すること
+- [ ] 既存のテストケースが引き続き動作すること
 
 ## 未着手・バックログ
 

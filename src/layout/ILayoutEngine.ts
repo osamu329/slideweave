@@ -29,7 +29,7 @@ export interface ILayoutEngine {
     element: Element,
     containerWidth?: number,
     containerHeight?: number,
-  ): LayoutResult;
+  ): LayoutResult | Promise<LayoutResult>;
 
   /**
    * エンジン名

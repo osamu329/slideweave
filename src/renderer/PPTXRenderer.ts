@@ -121,7 +121,7 @@ export class PPTXRenderer {
       height: layoutResult.height, // 実際のレイアウトサイズ（ピクセル）
       backgroundColor: style?.backgroundColor,
       background: style?.background, // グラデーション対応
-      borderRadius: style?.borderRadius // px文字列をそのまま渡す
+      borderRadius: style?.borderRadius ? `${style.borderRadius}px` : undefined // 数値をpx文字列に変換
     };
 
     const svg = this.svgGenerator.generateFrameSVG(svgOptions);
@@ -240,7 +240,7 @@ export class PPTXRenderer {
       italic: element.italic || false,
       // marginは要素間隔なのでaddTextに渡さない（レイアウトエンジンで処理済み）
       // paddingのみをテキストフレーム内マージンとして適用
-      margin: element.style?.padding !== undefined ? element.style.padding * 8 : 0, // paddingをPowerPointのmarginに適用
+      margin: element.style?.padding !== undefined ? element.style.padding * 4 : 0, // paddingをPowerPointのmarginに適用
       valign: "top" as const, // 縦位置を上揃えに設定
       fill: element.style?.backgroundColor ? { color: element.style.backgroundColor } : undefined, // 背景色設定（型定義に合わせてオブジェクト形式）
     };
@@ -280,7 +280,7 @@ export class PPTXRenderer {
       color: element.color || "000000",
       bold: element.bold !== undefined ? element.bold : true, // headingはデフォルトでbold
       italic: element.italic || false,
-      margin: element.style?.padding !== undefined ? element.style.padding * 8 : 0, // paddingのみをPowerPointのmarginに適用
+      margin: element.style?.padding !== undefined ? element.style.padding * 4 : 0, // paddingのみをPowerPointのmarginに適用
       valign: "top" as const, // 縦位置を上揃えに設定
       fill: element.style?.backgroundColor ? { color: element.style.backgroundColor } : undefined, // 背景色設定（型定義に合わせてオブジェクト形式）
     };

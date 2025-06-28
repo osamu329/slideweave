@@ -5,6 +5,10 @@
 import { runTest } from './runTest';
 import * as path from 'path';
 import * as fs from 'fs';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 async function runAllTests() {
   console.log('🚀 examples以下のJSONテストケースを一括実行開始');
@@ -60,8 +64,8 @@ async function runAllTests() {
   }
 }
 
-// 直接実行時
-if (require.main === module) {
+// 直接実行時（ES Module）
+if (import.meta.url === `file://${process.argv[1]}`) {
   runAllTests().catch(console.error);
 }
 

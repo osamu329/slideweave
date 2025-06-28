@@ -5,11 +5,11 @@
     {
       "type": "container",
       "style": {
-        "width": 960,
-        "height": 720,
-        "padding": 4,
+        "width": 3840,
+        "height": 2880,
+        "padding": 16,
         "flexDirection": "column",
-        "gap": 2
+        "gap": 8
       },
       "children": [
         {
@@ -18,16 +18,16 @@
           "content": "frame内テキスト属性テスト",
           "color": "1e40af",
           "style": {
-            "marginBottom": 3
+            "marginBottom": 12
           }
         },
         {
           "type": "frame",
           "style": {
             "backgroundColor": "f8fafc",
-            "padding": 3,
+            "padding": 12,
             "borderRadius": "8px",
-            "marginBottom": 2
+            "marginBottom": 8
           },
           "children": [
             {
@@ -36,8 +36,8 @@
               "content": "1. フォントサイズテスト",
               "color": "374151",
               "style": {
-                "marginBottom": 2,
-                "padding": 1
+                "marginBottom": 8,
+                "padding": 4
               }
             },
             {
@@ -46,8 +46,8 @@
               "fontSize": 10,
               "color": "000000",
               "style": {
-                "marginBottom": 1,
-                "padding": 1
+                "marginBottom": 4,
+                "padding": 4
               }
             },
             {
@@ -56,8 +56,8 @@
               "fontSize": 14,
               "color": "000000",
               "style": {
-                "marginBottom": 1,
-                "padding": 1
+                "marginBottom": 4,
+                "padding": 4
               }
             },
             {
@@ -66,8 +66,8 @@
               "fontSize": 18,
               "color": "000000",
               "style": {
-                "marginBottom": 1,
-                "padding": 1
+                "marginBottom": 4,
+                "padding": 4
               }
             },
             {
@@ -76,7 +76,7 @@
               "fontSize": 24,
               "color": "000000",
               "style": {
-                "padding": 1
+                "padding": 4
               }
             }
           ]
@@ -85,9 +85,9 @@
           "type": "frame",
           "style": {
             "backgroundColor": "fef3c7",
-            "padding": 4,
+            "padding": 16,
             "borderRadius": "8px",
-            "marginBottom": 2
+            "marginBottom": 8
           },
           "children": [
             {
@@ -96,8 +96,8 @@
               "content": "2. カラーテスト",
               "color": "374151",
               "style": {
-                "marginBottom": 2,
-                "padding": 2
+                "marginBottom": 8,
+                "padding": 8
               }
             },
             {
@@ -106,8 +106,8 @@
               "fontSize": 14,
               "color": "000000",
               "style": {
-                "marginBottom": 1,
-                "padding": 1
+                "marginBottom": 4,
+                "padding": 4
               }
             },
             {
@@ -116,8 +116,8 @@
               "fontSize": 14,
               "color": "dc2626",
               "style": {
-                "marginBottom": 1,
-                "padding": 1
+                "marginBottom": 4,
+                "padding": 4
               }
             },
             {
@@ -126,8 +126,8 @@
               "fontSize": 14,
               "color": "2563eb",
               "style": {
-                "marginBottom": 1,
-                "padding": 1
+                "marginBottom": 4,
+                "padding": 4
               }
             },
             {
@@ -136,7 +136,7 @@
               "fontSize": 14,
               "color": "16a34a",
               "style": {
-                "padding": 1
+                "padding": 4
               }
             }
           ]
@@ -145,9 +145,9 @@
           "type": "frame",
           "style": {
             "backgroundColor": "fce7f3",
-            "padding": 5,
+            "padding": 20,
             "borderRadius": "8px",
-            "marginBottom": 2
+            "marginBottom": 8
           },
           "children": [
             {
@@ -156,8 +156,8 @@
               "content": "3. スタイルテスト",
               "color": "374151",
               "style": {
-                "marginBottom": 2,
-                "padding": 2
+                "marginBottom": 8,
+                "padding": 8
               }
             },
             {
@@ -166,8 +166,8 @@
               "fontSize": 14,
               "color": "000000",
               "style": {
-                "marginBottom": 1,
-                "padding": 1
+                "marginBottom": 4,
+                "padding": 4
               }
             },
             {
@@ -177,8 +177,8 @@
               "color": "000000",
               "bold": true,
               "style": {
-                "marginBottom": 1,
-                "padding": 1
+                "marginBottom": 4,
+                "padding": 4
               }
             },
             {
@@ -188,8 +188,8 @@
               "color": "000000",
               "italic": true,
               "style": {
-                "marginBottom": 1,
-                "padding": 1
+                "marginBottom": 4,
+                "padding": 4
               }
             },
             {
@@ -200,7 +200,7 @@
               "bold": true,
               "italic": true,
               "style": {
-                "padding": 1
+                "padding": 4
               }
             }
           ]
@@ -209,7 +209,7 @@
           "type": "frame",
           "style": {
             "backgroundColor": "ecfdf5",
-            "padding": 6,
+            "padding": 24,
             "borderRadius": "8px"
           },
           "children": [
@@ -219,8 +219,8 @@
               "content": "4. フォントファミリーテスト",
               "color": "374151",
               "style": {
-                "marginBottom": 2,
-                "padding": 3
+                "marginBottom": 8,
+                "padding": 12
               }
             },
             {
@@ -230,8 +230,8 @@
               "color": "000000",
               "fontFamily": "Arial",
               "style": {
-                "marginBottom": 1,
-                "padding": 2
+                "marginBottom": 4,
+                "padding": 8
               }
             },
             {
@@ -241,8 +241,8 @@
               "color": "000000",
               "fontFamily": "Times New Roman",
               "style": {
-                "marginBottom": 1,
-                "padding": 2
+                "marginBottom": 4,
+                "padding": 8
               }
             },
             {
@@ -252,8 +252,8 @@
               "color": "000000",
               "fontFamily": "Courier New",
               "style": {
-                "marginBottom": 1,
-                "padding": 2
+                "marginBottom": 4,
+                "padding": 8
               }
             },
             {
@@ -263,7 +263,7 @@
               "color": "000000",
               "fontFamily": "Calibri",
               "style": {
-                "padding": 2
+                "padding": 8
               }
             }
           ]

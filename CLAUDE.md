@@ -2,7 +2,7 @@
 
 ## プロジェクト概要
 
-TypeScriptベースのPowerPointスライド作成ツール。8pxグリッドシステムとFlexbox風レイアウトを使用した構造化されたスライド生成を実現。
+TypeScriptベースのPowerPointスライド作成ツール。4pxグリッドシステムとFlexbox風レイアウトを使用した構造化されたスライド生成を実現。
 
 ## 技術スタック
 
@@ -49,7 +49,7 @@ src/
 │   └── SlideDataLoader.ts
 ├── elements/             # 要素定義・バリデーション
 │   └── validator.ts
-├── grid/                 # 8pxグリッドシステム
+├── grid/                 # 4pxグリッドシステム
 │   └── GridSystem.ts
 ├── layout/               # レイアウトエンジン
 │   ├── ILayoutEngine.ts  # インターフェース定義
@@ -75,7 +75,7 @@ output/                   # 生成されたPPTXファイル
 
 ## 開発方針
 
-- 8px単位のグリッドシステム
+- 4px単位のグリッドシステム
 - Object記法でのレイアウト定義
 - PPTXGenJSを使用したPowerPoint生成
 - TypeScript厳格モード
@@ -85,14 +85,14 @@ output/                   # 生成されたPPTXファイル
 
 SlideWeaveは2つの単位系をサポートします：
 
-### 無次元数値（8pxグリッド単位）
+### 無次元数値（4pxグリッド単位）
 ```json
 {
   "style": {
-    "width": 30,     // 30 × 8px = 240px
-    "height": 20,    // 20 × 8px = 160px
-    "margin": 4,     // 4 × 8px = 32px
-    "padding": 2     // 2 × 8px = 16px
+    "width": 30,     // 30 × 4px = 240px
+    "height": 20,    // 20 × 4px = 160px
+    "margin": 4,     // 4 × 4px = 32px
+    "padding": 2     // 2 × 4px = 16px
   }
 }
 ```
@@ -113,7 +113,7 @@ SlideWeaveは2つの単位系をサポートします：
 ## 設計ポイント
 
 ### 単位変換の責務分離
-- **StyleConverter**: 無次元数値のみを8px単位に変換（`30 → "240px"`）
+- **StyleConverter**: 無次元数値のみを4px単位に変換（`30 → "240px"`）
 - **YogaLayoutEngine**: 変換済み値をYogaに渡すだけ
 - **Yogaライブラリ**: パーセンテージ、vw/vh等の複雑な単位を処理
 
@@ -139,20 +139,20 @@ SlideWeaveは2つの単位系をサポートします：
 - **padding**: PowerPointレベルで処理（テキストフレーム内マージン）
 
 ### レイアウトエンジン（YogaLayoutEngine/CSSLayoutEngine）
-- **margin**: 8px単位をピクセルに変換してレイアウト計算
-- **padding**: 8px単位をピクセルに変換してレイアウト計算
+- **margin**: 4px単位をピクセルに変換してレイアウト計算
+- **padding**: 4px単位をピクセルに変換してレイアウト計算
 - 両方ともLayoutResultの座標計算に反映
 
 ### PPTXRenderer
 - **margin**: レイアウトエンジンで処理済みのため、PowerPointには渡さない
-- **padding**: element.style.paddingを8px単位でPowerPointのmarginオプションに適用
+- **padding**: element.style.paddingを4px単位でPowerPointのmarginオプションに適用
 
 ### 実装例
 ```typescript
 // 正しい実装（text/heading共通）
 const textOptions = {
   ...position,
-  margin: element.style?.padding !== undefined ? element.style.padding * 8 : 0, // paddingのみ適用
+  margin: element.style?.padding !== undefined ? element.style.padding * 4 : 0, // paddingのみ適用
   // marginプロパティは使用しない（レイアウトエンジンで処理済み）
 };
 ```

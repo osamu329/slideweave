@@ -5,11 +5,11 @@
     {
       "type": "container",
       "style": {
-        "width": 960,
-        "height": 720,
-        "padding": 4,
+        "width": 3840,
+        "height": 2880,
+        "padding": 16,
         "flexDirection": "column",
-        "gap": 2
+        "gap": 8
       },
       "children": [
         {
@@ -18,7 +18,7 @@
           "content": "テキスト属性テスト",
           "color": "1e40af",
           "style": {
-            "marginBottom": 3
+            "marginBottom": 12
           }
         },
         {
@@ -27,7 +27,7 @@
           "content": "1. フォントサイズテスト",
           "color": "374151",
           "style": {
-            "marginBottom": 2
+            "marginBottom": 8
           }
         },
         {
@@ -36,7 +36,7 @@
           "fontSize": 10,
           "color": "000000",
           "style": {
-            "marginBottom": 1
+            "marginBottom": 4
           }
         },
         {
@@ -45,7 +45,7 @@
           "fontSize": 14,
           "color": "000000",
           "style": {
-            "marginBottom": 1
+            "marginBottom": 4
           }
         },
         {
@@ -54,7 +54,7 @@
           "fontSize": 18,
           "color": "000000",
           "style": {
-            "marginBottom": 1
+            "marginBottom": 4
           }
         },
         {
@@ -63,7 +63,7 @@
           "fontSize": 24,
           "color": "000000",
           "style": {
-            "marginBottom": 2
+            "marginBottom": 8
           }
         },
         {
@@ -72,7 +72,7 @@
           "content": "2. カラーテスト",
           "color": "374151",
           "style": {
-            "marginBottom": 2
+            "marginBottom": 8
           }
         },
         {
@@ -81,7 +81,7 @@
           "fontSize": 14,
           "color": "000000",
           "style": {
-            "marginBottom": 1
+            "marginBottom": 4
           }
         },
         {
@@ -90,7 +90,7 @@
           "fontSize": 14,
           "color": "dc2626",
           "style": {
-            "marginBottom": 1
+            "marginBottom": 4
           }
         },
         {
@@ -99,7 +99,7 @@
           "fontSize": 14,
           "color": "2563eb",
           "style": {
-            "marginBottom": 1
+            "marginBottom": 4
           }
         },
         {
@@ -108,7 +108,7 @@
           "fontSize": 14,
           "color": "16a34a",
           "style": {
-            "marginBottom": 2
+            "marginBottom": 8
           }
         },
         {
@@ -117,7 +117,7 @@
           "content": "3. スタイルテスト",
           "color": "374151",
           "style": {
-            "marginBottom": 2
+            "marginBottom": 8
           }
         },
         {
@@ -126,7 +126,7 @@
           "fontSize": 14,
           "color": "000000",
           "style": {
-            "marginBottom": 1
+            "marginBottom": 4
           }
         },
         {
@@ -136,7 +136,7 @@
           "color": "000000",
           "bold": true,
           "style": {
-            "marginBottom": 1
+            "marginBottom": 4
           }
         },
         {
@@ -146,7 +146,7 @@
           "color": "000000",
           "italic": true,
           "style": {
-            "marginBottom": 1
+            "marginBottom": 4
           }
         },
         {
@@ -157,7 +157,7 @@
           "bold": true,
           "italic": true,
           "style": {
-            "marginBottom": 2
+            "marginBottom": 8
           }
         },
         {
@@ -166,7 +166,7 @@
           "content": "4. フォントファミリーテスト",
           "color": "374151",
           "style": {
-            "marginBottom": 2
+            "marginBottom": 8
           }
         },
         {
@@ -176,7 +176,7 @@
           "color": "000000",
           "fontFamily": "Arial",
           "style": {
-            "marginBottom": 1
+            "marginBottom": 4
           }
         },
         {
@@ -186,7 +186,7 @@
           "color": "000000",
           "fontFamily": "Times New Roman",
           "style": {
-            "marginBottom": 1
+            "marginBottom": 4
           }
         },
         {
@@ -196,7 +196,7 @@
           "color": "000000",
           "fontFamily": "Courier New",
           "style": {
-            "marginBottom": 1
+            "marginBottom": 4
           }
         },
         {

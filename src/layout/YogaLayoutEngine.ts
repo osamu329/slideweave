@@ -7,17 +7,23 @@ import { Element } from "../types/elements";
 import { ILayoutEngine, LayoutResult } from "./ILayoutEngine";
 import { StyleConverter } from "./StyleConverter";
 
-// yoga-layout-prebuiltのインポート
-const yoga = require("yoga-layout-prebuilt");
+// yoga-layout v3のインポート（非同期）
+import yogaLayout from "yoga-layout";
 
 export class YogaLayoutEngine implements ILayoutEngine {
   readonly name = "yoga-layout";
+  private yoga: any = null;
 
-  renderLayout(
+  async renderLayout(
     element: Element,
     containerWidth: number = 720,
     containerHeight: number = 540,
-  ): LayoutResult {
+  ): Promise<LayoutResult> {
+    // Yogaインスタンスの初期化
+    if (!this.yoga) {
+      this.yoga = await yogaLayout;
+    }
+
     // Yogaノードツリーを作成
     const yogaNode = this.createYogaNode(element);
 
@@ -26,7 +32,7 @@ export class YogaLayoutEngine implements ILayoutEngine {
     yogaNode.setHeight(containerHeight);
 
     // レイアウト計算実行
-    yogaNode.calculateLayout(containerWidth, containerHeight, yoga.DIRECTION_LTR);
+    yogaNode.calculateLayout(containerWidth, containerHeight, this.yoga.DIRECTION_LTR);
 
     // 計算結果をLayoutResult形式に変換
     const result = this.convertToLayoutResult(yogaNode, element);
@@ -41,7 +47,7 @@ export class YogaLayoutEngine implements ILayoutEngine {
    * Element からYogaノードを作成
    */
   private createYogaNode(element: Element): any {
-    const node = yoga.Node.create();
+    const node = this.yoga.Node.create();
 
     // スタイル設定
     this.applyStyleToYogaNode(node, element);
@@ -77,42 +83,47 @@ export class YogaLayoutEngine implements ILayoutEngine {
   private applyStyleToNode(node: any, style: any, element: Element): void {
     // FlexDirection
     if (style.direction === "row") {
-      node.setFlexDirection(yoga.FLEX_DIRECTION_ROW);
+      node.setFlexDirection(this.yoga.FLEX_DIRECTION_ROW);
     } else {
-      node.setFlexDirection(yoga.FLEX_DIRECTION_COLUMN);
+      node.setFlexDirection(this.yoga.FLEX_DIRECTION_COLUMN);
+    }
+
+    // Gap プロパティ: 8px単位をピクセルに変換
+    if (style.gap !== undefined) {
+      node.setGap(this.yoga.GUTTER_ALL, style.gap * 4);
     }
 
     // Spacing: 8px単位をピクセルに変換
     if (style.margin !== undefined) {
-      node.setMargin(yoga.EDGE_ALL, style.margin * 8);
+      node.setMargin(this.yoga.EDGE_ALL, style.margin * 4);
     }
     if (style.marginTop !== undefined) {
-      node.setMargin(yoga.EDGE_TOP, style.marginTop * 8);
+      node.setMargin(this.yoga.EDGE_TOP, style.marginTop * 4);
     }
     if (style.marginRight !== undefined) {
-      node.setMargin(yoga.EDGE_RIGHT, style.marginRight * 8);
+      node.setMargin(this.yoga.EDGE_RIGHT, style.marginRight * 4);
     }
     if (style.marginBottom !== undefined) {
-      node.setMargin(yoga.EDGE_BOTTOM, style.marginBottom * 8);
+      node.setMargin(this.yoga.EDGE_BOTTOM, style.marginBottom * 4);
     }
     if (style.marginLeft !== undefined) {
-      node.setMargin(yoga.EDGE_LEFT, style.marginLeft * 8);
+      node.setMargin(this.yoga.EDGE_LEFT, style.marginLeft * 4);
     }
 
     if (style.padding !== undefined) {
-      node.setPadding(yoga.EDGE_ALL, style.padding * 8);
+      node.setPadding(this.yoga.EDGE_ALL, style.padding * 4);
     }
     if (style.paddingTop !== undefined) {
-      node.setPadding(yoga.EDGE_TOP, style.paddingTop * 8);
+      node.setPadding(this.yoga.EDGE_TOP, style.paddingTop * 4);
     }
     if (style.paddingRight !== undefined) {
-      node.setPadding(yoga.EDGE_RIGHT, style.paddingRight * 8);
+      node.setPadding(this.yoga.EDGE_RIGHT, style.paddingRight * 4);
     }
     if (style.paddingBottom !== undefined) {
-      node.setPadding(yoga.EDGE_BOTTOM, style.paddingBottom * 8);
+      node.setPadding(this.yoga.EDGE_BOTTOM, style.paddingBottom * 4);
     }
     if (style.paddingLeft !== undefined) {
-      node.setPadding(yoga.EDGE_LEFT, style.paddingLeft * 8);
+      node.setPadding(this.yoga.EDGE_LEFT, style.paddingLeft * 4);
     }
 
     // Dimensions: 無次元数値のみ変換、文字列（%、px、auto、vw等）はYogaに委譲
@@ -148,14 +159,14 @@ export class YogaLayoutEngine implements ILayoutEngine {
 
       case "container":
         // コンテナのデフォルト設定
-        node.setJustifyContent(yoga.JUSTIFY_FLEX_START);
-        node.setAlignItems(yoga.ALIGN_FLEX_START);
+        node.setJustifyContent(this.yoga.JUSTIFY_FLEX_START);
+        node.setAlignItems(this.yoga.ALIGN_FLEX_START);
         break;
 
       case "slide":
         // スライドのデフォルト設定
-        node.setFlexDirection(yoga.FLEX_DIRECTION_COLUMN);
-        node.setJustifyContent(yoga.JUSTIFY_FLEX_START);
+        node.setFlexDirection(this.yoga.FLEX_DIRECTION_COLUMN);
+        node.setJustifyContent(this.yoga.JUSTIFY_FLEX_START);
         break;
     }
   }
@@ -179,7 +190,7 @@ export class YogaLayoutEngine implements ILayoutEngine {
       let resultHeight = lineHeight;
 
       // 幅制約の処理
-      if (widthMode !== yoga.MEASURE_MODE_UNDEFINED && width > 0) {
+      if (widthMode !== this.yoga.MEASURE_MODE_UNDEFINED && width > 0) {
         if (naturalWidth <= width) {
           // 制約幅内に収まる
           resultWidth = naturalWidth;
@@ -194,8 +205,8 @@ export class YogaLayoutEngine implements ILayoutEngine {
 
       // グリッド整列（textとheadingのみオフ）
       const isTextElement = element.type === 'text' || element.type === 'heading';
-      const alignedWidth = isTextElement ? resultWidth : Math.ceil(resultWidth / 8) * 8;
-      const alignedHeight = isTextElement ? resultHeight : Math.ceil(resultHeight / 8) * 8;
+      const alignedWidth = isTextElement ? resultWidth : Math.ceil(resultWidth / 8) * 4;
+      const alignedHeight = isTextElement ? resultHeight : Math.ceil(resultHeight / 8) * 4;
 
       return {
         width: alignedWidth,

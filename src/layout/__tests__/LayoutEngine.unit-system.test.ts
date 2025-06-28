@@ -17,7 +17,7 @@ describe('LayoutEngine - Unit System', () => {
     const yogaEngine = new YogaLayoutEngine();
 
     describe('8px grid units (dimensionless numbers)', () => {
-      it('should convert dimensionless width/height to 8px units', () => {
+      it('should convert dimensionless width/height to 8px units', async () => {
         const element: ContainerElement = {
           type: 'container',
           style: {
@@ -37,7 +37,7 @@ describe('LayoutEngine - Unit System', () => {
           ]
         };
 
-        const result = yogaEngine.renderLayout(element, 720, 540);
+        const result = await yogaEngine.renderLayout(element, 720, 540);
 
         expect(result.children).toHaveLength(1);
         const child = result.children![0];
@@ -52,7 +52,7 @@ describe('LayoutEngine - Unit System', () => {
         expect(child.top).toBe(32);  // margin-top
       });
 
-      it('should handle mixed units in nested layout', () => {
+      it('should handle mixed units in nested layout', async () => {
         const element: ContainerElement = {
           type: 'container',
           style: {
@@ -73,7 +73,7 @@ describe('LayoutEngine - Unit System', () => {
           ]
         };
 
-        const result = yogaEngine.renderLayout(element, 720, 540);
+        const result = await yogaEngine.renderLayout(element, 720, 540);
 
         // Parent container: 50*8 = 400px, 40*8 = 320px
         expect(result.width).toBe(400);
@@ -91,7 +91,7 @@ describe('LayoutEngine - Unit System', () => {
     });
 
     describe('Explicit pixel units', () => {
-      it('should use exact pixel values for "px" suffixed strings', () => {
+      it('should use exact pixel values for "px" suffixed strings', async () => {
         const element: ContainerElement = {
           type: 'container',
           style: {
@@ -111,7 +111,7 @@ describe('LayoutEngine - Unit System', () => {
           ]
         };
 
-        const result = yogaEngine.renderLayout(element, 720, 540);
+        const result = await yogaEngine.renderLayout(element, 720, 540);
 
         expect(result.children).toHaveLength(1);
         const child = result.children![0];
@@ -125,7 +125,7 @@ describe('LayoutEngine - Unit System', () => {
         expect(child.top).toBe(16);
       });
 
-      it('should handle percentage values correctly', () => {
+      it('should handle percentage values correctly', async () => {
         const element: ContainerElement = {
           type: 'container',
           style: {
@@ -144,7 +144,7 @@ describe('LayoutEngine - Unit System', () => {
           ]
         };
 
-        const result = yogaEngine.renderLayout(element, 720, 540);
+        const result = await yogaEngine.renderLayout(element, 720, 540);
 
         expect(result.children).toHaveLength(1);
         const child = result.children![0];
@@ -157,7 +157,7 @@ describe('LayoutEngine - Unit System', () => {
     });
 
     describe('Mixed unit scenarios', () => {
-      it('should correctly handle mixed 8px units and pixel units', () => {
+      it('should correctly handle mixed 8px units and pixel units', async () => {
         const element: ContainerElement = {
           type: 'container',
           style: {
@@ -187,7 +187,7 @@ describe('LayoutEngine - Unit System', () => {
           ]
         };
 
-        const result = yogaEngine.renderLayout(element, 720, 540);
+        const result = await yogaEngine.renderLayout(element, 720, 540);
 
         expect(result.width).toBe(960);  // Exact pixel
 
@@ -242,7 +242,7 @@ describe('LayoutEngine - Unit System', () => {
   });
 
   describe('Cross-engine consistency', () => {
-    it('should produce identical results for identical input', () => {
+    it('should produce identical results for identical input', async () => {
       const yogaEngine = new YogaLayoutEngine();
       const cssEngine = new CSSLayoutEngine();
 
@@ -265,7 +265,7 @@ describe('LayoutEngine - Unit System', () => {
         ]
       };
 
-      const yogaResult = yogaEngine.renderLayout(element, 720, 540);
+      const yogaResult = await yogaEngine.renderLayout(element, 720, 540);
       const cssResult = cssEngine.renderLayout(element, 720, 540);
 
       // Both engines should produce same child dimensions

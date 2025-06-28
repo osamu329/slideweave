@@ -10,6 +10,10 @@ import { SlideDataLoader } from '../src/data/SlideDataLoader';
 import { LayoutResult } from '../src/layout/LayoutEngine';
 import * as path from 'path';
 import * as fs from 'fs';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 
 /**
@@ -76,7 +80,7 @@ async function runTest(testFileName: string) {
       }
       
       // レイアウト計算
-      const slideLayout = renderLayout(slide, slideWidth, slideHeight);
+      const slideLayout = await renderLayout(slide, slideWidth, slideHeight);
       
       // デバッグ出力
       console.log(`=== スライド${i + 1}のレイアウト結果 ===`);
@@ -116,8 +120,8 @@ async function runTest(testFileName: string) {
   }
 }
 
-// 直接実行時
-if (require.main === module) {
+// 直接実行時（ES Module）
+if (import.meta.url === `file://${process.argv[1]}`) {
   const testFile = process.argv[2] || 'test1-basic-layout.json';
   runTest(testFile).catch(console.error);
 }

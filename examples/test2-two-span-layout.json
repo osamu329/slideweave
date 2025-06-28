@@ -5,7 +5,7 @@
     {
       "type": "slide",
       "style": {
-        "padding": 2
+        "padding": 16
       },
       "children": [
         {
@@ -14,7 +14,7 @@
           "level": 1,
           "fontSize": 28,
           "style": {
-            "marginBottom": 1,
+            "marginBottom": 8,
             "width": "100%"
           }
         },
@@ -23,13 +23,13 @@
           "style": {
             "direction": "row",
             "width": "100%",
-            "marginTop": 2
+            "marginTop": 16
           },
           "children": [
             {
               "type": "container",
               "style": {
-                "flex": 1,
+                "flex": 4,
                 "backgroundColor": "#F0F8FF"
               },
               "children": [
@@ -39,7 +39,7 @@
                   "level": 3,
                   "fontSize": 20,
                   "style": {
-                    "marginBottom": 1
+                    "marginBottom": 8
                   }
                 },
                 {
@@ -52,8 +52,8 @@
             {
               "type": "container",
               "style": {
-                "flex": 1,
-                "marginLeft": 2,
+                "flex": 4,
+                "marginLeft": 16,
                 "backgroundColor": "#F0FFF0"
               },
               "children": [
@@ -63,7 +63,7 @@
                   "level": 3,
                   "fontSize": 20,
                   "style": {
-                    "marginBottom": 1
+                    "marginBottom": 8
                   }
                 },
                 {
@@ -80,7 +80,7 @@
           "style": {
             "direction": "column",
             "width": "100%",
-            "marginTop": 2,
+            "marginTop": 16,
             "backgroundColor": "000000"
           },
           "children": [
@@ -90,7 +90,7 @@
               "level": 3,
               "fontSize": 20,
               "style": {
-                "marginBottom": 1
+                "marginBottom": 8
               }
             },
             {
@@ -104,4 +104,3 @@
     }
   ]
 }
-

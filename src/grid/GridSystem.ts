@@ -1,15 +1,15 @@
 /**
- * 8pxグリッドシステム
- * SlideWeaveで使用する8px単位の座標系とPPTXGenJS用の変換機能
+ * 4pxグリッドシステム
+ * SlideWeaveで使用する4px単位の座標系とPPTXGenJS用の変換機能
  */
 export class GridSystem {
-  private static readonly GRID_UNIT = 8; // 8px
+  private static readonly GRID_UNIT = 4; // 4px
   private static readonly PX_TO_PT = 0.75; // 1px = 0.75pt
   private static readonly PT_TO_INCH = 1 / 72; // 1pt = 1/72 inch
 
   /**
    * グリッド単位をポイントに変換
-   * @param gridUnits 8px単位の値
+   * @param gridUnits 4px単位の値
    * @returns ポイント値
    */
   static toPoints(gridUnits: number): number {
@@ -29,7 +29,7 @@ export class GridSystem {
 
   /**
    * グリッド単位を直接インチに変換
-   * @param gridUnits 8px単位の値
+   * @param gridUnits 4px単位の値
    * @returns インチ値
    */
   static gridToInches(gridUnits: number): number {

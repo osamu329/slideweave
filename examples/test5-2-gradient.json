@@ -8,7 +8,7 @@
         "width": "960px",
         "height": "720px",
         "flexDirection": "column",
-        "padding": 4
+        "padding": 16
       },
       "children": [
         {
@@ -17,21 +17,27 @@
           "style": {
             "fontSize": 24,
             "fontWeight": "bold",
-            "marginBottom": 2
+            "marginBottom": 8
           }
         },
         {
           "type": "frame",
           "style": {
-            "width": 116,
-            "height": 16,
-            "marginBottom": 1,
+            "width": 464,
+            "height": 64,
+            "marginBottom": 4,
             "background": {
               "type": "linearGradient",
               "direction": "to right",
               "stops": [
-                {"color": "#FF0000", "offset": 0},
-                {"color": "#0000FF", "offset": 1}
+                {
+                  "color": "#FF0000",
+                  "offset": 0
+                },
+                {
+                  "color": "#0000FF",
+                  "offset": 1
+                }
               ]
             }
           }
@@ -39,15 +45,21 @@
         {
           "type": "frame",
           "style": {
-            "width": 116,
-            "height": 16,
-            "marginBottom": 1,
+            "width": 464,
+            "height": 64,
+            "marginBottom": 4,
             "background": {
               "type": "linearGradient",
               "direction": "to bottom",
               "stops": [
-                {"color": "#00FF00", "offset": 0},
-                {"color": "#FFFF00", "offset": 1}
+                {
+                  "color": "#00FF00",
+                  "offset": 0
+                },
+                {
+                  "color": "#FFFF00",
+                  "offset": 1
+                }
               ]
             }
           }
@@ -55,14 +67,20 @@
         {
           "type": "frame",
           "style": {
-            "width": 116,
-            "height": 16,
-            "marginBottom": 1,
+            "width": 464,
+            "height": 64,
+            "marginBottom": 4,
             "background": {
               "type": "radialGradient",
               "stops": [
-                {"color": "#FFFFFF", "offset": 0},
-                {"color": "#000000", "offset": 1}
+                {
+                  "color": "#FFFFFF",
+                  "offset": 0
+                },
+                {
+                  "color": "#000000",
+                  "offset": 1
+                }
               ]
             }
           }
@@ -70,15 +88,24 @@
         {
           "type": "frame",
           "style": {
-            "width": 116,
-            "height": 16,
+            "width": 464,
+            "height": 64,
             "background": {
               "type": "linearGradient",
               "direction": "45deg",
               "stops": [
-                {"color": "#FF00FF", "offset": 0},
-                {"color": "#00FFFF", "offset": 0.5},
-                {"color": "#FFFF00", "offset": 1}
+                {
+                  "color": "#FF00FF",
+                  "offset": 0
+                },
+                {
+                  "color": "#00FFFF",
+                  "offset": 0.5
+                },
+                {
+                  "color": "#FFFF00",
+                  "offset": 1
+                }
               ]
             }
           }

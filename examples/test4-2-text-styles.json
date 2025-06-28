@@ -5,11 +5,11 @@
     {
       "type": "container",
       "style": {
-        "width": 960,
-        "height": 720,
-        "padding": 4,
+        "width": 3840,
+        "height": 2880,
+        "padding": 16,
         "flexDirection": "column",
-        "gap": 2
+        "gap": 8
       },
       "children": [
         {
@@ -18,7 +18,7 @@
           "content": "テキストスタイルテスト",
           "color": "1e40af",
           "style": {
-            "marginBottom": 3
+            "marginBottom": 12
           }
         },
         {
@@ -27,8 +27,8 @@
           "fontSize": 16,
           "color": "000000",
           "style": {
-            "marginBottom": 2,
-            "padding": 1
+            "marginBottom": 8,
+            "padding": 4
           }
         },
         {
@@ -38,8 +38,8 @@
           "color": "000000",
           "bold": true,
           "style": {
-            "marginBottom": 2,
-            "padding": 2
+            "marginBottom": 8,
+            "padding": 8
           }
         },
         {
@@ -49,8 +49,8 @@
           "color": "000000",
           "italic": true,
           "style": {
-            "marginBottom": 2,
-            "padding": 2
+            "marginBottom": 8,
+            "padding": 8
           }
         },
         {
@@ -61,8 +61,8 @@
           "bold": true,
           "italic": true,
           "style": {
-            "marginBottom": 2,
-            "padding": 3
+            "marginBottom": 8,
+            "padding": 12
           }
         },
         {
@@ -71,8 +71,8 @@
           "content": "見出しでのスタイル",
           "color": "374151",
           "style": {
-            "marginBottom": 2,
-            "padding": 2
+            "marginBottom": 8,
+            "padding": 8
           }
         },
         {
@@ -81,8 +81,8 @@
           "content": "通常見出し",
           "color": "374151",
           "style": {
-            "marginBottom": 1,
-            "padding": 1
+            "marginBottom": 4,
+            "padding": 4
           }
         },
         {
@@ -92,8 +92,8 @@
           "color": "374151",
           "bold": true,
           "style": {
-            "marginBottom": 1,
-            "padding": 1
+            "marginBottom": 4,
+            "padding": 4
           }
         },
         {
@@ -103,8 +103,8 @@
           "color": "374151",
           "italic": true,
           "style": {
-            "marginBottom": 1,
-            "padding": 1
+            "marginBottom": 4,
+            "padding": 4
           }
         },
         {
@@ -115,7 +115,7 @@
           "bold": true,
           "italic": true,
           "style": {
-            "padding": 2
+            "padding": 8
           }
         }
       ]
