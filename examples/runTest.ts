@@ -3,13 +3,14 @@
  * JSON形式のスライドデータを読み込んでPPTXファイルを生成
  */
 
-import { renderLayout } from '../src/layout/LayoutEngine';
-import { PPTXRenderer } from '../src/renderer/PPTXRenderer';
-import { ElementValidator } from '../src/elements/validator';
-import { SlideDataLoader } from '../src/data/SlideDataLoader';
-import { LayoutResult } from '../src/layout/LayoutEngine';
+import { renderLayout } from '../dist/layout/LayoutEngine.js';
+import { PPTXRenderer } from '../dist/renderer/PPTXRenderer.js';
+import { ElementValidator } from '../dist/elements/validator.js';
+import { SlideDataLoader } from '../dist/data/SlideDataLoader.js';
+import { LayoutResult } from '../dist/layout/LayoutEngine.js';
 import * as path from 'path';
 import * as fs from 'fs';
+
 
 /**
  * テキスト要素の座標を検証
@@ -84,6 +85,7 @@ async function runTest(testFileName: string) {
       // テキスト要素の座標検証
       console.log(`\n=== テキスト要素の座標検証 ===`);
       verifyTextCoordinates(slideLayout);
+      
       
       // 最初のスライド、またはスライドを追加
       if (i === 0) {

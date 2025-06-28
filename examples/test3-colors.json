@@ -1,0 +1,84 @@
+{
+  "title": "色設定のテスト",
+  "description": "背景色と前景色が正しく適用されるかを確認するテスト",
+  "slides": [
+    {
+      "type": "container",
+      "style": {
+        "width": 960,
+        "height": 720,
+        "backgroundColor": "f0f0f0",
+        "padding": 4,
+        "flexDirection": "column",
+        "justifyContent": "flex-start",
+        "alignItems": "flex-start",
+        "gap": 2
+      },
+      "children": [
+    {
+      "type": "heading",
+      "level": 1,
+      "content": "色設定のテスト",
+      "color": "000080",
+      "style": {
+        "margin": 2
+      }
+    },
+    {
+      "type": "container",
+      "style": {
+        "backgroundColor": "ff0000",
+        "padding": 2,
+        "width": 400,
+        "height": 100
+      },
+      "children": [
+        {
+          "type": "text",
+          "content": "赤背景に白文字のテキスト",
+          "color": "ffffff",
+          "fontSize": 14
+        }
+      ]
+    },
+    {
+      "type": "container",
+      "style": {
+        "backgroundColor": "0000ff",
+        "padding": 2,
+        "width": 400,
+        "height": 100,
+        "marginTop": 2
+      },
+      "children": [
+        {
+          "type": "text",
+          "content": "青背景に黄色文字のテキスト",
+          "color": "ffff00",
+          "fontSize": 14
+        }
+      ]
+    },
+    {
+      "type": "container",
+      "style": {
+        "backgroundColor": "008000",
+        "padding": 2,
+        "width": 400,
+        "height": 100,
+        "marginTop": 2
+      },
+      "children": [
+        {
+          "type": "heading",
+          "level": 2,
+          "content": "緑背景に白文字の見出し",
+          "color": "ffffff",
+          "bold": true
+        }
+      ]
+    }
+  ]
+    }
+  ]
+}
