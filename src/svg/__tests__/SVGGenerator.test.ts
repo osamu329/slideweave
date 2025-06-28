@@ -117,5 +117,37 @@ describe('SVGGenerator', () => {
       expect(svg).toContain('<rect');
       expect(svg).toContain('fill="none"');
     });
+
+    it('should support RGBA color format', () => {
+      const svg = generator.generateFrameSVG({
+        width: 200,
+        height: 100,
+        backgroundColor: 'rgba(255,0,0,0.5)'
+      });
+      
+      expect(svg).toContain('<svg');
+      expect(svg).toContain('<rect');
+      expect(svg).toContain('fill="rgba(255,0,0,0.5)"');
+    });
+
+    it('should support RGBA color format with spaces', () => {
+      const svg = generator.generateFrameSVG({
+        width: 200,
+        height: 100,
+        backgroundColor: 'rgba(255, 0, 0, 0.5)'
+      });
+      
+      expect(svg).toContain('fill="rgba(255, 0, 0, 0.5)"');
+    });
+
+    it('should support RGB color format', () => {
+      const svg = generator.generateFrameSVG({
+        width: 200,
+        height: 100,
+        backgroundColor: 'rgb(255,0,0)'
+      });
+      
+      expect(svg).toContain('fill="rgb(255,0,0)"');
+    });
   });
 });

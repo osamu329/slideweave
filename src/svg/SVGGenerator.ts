@@ -46,10 +46,17 @@ export class SVGGenerator {
   generateFrameSVG(options: FrameSVGOptions): string {
     const { width, height, backgroundColor, borderRadius } = options;
     
-    // Ensure color has # prefix if it's a hex color
+    // Handle different color formats
     let fill = backgroundColor || 'none';
-    if (backgroundColor && !backgroundColor.startsWith('#') && backgroundColor !== 'none') {
-      fill = `#${backgroundColor}`;
+    if (backgroundColor && backgroundColor !== 'none') {
+      if (backgroundColor.startsWith('rgba(') || backgroundColor.startsWith('rgb(')) {
+        // RGBA/RGB format - use as-is
+        fill = backgroundColor;
+      } else if (!backgroundColor.startsWith('#')) {
+        // Hex color without # prefix - add #
+        fill = `#${backgroundColor}`;
+      }
+      // Colors that already start with # are used as-is
     }
     
     const rectOptions: RectOptions = {
