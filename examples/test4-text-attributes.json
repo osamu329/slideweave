@@ -22,223 +22,189 @@
           }
         },
         {
-          "type": "frame",
+          "type": "heading",
+          "level": 2,
+          "content": "1. フォントサイズテスト",
+          "color": "374151",
           "style": {
-            "backgroundColor": "f8fafc",
-            "padding": 3,
-            "borderRadius": 8,
             "marginBottom": 2
-          },
-          "children": [
-            {
-              "type": "heading",
-              "level": 2,
-              "content": "1. フォントサイズテスト",
-              "color": "374151",
-              "style": {
-                "marginBottom": 2
-              }
-            },
-            {
-              "type": "text",
-              "content": "10pt テキスト",
-              "fontSize": 10,
-              "color": "000000",
-              "style": {
-                "marginBottom": 1
-              }
-            },
-            {
-              "type": "text",
-              "content": "14pt テキスト (デフォルト)",
-              "fontSize": 14,
-              "color": "000000",
-              "style": {
-                "marginBottom": 1
-              }
-            },
-            {
-              "type": "text",
-              "content": "18pt テキスト",
-              "fontSize": 18,
-              "color": "000000",
-              "style": {
-                "marginBottom": 1
-              }
-            },
-            {
-              "type": "text",
-              "content": "24pt テキスト",
-              "fontSize": 24,
-              "color": "000000"
-            }
-          ]
+          }
         },
         {
-          "type": "frame",
+          "type": "text",
+          "content": "10pt テキスト",
+          "fontSize": 10,
+          "color": "000000",
           "style": {
-            "backgroundColor": "fef3c7",
-            "padding": 3,
-            "borderRadius": 8,
-            "marginBottom": 2
-          },
-          "children": [
-            {
-              "type": "heading",
-              "level": 2,
-              "content": "2. カラーテスト",
-              "color": "374151",
-              "style": {
-                "marginBottom": 2
-              }
-            },
-            {
-              "type": "text",
-              "content": "黒色テキスト (デフォルト)",
-              "fontSize": 14,
-              "color": "000000",
-              "style": {
-                "marginBottom": 1
-              }
-            },
-            {
-              "type": "text",
-              "content": "赤色テキスト",
-              "fontSize": 14,
-              "color": "dc2626",
-              "style": {
-                "marginBottom": 1
-              }
-            },
-            {
-              "type": "text",
-              "content": "青色テキスト",
-              "fontSize": 14,
-              "color": "2563eb",
-              "style": {
-                "marginBottom": 1
-              }
-            },
-            {
-              "type": "text",
-              "content": "緑色テキスト",
-              "fontSize": 14,
-              "color": "16a34a"
-            }
-          ]
+            "marginBottom": 1
+          }
         },
         {
-          "type": "frame",
+          "type": "text",
+          "content": "14pt テキスト (デフォルト)",
+          "fontSize": 14,
+          "color": "000000",
           "style": {
-            "backgroundColor": "fce7f3",
-            "padding": 3,
-            "borderRadius": 8,
-            "marginBottom": 2
-          },
-          "children": [
-            {
-              "type": "heading",
-              "level": 2,
-              "content": "3. スタイルテスト",
-              "color": "374151",
-              "style": {
-                "marginBottom": 2
-              }
-            },
-            {
-              "type": "text",
-              "content": "通常テキスト",
-              "fontSize": 14,
-              "color": "000000",
-              "style": {
-                "marginBottom": 1
-              }
-            },
-            {
-              "type": "text",
-              "content": "太字テキスト",
-              "fontSize": 14,
-              "color": "000000",
-              "bold": true,
-              "style": {
-                "marginBottom": 1
-              }
-            },
-            {
-              "type": "text",
-              "content": "斜体テキスト",
-              "fontSize": 14,
-              "color": "000000",
-              "italic": true,
-              "style": {
-                "marginBottom": 1
-              }
-            },
-            {
-              "type": "text",
-              "content": "太字＋斜体テキスト",
-              "fontSize": 14,
-              "color": "000000",
-              "bold": true,
-              "italic": true
-            }
-          ]
+            "marginBottom": 1
+          }
         },
         {
-          "type": "frame",
+          "type": "text",
+          "content": "18pt テキスト",
+          "fontSize": 18,
+          "color": "000000",
           "style": {
-            "backgroundColor": "ecfdf5",
-            "padding": 3,
-            "borderRadius": 8
-          },
-          "children": [
-            {
-              "type": "heading",
-              "level": 2,
-              "content": "4. フォントファミリーテスト",
-              "color": "374151",
-              "style": {
-                "marginBottom": 2
-              }
-            },
-            {
-              "type": "text",
-              "content": "Arial フォント (デフォルト)",
-              "fontSize": 14,
-              "color": "000000",
-              "fontFamily": "Arial",
-              "style": {
-                "marginBottom": 1
-              }
-            },
-            {
-              "type": "text",
-              "content": "Times New Roman フォント",
-              "fontSize": 14,
-              "color": "000000",
-              "fontFamily": "Times New Roman",
-              "style": {
-                "marginBottom": 1
-              }
-            },
-            {
-              "type": "text",
-              "content": "Courier New フォント (等幅)",
-              "fontSize": 14,
-              "color": "000000",
-              "fontFamily": "Courier New",
-              "style": {
-                "marginBottom": 1
-              }
-            },
-            {
-              "type": "text",
-              "content": "Calibri フォント",
-              "fontSize": 14,
-              "color": "000000",
-              "fontFamily": "Calibri"
-            }
-          ]
+            "marginBottom": 1
+          }
+        },
+        {
+          "type": "text",
+          "content": "24pt テキスト",
+          "fontSize": 24,
+          "color": "000000",
+          "style": {
+            "marginBottom": 2
+          }
+        },
+        {
+          "type": "heading",
+          "level": 2,
+          "content": "2. カラーテスト",
+          "color": "374151",
+          "style": {
+            "marginBottom": 2
+          }
+        },
+        {
+          "type": "text",
+          "content": "黒色テキスト (デフォルト)",
+          "fontSize": 14,
+          "color": "000000",
+          "style": {
+            "marginBottom": 1
+          }
+        },
+        {
+          "type": "text",
+          "content": "赤色テキスト",
+          "fontSize": 14,
+          "color": "dc2626",
+          "style": {
+            "marginBottom": 1
+          }
+        },
+        {
+          "type": "text",
+          "content": "青色テキスト",
+          "fontSize": 14,
+          "color": "2563eb",
+          "style": {
+            "marginBottom": 1
+          }
+        },
+        {
+          "type": "text",
+          "content": "緑色テキスト",
+          "fontSize": 14,
+          "color": "16a34a",
+          "style": {
+            "marginBottom": 2
+          }
+        },
+        {
+          "type": "heading",
+          "level": 2,
+          "content": "3. スタイルテスト",
+          "color": "374151",
+          "style": {
+            "marginBottom": 2
+          }
+        },
+        {
+          "type": "text",
+          "content": "通常テキスト",
+          "fontSize": 14,
+          "color": "000000",
+          "style": {
+            "marginBottom": 1
+          }
+        },
+        {
+          "type": "text",
+          "content": "太字テキスト",
+          "fontSize": 14,
+          "color": "000000",
+          "bold": true,
+          "style": {
+            "marginBottom": 1
+          }
+        },
+        {
+          "type": "text",
+          "content": "斜体テキスト",
+          "fontSize": 14,
+          "color": "000000",
+          "italic": true,
+          "style": {
+            "marginBottom": 1
+          }
+        },
+        {
+          "type": "text",
+          "content": "太字＋斜体テキスト",
+          "fontSize": 14,
+          "color": "000000",
+          "bold": true,
+          "italic": true,
+          "style": {
+            "marginBottom": 2
+          }
+        },
+        {
+          "type": "heading",
+          "level": 2,
+          "content": "4. フォントファミリーテスト",
+          "color": "374151",
+          "style": {
+            "marginBottom": 2
+          }
+        },
+        {
+          "type": "text",
+          "content": "Arial フォント (デフォルト)",
+          "fontSize": 14,
+          "color": "000000",
+          "fontFamily": "Arial",
+          "style": {
+            "marginBottom": 1
+          }
+        },
+        {
+          "type": "text",
+          "content": "Times New Roman フォント",
+          "fontSize": 14,
+          "color": "000000",
+          "fontFamily": "Times New Roman",
+          "style": {
+            "marginBottom": 1
+          }
+        },
+        {
+          "type": "text",
+          "content": "Courier New フォント (等幅)",
+          "fontSize": 14,
+          "color": "000000",
+          "fontFamily": "Courier New",
+          "style": {
+            "marginBottom": 1
+          }
+        },
+        {
+          "type": "text",
+          "content": "Calibri フォント",
+          "fontSize": 14,
+          "color": "000000",
+          "fontFamily": "Calibri"
         }
       ]
     }

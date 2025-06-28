@@ -65,6 +65,7 @@ export class PPTXRenderer {
     }
 
     const element = layoutResult.element;
+    
 
     switch (element.type) {
       case "container":
@@ -213,10 +214,13 @@ export class PPTXRenderer {
       color: element.color || "000000",
       bold: element.bold || false,
       italic: element.italic || false,
-      margin: element.style?.margin !== undefined ? element.style.margin * 8 : 0,   // 指定されていない場合は0
-      padding: element.style?.padding !== undefined ? element.style.padding * 8 : 0, // 指定されていない場合は0
+      // marginは要素間隔なのでaddTextに渡さない（レイアウトエンジンで処理済み）
+      // paddingのみをテキストフレーム内マージンとして適用
+      margin: element.style?.padding !== undefined ? element.style.padding * 8 : 0, // paddingをPowerPointのmarginに適用
       valign: "top" as const, // 縦位置を上揃えに設定
+      fill: element.style?.backgroundColor ? { color: element.style.backgroundColor } : undefined, // 背景色設定（型定義に合わせてオブジェクト形式）
     };
+
 
     this.currentSlide.addText(element.content, textOptions);
   }
@@ -253,9 +257,9 @@ export class PPTXRenderer {
       color: element.color || "000000",
       bold: element.bold !== undefined ? element.bold : true, // headingはデフォルトでbold
       italic: element.italic || false,
-      margin: element.style?.margin !== undefined ? element.style.margin * 8 : 0,   // 指定されていない場合は0
-      padding: element.style?.padding !== undefined ? element.style.padding * 8 : 0, // 指定されていない場合は0
+      margin: element.style?.padding !== undefined ? element.style.padding * 8 : 0, // paddingのみをPowerPointのmarginに適用
       valign: "top" as const, // 縦位置を上揃えに設定
+      fill: element.style?.backgroundColor ? { color: element.style.backgroundColor } : undefined, // 背景色設定（型定義に合わせてオブジェクト形式）
     };
 
     this.currentSlide.addText(element.content, textOptions);

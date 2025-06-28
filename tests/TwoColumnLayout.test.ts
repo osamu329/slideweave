@@ -28,14 +28,6 @@ describe('TwoColumnLayout', () => {
     const leftText = leftColumn.children![1];  // テキスト要素
     const rightText = rightColumn.children![1]; // テキスト要素
     
-    console.log('コンテナレベル検証:');
-    console.log('左カラム:', { left: leftColumn.left, width: leftColumn.width });
-    console.log('右カラム:', { left: rightColumn.left, width: rightColumn.width });
-    console.log('間隔:', rightColumn.left - (leftColumn.left + leftColumn.width));
-    
-    console.log('\\nテキストレベル検証:');
-    console.log('左テキスト:', { width: leftText.width });
-    console.log('右テキスト:', { width: rightText.width });
     
     // 期待値の計算（100%幅対応）
     const parentWidth = 688; // 100%幅: 720 - 32px(padding) = 688px

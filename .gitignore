@@ -49,3 +49,4 @@ env/
 venv/
 ENV/
 .uv/
+tmp/

@@ -1,0 +1,152 @@
+{
+  "title": "margin/padding動作のテスト",
+  "description": "margin（要素間隔）とpadding（テキストフレーム内マージン）の動作確認",
+  "slides": [
+    {
+      "type": "container",
+      "style": {
+        "width": 960,
+        "height": 720,
+        "padding": 4,
+        "flexDirection": "column",
+        "gap": 2
+      },
+      "children": [
+        {
+          "type": "heading",
+          "level": 1,
+          "content": "margin/padding動作テスト",
+          "color": "1e40af",
+          "style": {
+            "marginBottom": 3
+          }
+        },
+        {
+          "type": "heading",
+          "level": 2,
+          "content": "1. margin（要素間隔）テスト",
+          "color": "374151",
+          "style": {
+            "marginBottom": 2
+          }
+        },
+        {
+          "type": "text",
+          "content": "margin: 0 のテキスト",
+          "fontSize": 14,
+          "color": "000000",
+          "style": {
+            "margin": 0,
+            "marginBottom": 1
+          }
+        },
+        {
+          "type": "text",
+          "content": "margin: 2 のテキスト",
+          "fontSize": 14,
+          "color": "000000",
+          "style": {
+            "margin": 2,
+            "marginBottom": 1
+          }
+        },
+        {
+          "type": "text",
+          "content": "margin: 4 のテキスト",
+          "fontSize": 14,
+          "color": "000000",
+          "style": {
+            "margin": 4,
+            "marginBottom": 3
+          }
+        },
+        {
+          "type": "heading",
+          "level": 2,
+          "content": "2. padding（テキストフレーム内マージン）テスト",
+          "color": "374151",
+          "style": {
+            "marginBottom": 2
+          }
+        },
+        {
+          "type": "text",
+          "content": "padding: 0 のテキスト",
+          "fontSize": 14,
+          "color": "ffffff",
+          "style": {
+            "padding": 0,
+            "backgroundColor": "dc2626",
+            "marginBottom": 1
+          }
+        },
+        {
+          "type": "text",
+          "content": "padding: 2 のテキスト",
+          "fontSize": 14,
+          "color": "ffffff",
+          "style": {
+            "padding": 2,
+            "backgroundColor": "2563eb",
+            "marginBottom": 1
+          }
+        },
+        {
+          "type": "text",
+          "content": "padding: 4 のテキスト",
+          "fontSize": 14,
+          "color": "ffffff",
+          "style": {
+            "padding": 4,
+            "backgroundColor": "16a34a",
+            "marginBottom": 3
+          }
+        },
+        {
+          "type": "heading",
+          "level": 2,
+          "content": "3. margin/padding組み合わせテスト",
+          "color": "374151",
+          "style": {
+            "marginBottom": 2
+          }
+        },
+        {
+          "type": "text",
+          "content": "margin:1, padding:1",
+          "fontSize": 14,
+          "color": "ffffff",
+          "style": {
+            "margin": 1,
+            "padding": 1,
+            "backgroundColor": "7c3aed",
+            "marginBottom": 1
+          }
+        },
+        {
+          "type": "text",
+          "content": "margin:3, padding:3",
+          "fontSize": 14,
+          "color": "ffffff",
+          "style": {
+            "margin": 3,
+            "padding": 3,
+            "backgroundColor": "f59e0b",
+            "marginBottom": 1
+          }
+        },
+        {
+          "type": "text",
+          "content": "margin:2, padding:0（背景色なし）",
+          "fontSize": 14,
+          "color": "000000",
+          "style": {
+            "margin": 2,
+            "padding": 0,
+            "marginBottom": 1
+          }
+        }
+      ]
+    }
+  ]
+}
