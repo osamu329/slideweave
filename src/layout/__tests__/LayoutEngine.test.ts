@@ -68,7 +68,7 @@ describe("LayoutEngine", () => {
       expect(textElement.left).toBe(0);
       expect(textElement.top).toBe(0);
       expect(textElement.width).toBe(640); // 制約幅と一致
-      expect(textElement.height).toBe(72); // グリッド整列により8の倍数
+      expect(textElement.height).toBe(96); // 日本語文字幅係数1.2適用による適切な行高
     });
 
     test("テキスト幅がコンテナ幅を超えない", () => {

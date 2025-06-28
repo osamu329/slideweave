@@ -570,11 +570,20 @@ function layoutNodeImpl(
 
     // Let's not measure the text if we already know both dimensions
     if (isRowUndefined || isColumnUndefined) {
+      console.log("🔧 CSS-LAYOUT DEBUG - About to call measure:");
+      console.log("  width parameter:", width);
+      console.log("  parentMaxWidth:", parentMaxWidth);
+      console.log("  node.layout.width:", node.layout.width);
+      console.log("  isRowUndefined:", isRowUndefined);
+      console.log("  isColumnUndefined:", isColumnUndefined);
+      
       var /*css_dim_t*/ measureDim = node.style.measure(
           /*(c)!node->context,*/
           /*(java)!layoutContext.measureOutput,*/
           width,
         );
+      
+      console.log("  measureDim result:", measureDim);
       if (isRowUndefined) {
         node.layout.width = measureDim.width + paddingAndBorderAxisResolvedRow;
       }

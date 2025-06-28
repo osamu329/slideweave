@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .container {
+            display: flex;
+            width: 640px;
+            background: #f0f0f0;
+            border: 1px solid #333;
+        }
+        .left-column {
+            flex: 1;
+            margin-right: 16px;
+            padding: 16px;
+            background: #F0F8FF;
+            border: 1px solid blue;
+        }
+        .right-column {
+            flex: 1;
+            margin-left: 16px;
+            padding: 16px;
+            background: #F0FFF0;
+            border: 1px solid green;
+        }
+        .text {
+            background: #ffcccc;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <h2>Flexbox動作テスト</h2>
+    <div class="container">
+        <div class="left-column">
+            <h3>左カラム</h3>
+            <div class="text">これは左側のカラムです。2段組みレイアウトでは、コンテンツを左右に分割して表示します。この部分では主要な情報を記載します。</div>
+        </div>
+        <div class="right-column">
+            <h3>右カラム</h3>
+            <div class="text">これは右側のカラムです。補足情報や詳細な説明、関連するデータなどを配置します。レイアウトエンジンの横並び配置機能をテストします。</div>
+        </div>
+    </div>
+    
+    <script>
+        // JavaScript で実際の幅を測定
+        const container = document.querySelector('.container');
+        const leftColumn = document.querySelector('.left-column');
+        const rightColumn = document.querySelector('.right-column');
+        const leftText = document.querySelector('.left-column .text');
+        const rightText = document.querySelector('.right-column .text');
+        
+        console.log('=== ブラウザでのFlexbox実測値 ===');
+        console.log('コンテナ:', container.offsetWidth + 'px');
+        console.log('左カラム:', leftColumn.offsetWidth + 'px');
+        console.log('右カラム:', rightColumn.offsetWidth + 'px');
+        console.log('左テキスト:', leftText.offsetWidth + 'px');
+        console.log('右テキスト:', rightText.offsetWidth + 'px');
+        
+        // テキストは親カラム内に収まっているか？
+        console.log('');
+        console.log('=== 制約確認 ===');
+        console.log('左テキストが左カラム内に収まる?', leftText.offsetWidth <= leftColumn.offsetWidth);
+        console.log('右テキストが右カラム内に収まる?', rightText.offsetWidth <= rightColumn.offsetWidth);
+    </script>
+</body>
+</html>

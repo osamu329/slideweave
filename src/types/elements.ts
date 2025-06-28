@@ -34,8 +34,8 @@ export interface BaseStyle {
   backgroundColor?: string;
   borderColor?: string;
   borderWidth?: number;
-  width?: number;
-  height?: number;
+  width?: number | string;
+  height?: number | string;
   flex?: number;
 }
 

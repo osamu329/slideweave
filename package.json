@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "css-layout": "^1.1.1",
-    "pptxgenjs": "^4.0.1"
+    "pptxgenjs": "^4.0.1",
+    "yoga-layout-prebuilt": "^1.10.0"
   }
 }

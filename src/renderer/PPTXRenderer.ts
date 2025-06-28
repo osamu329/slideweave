@@ -123,6 +123,9 @@ export class PPTXRenderer {
       color: element.color || "000000",
       bold: element.bold || false,
       italic: element.italic || false,
+      margin: element.style?.margin !== undefined ? element.style.margin * 8 : 0,   // 指定されていない場合は0
+      padding: element.style?.padding !== undefined ? element.style.padding * 8 : 0, // 指定されていない場合は0
+      valign: "top" as const, // 縦位置を上揃えに明示的に設定
     };
 
     this.currentSlide.addText(element.content, textOptions);
@@ -160,6 +163,9 @@ export class PPTXRenderer {
       color: element.color || "000000",
       bold: element.bold !== undefined ? element.bold : true, // headingはデフォルトでbold
       italic: element.italic || false,
+      margin: element.style?.margin !== undefined ? element.style.margin * 8 : 0,   // 指定されていない場合は0
+      padding: element.style?.padding !== undefined ? element.style.padding * 8 : 0, // 指定されていない場合は0
+      valign: "top" as const, // 縦位置を上揃えに明示的に設定
     };
 
     this.currentSlide.addText(element.content, textOptions);
