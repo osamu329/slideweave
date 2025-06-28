@@ -1,0 +1,59 @@
+{
+  "title": "shape要素のテスト",
+  "description": "rectangle、circle、ellipse shape要素が正しく描画されるかを確認するテスト",
+  "slides": [
+    {
+      "type": "frame",
+      "style": {
+        "width": 960,
+        "height": 720,
+        "backgroundColor": "f0f0f0",
+        "padding": 4,
+        "flexDirection": "column",
+        "justifyContent": "flex-start",
+        "alignItems": "flex-start",
+        "gap": 2
+      },
+      "children": [
+    {
+      "type": "heading",
+      "level": 1,
+      "content": "shape要素のテスト",
+      "color": "000080",
+      "style": {
+        "margin": 2
+      }
+    },
+    {
+      "type": "shape",
+      "shapeType": "rectangle",
+      "style": {
+        "backgroundColor": "ff0000",
+        "width": 400,
+        "height": 100
+      }
+    },
+    {
+      "type": "shape",
+      "shapeType": "circle",
+      "style": {
+        "backgroundColor": "0000ff",
+        "width": 400,
+        "height": 100,
+        "marginTop": 2
+      }
+    },
+    {
+      "type": "shape",
+      "shapeType": "ellipse",
+      "style": {
+        "backgroundColor": "008000",
+        "width": 400,
+        "height": 100,
+        "marginTop": 2
+      }
+    }
+  ]
+    }
+  ]
+}
