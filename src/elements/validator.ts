@@ -29,7 +29,7 @@ export class ElementValidator {
   static validate(element: any): ValidationResult {
     const errors: ValidationError[] = [];
     const warnings: ValidationError[] = [];
-    let validatedElement: Element | undefined;
+    const validatedElement: Element | undefined = this.applyDefaults(element);
 
     // 基本構造チェック
     if (!element || typeof element !== 'object') {
@@ -70,9 +70,6 @@ export class ElementValidator {
     if (element.children) {
       this.validateChildren(element.children, errors, warnings);
     }
-
-    // デフォルト値設定
-    validatedElement = this.applyDefaults(element);
 
     return {
       isValid: errors.length === 0,

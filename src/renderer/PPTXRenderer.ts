@@ -209,6 +209,6 @@ export class PPTXRenderer {
    * @param name レイアウト名
    */
   setLayout(name: string): void {
-    this.pptx.layout = name as any;
+    (this.pptx as any).layout = name;
   }
 }

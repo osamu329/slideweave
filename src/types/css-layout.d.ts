@@ -31,6 +31,6 @@ declare module 'css-layout' {
     children?: ComputedLayout[];
   }
 
-  function cssLayout(node: CSSLayoutNode): ComputedLayout;
+  function cssLayout(_node: CSSLayoutNode): ComputedLayout;
   export = cssLayout;
 }
