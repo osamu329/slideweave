@@ -154,6 +154,6 @@ export class SVGGenerator {
     // Include gradient definitions if needed
     const defs = gradientDefs ? `<defs>${gradientDefs}</defs>` : '';
     
-    return `<svg viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">${defs}${rect}</svg>`;
+    return `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">${defs}${rect}</svg>`;
   }
 }
