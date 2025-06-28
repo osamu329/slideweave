@@ -504,7 +504,7 @@
           },
           "children": [
             {
-              "type": "container",
+              "type": "frame",
               "style": {
                 "flexDirection": "row",
                 "backgroundColor": "rgba(255,255,255,0.1)",
