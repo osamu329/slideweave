@@ -55,6 +55,18 @@ def analyze_shape(shape, indent=0):
             print(f"{prefix}  Vertical Anchor: {anchor}")
             info["vertical_anchor"] = anchor
         
+        # テキストフレームのマージン設定（paddingに相当）
+        if hasattr(text_frame, 'margin_left'):
+            margin_left = text_frame.margin_left / 914400 if text_frame.margin_left else 0
+            margin_top = text_frame.margin_top / 914400 if text_frame.margin_top else 0
+            margin_right = text_frame.margin_right / 914400 if text_frame.margin_right else 0
+            margin_bottom = text_frame.margin_bottom / 914400 if text_frame.margin_bottom else 0
+            print(f"{prefix}  Text Margins (inches): L:{margin_left:.3f} T:{margin_top:.3f} R:{margin_right:.3f} B:{margin_bottom:.3f}")
+            info["text_margin_left"] = margin_left
+            info["text_margin_top"] = margin_top
+            info["text_margin_right"] = margin_right
+            info["text_margin_bottom"] = margin_bottom
+        
         for paragraph in text_frame.paragraphs:
             for run in paragraph.runs:
                 if run.text.strip():
@@ -63,9 +75,15 @@ def analyze_shape(shape, indent=0):
                         print(f"{prefix}    Font Color: #{run.font.color.rgb}")
                     print(f"{prefix}    Font Size: {run.font.size/12700:.1f}pt")
                     print(f"{prefix}    Bold: {run.font.bold}")
+                    print(f"{prefix}    Italic: {run.font.italic}")
+                    if run.font.name:
+                        print(f"{prefix}    Font Family: {run.font.name}")
                     info["text"] = run.text
                     info["font_color"] = str(run.font.color.rgb) if run.font.color.rgb else None
                     info["font_size"] = run.font.size/12700 if run.font.size else None
+                    info["font_bold"] = run.font.bold
+                    info["font_italic"] = run.font.italic
+                    info["font_family"] = run.font.name
     
     # グループシェイプの場合、子要素を再帰的に解析
     if shape.shape_type == MSO_SHAPE_TYPE.GROUP:
