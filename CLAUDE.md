@@ -81,6 +81,52 @@ output/                   # 生成されたPPTXファイル
 - TypeScript厳格モード
 - テストカバレッジ80%以上
 
+## 単位システム
+
+SlideWeaveは2つの単位系をサポートします：
+
+### 無次元数値（8pxグリッド単位）
+```json
+{
+  "style": {
+    "width": 30,     // 30 × 8px = 240px
+    "height": 20,    // 20 × 8px = 160px
+    "margin": 4,     // 4 × 8px = 32px
+    "padding": 2     // 2 × 8px = 16px
+  }
+}
+```
+
+### 明示的単位（ピクセル）
+```json
+{
+  "style": {
+    "width": "640px",   // 正確に640px
+    "height": "480px",  // 正確に480px
+    "width": "50%"      // パーセンテージ（YogaLayoutEngineのみ）
+  }
+}
+```
+
+**推奨**: レスポンシブ設計には無次元数値、精密なサイズ指定には明示的単位を使用
+
+## 設計ポイント
+
+### 単位変換の責務分離
+- **StyleConverter**: 無次元数値のみを8px単位に変換（`30 → "240px"`）
+- **YogaLayoutEngine**: 変換済み値をYogaに渡すだけ
+- **Yogaライブラリ**: パーセンテージ、vw/vh等の複雑な単位を処理
+
+### frame背景描画のSVG化
+- **従来**: PPTXGenJSのaddShapeで背景色描画
+- **新方式**: SVGGeneratorでSVG生成 → addImageで描画
+- **利点**: borderRadius等の複雑な装飾に対応、透過背景・グラデーションも将来対応可能
+
+### TDD実践
+- **Red**: 失敗するテストケースを先に作成
+- **Green**: テストが通る最小限の実装
+- **Refactor**: 設計を改善、重複排除
+
 ## 実装注意点
 
 - css-layoutの動作は、検索せずに実装を確認すること。
@@ -114,6 +160,33 @@ const textOptions = {
 ### 責務分離
 - **LayoutEngine**: 要素配置・間隔計算（margin処理）
 - **PPTXRenderer**: PowerPointオブジェクト描画（padding処理）
+
+## 要素タイプ設計
+
+### container vs frame の責務分離
+
+#### container要素
+- **目的**: 純粋なレイアウト専用コンテナ
+- **PowerPoint描画**: なし（レイアウト計算のみ）
+- **背景色**: 指定されても描画しない
+- **用途**: flexboxライクなレイアウト構造
+
+#### frame要素  
+- **目的**: 装飾付きコンテナ（背景色・ボーダー等）
+- **PowerPoint描画**: あり（shapeオブジェクト生成）
+- **背景色**: backgroundColor指定時に描画
+- **用途**: 視覚的な枠・背景が必要な場合
+
+#### shape要素
+- **目的**: 図形専用（rectangle, circle, ellipse等）
+- **PowerPoint描画**: あり（shapeオブジェクト生成）
+- **背景色**: backgroundColor指定時に描画
+- **用途**: 純粋な図形描画
+
+### 設計原則
+- **container**: レイアウトのみ、描画なし
+- **frame**: レイアウト + 装飾描画
+- **shape**: 図形描画のみ
 
 ## Linear Issue管理
 

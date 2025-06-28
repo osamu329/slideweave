@@ -16,7 +16,7 @@
           "style": {
             "marginTop": 2,
             "marginBottom": 2,
-            "width": 640
+            "width": "640px"
           }
         },
         {
@@ -24,7 +24,7 @@
           "style": {
             "marginTop": 1,
             "marginBottom": 1,
-            "width": 640
+            "width": "640px"
           },
           "children": [
             {

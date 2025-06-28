@@ -5,8 +5,8 @@
     {
       "type": "frame",
       "style": {
-        "width": 960,
-        "height": 720,
+        "width": "960px",
+        "height": "720px",
         "backgroundColor": "f0f0f0",
         "padding": 4,
         "flexDirection": "column",
@@ -29,8 +29,8 @@
       "style": {
         "backgroundColor": "ff0000",
         "padding": 2,
-        "width": 400,
-        "height": 100
+        "width": "400px",
+        "height": "100px"
       },
       "children": [
         {
@@ -46,8 +46,8 @@
       "style": {
         "backgroundColor": "0000ff",
         "padding": 2,
-        "width": 400,
-        "height": 100,
+        "width": "400px",
+        "height": "100px",
         "marginTop": 2
       },
       "children": [
@@ -64,8 +64,8 @@
       "style": {
         "backgroundColor": "008000",
         "padding": 2,
-        "width": 400,
-        "height": 100,
+        "width": "400px",
+        "height": "100px",
         "marginTop": 2
       },
       "children": [

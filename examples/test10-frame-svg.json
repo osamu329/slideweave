@@ -1,0 +1,134 @@
+{
+  "title": "Frame SVG Test",
+  "slides": [
+    {
+      "name": "Frame SVG Rendering",
+      "type": "container",
+      "style": {
+        "flexDirection": "column",
+        "padding": 4,
+        "gap": 3
+      },
+      "children": [
+    {
+      "type": "heading",
+      "level": 1,
+      "content": "Frame SVG Rendering Test",
+      "style": {
+        "color": "1a1a1a"
+      }
+    },
+    {
+      "type": "container",
+      "style": {
+        "flexDirection": "row",
+        "gap": 2
+      },
+      "children": [
+        {
+          "type": "frame",
+          "style": {
+            "width": 30,
+            "height": 20,
+            "backgroundColor": "ef4444"
+          },
+          "children": [
+            {
+              "type": "text",
+              "content": "Simple red background",
+              "style": {
+                "color": "ffffff",
+                "padding": 2
+              }
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "style": {
+            "width": 30,
+            "height": 20,
+            "backgroundColor": "3b82f6",
+            "borderRadius": 2
+          },
+          "children": [
+            {
+              "type": "text",
+              "content": "Rounded corners (16px)",
+              "style": {
+                "color": "ffffff",
+                "padding": 2
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "container",
+      "style": {
+        "flexDirection": "row",
+        "gap": 2
+      },
+      "children": [
+        {
+          "type": "frame",
+          "style": {
+            "width": 30,
+            "height": 20,
+            "backgroundColor": "10b981",
+            "borderRadius": 1
+          },
+          "children": [
+            {
+              "type": "text",
+              "content": "Small radius (8px)",
+              "style": {
+                "color": "ffffff",
+                "padding": 2
+              }
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "style": {
+            "width": 30,
+            "height": 20,
+            "backgroundColor": "f59e0b",
+            "borderRadius": 3
+          },
+          "children": [
+            {
+              "type": "text",
+              "content": "Large radius (24px)",
+              "style": {
+                "color": "ffffff",
+                "padding": 2
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "style": {
+        "width": 62,
+        "height": 15,
+        "borderRadius": 2
+      },
+      "children": [
+        {
+          "type": "text",
+          "content": "Transparent frame with no background - should not be visible",
+          "style": {
+            "padding": 2
+          }
+        }
+      ]
+    }
+  ]
+    }
+  ]
+}

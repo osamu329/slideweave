@@ -116,7 +116,10 @@ export class CSSLayoutEngine implements ILayoutEngine {
       // width: 明示的に指定された場合はそのまま使用（CSS-Layoutはパーセンテージ未対応）
       if (element.style.width !== undefined) {
         if (typeof element.style.width === 'number') {
-          node.style!.width = element.style.width;
+          node.style!.width = element.style.width * 8; // 8px単位をピクセルに変換
+        } else if (element.style.width.endsWith('px')) {
+          const pixels = parseFloat(element.style.width);
+          node.style!.width = pixels; // ピクセル単位をそのまま使用
         }
         // TODO: CSS-Layoutはパーセンテージ未対応のため、文字列は無視
       }
@@ -124,7 +127,10 @@ export class CSSLayoutEngine implements ILayoutEngine {
       // height: 明示的に指定された場合はそのまま使用（CSS-Layoutはパーセンテージ未対応）
       if (element.style.height !== undefined) {
         if (typeof element.style.height === 'number') {
-          node.style!.height = element.style.height;
+          node.style!.height = element.style.height * 8; // 8px単位をピクセルに変換
+        } else if (element.style.height.endsWith('px')) {
+          const pixels = parseFloat(element.style.height);
+          node.style!.height = pixels; // ピクセル単位をそのまま使用
         }
         // TODO: CSS-Layoutはパーセンテージ未対応のため、文字列は無視
       }

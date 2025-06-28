@@ -3,11 +3,11 @@
  * JSON形式のスライドデータを読み込んでPPTXファイルを生成
  */
 
-import { renderLayout } from '../dist/layout/LayoutEngine.js';
-import { PPTXRenderer } from '../dist/renderer/PPTXRenderer.js';
-import { ElementValidator } from '../dist/elements/validator.js';
-import { SlideDataLoader } from '../dist/data/SlideDataLoader.js';
-import { LayoutResult } from '../dist/layout/LayoutEngine.js';
+import { renderLayout } from '../src/layout/LayoutEngine';
+import { PPTXRenderer } from '../src/renderer/PPTXRenderer';
+import { ElementValidator } from '../src/elements/validator';
+import { SlideDataLoader } from '../src/data/SlideDataLoader';
+import { LayoutResult } from '../src/layout/LayoutEngine';
 import * as path from 'path';
 import * as fs from 'fs';
 

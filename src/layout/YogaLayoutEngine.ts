@@ -5,6 +5,7 @@
 
 import { Element } from "../types/elements";
 import { ILayoutEngine, LayoutResult } from "./ILayoutEngine";
+import { StyleConverter } from "./StyleConverter";
 
 // yoga-layout-prebuiltのインポート
 const yoga = require("yoga-layout-prebuilt");
@@ -67,6 +68,13 @@ export class YogaLayoutEngine implements ILayoutEngine {
       return;
     }
 
+    this.applyStyleToNode(node, style, element);
+  }
+
+  /**
+   * スタイルをYogaノードに適用（無次元数値のみ変換、他はYogaに委譲）
+   */
+  private applyStyleToNode(node: any, style: any, element: Element): void {
     // FlexDirection
     if (style.direction === "row") {
       node.setFlexDirection(yoga.FLEX_DIRECTION_ROW);
@@ -74,10 +82,9 @@ export class YogaLayoutEngine implements ILayoutEngine {
       node.setFlexDirection(yoga.FLEX_DIRECTION_COLUMN);
     }
 
-    // Margin (8px単位をピクセルに変換)
+    // Spacing: 8px単位をピクセルに変換
     if (style.margin !== undefined) {
-      const margin = style.margin * 8;
-      node.setMargin(yoga.EDGE_ALL, margin);
+      node.setMargin(yoga.EDGE_ALL, style.margin * 8);
     }
     if (style.marginTop !== undefined) {
       node.setMargin(yoga.EDGE_TOP, style.marginTop * 8);
@@ -92,10 +99,8 @@ export class YogaLayoutEngine implements ILayoutEngine {
       node.setMargin(yoga.EDGE_LEFT, style.marginLeft * 8);
     }
 
-    // Padding (8px単位をピクセルに変換)
     if (style.padding !== undefined) {
-      const padding = style.padding * 8;
-      node.setPadding(yoga.EDGE_ALL, padding);
+      node.setPadding(yoga.EDGE_ALL, style.padding * 8);
     }
     if (style.paddingTop !== undefined) {
       node.setPadding(yoga.EDGE_TOP, style.paddingTop * 8);
@@ -110,30 +115,15 @@ export class YogaLayoutEngine implements ILayoutEngine {
       node.setPadding(yoga.EDGE_LEFT, style.paddingLeft * 8);
     }
 
-    // Width/Height (パーセンテージ対応)
+    // Dimensions: 無次元数値のみ変換、文字列（%、px、auto、vw等）はYogaに委譲
     if (style.width !== undefined) {
-      if (typeof style.width === 'string') {
-        if (style.width === 'auto') {
-          node.setWidthAuto();
-        } else if (style.width.endsWith('%')) {
-          const percentage = parseFloat(style.width);
-          node.setWidthPercent(percentage);
-        }
-      } else {
-        node.setWidth(style.width);
-      }
+      const widthValue = StyleConverter.convertDimensionUnit(style.width);
+      // YogaライブラリのsetWidthに文字列を渡す（Yogaが適切に処理）
+      node.setWidth(widthValue);
     }
     if (style.height !== undefined) {
-      if (typeof style.height === 'string') {
-        if (style.height === 'auto') {
-          node.setHeightAuto();
-        } else if (style.height.endsWith('%')) {
-          const percentage = parseFloat(style.height);
-          node.setHeightPercent(percentage);
-        }
-      } else {
-        node.setHeight(style.height);
-      }
+      const heightValue = StyleConverter.convertDimensionUnit(style.height);
+      node.setHeight(heightValue);
     }
 
     // Flex

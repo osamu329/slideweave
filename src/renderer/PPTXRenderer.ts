@@ -4,7 +4,7 @@
  */
 
 import PptxGenJS from "pptxgenjs";
-import { LayoutResult, flattenLayout } from "../layout/LayoutEngine";
+import { LayoutResult, flattenLayout } from "../layout/ILayoutEngine";
 import {
   TextElement,
   HeadingElement,
@@ -12,6 +12,7 @@ import {
   FrameElement,
   ShapeElement,
 } from "../types/elements";
+import { SVGGenerator } from "../svg/SVGGenerator";
 
 export interface PPTXRenderOptions {
   slideWidth?: number; // インチ
@@ -22,9 +23,11 @@ export interface PPTXRenderOptions {
 export class PPTXRenderer {
   private pptx: PptxGenJS;
   private currentSlide: PptxGenJS.Slide | null = null;
+  private svgGenerator: SVGGenerator;
 
   constructor(options: PPTXRenderOptions = {}) {
     this.pptx = new PptxGenJS();
+    this.svgGenerator = new SVGGenerator();
 
     // スライドサイズ設定（デフォルト: 10x7.5インチ）
     this.pptx.defineLayout({
@@ -111,37 +114,29 @@ export class PPTXRenderer {
     const position = this.pixelsToInches(layoutResult);
     const style = element.style;
 
-    // 背景色またはボーダーがある場合のみ描画
-    if (style?.backgroundColor || style?.borderColor) {
-      const shapeOptions: Record<string, unknown> = {
-        x: position.x,
-        y: position.y,
-        w: position.w,
-        h: position.h,
-      };
+    // SVGを生成してframeを描画
+    // SVGの座標系を実際のピクセルサイズに合わせる
+    const svgOptions = {
+      width: layoutResult.width,   // 実際のレイアウトサイズ（ピクセル）
+      height: layoutResult.height, // 実際のレイアウトサイズ（ピクセル）
+      backgroundColor: style?.backgroundColor,
+      borderRadius: style?.borderRadius ? style.borderRadius * 8 : undefined // 8px単位をピクセルに変換
+    };
 
-      // 背景色設定
-      if (style.backgroundColor) {
-        shapeOptions.fill = { color: style.backgroundColor };
-      } else {
-        shapeOptions.fill = { type: "none" };
-      }
+    const svg = this.svgGenerator.generateFrameSVG(svgOptions);
+    
+    // SVGをBase64エンコード
+    const svgBase64 = Buffer.from(svg).toString('base64');
+    const dataUri = `data:image/svg+xml;base64,${svgBase64}`;
 
-      // ボーダー設定
-      if (style.borderColor && style.borderWidth) {
-        shapeOptions.line = {
-          color: style.borderColor,
-          width: style.borderWidth,
-          dashType: style.borderStyle === "dashed" ? "dash" : "solid",
-        };
-      } else {
-        shapeOptions.line = { type: "none" };
-      }
-
-      // 角丸設定（PowerPointではrectangleの場合のみ）
-      const shapeType = (style as FrameElement['style'])?.borderRadius ? "roundRect" : "rect";
-      this.currentSlide.addShape(shapeType as any, shapeOptions);
-    }
+    // addImageでSVGを描画
+    this.currentSlide.addImage({
+      data: dataUri,
+      x: position.x,
+      y: position.y,
+      w: position.w,
+      h: position.h
+    });
   }
 
   /**
