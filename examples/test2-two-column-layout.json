@@ -30,7 +30,6 @@
               "type": "container",
               "style": {
                 "flex": 1,
-                "marginRight": 1,
                 "padding": 2,
                 "backgroundColor": "#F0F8FF"
               },
@@ -55,7 +54,7 @@
               "type": "container",
               "style": {
                 "flex": 1,
-                "marginLeft": 1,
+                "marginLeft": 2,
                 "padding": 2,
                 "backgroundColor": "#F0FFF0"
               },

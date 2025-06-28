@@ -36,6 +36,7 @@ export interface BaseStyle {
   borderWidth?: number;
   width?: number;
   height?: number;
+  flex?: number;
 }
 
 export interface BaseElement {

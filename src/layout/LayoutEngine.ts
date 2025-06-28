@@ -5,7 +5,7 @@
 
 // css-layoutを使用したレイアウトエンジン
 import { Element } from "../types/elements";
-import { computeLayout } from "./css-layout-debug.js";
+const computeLayout = require("css-layout");
 
 export interface LayoutResult {
   left: number;
@@ -175,6 +175,11 @@ function convertToCSSLayout(element: Element): CSSLayoutNode {
       // height: 明示的に指定された場合はそのまま使用
       if (element.style.height !== undefined) {
         node.style!.height = element.style.height;
+      }
+
+      // flex: flexプロパティの変換
+      if (element.style.flex !== undefined) {
+        node.style!.flex = element.style.flex;
       }
     }
   }

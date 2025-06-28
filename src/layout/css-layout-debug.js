@@ -765,6 +765,10 @@ function layoutNodeImpl(
         nextContentDim =
           getPaddingAndBorderAxis(child, mainAxis) +
           getMarginAxis(child, mainAxis);
+        console.log("🔧 FLEX DEBUG - Flex child contribution:");
+        console.log("  padding+border:", getPaddingAndBorderAxis(child, mainAxis));
+        console.log("  margin:", getMarginAxis(child, mainAxis));
+        console.log("  nextContentDim:", nextContentDim);
       } else {
         maxWidth = CSS_UNDEFINED;
         if (!isMainRowDirection) {
@@ -871,14 +875,25 @@ function layoutNodeImpl(
     var /*float*/ remainingMainDim = 0;
     if (isMainDimDefined) {
       remainingMainDim = definedMainDim - mainContentDim;
+      console.log("🔧 FLEX DEBUG - Main dimension defined:");
+      console.log("  definedMainDim:", definedMainDim);
+      console.log("  mainContentDim:", mainContentDim);
+      console.log("  remainingMainDim:", remainingMainDim);
     } else {
       remainingMainDim = fmaxf(mainContentDim, 0) - mainContentDim;
+      console.log("🔧 FLEX DEBUG - Main dimension NOT defined:");
+      console.log("  mainContentDim:", mainContentDim);
+      console.log("  remainingMainDim:", remainingMainDim);
     }
 
     // If there are flexible children in the mix, they are going to fill the
     // remaining space
     if (flexibleChildrenCount !== 0) {
       var /*float*/ flexibleMainDim = remainingMainDim / totalFlexible;
+      console.log("🔧 FLEX DEBUG - Flexible children found:");
+      console.log("  flexibleChildrenCount:", flexibleChildrenCount);
+      console.log("  totalFlexible:", totalFlexible);
+      console.log("  flexibleMainDim:", flexibleMainDim);
       var /*float*/ baseMainDim;
       var /*float*/ boundMainDim;
 
@@ -910,12 +925,18 @@ function layoutNodeImpl(
       while (currentFlexChild !== null) {
         // At this point we know the final size of the element in the main
         // dimension
+        var calculatedSize = flexibleMainDim * currentFlexChild.style.flex +
+            getPaddingAndBorderAxis(currentFlexChild, mainAxis);
         currentFlexChild.layout[dim[mainAxis]] = boundAxis(
           currentFlexChild,
           mainAxis,
-          flexibleMainDim * currentFlexChild.style.flex +
-            getPaddingAndBorderAxis(currentFlexChild, mainAxis),
+          calculatedSize,
         );
+        console.log("🔧 FLEX DEBUG - Setting flex child size:");
+        console.log("  flex value:", currentFlexChild.style.flex);
+        console.log("  padding+border:", getPaddingAndBorderAxis(currentFlexChild, mainAxis));
+        console.log("  calculated size:", calculatedSize);
+        console.log("  final size:", currentFlexChild.layout[dim[mainAxis]]);
 
         maxWidth = CSS_UNDEFINED;
         if (isDimDefined(node, resolvedRowAxis)) {
