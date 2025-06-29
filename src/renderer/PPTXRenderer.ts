@@ -14,6 +14,7 @@ import {
   TextShadow,
 } from "../types/elements";
 import { SVGGenerator, BackgroundBlurOptions } from "../svg/SVGGenerator";
+import { TempFileManager } from "../utils/TempFileManager";
 
 export interface PPTXRenderOptions {
   slideWidth?: number; // インチ
@@ -288,13 +289,8 @@ export class PPTXRenderer {
     if (svgOptions.backgroundBlur) {
       const blurredImagePath = await this.svgGenerator.processBackgroundBlur(svgOptions.backgroundBlur);
       if (blurredImagePath) {
-        // examples/output/からの相対パスを絶対パスに変換
-        const absolutePath = blurredImagePath.startsWith('./') 
-          ? blurredImagePath.replace('./', 'examples/output/')
-          : blurredImagePath;
-        
         this.currentSlide.addImage({
-          path: absolutePath,
+          path: blurredImagePath, // 既に絶対パス
           x: position.x,
           y: position.y,
           w: position.w,
@@ -527,7 +523,18 @@ export class PPTXRenderer {
    * @returns Promise
    */
   async save(filename: string): Promise<string> {
-    return this.pptx.writeFile({ fileName: filename });
+    try {
+      const result = await this.pptx.writeFile({ fileName: filename });
+      
+      // PPTX生成完了後に一時ファイルをクリーンアップ
+      TempFileManager.getInstance().cleanupAll();
+      
+      return result;
+    } catch (error) {
+      // エラー時でもクリーンアップを実行
+      TempFileManager.getInstance().cleanupAll();
+      throw error;
+    }
   }
 
   /**

@@ -4,8 +4,12 @@
   "description": "PowerPoint slide creation tool",
   "type": "module",
   "main": "index.js",
+  "bin": {
+    "slideweave": "./bin/slideweave.js"
+  },
   "scripts": {
     "build": "tsc",
+    "build:cli": "tsc && chmod +x bin/slideweave.js",
     "dev": "tsc --watch",
     "start": "node dist/index.js",
     "test": "jest",
@@ -23,7 +27,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^29.0.0",
-    "@types/node": "^20.0.0",
+    "@types/node": "^20.19.2",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "eslint": "^8.0.0",
@@ -35,6 +39,10 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "chalk": "^5.4.1",
+    "commander": "^14.0.0",
+    "cosmiconfig": "^9.0.0",
+    "ora": "^8.2.0",
     "pptxgenjs": "^4.0.1",
     "sharp": "^0.34.2",
     "yoga-layout": "^3.2.1"

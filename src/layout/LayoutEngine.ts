@@ -3,10 +3,10 @@
  * レイアウトエンジンのファクトリー・エントリーポイント
  */
 
-import type { Element } from "../types/elements";
-import type { ILayoutEngine, LayoutResult } from "./ILayoutEngine";
-import { flattenLayout } from "./ILayoutEngine";
-import { YogaLayoutEngine } from "./YogaLayoutEngine";
+import type { Element } from "../types/elements.js";
+import type { ILayoutEngine, LayoutResult } from "./ILayoutEngine.js";
+import { flattenLayout } from "./ILayoutEngine.js";
+import { YogaLayoutEngine } from "./YogaLayoutEngine.js";
 
 // 利用可能なレイアウトエンジン
 export enum LayoutEngineType {

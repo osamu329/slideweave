@@ -40,11 +40,59 @@ npm run lint
 npm run typecheck
 ```
 
+## CLI機能 ✅
+
+**Status**: 基本実装完了 (OSN-164)
+
+SlideWeaveのコマンドラインインターフェース機能。tsxを使用して実行。
+
+### 使用方法
+```bash
+# JSON → PPTX生成
+npx tsx src/cli/index.ts build <input.json> [options]
+
+# 例：基本的な使用方法
+npx tsx src/cli/index.ts build examples/test01-basic-layout.json
+
+# 例：カスタム出力ファイル名
+npx tsx src/cli/index.ts build examples/test03-colors.json -o output.pptx
+
+# 例：詳細ログ
+npx tsx src/cli/index.ts build examples/test01-basic-layout.json --verbose
+
+# 設定ファイル初期化  
+npx tsx src/cli/index.ts init
+
+# ヘルプ・バージョン表示
+npx tsx src/cli/index.ts --help
+npx tsx src/cli/index.ts build --help
+```
+
+### 利用可能なオプション
+- `-o, --output <file>`: 出力PowerPointファイルパス
+- `--css <files...>`: 外部CSSファイル（未実装）
+- `-c, --config <file>`: 設定ファイルパス  
+- `--verbose`: 詳細ログ
+
+### 設定ファイル
+`slideweave.config.js`で出力設定、スライド設定をカスタマイズ可能。
+
 ## プロジェクト構造
 
 ```
 src/
 ├── index.ts              # エントリーポイント
+├── cli/                  # CLI機能 ✅
+│   ├── index.ts          # CLIメインエントリー
+│   ├── commands/
+│   │   ├── build.ts      # buildコマンド実装
+│   │   ├── init.ts       # initコマンド実装
+│   │   └── index.ts
+│   ├── utils/
+│   │   ├── logger.ts     # カラーログ出力
+│   │   ├── config.ts     # 設定ファイル管理
+│   │   └── errors.ts     # エラーハンドリング
+│   └── __tests__/
 ├── data/                 # データローダー
 │   └── SlideDataLoader.ts
 ├── elements/             # 要素定義・バリデーション
@@ -62,9 +110,19 @@ src/
 │       └── LayoutEngine.test.ts
 ├── renderer/             # PPTXGenJS統合
 │   └── PPTXRenderer.ts
+├── svg/                  # SVG生成
+│   └── SVGGenerator.ts
+├── css-processor/        # CSS処理
+│   ├── CSSStyleParser.ts
+│   └── CSSStylesheetParser.ts
+├── utils/               # ユーティリティ
+│   └── TempFileManager.ts
 └── types/                # TypeScript型定義
     ├── elements.ts       # 要素型定義
     └── css-layout.d.ts   # css-layout型定義
+
+bin/
+└── slideweave.js         # CLI実行ファイル
 
 tests/                    # テストファイル
 scripts/                  # Python検証スクリプト

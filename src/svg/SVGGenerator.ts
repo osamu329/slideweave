@@ -1,7 +1,7 @@
 import { Background, LinearGradient, RadialGradient } from '../types/elements.js';
 import sharp from 'sharp';
 import * as path from 'path';
-import * as fs from 'fs';
+import { TempFileManager } from '../utils/TempFileManager.js';
 
 export interface RectOptions {
   x: number;
@@ -129,21 +129,19 @@ export class SVGGenerator {
       const timestamp = Date.now();
       const hash = Math.random().toString(36).substring(2, 8);
       const filename = `blur-${timestamp}-${hash}.png`;
-      const outputDir = path.join(process.cwd(), 'examples', 'output');
-      const filePath = path.join(outputDir, filename);
-
-      // 出力ディレクトリが存在しない場合は作成
-      if (!fs.existsSync(outputDir)) {
-        fs.mkdirSync(outputDir, { recursive: true });
-      }
+      const tempDir = TempFileManager.getInstance().getTempDir();
+      const filePath = path.join(tempDir, filename);
 
       // PNG形式でファイルに保存（Web互換性のため）
       await sharp(croppedBlurred)
         .png({ quality: Math.round(quality * 0.9) }) // PNGの場合は品質を少し調整
         .toFile(filePath);
 
-      // 相対パスを返す（examples/output/からの相対パス）
-      return `./${filename}`;
+      // 一時ファイルとして登録（後でクリーンアップ）
+      TempFileManager.getInstance().registerTempFile(filePath);
+
+      // 絶対パスを返す（PPTXRendererで直接使用）
+      return filePath;
     } catch (error) {
       console.warn('Background blur processing failed:', error);
       return '';
