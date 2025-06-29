@@ -1,0 +1,44 @@
+{
+  "title": "Background Blur Glass Effect Test",
+  "description": "背景画像をクロップ・ブラーしてガラス効果を実現するテスト",
+  "slides": [
+    {
+      "type": "slide",
+      "style": {
+        "backgroundImage": "./tmp/510.jpg",
+        "backgroundSize": "cover",
+        "padding": 8
+      },
+      "children": [
+        {
+          "type": "frame",
+          "style": {
+            "glassEffect": true,
+            "padding": 6,
+            "borderRadius": "8px",
+            "width": "60%"
+          },
+          "children": [
+            {
+              "type": "heading",
+              "content": "背景ブラーガラス効果",
+              "level": 1,
+              "fontSize": 32,
+              "color": "FFFFFF",
+              "bold": true,
+              "style": {
+                "marginBottom": 3
+              }
+            },
+            {
+              "type": "text",
+              "content": "背景画像をクロップ・ブラーしてリアルなガラス効果を実現。PowerPointでも自然な透過背景。",
+              "fontSize": 16,
+              "color": "F0F0F0"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

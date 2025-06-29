@@ -51,10 +51,10 @@ async function runTest(testFileName: string) {
       
       // 最初のスライド、またはスライドを追加
       if (i === 0) {
-        renderer.render(slideLayout);
+        await renderer.render(slideLayout);
       } else {
         //renderer.addSlide();
-        renderer.render(slideLayout);
+        await renderer.render(slideLayout);
       }
     }
 

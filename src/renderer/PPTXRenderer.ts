@@ -12,7 +12,7 @@ import {
   FrameElement,
   ShapeElement,
 } from "../types/elements";
-import { SVGGenerator } from "../svg/SVGGenerator";
+import { SVGGenerator, BackgroundBlurOptions } from "../svg/SVGGenerator";
 
 export interface PPTXRenderOptions {
   slideWidth?: number; // インチ
@@ -24,18 +24,56 @@ export class PPTXRenderer {
   private pptx: PptxGenJS;
   private currentSlide: PptxGenJS.Slide | null = null;
   private svgGenerator: SVGGenerator;
+  private currentBackgroundImage: string | null = null;
 
   constructor(options: PPTXRenderOptions = {}) {
     this.pptx = new PptxGenJS();
     this.svgGenerator = new SVGGenerator();
+    this.options = {
+      slideWidth: 10,
+      slideHeight: 5.625,
+      theme: "light",
+      ...options,
+    };
 
     // スライドサイズ設定（デフォルト: 10x5.625インチ = 16:9）
     this.pptx.defineLayout({
       name: "SLIDEWEAVE_LAYOUT",
-      width: options.slideWidth || 10,
-      height: options.slideHeight || 5.625,
+      width: this.options.slideWidth!,
+      height: this.options.slideHeight!,
     });
     this.pptx.layout = "SLIDEWEAVE_LAYOUT";
+  }
+
+  /**
+   * 背景ブラーオプションを作成
+   */
+  private createBackgroundBlurOptions(layoutResult: LayoutResult, style: any): BackgroundBlurOptions | undefined {
+    if (!style?.glassEffect) {
+      return undefined;
+    }
+
+    // 背景画像または背景色のいずれかが必要
+    if (!this.currentBackgroundImage && !style?.backgroundColor) {
+      return undefined;
+    }
+
+    const slideWidthPx = this.options.slideWidth! * 96; // インチをピクセルに変換 (96 DPI)
+    const slideHeightPx = this.options.slideHeight! * 96;
+
+    return {
+      backgroundImagePath: this.currentBackgroundImage || undefined,
+      backgroundColor: style?.backgroundColor || undefined,
+      frameX: layoutResult.left || 0,
+      frameY: layoutResult.top || 0,
+      frameWidth: layoutResult.width,
+      frameHeight: layoutResult.height,
+      slideWidth: slideWidthPx,
+      slideHeight: slideHeightPx,
+      borderRadius: style?.borderRadius ? `${style.borderRadius}px` : undefined,
+      blurStrength: 5, // 適度なブラー強度（輪郭が分かるレベル）
+      quality: 70 // ファイルサイズ抑制のため低めの品質
+    };
   }
 
   /**
@@ -44,14 +82,14 @@ export class PPTXRenderer {
    * @param layoutResults レイアウト計算結果配列 (テスト用)
    * @returns PPTXGenJS インスタンス
    */
-  render(elements: any[], layoutResults: LayoutResult[]): PptxGenJS;
+  render(elements: any[], layoutResults: LayoutResult[]): Promise<PptxGenJS>;
   /**
    * レイアウト結果からPPTXファイルを生成
    * @param layoutResult レイアウト計算結果
    * @returns PPTXGenJS インスタンス
    */
-  render(layoutResult: LayoutResult): PptxGenJS;
-  render(elementsOrLayoutResult: any[] | LayoutResult, layoutResults?: LayoutResult[]): PptxGenJS {
+  render(layoutResult: LayoutResult): Promise<PptxGenJS>;
+  async render(elementsOrLayoutResult: any[] | LayoutResult, layoutResults?: LayoutResult[]): Promise<PptxGenJS> {
     // 新しいスライドを作成
     this.currentSlide = this.pptx.addSlide();
 
@@ -65,9 +103,9 @@ export class PPTXRenderer {
       const flatElements = flattenLayout(layoutResult);
 
       // 各要素を絶対座標でレンダリング
-      flatElements.forEach((element) => {
-        this.renderFlatElement(element);
-      });
+      for (const element of flatElements) {
+        await this.renderFlatElement(element);
+      }
     } else {
       const layoutResult = elementsOrLayoutResult as LayoutResult;
       // スライドレベルの背景画像を先に描画
@@ -77,9 +115,9 @@ export class PPTXRenderer {
       const flatElements = flattenLayout(layoutResult);
 
       // 各要素を絶対座標でレンダリング
-      flatElements.forEach((element) => {
-        this.renderFlatElement(element);
-      });
+      for (const element of flatElements) {
+        await this.renderFlatElement(element);
+      }
     }
 
     return this.pptx;
@@ -97,6 +135,7 @@ export class PPTXRenderer {
 
     // backgroundImageが指定されている場合のみ描画
     if (style?.backgroundImage) {
+      this.currentBackgroundImage = style.backgroundImage; // 背景画像パスを保存
       this.addBackgroundImage(style.backgroundImage, style.backgroundSize, layoutResult);
     }
   }
@@ -165,7 +204,7 @@ export class PPTXRenderer {
    * 平坦化された要素を絶対座標でレンダリング
    * @param layoutResult レイアウト結果（絶対座標）
    */
-  private renderFlatElement(layoutResult: LayoutResult): void {
+  private async renderFlatElement(layoutResult: LayoutResult): Promise<void> {
     if (!this.currentSlide) {
       throw new Error("スライドが初期化されていません");
     }
@@ -177,7 +216,7 @@ export class PPTXRenderer {
         this.renderContainer(layoutResult, element as ContainerElement);
         break;
       case "frame":
-        this.renderFrame(layoutResult, element as FrameElement);
+        await this.renderFrame(layoutResult, element as FrameElement);
         break;
       case "shape":
         this.renderShape(layoutResult, element as ShapeElement);
@@ -211,7 +250,7 @@ export class PPTXRenderer {
    * @param layoutResult レイアウト結果
    * @param element frame要素
    */
-  private renderFrame(layoutResult: LayoutResult, element: FrameElement): void {
+  private async renderFrame(layoutResult: LayoutResult, element: FrameElement): Promise<void> {
     if (!this.currentSlide) return;
 
     const position = this.pixelsToInches(layoutResult);
@@ -225,16 +264,31 @@ export class PPTXRenderer {
       backgroundColor: style?.backgroundColor,
       background: style?.background, // グラデーション対応
       borderRadius: style?.borderRadius ? `${style.borderRadius}px` : undefined, // 数値をpx文字列に変換
-      glassEffect: style?.glassEffect // ガラス風効果
+      glassEffect: style?.glassEffect, // ガラス風効果
+      backgroundBlur: this.createBackgroundBlurOptions(layoutResult, style) // 背景ブラー効果
     };
 
-    const svg = this.svgGenerator.generateFrameSVG(svgOptions);
+    // 背景ブラー画像を先に配置
+    if (svgOptions.backgroundBlur) {
+      const blurredImageData = await this.svgGenerator.processBackgroundBlur(svgOptions.backgroundBlur);
+      if (blurredImageData) {
+        this.currentSlide.addImage({
+          data: blurredImageData,
+          x: position.x,
+          y: position.y,
+          w: position.w,
+          h: position.h,
+        });
+      }
+    }
+
+    const svg = await this.svgGenerator.generateFrameSVG(svgOptions);
     
     // SVGをBase64エンコード
     const svgBase64 = Buffer.from(svg).toString('base64');
     const dataUri = `data:image/svg+xml;base64,${svgBase64}`;
 
-    // addImageでSVGを描画
+    // addImageでSVGを描画（ガラス効果オーバーレイ）
     this.currentSlide.addImage({
       data: dataUri,
       x: position.x,

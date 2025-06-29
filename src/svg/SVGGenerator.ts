@@ -1,4 +1,5 @@
 import { Background, LinearGradient, RadialGradient } from '../types/elements.js';
+import sharp from 'sharp';
 
 export interface RectOptions {
   x: number;
@@ -17,10 +18,122 @@ export interface FrameSVGOptions {
   background?: Background;
   borderRadius?: string;  // "12px"形式の文字列のみ
   glassEffect?: boolean;  // ガラス風効果を有効化
+  backgroundBlur?: BackgroundBlurOptions;  // 背景画像ブラー効果
+}
+
+export interface BackgroundBlurOptions {
+  backgroundImagePath?: string; // 背景画像のファイルパス（オプション）
+  backgroundColor?: string;     // 背景色（画像がない場合）
+  frameX: number;              // フレームのX座標（ピクセル）
+  frameY: number;              // フレームのY座標（ピクセル）
+  frameWidth: number;          // フレームの幅（ピクセル）
+  frameHeight: number;         // フレームの高さ（ピクセル）
+  slideWidth: number;          // スライドの幅（ピクセル）
+  slideHeight: number;         // スライドの高さ（ピクセル）
+  borderRadius?: string;       // "16px"形式のborderRadius
+  blurStrength?: number;       // ブラー強度（デフォルト: 5）
+  quality?: number;            // 画質（デフォルト: 80）
 }
 
 export class SVGGenerator {
   private gradientId = 0;
+
+  /**
+   * 背景画像をクロップしてブラー処理を適用
+   */
+  async processBackgroundBlur(options: BackgroundBlurOptions): Promise<string> {
+    const { 
+      backgroundImagePath, 
+      backgroundColor,
+      frameX, 
+      frameY, 
+      frameWidth,
+      frameHeight,
+      slideWidth, 
+      slideHeight,
+      blurStrength = 5,
+      quality = 80 
+    } = options;
+
+    try {
+      // 座標の検証
+      const validLeft = Math.max(0, Math.floor(frameX));
+      const validTop = Math.max(0, Math.floor(frameY));
+      const validWidth = Math.min(Math.floor(frameWidth), slideWidth - validLeft);
+      const validHeight = Math.min(Math.floor(frameHeight), slideHeight - validTop);
+
+      let backgroundBuffer: Buffer;
+
+      if (backgroundImagePath) {
+        // 背景画像を読み込み、スライドサイズにリサイズ
+        backgroundBuffer = await sharp(backgroundImagePath)
+          .resize(slideWidth, slideHeight, { fit: 'cover' })
+          .toBuffer();
+      } else if (backgroundColor) {
+        // 背景色で塗りつぶした画像を生成
+        const color = backgroundColor.startsWith('#') ? backgroundColor : `#${backgroundColor}`;
+        backgroundBuffer = await sharp({
+          create: {
+            width: slideWidth,
+            height: slideHeight,
+            channels: 3,
+            background: color
+          }
+        }).png().toBuffer();
+      } else {
+        console.warn('No background image or color provided for blur effect');
+        return '';
+      }
+
+      // 先にブラーを適用してからクロップ（角の問題を解決）
+      const blurredBackground = await sharp(backgroundBuffer)
+        .blur(blurStrength)
+        .toBuffer();
+
+      // ブラー後にクロップ
+      let croppedBlurred = await sharp(blurredBackground)
+        .extract({ 
+          left: validLeft, 
+          top: validTop, 
+          width: validWidth, 
+          height: validHeight 
+        })
+        .toBuffer();
+
+      // borderRadiusが指定されている場合、角を丸くマスク
+      if (options.borderRadius) {
+        const radius = this.parseBorderRadius(options.borderRadius, validWidth, validHeight);
+        if (radius > 0) {
+          // SVGマスクを作成
+          const maskSvg = `
+            <svg width="${validWidth}" height="${validHeight}">
+              <rect width="${validWidth}" height="${validHeight}" rx="${radius}" ry="${radius}" fill="white"/>
+            </svg>
+          `;
+          
+          // マスクを適用してrounded borderを実現
+          croppedBlurred = await sharp(croppedBlurred)
+            .composite([{
+              input: Buffer.from(maskSvg),
+              blend: 'dest-in'
+            }])
+            .png()
+            .toBuffer();
+        }
+      }
+
+      // 最終的にWebP形式で圧縮
+      const finalBuffer = await sharp(croppedBlurred)
+        .webp({ quality })
+        .toBuffer();
+
+      // Base64エンコード
+      return `data:image/webp;base64,${finalBuffer.toString('base64')}`;
+    } catch (error) {
+      console.warn('Background blur processing failed:', error);
+      return '';
+    }
+  }
 
   /**
    * borderRadiusをピクセル値に変換し、要素サイズでクランプ
@@ -105,8 +218,8 @@ export class SVGGenerator {
     return `<rect ${attrs.join(' ')} />`;
   }
 
-  generateFrameSVG(options: FrameSVGOptions): string {
-    const { width, height, backgroundColor, background, borderRadius, glassEffect } = options;
+  async generateFrameSVG(options: FrameSVGOptions): Promise<string> {
+    const { width, height, backgroundColor, background, borderRadius, glassEffect, backgroundBlur } = options;
     
     let fill = 'none';
     let gradientDefs = '';
@@ -156,6 +269,9 @@ export class SVGGenerator {
     let rect = this.createRect(rectOptions);
     let filters = '';
     let glassElements = '';
+    let backgroundBlurElement = '';
+    
+    // 背景画像ブラー処理はPPTXRendererで別レイヤーとして処理するため、SVGには含めない
     
     // ガラス風効果を適用
     if (glassEffect) {
@@ -173,11 +289,11 @@ export class SVGGenerator {
     // Include gradient definitions and filters if needed
     const defs = (gradientDefs || filters) ? `<defs>${gradientDefs}${filters}</defs>` : '';
     
-    return `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">${defs}${rect}${glassElements}</svg>`;
+    return `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">${defs}${backgroundBlurElement}${rect}${glassElements}</svg>`;
   }
 
   /**
-   * ガラス風効果を生成 - examples/glass.svgベース
+   * ガラス風効果を生成 - docs/glass-effect.md準拠の現代的なマット仕上げ
    */
   private createGlassEffect(width: number, height: number, borderRadius?: string): {
     baseRect: string;
@@ -185,64 +301,51 @@ export class SVGGenerator {
     elements: string;
     gradients: string;
   } {
-    const filterId = `glow${++this.gradientId}`;
-    const glassGradId = `glassGrad${this.gradientId}`;
-    const reflectionId = `reflection${this.gradientId}`;
-    const borderGradId = `borderGrad${this.gradientId}`;
+    const glassGradId = `glassGrad${++this.gradientId}`;
+    const outerBorderGradId = `outerBorder${this.gradientId}`;
+    const innerBorderGradId = `innerBorder${this.gradientId}`;
     
     const radius = this.parseBorderRadius(borderRadius, width, height);
     
-    // グロー効果フィルター（examples/glass.svgベース）
-    const filters = `
-      <filter id="${filterId}" x="-20%" y="-20%" width="140%" height="140%">
-        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-        <feMerge>
-          <feMergeNode in="coloredBlur"/>
-          <feMergeNode in="SourceGraphic"/>
-        </feMerge>
-      </filter>
-    `;
+    // フィルターは使用しない（マットな質感重視）
+    const filters = '';
 
-    // ガラス効果用グラデーション（examples/glass.svgベース、stop-opacity使用）
+    // マットなガラス効果用グラデーション（透明度0.1-0.25範囲）
     const gradients = `
       <linearGradient id="${glassGradId}" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.3" />
+        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.25" />
         <stop offset="50%" stop-color="#ffffff" stop-opacity="0.15" />
-        <stop offset="100%" stop-color="#ffffff" stop-opacity="0.05" />
+        <stop offset="100%" stop-color="#ffffff" stop-opacity="0.1" />
       </linearGradient>
-      <linearGradient id="${reflectionId}" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.6" />
-        <stop offset="30%" stop-color="#ffffff" stop-opacity="0.2" />
-        <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
-      </linearGradient>
-      <linearGradient id="${borderGradId}" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.6" />
+      <linearGradient id="${outerBorderGradId}" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.5" />
         <stop offset="50%" stop-color="#ffffff" stop-opacity="0.3" />
         <stop offset="100%" stop-color="#ffffff" stop-opacity="0.2" />
       </linearGradient>
+      <linearGradient id="${innerBorderGradId}" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.3" />
+        <stop offset="50%" stop-color="#ffffff" stop-opacity="0.2" />
+        <stop offset="100%" stop-color="#ffffff" stop-opacity="0.1" />
+      </linearGradient>
     `;
 
-    // メインガラスパネル（examples/glass.svgベース）
+    // メインガラスパネル（二重ボーダー）
     const baseRect = `<rect x="0" y="0" width="${width}" height="${height}" 
       fill="url(#${glassGradId})" 
-      stroke="url(#${borderGradId})" 
-      stroke-width="1.5"
-      ${radius > 0 ? `rx="${radius}" ry="${radius}"` : ''}
-      filter="url(#${filterId})" />`;
+      stroke="url(#${outerBorderGradId})" 
+      stroke-width="2"
+      ${radius > 0 ? `rx="${radius}" ry="${radius}"` : ''} />`;
 
-    // 反射ハイライト（左上部分、サイズ調整）
-    const reflectionWidth = width * 0.4;
-    const reflectionHeight = height * 0.4;
-    const reflectionX = width * 0.02; // 全体の2%位置
-    const reflectionY = height * 0.02; // 全体の2%位置
-    const reflectionRadius = Math.max(radius * 0.75, 0); // 元の75%のサイズ
-
+    // 内側ボーダー（立体感演出）
+    const innerStrokeWidth = 1;
+    const innerOffset = 1; // 外側ボーダーとの間隔
     const elements = `
-      <rect x="${reflectionX}" y="${reflectionY}" 
-        width="${reflectionWidth}" height="${reflectionHeight}" 
-        ${reflectionRadius > 0 ? `rx="${reflectionRadius}" ry="${reflectionRadius}"` : ''}
-        fill="url(#${reflectionId})"
-        opacity="0.8" />
+      <rect x="${innerOffset}" y="${innerOffset}" 
+        width="${width - innerOffset * 2}" height="${height - innerOffset * 2}" 
+        fill="none" 
+        stroke="url(#${innerBorderGradId})" 
+        stroke-width="${innerStrokeWidth}"
+        ${radius > 0 ? `rx="${Math.max(radius - innerOffset, 0)}" ry="${Math.max(radius - innerOffset, 0)}"` : ''} />
     `;
 
     return {

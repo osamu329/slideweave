@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "pptxgenjs": "^4.0.1",
+    "sharp": "^0.34.2",
     "yoga-layout": "^3.2.1"
   }
 }

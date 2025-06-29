@@ -1,0 +1,44 @@
+{
+  "title": "Background Color Blur Glass Effect Test",
+  "description": "背景色をブラーしてガラス効果を実現するテスト",
+  "slides": [
+    {
+      "type": "slide",
+      "style": {
+        "backgroundColor": "4472C4",
+        "padding": 8
+      },
+      "children": [
+        {
+          "type": "frame",
+          "style": {
+            "glassEffect": true,
+            "backgroundColor": "FF6B6B",
+            "padding": 6,
+            "borderRadius": "16px",
+            "width": "60%"
+          },
+          "children": [
+            {
+              "type": "heading",
+              "content": "背景色ブラーガラス効果",
+              "level": 1,
+              "fontSize": 32,
+              "color": "FFFFFF",
+              "bold": true,
+              "style": {
+                "marginBottom": 3
+              }
+            },
+            {
+              "type": "text",
+              "content": "背景色もクロップ・ブラーしてガラス効果を実現。画像がなくても動作する。",
+              "fontSize": 16,
+              "color": "F0F0F0"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
