@@ -7,7 +7,7 @@ TypeScriptベースのPowerPointスライド作成ツール。4pxグリッドシ
 ## 技術スタック
 
 - **言語**: TypeScript
-- **ライブラリ**: PPTXGenJS, css-layout
+- **ライブラリ**: PPTXGenJS, css-layout, PostCSS
 - **テスト**: Jest
 - **Lint**: ESLint
 
@@ -75,7 +75,7 @@ output/                   # 生成されたPPTXファイル
 
 ## 開発方針
 
-- 4px単位のグリッドシステム
+- 明示的CSS単位システム（px, %, vw, vh）
 - Object記法でのレイアウト定義
 - PPTXGenJSを使用したPowerPoint生成
 - TypeScript厳格モード
@@ -83,39 +83,34 @@ output/                   # 生成されたPPTXファイル
 
 ## 単位システム
 
-SlideWeaveは2つの単位系をサポートします：
+SlideWeaveは明示的CSS単位のみをサポートします：
 
-### 無次元数値（4pxグリッド単位）
+### サポート単位
 ```json
 {
   "style": {
-    "width": 30,     // 30 × 4px = 240px
-    "height": 20,    // 20 × 4px = 160px
-    "margin": 4,     // 4 × 4px = 32px
-    "padding": 2     // 2 × 4px = 16px
+    "width": "640px",     // ピクセル単位
+    "height": "480px",    // ピクセル単位
+    "margin": "16px",     // ピクセル単位
+    "padding": "8px",     // ピクセル単位
+    "width": "50%",       // パーセンテージ
+    "height": "100vh",    // ビューポート高さ
+    "width": "75vw"       // ビューポート幅
   }
 }
 ```
 
-### 明示的単位（ピクセル）
-```json
-{
-  "style": {
-    "width": "640px",   // 正確に640px
-    "height": "480px",  // 正確に480px
-    "width": "50%"      // パーセンテージ（YogaLayoutEngineのみ）
-  }
-}
-```
-
-**推奨**: レスポンシブ設計には無次元数値、精密なサイズ指定には明示的単位を使用
+### 無次元数値の扱い
+- **非対応**: 無次元数値（例: `width: 30`）は警告が表示されます
+- **例外**: `flex`, `opacity`, `z-index`等の特定プロパティは無次元数値を許可
+- **フォールバック**: 無次元数値は自動的に`px`単位として解釈されます
 
 ## 設計ポイント
 
-### 単位変換の責務分離
-- **StyleConverter**: 無次元数値のみを4px単位に変換（`30 → "240px"`）
-- **YogaLayoutEngine**: 変換済み値をYogaに渡すだけ
-- **Yogaライブラリ**: パーセンテージ、vw/vh等の複雑な単位を処理
+### 単位システムの責務分離
+- **StyleConverter**: 単位付き文字列をそのまま渡し、無次元数値には警告を表示
+- **YogaLayoutEngine**: 単位付き文字列をYogaライブラリに直接渡す
+- **Yogaライブラリ**: px, %, vw, vh等のCSS単位を直接処理
 
 ### frame背景描画のSVG化
 - **従来**: PPTXGenJSのaddShapeで背景色描画
@@ -126,6 +121,25 @@ SlideWeaveは2つの単位系をサポートします：
 - **Red**: 失敗するテストケースを先に作成
 - **Green**: テストが通る最小限の実装
 - **Refactor**: 設計を改善、重複排除
+
+### PostCSSベースCSSライクスタイルシート機能 🚧
+- **OSN-162進行中**: CSSライクな記述でのスタイル指定機能
+- **目標**: JSONベース → CSSライク記述への移行
+- **対応範囲**: PowerPoint再現可能なCSSプロパティのみ
+- **実装方針**: PostCSS → JSONスタイルオブジェクト変換
+- **警告システム**: 非対応CSSプロパティの検出・代替案提示
+
+#### 対応予定CSSプロパティ
+- **レイアウト**: `width`, `height`, `padding`, `margin`, `flex-direction`
+- **背景**: `background-color`, `background-image`
+- **テキスト**: `font-size`, `font-family`, `color`, `text-align`
+- **境界**: `border`, `border-radius`
+
+#### 非対応CSSプロパティ（PowerPoint制約）
+- **フレックスボックス詳細**: `justify-content`, `align-items`, `flex-wrap`
+- **グリッド**: `display: grid`, `grid-template-*`
+- **疑似要素**: `::before`, `::after`
+- **メディアクエリ**: `@media`
 
 ## 実装注意点
 

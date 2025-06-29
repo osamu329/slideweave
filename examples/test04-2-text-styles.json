@@ -5,11 +5,11 @@
     {
       "type": "container",
       "style": {
-        "width": 3840,
-        "height": 2880,
-        "padding": 16,
+        "width": "15360px",
+        "height": "11520px",
+        "padding": "64px",
         "flexDirection": "column",
-        "gap": 8
+        "gap": "32px"
       },
       "children": [
         {
@@ -18,51 +18,51 @@
           "content": "テキストスタイルテスト",
           "color": "1e40af",
           "style": {
-            "marginBottom": 12
+            "marginBottom": "48px"
           }
         },
         {
           "type": "text",
           "content": "通常テキスト",
-          "fontSize": 16,
+          "fontSize": "16px",
           "color": "000000",
           "style": {
-            "marginBottom": 8,
-            "padding": 4
+            "marginBottom": "32px",
+            "padding": "16px"
           }
         },
         {
           "type": "text",
           "content": "太字テキスト",
-          "fontSize": 16,
+          "fontSize": "16px",
           "color": "000000",
           "bold": true,
           "style": {
-            "marginBottom": 8,
-            "padding": 8
+            "marginBottom": "32px",
+            "padding": "32px"
           }
         },
         {
           "type": "text",
           "content": "斜体テキスト",
-          "fontSize": 16,
+          "fontSize": "16px",
           "color": "000000",
           "italic": true,
           "style": {
-            "marginBottom": 8,
-            "padding": 8
+            "marginBottom": "32px",
+            "padding": "32px"
           }
         },
         {
           "type": "text",
           "content": "太字＋斜体テキスト",
-          "fontSize": 16,
+          "fontSize": "16px",
           "color": "000000",
           "bold": true,
           "italic": true,
           "style": {
-            "marginBottom": 8,
-            "padding": 12
+            "marginBottom": "32px",
+            "padding": "48px"
           }
         },
         {
@@ -71,8 +71,8 @@
           "content": "見出しでのスタイル",
           "color": "374151",
           "style": {
-            "marginBottom": 8,
-            "padding": 8
+            "marginBottom": "32px",
+            "padding": "32px"
           }
         },
         {
@@ -81,8 +81,8 @@
           "content": "通常見出し",
           "color": "374151",
           "style": {
-            "marginBottom": 4,
-            "padding": 4
+            "marginBottom": "16px",
+            "padding": "16px"
           }
         },
         {
@@ -92,8 +92,8 @@
           "color": "374151",
           "bold": true,
           "style": {
-            "marginBottom": 4,
-            "padding": 4
+            "marginBottom": "16px",
+            "padding": "16px"
           }
         },
         {
@@ -103,8 +103,8 @@
           "color": "374151",
           "italic": true,
           "style": {
-            "marginBottom": 4,
-            "padding": 4
+            "marginBottom": "16px",
+            "padding": "16px"
           }
         },
         {
@@ -115,7 +115,7 @@
           "bold": true,
           "italic": true,
           "style": {
-            "padding": 8
+            "padding": "32px"
           }
         }
       ]

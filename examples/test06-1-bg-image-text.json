@@ -7,14 +7,14 @@
       "style": {
         "backgroundImage": "./tmp/510.jpg",
         "backgroundSize": "cover",
-        "padding": 8
+        "padding": "32px"
       },
       "children": [
         {
           "type": "frame",
           "style": {
             "backgroundColor": "rgba(0,0,0,0.6)",
-            "padding": 4,
+            "padding": "16px",
             "borderRadius": "12px",
             "width": "70%"
           },
@@ -23,17 +23,17 @@
               "type": "heading",
               "content": "美しい風景",
               "level": 1,
-              "fontSize": 28,
+              "fontSize": "28px",
               "color": "FFFFFF",
               "bold": true,
               "style": {
-                "marginBottom": 2
+                "marginBottom": "8px"
               }
             },
             {
               "type": "text",
               "content": "自然の雄大さと静寂が調和した絶景。透明度の高い湖面に映る空と雲が美しい。",
-              "fontSize": 16,
+              "fontSize": "16px",
               "color": "E0E0E0"
             }
           ]

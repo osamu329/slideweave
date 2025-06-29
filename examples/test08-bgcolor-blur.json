@@ -6,7 +6,7 @@
       "type": "slide",
       "style": {
         "backgroundColor": "4472C4",
-        "padding": 8
+        "padding": "32px"
       },
       "children": [
         {
@@ -14,7 +14,7 @@
           "style": {
             "glassEffect": true,
             "backgroundColor": "FF6B6B",
-            "padding": 6,
+            "padding": "24px",
             "borderRadius": "16px",
             "width": "60%"
           },
@@ -23,17 +23,17 @@
               "type": "heading",
               "content": "背景色ブラーガラス効果",
               "level": 1,
-              "fontSize": 32,
+              "fontSize": "32px",
               "color": "FFFFFF",
               "bold": true,
               "style": {
-                "marginBottom": 3
+                "marginBottom": "12px"
               }
             },
             {
               "type": "text",
               "content": "背景色もクロップ・ブラーしてガラス効果を実現。画像がなくても動作する。",
-              "fontSize": 16,
+              "fontSize": "16px",
               "color": "F0F0F0"
             }
           ]
@@ -43,7 +43,7 @@
           "style": {
             "glassEffect": true,
             "backgroundColor": "32CD32",
-            "padding": 6,
+            "padding": "24px",
             "borderRadius": "16px",
             "width": "60%",
             "alignSelf": "flex-end"
@@ -53,17 +53,17 @@
               "type": "heading",
               "content": "2つ目のフレーム",
               "level": 2,
-              "fontSize": 24,
+              "fontSize": "24px",
               "color": "FFFFFF",
               "bold": true,
               "style": {
-                "marginBottom": 2
+                "marginBottom": "8px"
               }
             },
             {
               "type": "text",
               "content": "複数のガラスフレームでブラー効果をテスト。",
-              "fontSize": 14,
+              "fontSize": "14px",
               "color": "F0F0F0"
             }
           ]

@@ -5,14 +5,14 @@
     {
       "type": "frame",
       "style": {
-        "width": "960px",
-        "height": "720px",
+        "width": "3840px",
+        "height": "2880px",
         "backgroundColor": "f0f0f0",
-        "padding": 16,
+        "padding": "64px",
         "flexDirection": "column",
         "justifyContent": "flex-start",
         "alignItems": "flex-start",
-        "gap": 8
+        "gap": "32px"
       },
       "children": [
         {
@@ -21,23 +21,23 @@
           "content": "色設定のテスト",
           "color": "000080",
           "style": {
-            "margin": 8
+            "margin": "32px"
           }
         },
         {
           "type": "frame",
           "style": {
             "backgroundColor": "ff0000",
-            "padding": 8,
-            "width": "400px",
-            "height": "100px"
+            "padding": "32px",
+            "width": "1600px",
+            "height": "400px"
           },
           "children": [
             {
               "type": "text",
               "content": "赤背景に白文字のテキスト",
               "color": "ffffff",
-              "fontSize": 14
+              "fontSize": "14px"
             }
           ]
         },
@@ -45,17 +45,17 @@
           "type": "frame",
           "style": {
             "backgroundColor": "0000ff",
-            "padding": 8,
-            "width": "400px",
-            "height": "100px",
-            "marginTop": 8
+            "padding": "32px",
+            "width": "1600px",
+            "height": "400px",
+            "marginTop": "32px"
           },
           "children": [
             {
               "type": "text",
               "content": "青背景に黄色文字のテキスト",
               "color": "ffff00",
-              "fontSize": 14
+              "fontSize": "14px"
             }
           ]
         },
@@ -63,10 +63,10 @@
           "type": "frame",
           "style": {
             "backgroundColor": "008000",
-            "padding": 8,
-            "width": "400px",
-            "height": "100px",
-            "marginTop": 8
+            "padding": "32px",
+            "width": "1600px",
+            "height": "400px",
+            "marginTop": "32px"
           },
           "children": [
             {

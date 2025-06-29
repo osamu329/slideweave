@@ -5,11 +5,11 @@
     {
       "type": "container",
       "style": {
-        "width": 960,
-        "height": 720,
-        "padding": 4,
+        "width": "3840px",
+        "height": "2880px",
+        "padding": "16px",
         "flexDirection": "column",
-        "gap": 2
+        "gap": "8px"
       },
       "children": [
         {
@@ -23,15 +23,15 @@
           "style": {
             "backgroundColor": "ffcccc",
             "borderColor": "000000",
-            "borderWidth": 1,
-            "width": 500,
-            "height": 80
+            "borderWidth": "4px",
+            "width": "2000px",
+            "height": "320px"
           },
           "children": [
             {
               "type": "text",
               "content": "TOP - 上揃えテスト (現在の設定)",
-              "fontSize": 14,
+              "fontSize": "14px",
               "color": "000000"
             }
           ]
@@ -41,15 +41,15 @@
           "style": {
             "backgroundColor": "ccffcc",
             "borderColor": "000000",
-            "borderWidth": 1,
-            "width": 500,
-            "height": 80
+            "borderWidth": "4px",
+            "width": "2000px",
+            "height": "320px"
           },
           "children": [
             {
               "type": "text",
               "content": "MIDDLE - 中央揃えテスト (デフォルト想定)",
-              "fontSize": 14,
+              "fontSize": "14px",
               "color": "000000"
             }
           ]
@@ -59,15 +59,15 @@
           "style": {
             "backgroundColor": "ccccff",
             "borderColor": "000000",
-            "borderWidth": 1,
-            "width": 500,
-            "height": 80
+            "borderWidth": "4px",
+            "width": "2000px",
+            "height": "320px"
           },
           "children": [
             {
               "type": "text",
               "content": "BOTTOM - 下揃えテスト (想定)",
-              "fontSize": 14,
+              "fontSize": "14px",
               "color": "000000"
             }
           ]

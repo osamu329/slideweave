@@ -39,6 +39,15 @@ export interface RadialGradient {
 
 export type Background = string | LinearGradient | RadialGradient;
 
+export interface TextShadow {
+  type: "outer" | "inner";
+  color: string;
+  blur: number;
+  offset: number;
+  angle: number;
+  opacity?: number;
+}
+
 export interface BaseStyle {
   margin?: number;
   marginTop?: number;
@@ -62,10 +71,32 @@ export interface BaseStyle {
   width?: number | string;
   height?: number | string;
   flex?: number;
+  // テキスト関連プロパティ（CSS統合用）
+  fontSize?: number | string;
+  fontFamily?: string;
+  color?: string;
+  bold?: boolean;
+  italic?: boolean;
+  // レイアウト関連（CSS統合用）
+  alignSelf?: "auto" | "flex-start" | "flex-end" | "center" | "stretch";
+  justifyContent?:
+    | "flex-start"
+    | "flex-end"
+    | "center"
+    | "space-between"
+    | "space-around";
+  alignItems?: "flex-start" | "flex-end" | "center" | "stretch";
+  flexDirection?: "row" | "column";
+  flexWrap?: "nowrap" | "wrap";
+  minWidth?: number | string;
+  minHeight?: number | string;
+  maxWidth?: number | string;
+  maxHeight?: number | string;
 }
 
 export interface BaseElement {
   type: ElementType;
+  className?: string;  // CSSクラス名（CSSライクスタイルシート機能用）
   style?: BaseStyle;
   children?: Element[];
 }
@@ -114,6 +145,7 @@ export interface TextElement extends BaseElement {
   color?: string;
   bold?: boolean;
   italic?: boolean;
+  shadow?: TextShadow;
 }
 
 export interface HeadingElement extends BaseElement {
@@ -125,6 +157,7 @@ export interface HeadingElement extends BaseElement {
   color?: string;
   bold?: boolean;
   italic?: boolean;
+  shadow?: TextShadow;
 }
 
 export interface ListElement extends BaseElement {

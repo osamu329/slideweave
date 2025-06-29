@@ -10,6 +10,7 @@ import { YogaLayoutEngine } from "./YogaLayoutEngine";
 
 // 利用可能なレイアウトエンジン
 export enum LayoutEngineType {
+  // eslint-disable-next-line no-unused-vars
   YOGA = "yoga-layout",
 }
 

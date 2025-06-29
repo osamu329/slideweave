@@ -5,11 +5,11 @@
     {
       "type": "container",
       "style": {
-        "width": 3840,
-        "height": 2880,
-        "padding": 16,
+        "width": "15360px",
+        "height": "11520px",
+        "padding": "64px",
         "flexDirection": "column",
-        "gap": 8
+        "gap": "32px"
       },
       "children": [
         {
@@ -18,7 +18,7 @@
           "content": "margin/padding動作テスト",
           "color": "1e40af",
           "style": {
-            "marginBottom": 12
+            "marginBottom": "48px"
           }
         },
         {
@@ -27,37 +27,37 @@
           "content": "1. margin（要素間隔）テスト",
           "color": "374151",
           "style": {
-            "marginBottom": 8
+            "marginBottom": "32px"
           }
         },
         {
           "type": "text",
           "content": "margin: 0 のテキスト",
-          "fontSize": 14,
+          "fontSize": "14px",
           "color": "000000",
           "style": {
-            "margin": 0,
-            "marginBottom": 4
+            "margin": "0px",
+            "marginBottom": "16px"
           }
         },
         {
           "type": "text",
           "content": "margin: 2 のテキスト",
-          "fontSize": 14,
+          "fontSize": "14px",
           "color": "000000",
           "style": {
-            "margin": 8,
-            "marginBottom": 4
+            "margin": "32px",
+            "marginBottom": "16px"
           }
         },
         {
           "type": "text",
           "content": "margin: 4 のテキスト",
-          "fontSize": 14,
+          "fontSize": "14px",
           "color": "000000",
           "style": {
-            "margin": 16,
-            "marginBottom": 12
+            "margin": "64px",
+            "marginBottom": "48px"
           }
         },
         {
@@ -66,40 +66,40 @@
           "content": "2. padding（テキストフレーム内マージン）テスト",
           "color": "374151",
           "style": {
-            "marginBottom": 8
+            "marginBottom": "32px"
           }
         },
         {
           "type": "text",
           "content": "padding: 0 のテキスト",
-          "fontSize": 14,
+          "fontSize": "14px",
           "color": "ffffff",
           "style": {
-            "padding": 0,
+            "padding": "0px",
             "backgroundColor": "dc2626",
-            "marginBottom": 4
+            "marginBottom": "16px"
           }
         },
         {
           "type": "text",
           "content": "padding: 2 のテキスト",
-          "fontSize": 14,
+          "fontSize": "14px",
           "color": "ffffff",
           "style": {
-            "padding": 8,
+            "padding": "32px",
             "backgroundColor": "2563eb",
-            "marginBottom": 4
+            "marginBottom": "16px"
           }
         },
         {
           "type": "text",
           "content": "padding: 4 のテキスト",
-          "fontSize": 14,
+          "fontSize": "14px",
           "color": "ffffff",
           "style": {
-            "padding": 16,
+            "padding": "64px",
             "backgroundColor": "16a34a",
-            "marginBottom": 12
+            "marginBottom": "48px"
           }
         },
         {
@@ -108,42 +108,42 @@
           "content": "3. margin/padding組み合わせテスト",
           "color": "374151",
           "style": {
-            "marginBottom": 8
+            "marginBottom": "32px"
           }
         },
         {
           "type": "text",
           "content": "margin:1, padding:1",
-          "fontSize": 14,
+          "fontSize": "14px",
           "color": "ffffff",
           "style": {
-            "margin": 4,
-            "padding": 4,
+            "margin": "16px",
+            "padding": "16px",
             "backgroundColor": "7c3aed",
-            "marginBottom": 4
+            "marginBottom": "16px"
           }
         },
         {
           "type": "text",
           "content": "margin:3, padding:3",
-          "fontSize": 14,
+          "fontSize": "14px",
           "color": "ffffff",
           "style": {
-            "margin": 12,
-            "padding": 12,
+            "margin": "48px",
+            "padding": "48px",
             "backgroundColor": "f59e0b",
-            "marginBottom": 4
+            "marginBottom": "16px"
           }
         },
         {
           "type": "text",
           "content": "margin:2, padding:0（背景色なし）",
-          "fontSize": 14,
+          "fontSize": "14px",
           "color": "000000",
           "style": {
-            "margin": 8,
-            "padding": 0,
-            "marginBottom": 4
+            "margin": "32px",
+            "padding": "0px",
+            "marginBottom": "16px"
           }
         }
       ]

@@ -5,16 +5,16 @@
     {
       "type": "slide",
       "style": {
-        "padding": 16
+        "padding": "64px"
       },
       "children": [
         {
           "type": "heading",
           "content": "2段組みレイアウトデモ",
           "level": 1,
-          "fontSize": 28,
+          "fontSize": "28px",
           "style": {
-            "marginBottom": 8,
+            "marginBottom": "32px",
             "width": "100%"
           }
         },
@@ -23,7 +23,7 @@
           "style": {
             "direction": "row",
             "width": "100%",
-            "marginTop": 16
+            "marginTop": "8px"
           },
           "children": [
             {
@@ -37,15 +37,15 @@
                   "type": "heading",
                   "content": "左カラム",
                   "level": 3,
-                  "fontSize": 20,
+                  "fontSize": "20px",
                   "style": {
-                    "marginBottom": 8
+                    "marginBottom": "8px"
                   }
                 },
                 {
                   "type": "text",
                   "content": "これは左側のカラムです。2段組みレイアウトでは、コンテンツを左右に分割して表示します。この部分では主要な情報を記載します。",
-                  "fontSize": 14
+                  "fontSize": "14px"
                 }
               ]
             },
@@ -53,7 +53,7 @@
               "type": "container",
               "style": {
                 "flex": 4,
-                "marginLeft": 16,
+                "marginLeft": "8px",
                 "backgroundColor": "#F0FFF0"
               },
               "children": [
@@ -61,15 +61,15 @@
                   "type": "heading",
                   "content": "右カラム",
                   "level": 3,
-                  "fontSize": 20,
+                  "fontSize": "20px",
                   "style": {
-                    "marginBottom": 8
+                    "marginBottom": "8px"
                   }
                 },
                 {
                   "type": "text",
                   "content": "これは右側のカラムです。補足情報や詳細な説明、関連するデータなどを配置します。レイアウトエンジンの横並び配置機能をテストします。",
-                  "fontSize": 14
+                  "fontSize": "14px"
                 }
               ]
             }
@@ -80,7 +80,7 @@
           "style": {
             "direction": "column",
             "width": "100%",
-            "marginTop": 16,
+            "marginTop": "8px",
             "backgroundColor": "000000"
           },
           "children": [
@@ -88,15 +88,15 @@
               "type": "heading",
               "content": "左カラム",
               "level": 3,
-              "fontSize": 20,
+              "fontSize": "20px",
               "style": {
-                "marginBottom": 8
+                "marginBottom": "8px"
               }
             },
             {
               "type": "text",
               "content": "これは左側のカラムです。2段組みレイアウトでは、コンテンツを左右に分割して表示します。この部分では主要な情報を記載します。",
-              "fontSize": 14
+              "fontSize": "14px"
             }
           ]
         }

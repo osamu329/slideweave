@@ -7,7 +7,7 @@
       "style": {
         "backgroundImage": "./tmp/510.jpg",
         "backgroundSize": "cover",
-        "padding": 8
+        "padding": "32px"
       },
       "children": [
         {
@@ -15,7 +15,7 @@
           "style": {
             "backgroundColor": "rgba(255,255,255,0.1)",
             "glassEffect": true,
-            "padding": 6,
+            "padding": "24px",
             "borderRadius": "16px",
             "width": "60%"
           },
@@ -24,17 +24,17 @@
               "type": "heading",
               "content": "ガラス風効果",
               "level": 1,
-              "fontSize": 32,
+              "fontSize": "32px",
               "color": "FFFFFF",
               "bold": true,
               "style": {
-                "marginBottom": 3
+                "marginBottom": "12px"
               }
             },
             {
               "type": "text",
               "content": "SVGで実現したガラス風の半透明効果。背景がぼかされて美しく透けて見えます。",
-              "fontSize": 16,
+              "fontSize": "16px",
               "color": "F0F0F0"
             }
           ]

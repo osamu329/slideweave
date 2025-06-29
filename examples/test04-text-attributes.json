@@ -5,11 +5,11 @@
     {
       "type": "container",
       "style": {
-        "width": 3840,
-        "height": 2880,
-        "padding": 16,
+        "width": "15360px",
+        "height": "11520px",
+        "padding": "64px",
         "flexDirection": "column",
-        "gap": 8
+        "gap": "32px"
       },
       "children": [
         {
@@ -18,7 +18,7 @@
           "content": "テキスト属性テスト",
           "color": "1e40af",
           "style": {
-            "marginBottom": 12
+            "marginBottom": "48px"
           }
         },
         {
@@ -27,43 +27,43 @@
           "content": "1. フォントサイズテスト",
           "color": "374151",
           "style": {
-            "marginBottom": 8
+            "marginBottom": "32px"
           }
         },
         {
           "type": "text",
           "content": "10pt テキスト",
-          "fontSize": 10,
+          "fontSize": "10px",
           "color": "000000",
           "style": {
-            "marginBottom": 4
+            "marginBottom": "16px"
           }
         },
         {
           "type": "text",
           "content": "14pt テキスト (デフォルト)",
-          "fontSize": 14,
+          "fontSize": "14px",
           "color": "000000",
           "style": {
-            "marginBottom": 4
+            "marginBottom": "16px"
           }
         },
         {
           "type": "text",
           "content": "18pt テキスト",
-          "fontSize": 18,
+          "fontSize": "18px",
           "color": "000000",
           "style": {
-            "marginBottom": 4
+            "marginBottom": "16px"
           }
         },
         {
           "type": "text",
           "content": "24pt テキスト",
-          "fontSize": 24,
+          "fontSize": "24px",
           "color": "000000",
           "style": {
-            "marginBottom": 8
+            "marginBottom": "32px"
           }
         },
         {
@@ -72,43 +72,43 @@
           "content": "2. カラーテスト",
           "color": "374151",
           "style": {
-            "marginBottom": 8
+            "marginBottom": "32px"
           }
         },
         {
           "type": "text",
           "content": "黒色テキスト (デフォルト)",
-          "fontSize": 14,
+          "fontSize": "14px",
           "color": "000000",
           "style": {
-            "marginBottom": 4
+            "marginBottom": "16px"
           }
         },
         {
           "type": "text",
           "content": "赤色テキスト",
-          "fontSize": 14,
+          "fontSize": "14px",
           "color": "dc2626",
           "style": {
-            "marginBottom": 4
+            "marginBottom": "16px"
           }
         },
         {
           "type": "text",
           "content": "青色テキスト",
-          "fontSize": 14,
+          "fontSize": "14px",
           "color": "2563eb",
           "style": {
-            "marginBottom": 4
+            "marginBottom": "16px"
           }
         },
         {
           "type": "text",
           "content": "緑色テキスト",
-          "fontSize": 14,
+          "fontSize": "14px",
           "color": "16a34a",
           "style": {
-            "marginBottom": 8
+            "marginBottom": "32px"
           }
         },
         {
@@ -117,47 +117,47 @@
           "content": "3. スタイルテスト",
           "color": "374151",
           "style": {
-            "marginBottom": 8
+            "marginBottom": "32px"
           }
         },
         {
           "type": "text",
           "content": "通常テキスト",
-          "fontSize": 14,
+          "fontSize": "14px",
           "color": "000000",
           "style": {
-            "marginBottom": 4
+            "marginBottom": "16px"
           }
         },
         {
           "type": "text",
           "content": "太字テキスト",
-          "fontSize": 14,
+          "fontSize": "14px",
           "color": "000000",
           "bold": true,
           "style": {
-            "marginBottom": 4
+            "marginBottom": "16px"
           }
         },
         {
           "type": "text",
           "content": "斜体テキスト",
-          "fontSize": 14,
+          "fontSize": "14px",
           "color": "000000",
           "italic": true,
           "style": {
-            "marginBottom": 4
+            "marginBottom": "16px"
           }
         },
         {
           "type": "text",
           "content": "太字＋斜体テキスト",
-          "fontSize": 14,
+          "fontSize": "14px",
           "color": "000000",
           "bold": true,
           "italic": true,
           "style": {
-            "marginBottom": 8
+            "marginBottom": "32px"
           }
         },
         {
@@ -166,43 +166,43 @@
           "content": "4. フォントファミリーテスト",
           "color": "374151",
           "style": {
-            "marginBottom": 8
+            "marginBottom": "32px"
           }
         },
         {
           "type": "text",
           "content": "Arial フォント (デフォルト)",
-          "fontSize": 14,
+          "fontSize": "14px",
           "color": "000000",
           "fontFamily": "Arial",
           "style": {
-            "marginBottom": 4
+            "marginBottom": "16px"
           }
         },
         {
           "type": "text",
           "content": "Times New Roman フォント",
-          "fontSize": 14,
+          "fontSize": "14px",
           "color": "000000",
           "fontFamily": "Times New Roman",
           "style": {
-            "marginBottom": 4
+            "marginBottom": "16px"
           }
         },
         {
           "type": "text",
           "content": "Courier New フォント (等幅)",
-          "fontSize": 14,
+          "fontSize": "14px",
           "color": "000000",
           "fontFamily": "Courier New",
           "style": {
-            "marginBottom": 4
+            "marginBottom": "16px"
           }
         },
         {
           "type": "text",
           "content": "Calibri フォント",
-          "fontSize": 14,
+          "fontSize": "14px",
           "color": "000000",
           "fontFamily": "Calibri"
         }

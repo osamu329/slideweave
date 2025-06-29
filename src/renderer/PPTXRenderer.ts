@@ -11,6 +11,7 @@ import {
   ContainerElement,
   FrameElement,
   ShapeElement,
+  TextShadow,
 } from "../types/elements";
 import { SVGGenerator, BackgroundBlurOptions } from "../svg/SVGGenerator";
 
@@ -45,6 +46,20 @@ export class PPTXRenderer {
       height: this.options.slideHeight!,
     });
     this.pptx.layout = "SLIDEWEAVE_LAYOUT";
+  }
+
+  /**
+   * TextShadowをPPTXGenJSのshadowオプションに変換
+   */
+  private convertTextShadow(shadow: TextShadow): any {
+    return {
+      type: shadow.type,
+      color: shadow.color,
+      blur: shadow.blur,
+      offset: shadow.offset,
+      angle: shadow.angle,
+      ...(shadow.opacity !== undefined && { opacity: shadow.opacity }),
+    };
   }
 
   /**
@@ -387,6 +402,24 @@ export class PPTXRenderer {
   }
 
   /**
+   * CSS単位付き値から数値を抽出
+   * @param value 値（数値または単位付き文字列）
+   * @returns 数値
+   */
+  private extractNumericValue(value: string | number | undefined): number {
+    if (typeof value === 'number') {
+      return value;
+    }
+    if (typeof value === 'string') {
+      const numMatch = value.match(/^(\d+(?:\.\d+)?)/);
+      if (numMatch) {
+        return parseFloat(numMatch[1]);
+      }
+    }
+    return 0;
+  }
+
+  /**
    * textをレンダリング
    * @param layoutResult レイアウト結果
    * @param element text要素
@@ -395,19 +428,27 @@ export class PPTXRenderer {
     if (!this.currentSlide) return;
 
     const position = this.pixelsToInches(layoutResult);
-    const textOptions = {
+    const fontSize = this.extractNumericValue(element.style?.fontSize) || this.extractNumericValue(element.fontSize) || 12;
+    const padding = this.extractNumericValue(element.style?.padding) || 0;
+    
+    const textOptions: any = {
       ...position,
-      fontSize: element.fontSize || 12,
-      fontFace: element.fontFamily || "Arial",
-      color: element.color || "000000",
-      bold: element.bold || false,
-      italic: element.italic || false,
+      fontSize,
+      fontFace: element.style?.fontFamily || element.fontFamily || "Arial",
+      color: element.style?.color || element.color || "000000",
+      bold: element.style?.bold || element.bold || false,
+      italic: element.style?.italic || element.italic || false,
       // marginは要素間隔なのでaddTextに渡さない（レイアウトエンジンで処理済み）
       // paddingのみをテキストフレーム内マージンとして適用
-      margin: element.style?.padding !== undefined ? element.style.padding * 4 : 0, // paddingをPowerPointのmarginに適用
+      margin: padding, // paddingをPowerPointのmarginに適用（4pxグリッドシステム廃止のため乗算なし）
       valign: "top" as const, // 縦位置を上揃えに設定
       fill: element.style?.backgroundColor ? { color: element.style.backgroundColor } : undefined, // 背景色設定（型定義に合わせてオブジェクト形式）
     };
+
+    // shadowプロパティが指定されている場合は追加
+    if (element.shadow) {
+      textOptions.shadow = this.convertTextShadow(element.shadow);
+    }
 
     this.currentSlide.addText(element.content, textOptions);
   }
@@ -435,19 +476,25 @@ export class PPTXRenderer {
       6: 12,
     };
     const level = element.level || 1;
-    const fontSize = element.fontSize || fontSizeMap[level] || 16;
+    const fontSize = this.extractNumericValue(element.style?.fontSize) || this.extractNumericValue(element.fontSize) || fontSizeMap[level] || 16;
+    const padding = this.extractNumericValue(element.style?.padding) || 0;
 
-    const textOptions = {
+    const textOptions: any = {
       ...position,
       fontSize,
-      fontFace: element.fontFamily || "Arial",
-      color: element.color || "000000",
-      bold: element.bold !== undefined ? element.bold : true, // headingはデフォルトでbold
-      italic: element.italic || false,
-      margin: element.style?.padding !== undefined ? element.style.padding * 4 : 0, // paddingのみをPowerPointのmarginに適用
+      fontFace: element.style?.fontFamily || element.fontFamily || "Arial",
+      color: element.style?.color || element.color || "000000",
+      bold: element.style?.bold !== undefined ? element.style.bold : (element.bold !== undefined ? element.bold : true), // headingはデフォルトでbold
+      italic: element.style?.italic || element.italic || false,
+      margin: padding, // paddingのみをPowerPointのmarginに適用（4pxグリッドシステム廃止のため乗算なし）
       valign: "top" as const, // 縦位置を上揃えに設定
       fill: element.style?.backgroundColor ? { color: element.style.backgroundColor } : undefined, // 背景色設定（型定義に合わせてオブジェクト形式）
     };
+
+    // shadowプロパティが指定されている場合は追加
+    if (element.shadow) {
+      textOptions.shadow = this.convertTextShadow(element.shadow);
+    }
 
     this.currentSlide.addText(element.content, textOptions);
   }

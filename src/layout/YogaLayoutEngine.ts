@@ -88,52 +88,63 @@ export class YogaLayoutEngine implements ILayoutEngine {
       node.setFlexDirection(this.yoga.FLEX_DIRECTION_COLUMN);
     }
 
-    // Gap プロパティ: 8px単位をピクセルに変換
+    // Gap プロパティ: 単位付き文字列をYogaに直接渡す
     if (style.gap !== undefined) {
-      node.setGap(this.yoga.GUTTER_ALL, style.gap * 4);
+      const gapValue = StyleConverter.convertSpacingUnit(style.gap, 'gap');
+      node.setGap(this.yoga.GUTTER_ALL, gapValue);
     }
 
-    // Spacing: 8px単位をピクセルに変換
+    // Spacing: 単位付き文字列をYogaに直接渡す
     if (style.margin !== undefined) {
-      node.setMargin(this.yoga.EDGE_ALL, style.margin * 4);
+      const marginValue = StyleConverter.convertSpacingUnit(style.margin, 'margin');
+      node.setMargin(this.yoga.EDGE_ALL, marginValue);
     }
     if (style.marginTop !== undefined) {
-      node.setMargin(this.yoga.EDGE_TOP, style.marginTop * 4);
+      const marginTopValue = StyleConverter.convertSpacingUnit(style.marginTop, 'marginTop');
+      node.setMargin(this.yoga.EDGE_TOP, marginTopValue);
     }
     if (style.marginRight !== undefined) {
-      node.setMargin(this.yoga.EDGE_RIGHT, style.marginRight * 4);
+      const marginRightValue = StyleConverter.convertSpacingUnit(style.marginRight, 'marginRight');
+      node.setMargin(this.yoga.EDGE_RIGHT, marginRightValue);
     }
     if (style.marginBottom !== undefined) {
-      node.setMargin(this.yoga.EDGE_BOTTOM, style.marginBottom * 4);
+      const marginBottomValue = StyleConverter.convertSpacingUnit(style.marginBottom, 'marginBottom');
+      node.setMargin(this.yoga.EDGE_BOTTOM, marginBottomValue);
     }
     if (style.marginLeft !== undefined) {
-      node.setMargin(this.yoga.EDGE_LEFT, style.marginLeft * 4);
+      const marginLeftValue = StyleConverter.convertSpacingUnit(style.marginLeft, 'marginLeft');
+      node.setMargin(this.yoga.EDGE_LEFT, marginLeftValue);
     }
 
     if (style.padding !== undefined) {
-      node.setPadding(this.yoga.EDGE_ALL, style.padding * 4);
+      const paddingValue = StyleConverter.convertSpacingUnit(style.padding, 'padding');
+      node.setPadding(this.yoga.EDGE_ALL, paddingValue);
     }
     if (style.paddingTop !== undefined) {
-      node.setPadding(this.yoga.EDGE_TOP, style.paddingTop * 4);
+      const paddingTopValue = StyleConverter.convertSpacingUnit(style.paddingTop, 'paddingTop');
+      node.setPadding(this.yoga.EDGE_TOP, paddingTopValue);
     }
     if (style.paddingRight !== undefined) {
-      node.setPadding(this.yoga.EDGE_RIGHT, style.paddingRight * 4);
+      const paddingRightValue = StyleConverter.convertSpacingUnit(style.paddingRight, 'paddingRight');
+      node.setPadding(this.yoga.EDGE_RIGHT, paddingRightValue);
     }
     if (style.paddingBottom !== undefined) {
-      node.setPadding(this.yoga.EDGE_BOTTOM, style.paddingBottom * 4);
+      const paddingBottomValue = StyleConverter.convertSpacingUnit(style.paddingBottom, 'paddingBottom');
+      node.setPadding(this.yoga.EDGE_BOTTOM, paddingBottomValue);
     }
     if (style.paddingLeft !== undefined) {
-      node.setPadding(this.yoga.EDGE_LEFT, style.paddingLeft * 4);
+      const paddingLeftValue = StyleConverter.convertSpacingUnit(style.paddingLeft, 'paddingLeft');
+      node.setPadding(this.yoga.EDGE_LEFT, paddingLeftValue);
     }
 
-    // Dimensions: 無次元数値のみ変換、文字列（%、px、auto、vw等）はYogaに委譲
+    // Dimensions: 単位付き文字列をYogaに直接渡す
     if (style.width !== undefined) {
-      const widthValue = StyleConverter.convertDimensionUnit(style.width);
+      const widthValue = StyleConverter.convertDimensionUnit(style.width, 'width');
       // YogaライブラリのsetWidthに文字列を渡す（Yogaが適切に処理）
       node.setWidth(widthValue);
     }
     if (style.height !== undefined) {
-      const heightValue = StyleConverter.convertDimensionUnit(style.height);
+      const heightValue = StyleConverter.convertDimensionUnit(style.height, 'height');
       node.setHeight(heightValue);
     }
 
@@ -172,11 +183,50 @@ export class YogaLayoutEngine implements ILayoutEngine {
   }
 
   /**
+   * CSS単位付き値から数値を抽出
+   */
+  private extractNumericValue(value: string | number | undefined): number {
+    if (typeof value === 'number') {
+      return value;
+    }
+    if (typeof value === 'string') {
+      const numMatch = value.match(/^(\d+(?:\.\d+)?)/);
+      if (numMatch) {
+        return parseFloat(numMatch[1]);
+      }
+    }
+    return 0;
+  }
+
+  /**
    * テキスト要素のメジャー関数を設定
    */
   private setupTextMeasurement(node: any, element: Element): void {
     // テキスト・見出し要素の型チェック
-    const fontSize = ('fontSize' in element) ? element.fontSize || 14 : 14;
+    let fontSize = 14; // デフォルト値
+    
+    if ('fontSize' in element) {
+      // element.fontSizeプロパティから取得
+      fontSize = this.extractNumericValue(element.fontSize) || 14;
+    }
+    
+    if (element.style?.fontSize) {
+      // element.style.fontSizeから取得（こちらを優先）
+      fontSize = this.extractNumericValue(element.style.fontSize) || fontSize;
+    }
+    
+    // headingの場合のデフォルトフォントサイズ
+    if (element.type === 'heading' && 'level' in element) {
+      const fontSizeMap: Record<number, number> = {
+        1: 24, 2: 20, 3: 18, 4: 16, 5: 14, 6: 12,
+      };
+      const level = element.level || 1;
+      // fontSizeが明示的に設定されていない場合のみデフォルト値を使用
+      if (!element.style?.fontSize && !('fontSize' in element)) {
+        fontSize = fontSizeMap[level] || 16;
+      }
+    }
+    
     const content = ('content' in element) ? element.content || "" : "";
 
     node.setMeasureFunc((width: number, widthMode: number, _height: number, _heightMode: number) => {
