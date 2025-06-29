@@ -1,0 +1,44 @@
+{
+  "title": "Pure Glass Effect Test", 
+  "description": "背景色なし・ガラス効果のみのテスト",
+  "slides": [
+    {
+      "type": "slide",
+      "style": {
+        "backgroundImage": "./tmp/510.jpg",
+        "backgroundSize": "cover",
+        "padding": 8
+      },
+      "children": [
+        {
+          "type": "frame",
+          "style": {
+            "glassEffect": true,
+            "padding": 6,
+            "borderRadius": "16px",
+            "width": "60%"
+          },
+          "children": [
+            {
+              "type": "heading",
+              "content": "純粋ガラス効果",
+              "level": 1,
+              "fontSize": 32,
+              "color": "FFFFFF",
+              "bold": true,
+              "style": {
+                "marginBottom": 3
+              }
+            },
+            {
+              "type": "text",
+              "content": "背景色指定なし。ガラス効果のみで透過背景を実現。",
+              "fontSize": 16,
+              "color": "F0F0F0"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

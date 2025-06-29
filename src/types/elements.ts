@@ -56,6 +56,7 @@ export interface BaseStyle {
   background?: Background;
   backgroundImage?: string;
   backgroundSize?: "cover" | "contain" | "fit" | "none";
+  glassEffect?: boolean;
   borderColor?: string;
   borderWidth?: number;
   width?: number | string;

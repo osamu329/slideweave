@@ -16,6 +16,7 @@ export interface FrameSVGOptions {
   backgroundColor?: string;
   background?: Background;
   borderRadius?: string;  // "12px"形式の文字列のみ
+  glassEffect?: boolean;  // ガラス風効果を有効化
 }
 
 export class SVGGenerator {
@@ -105,7 +106,7 @@ export class SVGGenerator {
   }
 
   generateFrameSVG(options: FrameSVGOptions): string {
-    const { width, height, backgroundColor, background, borderRadius } = options;
+    const { width, height, backgroundColor, background, borderRadius, glassEffect } = options;
     
     let fill = 'none';
     let gradientDefs = '';
@@ -127,6 +128,9 @@ export class SVGGenerator {
     } else if (backgroundColor) {
       // Fallback to backgroundColor
       if (backgroundColor.startsWith('rgba(') || backgroundColor.startsWith('rgb(')) {
+        // PPTXGenJSはrgba()をサポートしないため、16進数色に変換が必要
+        // しかし、ここでは単純に透明度情報を失わないよう処理を変更
+        console.warn('rgba/rgb colors in SVG may not render correctly in PowerPoint');
         fill = backgroundColor;
       } else if (!backgroundColor.startsWith('#')) {
         fill = `#${backgroundColor}`;
@@ -149,11 +153,103 @@ export class SVGGenerator {
       rectOptions.ry = radius;
     }
 
-    const rect = this.createRect(rectOptions);
+    let rect = this.createRect(rectOptions);
+    let filters = '';
+    let glassElements = '';
     
-    // Include gradient definitions if needed
-    const defs = gradientDefs ? `<defs>${gradientDefs}</defs>` : '';
+    // ガラス風効果を適用
+    if (glassEffect) {
+      const glassResult = this.createGlassEffect(width, height, borderRadius);
+      rect = glassResult.baseRect;
+      filters = glassResult.filters;
+      glassElements = glassResult.elements;
+      gradientDefs += glassResult.gradients;
+    } else if (fill === 'none' && glassEffect === false) {
+      // 通常のフレームで背景色が指定されていない場合は透明にする
+      rectOptions.fill = 'transparent';
+      rect = this.createRect(rectOptions);
+    }
     
-    return `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">${defs}${rect}</svg>`;
+    // Include gradient definitions and filters if needed
+    const defs = (gradientDefs || filters) ? `<defs>${gradientDefs}${filters}</defs>` : '';
+    
+    return `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">${defs}${rect}${glassElements}</svg>`;
+  }
+
+  /**
+   * ガラス風効果を生成 - examples/glass.svgベース
+   */
+  private createGlassEffect(width: number, height: number, borderRadius?: string): {
+    baseRect: string;
+    filters: string;
+    elements: string;
+    gradients: string;
+  } {
+    const filterId = `glow${++this.gradientId}`;
+    const glassGradId = `glassGrad${this.gradientId}`;
+    const reflectionId = `reflection${this.gradientId}`;
+    const borderGradId = `borderGrad${this.gradientId}`;
+    
+    const radius = this.parseBorderRadius(borderRadius, width, height);
+    
+    // グロー効果フィルター（examples/glass.svgベース）
+    const filters = `
+      <filter id="${filterId}" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+        <feMerge>
+          <feMergeNode in="coloredBlur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+    `;
+
+    // ガラス効果用グラデーション（examples/glass.svgベース、stop-opacity使用）
+    const gradients = `
+      <linearGradient id="${glassGradId}" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.3" />
+        <stop offset="50%" stop-color="#ffffff" stop-opacity="0.15" />
+        <stop offset="100%" stop-color="#ffffff" stop-opacity="0.05" />
+      </linearGradient>
+      <linearGradient id="${reflectionId}" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.6" />
+        <stop offset="30%" stop-color="#ffffff" stop-opacity="0.2" />
+        <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+      </linearGradient>
+      <linearGradient id="${borderGradId}" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.6" />
+        <stop offset="50%" stop-color="#ffffff" stop-opacity="0.3" />
+        <stop offset="100%" stop-color="#ffffff" stop-opacity="0.2" />
+      </linearGradient>
+    `;
+
+    // メインガラスパネル（examples/glass.svgベース）
+    const baseRect = `<rect x="0" y="0" width="${width}" height="${height}" 
+      fill="url(#${glassGradId})" 
+      stroke="url(#${borderGradId})" 
+      stroke-width="1.5"
+      ${radius > 0 ? `rx="${radius}" ry="${radius}"` : ''}
+      filter="url(#${filterId})" />`;
+
+    // 反射ハイライト（左上部分、サイズ調整）
+    const reflectionWidth = width * 0.4;
+    const reflectionHeight = height * 0.4;
+    const reflectionX = width * 0.02; // 全体の2%位置
+    const reflectionY = height * 0.02; // 全体の2%位置
+    const reflectionRadius = Math.max(radius * 0.75, 0); // 元の75%のサイズ
+
+    const elements = `
+      <rect x="${reflectionX}" y="${reflectionY}" 
+        width="${reflectionWidth}" height="${reflectionHeight}" 
+        ${reflectionRadius > 0 ? `rx="${reflectionRadius}" ry="${reflectionRadius}"` : ''}
+        fill="url(#${reflectionId})"
+        opacity="0.8" />
+    `;
+
+    return {
+      baseRect,
+      filters,
+      elements,
+      gradients
+    };
   }
 }

@@ -224,7 +224,8 @@ export class PPTXRenderer {
       height: layoutResult.height, // 実際のレイアウトサイズ（ピクセル）
       backgroundColor: style?.backgroundColor,
       background: style?.background, // グラデーション対応
-      borderRadius: style?.borderRadius ? `${style.borderRadius}px` : undefined // 数値をpx文字列に変換
+      borderRadius: style?.borderRadius ? `${style.borderRadius}px` : undefined, // 数値をpx文字列に変換
+      glassEffect: style?.glassEffect // ガラス風効果
     };
 
     const svg = this.svgGenerator.generateFrameSVG(svgOptions);
