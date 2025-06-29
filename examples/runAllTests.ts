@@ -23,9 +23,7 @@ async function runAllTests() {
     return;
   }
   
-  console.log(`📁 ${jsonFiles.length}個のテストケースを発見:`);
-  jsonFiles.forEach(file => console.log(`  - ${file}`));
-  console.log('');
+  console.log(`📁 ${jsonFiles.length}個のテストケースを発見`);
   
   let successCount = 0;
   let failureCount = 0;
@@ -33,18 +31,17 @@ async function runAllTests() {
   // 各JSONファイルを順次実行
   for (const jsonFile of jsonFiles) {
     try {
-      console.log(`\n${'='.repeat(60)}`);
-      console.log(`🔧 実行中: ${jsonFile}`);
-      console.log(`${'='.repeat(60)}`);
+      process.stdout.write(`🔧 ${jsonFile}... `);
       
       await runTest(jsonFile);
       successCount++;
       
-      console.log(`✅ ${jsonFile} 処理完了`);
+      console.log(`✅`);
       
     } catch (error) {
       failureCount++;
-      console.error(`❌ ${jsonFile} 処理失敗:`, error);
+      console.log(`❌`);
+      console.error(`  エラー: ${error.message}`);
     }
   }
   

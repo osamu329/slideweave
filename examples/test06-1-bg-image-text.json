@@ -1,0 +1,44 @@
+{
+  "title": "Background Image with Text",
+  "description": "背景画像 + 半透明フレーム + テキストの組み合わせテスト",
+  "slides": [
+    {
+      "type": "slide",
+      "style": {
+        "backgroundImage": "./tmp/510.jpg",
+        "backgroundSize": "cover",
+        "padding": 32
+      },
+      "children": [
+        {
+          "type": "frame",
+          "style": {
+            "backgroundColor": "rgba(0,0,0,0.6)",
+            "padding": 24,
+            "borderRadius": "16px",
+            "width": "80%"
+          },
+          "children": [
+            {
+              "type": "heading",
+              "content": "美しい風景",
+              "level": 1,
+              "fontSize": 36,
+              "color": "FFFFFF",
+              "bold": true,
+              "style": {
+                "marginBottom": 16
+              }
+            },
+            {
+              "type": "text",
+              "content": "この美しい山と湖の風景は、自然の雄大さと静寂を物語っています。透明度の高い湖面に映る空と雲、そして緑豊かな森林が調和した絶景です。",
+              "fontSize": 18,
+              "color": "E0E0E0"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

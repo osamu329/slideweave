@@ -54,6 +54,8 @@ export interface BaseStyle {
   gap?: number;
   backgroundColor?: string;
   background?: Background;
+  backgroundImage?: string;
+  backgroundSize?: "cover" | "contain" | "fit" | "none";
   borderColor?: string;
   borderWidth?: number;
   width?: number | string;

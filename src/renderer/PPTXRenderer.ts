@@ -29,33 +29,136 @@ export class PPTXRenderer {
     this.pptx = new PptxGenJS();
     this.svgGenerator = new SVGGenerator();
 
-    // スライドサイズ設定（デフォルト: 10x7.5インチ）
+    // スライドサイズ設定（デフォルト: 10x5.625インチ = 16:9）
     this.pptx.defineLayout({
       name: "SLIDEWEAVE_LAYOUT",
       width: options.slideWidth || 10,
-      height: options.slideHeight || 7.5,
+      height: options.slideHeight || 5.625,
     });
     this.pptx.layout = "SLIDEWEAVE_LAYOUT";
   }
 
   /**
    * レイアウト結果からPPTXファイルを生成
+   * @param elements 要素配列 (テスト用)
+   * @param layoutResults レイアウト計算結果配列 (テスト用)
+   * @returns PPTXGenJS インスタンス
+   */
+  render(elements: any[], layoutResults: LayoutResult[]): PptxGenJS;
+  /**
+   * レイアウト結果からPPTXファイルを生成
    * @param layoutResult レイアウト計算結果
    * @returns PPTXGenJS インスタンス
    */
-  render(layoutResult: LayoutResult): PptxGenJS {
+  render(layoutResult: LayoutResult): PptxGenJS;
+  render(elementsOrLayoutResult: any[] | LayoutResult, layoutResults?: LayoutResult[]): PptxGenJS {
     // 新しいスライドを作成
     this.currentSlide = this.pptx.addSlide();
 
-    // 相対座標を絶対座標に変換して平坦化
-    const flatElements = flattenLayout(layoutResult);
+    // テスト用のオーバーロード処理
+    if (Array.isArray(elementsOrLayoutResult) && layoutResults) {
+      const layoutResult = layoutResults[0];
+      // スライドレベルの背景画像を先に描画
+      this.renderSlideBackground(layoutResult);
 
-    // 各要素を絶対座標でレンダリング
-    flatElements.forEach((element) => {
-      this.renderFlatElement(element);
-    });
+      // 相対座標を絶対座標に変換して平坦化
+      const flatElements = flattenLayout(layoutResult);
+
+      // 各要素を絶対座標でレンダリング
+      flatElements.forEach((element) => {
+        this.renderFlatElement(element);
+      });
+    } else {
+      const layoutResult = elementsOrLayoutResult as LayoutResult;
+      // スライドレベルの背景画像を先に描画
+      this.renderSlideBackground(layoutResult);
+
+      // 相対座標を絶対座標に変換して平坦化
+      const flatElements = flattenLayout(layoutResult);
+
+      // 各要素を絶対座標でレンダリング
+      flatElements.forEach((element) => {
+        this.renderFlatElement(element);
+      });
+    }
 
     return this.pptx;
+  }
+
+  /**
+   * スライドレベルの背景画像を描画
+   * @param layoutResult レイアウト結果
+   */
+  private renderSlideBackground(layoutResult: LayoutResult): void {
+    if (!this.currentSlide) return;
+
+    const element = layoutResult.element;
+    const style = element.style;
+
+    // backgroundImageが指定されている場合のみ描画
+    if (style?.backgroundImage) {
+      this.addBackgroundImage(style.backgroundImage, style.backgroundSize, layoutResult);
+    }
+  }
+
+  /**
+   * 背景画像をスライドに追加
+   * @param imagePath 画像パス
+   * @param backgroundSize サイズ指定
+   * @param layoutResult レイアウト結果
+   */
+  private addBackgroundImage(
+    imagePath: string,
+    backgroundSize: "cover" | "contain" | "fit" | "none" | undefined,
+    layoutResult: LayoutResult
+  ): void {
+    if (!this.currentSlide) return;
+
+    const position = this.pixelsToInches(layoutResult);
+    
+    // backgroundSizeに応じたsizingオプションを設定
+    let sizingOption: any = undefined;
+    
+    if (backgroundSize !== "none") {
+      const sizeType = this.mapBackgroundSizeToSizing(backgroundSize);
+      sizingOption = {
+        type: sizeType,
+        w: position.w,
+        h: position.h,
+      };
+    }
+
+    const imageOptions: any = {
+      path: imagePath,
+      x: position.x,
+      y: position.y,
+      w: backgroundSize === "none" ? undefined : "100%",
+      h: backgroundSize === "none" ? undefined : "100%",
+    };
+
+    // sizingオプションを条件付きで追加
+    if (sizingOption) {
+      imageOptions.sizing = sizingOption;
+    }
+
+    this.currentSlide.addImage(imageOptions);
+  }
+
+  /**
+   * backgroundSizeをPPTXGenJSのsizingタイプにマッピング
+   * @param backgroundSize backgroundSizeの値
+   * @returns PPTXGenJSのsizingタイプ
+   */
+  private mapBackgroundSizeToSizing(backgroundSize: "cover" | "contain" | "fit" | "none" | undefined): string {
+    switch (backgroundSize) {
+      case "contain":
+        return "contain";
+      case "fit":
+        return "crop";
+      case "cover":
+      default:
+        return "cover";
+    }
   }
 
   /**
