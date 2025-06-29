@@ -1,6 +1,6 @@
 {
-  "title": "Background Image with Text",
-  "description": "背景画像 + 半透明フレーム + テキストの組み合わせテスト",
+  "title": "Glass Effect Background Test",
+  "description": "SVGガラス風効果背景のテスト",
   "slides": [
     {
       "type": "slide",
@@ -13,28 +13,29 @@
         {
           "type": "frame",
           "style": {
-            "backgroundColor": "rgba(0,0,0,0.6)",
-            "padding": 4,
-            "borderRadius": "12px",
-            "width": "70%"
+            "backgroundColor": "rgba(255,255,255,0.1)",
+            "glassEffect": true,
+            "padding": 6,
+            "borderRadius": "16px",
+            "width": "60%"
           },
           "children": [
             {
               "type": "heading",
-              "content": "美しい風景",
+              "content": "ガラス風効果",
               "level": 1,
-              "fontSize": 28,
+              "fontSize": 32,
               "color": "FFFFFF",
               "bold": true,
               "style": {
-                "marginBottom": 2
+                "marginBottom": 3
               }
             },
             {
               "type": "text",
-              "content": "自然の雄大さと静寂が調和した絶景。透明度の高い湖面に映る空と雲が美しい。",
+              "content": "SVGで実現したガラス風の半透明効果。背景がぼかされて美しく透けて見えます。",
               "fontSize": 16,
-              "color": "E0E0E0"
+              "color": "F0F0F0"
             }
           ]
         }
