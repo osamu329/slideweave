@@ -1,5 +1,7 @@
 import { Background, LinearGradient, RadialGradient } from '../types/elements.js';
 import sharp from 'sharp';
+import * as path from 'path';
+import * as fs from 'fs';
 
 export interface RectOptions {
   x: number;
@@ -39,7 +41,8 @@ export class SVGGenerator {
   private gradientId = 0;
 
   /**
-   * 背景画像をクロップしてブラー処理を適用
+   * 背景画像をクロップしてブラー処理を適用し、ファイルとして保存
+   * @returns 保存されたファイルのパス（相対パス）
    */
   async processBackgroundBlur(options: BackgroundBlurOptions): Promise<string> {
     const { 
@@ -122,13 +125,25 @@ export class SVGGenerator {
         }
       }
 
-      // 最終的にWebP形式で圧縮
-      const finalBuffer = await sharp(croppedBlurred)
-        .webp({ quality })
-        .toBuffer();
+      // ユニークなファイル名を生成（タイムスタンプとハッシュベース）
+      const timestamp = Date.now();
+      const hash = Math.random().toString(36).substring(2, 8);
+      const filename = `blur-${timestamp}-${hash}.png`;
+      const outputDir = path.join(process.cwd(), 'examples', 'output');
+      const filePath = path.join(outputDir, filename);
 
-      // Base64エンコード
-      return `data:image/webp;base64,${finalBuffer.toString('base64')}`;
+      // 出力ディレクトリが存在しない場合は作成
+      if (!fs.existsSync(outputDir)) {
+        fs.mkdirSync(outputDir, { recursive: true });
+      }
+
+      // PNG形式でファイルに保存（Web互換性のため）
+      await sharp(croppedBlurred)
+        .png({ quality: Math.round(quality * 0.9) }) // PNGの場合は品質を少し調整
+        .toFile(filePath);
+
+      // 相対パスを返す（examples/output/からの相対パス）
+      return `./${filename}`;
     } catch (error) {
       console.warn('Background blur processing failed:', error);
       return '';
@@ -219,7 +234,7 @@ export class SVGGenerator {
   }
 
   async generateFrameSVG(options: FrameSVGOptions): Promise<string> {
-    const { width, height, backgroundColor, background, borderRadius, glassEffect, backgroundBlur } = options;
+    const { width, height, backgroundColor, background, borderRadius, glassEffect } = options;
     
     let fill = 'none';
     let gradientDefs = '';
@@ -269,7 +284,7 @@ export class SVGGenerator {
     let rect = this.createRect(rectOptions);
     let filters = '';
     let glassElements = '';
-    let backgroundBlurElement = '';
+    const backgroundBlurElement = '';
     
     // 背景画像ブラー処理はPPTXRendererで別レイヤーとして処理するため、SVGには含めない
     

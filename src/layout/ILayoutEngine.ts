@@ -26,9 +26,9 @@ export interface ILayoutEngine {
    * @returns レイアウト結果
    */
   renderLayout(
-    element: Element,
-    containerWidth?: number,
-    containerHeight?: number,
+    _element: Element,
+    _containerWidth?: number,
+    _containerHeight?: number,
   ): LayoutResult | Promise<LayoutResult>;
 
   /**

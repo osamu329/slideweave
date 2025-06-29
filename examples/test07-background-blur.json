@@ -37,6 +37,35 @@
               "color": "F0F0F0"
             }
           ]
+        },
+        {
+          "type": "frame",
+          "style": {
+            "glassEffect": true,
+            "padding": 6,
+            "borderRadius": "12px",
+            "width": "50%",
+            "marginLeft": 20
+          },
+          "children": [
+            {
+              "type": "heading",
+              "content": "右側フレーム",
+              "level": 2,
+              "fontSize": 24,
+              "color": "FFFFFF",
+              "bold": true,
+              "style": {
+                "marginBottom": 2
+              }
+            },
+            {
+              "type": "text",
+              "content": "複数フレームでの背景画像ブラー効果をテスト。",
+              "fontSize": 14,
+              "color": "F0F0F0"
+            }
+          ]
         }
       ]
     }

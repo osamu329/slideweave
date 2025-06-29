@@ -25,6 +25,8 @@ export class PPTXRenderer {
   private currentSlide: PptxGenJS.Slide | null = null;
   private svgGenerator: SVGGenerator;
   private currentBackgroundImage: string | null = null;
+  private currentBackgroundColor: string | null = null;
+  private options: PPTXRenderOptions;
 
   constructor(options: PPTXRenderOptions = {}) {
     this.pptx = new PptxGenJS();
@@ -53,8 +55,8 @@ export class PPTXRenderer {
       return undefined;
     }
 
-    // 背景画像または背景色のいずれかが必要
-    if (!this.currentBackgroundImage && !style?.backgroundColor) {
+    // 背景画像またはスライド背景色のいずれかが必要
+    if (!this.currentBackgroundImage && !this.currentBackgroundColor) {
       return undefined;
     }
 
@@ -63,7 +65,7 @@ export class PPTXRenderer {
 
     return {
       backgroundImagePath: this.currentBackgroundImage || undefined,
-      backgroundColor: style?.backgroundColor || undefined,
+      backgroundColor: this.currentBackgroundColor || undefined, // スライド背景色を使用
       frameX: layoutResult.left || 0,
       frameY: layoutResult.top || 0,
       frameWidth: layoutResult.width,
@@ -78,17 +80,10 @@ export class PPTXRenderer {
 
   /**
    * レイアウト結果からPPTXファイルを生成
-   * @param elements 要素配列 (テスト用)
-   * @param layoutResults レイアウト計算結果配列 (テスト用)
+   * @param elementsOrLayoutResult 要素配列またはレイアウト結果
+   * @param layoutResults レイアウト計算結果配列 (要素配列の場合のみ)
    * @returns PPTXGenJS インスタンス
    */
-  render(elements: any[], layoutResults: LayoutResult[]): Promise<PptxGenJS>;
-  /**
-   * レイアウト結果からPPTXファイルを生成
-   * @param layoutResult レイアウト計算結果
-   * @returns PPTXGenJS インスタンス
-   */
-  render(layoutResult: LayoutResult): Promise<PptxGenJS>;
   async render(elementsOrLayoutResult: any[] | LayoutResult, layoutResults?: LayoutResult[]): Promise<PptxGenJS> {
     // 新しいスライドを作成
     this.currentSlide = this.pptx.addSlide();
@@ -133,10 +128,16 @@ export class PPTXRenderer {
     const element = layoutResult.element;
     const style = element.style;
 
-    // backgroundImageが指定されている場合のみ描画
+    // 背景情報を保存
     if (style?.backgroundImage) {
       this.currentBackgroundImage = style.backgroundImage; // 背景画像パスを保存
       this.addBackgroundImage(style.backgroundImage, style.backgroundSize, layoutResult);
+    }
+    
+    if (style?.backgroundColor) {
+      this.currentBackgroundColor = style.backgroundColor; // 背景色を保存
+      // スライドの背景色を設定
+      this.currentSlide.background = { color: style.backgroundColor };
     }
   }
 
@@ -219,7 +220,7 @@ export class PPTXRenderer {
         await this.renderFrame(layoutResult, element as FrameElement);
         break;
       case "shape":
-        this.renderShape(layoutResult, element as ShapeElement);
+        await this.renderShape(layoutResult, element as ShapeElement);
         break;
       case "text":
         this.renderText(layoutResult, element as TextElement);
@@ -270,10 +271,15 @@ export class PPTXRenderer {
 
     // 背景ブラー画像を先に配置
     if (svgOptions.backgroundBlur) {
-      const blurredImageData = await this.svgGenerator.processBackgroundBlur(svgOptions.backgroundBlur);
-      if (blurredImageData) {
+      const blurredImagePath = await this.svgGenerator.processBackgroundBlur(svgOptions.backgroundBlur);
+      if (blurredImagePath) {
+        // examples/output/からの相対パスを絶対パスに変換
+        const absolutePath = blurredImagePath.startsWith('./') 
+          ? blurredImagePath.replace('./', 'examples/output/')
+          : blurredImagePath;
+        
         this.currentSlide.addImage({
-          data: blurredImageData,
+          path: absolutePath,
           x: position.x,
           y: position.y,
           w: position.w,
@@ -303,7 +309,7 @@ export class PPTXRenderer {
    * @param layoutResult レイアウト結果
    * @param element shape要素
    */
-  private renderShape(layoutResult: LayoutResult, element: ShapeElement): void {
+  private async renderShape(layoutResult: LayoutResult, element: ShapeElement): Promise<void> {
     if (!this.currentSlide) return;
 
     const position = this.pixelsToInches(layoutResult);
@@ -320,7 +326,7 @@ export class PPTXRenderer {
         borderRadius: element.shapeType === 'circle' ? `${Math.min(layoutResult.width, layoutResult.height) / 2}px` : undefined
       };
 
-      const svg = this.svgGenerator.generateFrameSVG(svgOptions);
+      const svg = await this.svgGenerator.generateFrameSVG(svgOptions);
       
       // SVGをBase64エンコード
       const svgBase64 = Buffer.from(svg).toString('base64');

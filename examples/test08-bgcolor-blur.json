@@ -37,6 +37,36 @@
               "color": "F0F0F0"
             }
           ]
+        },
+        {
+          "type": "frame",
+          "style": {
+            "glassEffect": true,
+            "backgroundColor": "32CD32",
+            "padding": 6,
+            "borderRadius": "16px",
+            "width": "60%",
+            "alignSelf": "flex-end"
+          },
+          "children": [
+            {
+              "type": "heading",
+              "content": "2つ目のフレーム",
+              "level": 2,
+              "fontSize": 24,
+              "color": "FFFFFF",
+              "bold": true,
+              "style": {
+                "marginBottom": 2
+              }
+            },
+            {
+              "type": "text",
+              "content": "複数のガラスフレームでブラー効果をテスト。",
+              "fontSize": 14,
+              "color": "F0F0F0"
+            }
+          ]
         }
       ]
     }
