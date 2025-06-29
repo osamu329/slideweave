@@ -432,8 +432,8 @@ export class PPTXRenderer {
       fontSize,
       fontFace: element.style?.fontFamily || element.fontFamily || "Arial",
       color: element.style?.color || element.color || "000000",
-      bold: element.style?.bold || element.bold || false,
-      italic: element.style?.italic || element.italic || false,
+      bold: this.isBold(element.style?.fontWeight),
+      italic: this.isItalic(element.style?.fontStyle),
       // marginは要素間隔なのでaddTextに渡さない（レイアウトエンジンで処理済み）
       // paddingのみをテキストフレーム内マージンとして適用
       margin: padding, // paddingをPowerPointのmarginに適用（4pxグリッドシステム廃止のため乗算なし）
@@ -480,8 +480,8 @@ export class PPTXRenderer {
       fontSize,
       fontFace: element.style?.fontFamily || element.fontFamily || "Arial",
       color: element.style?.color || element.color || "000000",
-      bold: element.style?.bold !== undefined ? element.style.bold : (element.bold !== undefined ? element.bold : true), // headingはデフォルトでbold
-      italic: element.style?.italic || element.italic || false,
+      bold: this.isBold(element.style?.fontWeight, true), // headingはデフォルトでbold
+      italic: this.isItalic(element.style?.fontStyle),
       margin: padding, // paddingのみをPowerPointのmarginに適用（4pxグリッドシステム廃止のため乗算なし）
       valign: "top" as const, // 縦位置を上揃えに設定
       fill: element.style?.backgroundColor ? { color: element.style.backgroundColor } : undefined, // 背景色設定（型定義に合わせてオブジェクト形式）
@@ -560,6 +560,40 @@ export class PPTXRenderer {
    */
   getPptx(): PptxGenJS {
     return this.pptx;
+  }
+
+  /**
+   * fontWeight値がboldかどうかを判定
+   * @param fontWeight フォントウェイト値（文字列、数値、boolean）
+   * @param defaultValue デフォルト値
+   * @returns bold かどうか
+   */
+  private isBold(fontWeight?: string | number | boolean, defaultValue: boolean = false): boolean {
+    if (typeof fontWeight === 'boolean') {
+      return fontWeight;
+    }
+    if (typeof fontWeight === 'string') {
+      return fontWeight === 'bold' || fontWeight === 'bolder' || parseInt(fontWeight) >= 700;
+    }
+    if (typeof fontWeight === 'number') {
+      return fontWeight >= 700;
+    }
+    return defaultValue;
+  }
+
+  /**
+   * fontStyle値がitalicかどうかを判定
+   * @param fontStyle フォントスタイル値（文字列、boolean）
+   * @returns italic かどうか
+   */
+  private isItalic(fontStyle?: string | boolean): boolean {
+    if (typeof fontStyle === 'boolean') {
+      return fontStyle;
+    }
+    if (typeof fontStyle === 'string') {
+      return fontStyle === 'italic' || fontStyle === 'oblique';
+    }
+    return false;
   }
 
 }

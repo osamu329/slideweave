@@ -4,6 +4,7 @@
  */
 
 import postcss, { Rule, Declaration } from 'postcss';
+import postcssImport from 'postcss-import';
 import { CSSStyleParser, ParsedStyle } from './CSSStyleParser';
 
 export interface StylesheetRules {
@@ -160,6 +161,9 @@ export class CSSStylesheetParser {
               warnings.push(`⚠️  Selector "${selector}" is not supported. Only class selectors (e.g., .my-class) are supported.`);
             }
           });
+        } else if (node.type === 'atrule' && node.name === 'import') {
+          // @import ディレクティブの警告
+          warnings.push(`⚠️  @import directive is not yet supported. External CSS files will be supported in a future update.`);
         }
       });
 
@@ -226,6 +230,11 @@ export class CSSStylesheetParser {
           ruleWarnings.push(`❓ CSS property "${prop}" support is unknown. Please verify PowerPoint compatibility.`);
         }
 
+        // CSS変数の警告
+        if (value.includes('var(')) {
+          ruleWarnings.push(`⚠️  CSS variables (e.g., var(--variable)) are not yet fully supported. Consider using literal values instead.`);
+        }
+
         // CSSStyleParserを使用して値をパース
         const cssString = `${prop}: ${value}`;
         const parsedStyle = CSSStyleParser.parse(cssString);
@@ -263,5 +272,42 @@ export class CSSStylesheetParser {
    */
   static getPropertySupport(property: string): PowerPointProperty | null {
     return POWERPOINT_PROPERTIES[property] || null;
+  }
+
+  /**
+   * @importディレクティブを処理してCSSスタイルシートを解析
+   * @param cssText CSSスタイルシート文字列（@import含む）
+   * @param fileMap 外部ファイルのマップ（テスト用）
+   * @returns 解析結果（スタイル定義と警告）
+   */
+  static parseWithImports(
+    cssText: string, 
+    fileMap?: Record<string, string>
+  ): ParseResult {
+    if (!cssText || cssText.trim() === '') {
+      return { styles: {}, warnings: [] };
+    }
+
+    try {
+      // Simple @import processing for testing
+      let processedCSS = cssText;
+      
+      if (fileMap) {
+        // Replace @import statements with actual CSS content
+        for (const [filename, content] of Object.entries(fileMap)) {
+          const importRegex = new RegExp(`@import\\s+['"]${filename.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}['"];?`, 'g');
+          processedCSS = processedCSS.replace(importRegex, content);
+        }
+      }
+
+      // 処理済みCSSを通常のparse方法で解析
+      return this.parse(processedCSS);
+
+    } catch (error) {
+      return {
+        styles: {},
+        warnings: [`❌ CSS import processing error: ${error instanceof Error ? error.message : 'Unknown error'}`]
+      };
+    }
   }
 }

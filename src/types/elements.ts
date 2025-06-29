@@ -75,8 +75,8 @@ export interface BaseStyle {
   fontSize?: number | string;
   fontFamily?: string;
   color?: string;
-  bold?: boolean;
-  italic?: boolean;
+  fontWeight?: string | number;
+  fontStyle?: string;
   // レイアウト関連（CSS統合用）
   alignSelf?: "auto" | "flex-start" | "flex-end" | "center" | "stretch";
   justifyContent?:
@@ -96,7 +96,7 @@ export interface BaseStyle {
 
 export interface BaseElement {
   type: ElementType;
-  className?: string;  // CSSクラス名（CSSライクスタイルシート機能用）
+  class?: string;  // CSSクラス名（単一または複数のクラスをスペース区切りで指定）
   style?: BaseStyle;
   children?: Element[];
 }

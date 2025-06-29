@@ -24,7 +24,7 @@ interface BuildOptions {
   verbose?: boolean;
 }
 
-async function buildSlides(inputPath: string, options: BuildOptions) {
+export async function buildSlides(inputPath: string, options: BuildOptions) {
   try {
     // バリデーション
     validateInputFile(inputPath);
@@ -42,11 +42,18 @@ async function buildSlides(inputPath: string, options: BuildOptions) {
     logger.info(`Building slides from ${path.basename(inputPath)}`);
     logger.debug(`Input: ${inputPath}`);
     logger.debug(`Output: ${outputPath}`);
+    
+    if (options.css && options.css.length > 0) {
+      logger.info(`Using external CSS files: ${options.css.map(f => path.basename(f)).join(', ')}`);
+      options.css.forEach(cssFile => logger.debug(`CSS: ${cssFile}`));
+    }
 
     const spinner = ora('Loading slide data...').start();
 
-    // JSONファイルを読み込み
-    const slideData = SlideDataLoader.loadFromFile(inputPath);
+    // JSONファイルを読み込み (外部CSSファイルがあれば一緒に処理)
+    const slideData = options.css && options.css.length > 0
+      ? SlideDataLoader.loadFromFileWithExternalCSS(inputPath, options.css)
+      : SlideDataLoader.loadFromFile(inputPath);
     spinner.succeed('Slide data loaded');
 
     // レイアウト設定（16:9デフォルト）

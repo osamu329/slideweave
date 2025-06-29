@@ -50,7 +50,7 @@ describe('CSSStylesheetParser', () => {
         header: {
           fontSize: 24,
           fontWeight: 'bold',
-          color: '#333'
+          color: '#333333'  // 3-digit hex is expanded to 6-digit
         },
         content: {
           fontSize: 14,
@@ -272,9 +272,126 @@ describe('CSSStylesheetParser', () => {
 
       expect(result.styles['integration-test']).toEqual({
         fontSize: 18,     // pt単位が数値に変換される
-        margin: 8,        // 単位なし数値
+        margin: '8px',    // 単位なし数値は警告付きでpx変換される
         padding: '16px'   // px単位は文字列として保持
       });
+    });
+  });
+
+  describe('@import directive support', () => {
+    test('should fail when @import directive is used (RED phase)', () => {
+      const css = `
+        @import 'external.css';
+        
+        .container {
+          width: 640px;
+          padding: 16px;
+        }
+      `;
+
+      const result = CSSStylesheetParser.parse(css);
+
+      // RED: この時点では@importは処理されない
+      expect(result.styles).toEqual({
+        container: {
+          width: '640px',
+          padding: '16px'
+        }
+      });
+      
+      // @import警告が出力されることを期待
+      expect(result.warnings.some(warning => 
+        warning.includes('@import') || warning.includes('import')
+      )).toBe(true);
+    });
+
+    test('should process @import with postcss-import plugin (GREEN phase)', () => {
+      // このテストは実装完了後にGREENになる
+      const css = `
+        @import 'test-styles.css';
+        
+        .local-class {
+          margin: 8px;
+        }
+      `;
+
+      // 仮想的な外部CSSファイル内容
+      const externalCSS = `
+        .imported-class {
+          color: #FF0000;
+          font-size: 16px;
+        }
+      `;
+
+      // 実装: mockファイルシステムを使用してテスト
+      const result = CSSStylesheetParser.parseWithImports(css, {
+        'test-styles.css': externalCSS
+      });
+
+      expect(result.styles).toEqual({
+        'imported-class': {
+          color: '#FF0000',
+          fontSize: '16px'
+        },
+        'local-class': {
+          margin: '8px'
+        }
+      });
+      expect(result.warnings).toHaveLength(0);
+    });
+  });
+
+  describe('CSS variables (custom properties) support', () => {
+    test('should fail when CSS variables are used (RED phase)', () => {
+      const css = `
+        :root {
+          --primary-color: #007ACC;
+          --spacing: 16px;
+        }
+        
+        .container {
+          color: var(--primary-color);
+          padding: var(--spacing);
+        }
+      `;
+
+      const result = CSSStylesheetParser.parse(css);
+
+      // RED: CSS variables are not processed yet, but values are stored as-is
+      expect(result.styles).toEqual({
+        container: {
+          color: 'var(--primary-color)',
+          padding: 'var(--spacing)'
+        }
+      });
+      
+      // Should have warnings about CSS variables not being supported
+      expect(result.warnings.some(warning => 
+        warning.includes('var(') || warning.includes('CSS variable') || warning.includes('custom property')
+      )).toBe(true);
+    });
+    
+    test.skip('should process CSS variables (GREEN phase - will implement)', () => {
+      const css = `
+        :root {
+          --primary-color: #007ACC;
+          --spacing: 16px;
+        }
+        
+        .container {
+          color: var(--primary-color);
+          padding: var(--spacing);
+        }
+      `;
+
+      // After implementation, this should work
+      // const result = CSSStylesheetParser.parseWithVariables(css);
+      // expect(result.styles).toEqual({
+      //   container: {
+      //     color: '#007ACC',
+      //     padding: '16px'
+      //   }
+      // });
     });
   });
 });

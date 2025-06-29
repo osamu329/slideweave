@@ -1,0 +1,15 @@
+{
+  "title": "Test Slides",
+  "slides": [{
+    "type": "slide",
+    "children": [{
+      "type": "container",
+      "class": "test-container",
+      "children": [{
+        "type": "text",
+        "content": "Hello World",
+        "class": "test-text"
+      }]
+    }]
+  }]
+}

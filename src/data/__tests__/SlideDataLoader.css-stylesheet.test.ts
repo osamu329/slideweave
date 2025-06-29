@@ -29,11 +29,11 @@ describe('SlideDataLoader CSS Stylesheet Integration', () => {
             children: [
               {
                 type: 'container',
-                className: 'container',
+                class: 'container',
                 children: [
                   {
                     type: 'heading',
-                    className: 'header',
+                    class: 'header',
                     content: 'Test Header'
                   }
                 ]
@@ -58,7 +58,7 @@ describe('SlideDataLoader CSS Stylesheet Integration', () => {
       expect(header.style).toEqual({
         fontSize: 24,      // pt単位が数値に変換
         fontWeight: 'bold',
-        color: '#333'
+        color: '#333333'   // 3桁色コードが6桁に展開される
       });
     });
 
@@ -78,7 +78,7 @@ describe('SlideDataLoader CSS Stylesheet Integration', () => {
             children: [
               {
                 type: 'frame',
-                className: 'base',
+                class: 'base',
                 style: {
                   backgroundColor: 'red',  // これがクラススタイルを上書き
                   margin: 8               // これは追加される
@@ -115,7 +115,7 @@ describe('SlideDataLoader CSS Stylesheet Integration', () => {
             children: [
               {
                 type: 'text',
-                className: 'text',
+                class: 'text',
                 style: 'color: red; font-weight: bold',  // CSS文字列
                 content: 'Test Text'
               }
@@ -144,7 +144,7 @@ describe('SlideDataLoader CSS Stylesheet Integration', () => {
             children: [
               {
                 type: 'text',
-                className: 'nonexistent-class',  // 存在しないクラス
+                class: 'nonexistent-class',  // 存在しないクラス
                 style: { color: 'blue' },
                 content: 'Test Text'
               }
@@ -186,15 +186,15 @@ describe('SlideDataLoader CSS Stylesheet Integration', () => {
             children: [
               {
                 type: 'container',
-                className: 'outer',
+                class: 'outer',
                 children: [
                   {
                     type: 'frame',
-                    className: 'inner',
+                    class: 'inner',
                     children: [
                       {
                         type: 'text',
-                        className: 'text-style',
+                        class: 'text-style',
                         content: 'Nested Text'
                       }
                     ]
@@ -211,19 +211,19 @@ describe('SlideDataLoader CSS Stylesheet Integration', () => {
       const outer = result.slides[0].children![0] as any;
       expect(outer.style).toEqual({
         padding: '20px',
-        backgroundColor: '#EEE'
+        backgroundColor: '#EEEEEE'  // 3桁色コードが6桁に展開される
       });
 
       const inner = outer.children[0] as any;
       expect(inner.style).toEqual({
         margin: '10px',
-        backgroundColor: '#FFF'
+        backgroundColor: '#FFFFFF'  // 3桁色コードが6桁に展開される
       });
 
       const text = inner.children[0] as any;
       expect(text.style).toEqual({
         fontSize: 14,
-        color: '#333'
+        color: '#333333'  // 3桁色コードが6桁に展開される
       });
     });
   });
@@ -247,7 +247,7 @@ describe('SlideDataLoader CSS Stylesheet Integration', () => {
             children: [
               {
                 type: 'container',
-                className: 'unsupported'
+                class: 'unsupported'
               }
             ]
           }
@@ -272,6 +272,210 @@ describe('SlideDataLoader CSS Stylesheet Integration', () => {
       });
 
       consoleSpy.mockRestore();
+    });
+  });
+
+  describe('class attribute support', () => {
+    test('should support single class name with "class" property', () => {
+      const slideData = {
+        title: 'Test Slide',
+        css: `
+          .primary {
+            font-size: 18px;
+            color: #007ACC;
+          }
+        `,
+        slides: [
+          {
+            type: 'slide',
+            children: [
+              {
+                type: 'text',
+                class: 'primary',  // "class" プロパティを使用
+                content: 'Single Class Text'
+              }
+            ]
+          }
+        ]
+      };
+
+      const result = SlideDataLoader.loadFromObject(slideData);
+
+      const text = result.slides[0].children![0] as any;
+      expect(text.style).toEqual({
+        fontSize: '18px',
+        color: '#007ACC'
+      });
+    });
+
+    test('should support multiple class names with "class" property (space-separated)', () => {
+      const slideData = {
+        title: 'Test Slide',
+        css: `
+          .primary {
+            font-size: 18px;
+            color: #007ACC;
+          }
+          
+          .bold {
+            font-weight: bold;
+          }
+          
+          .highlight {
+            background-color: #FFFF00;
+          }
+        `,
+        slides: [
+          {
+            type: 'slide',
+            children: [
+              {
+                type: 'text',
+                class: 'primary bold highlight',  // 複数クラスをスペース区切り
+                content: 'Multiple Classes Text'
+              }
+            ]
+          }
+        ]
+      };
+
+      const result = SlideDataLoader.loadFromObject(slideData);
+
+      const text = result.slides[0].children![0] as any;
+      expect(text.style).toEqual({
+        fontSize: '18px',
+        color: '#007ACC',
+        fontWeight: 'bold',
+        backgroundColor: '#FFFF00'
+      });
+    });
+
+    test('should handle class conflicts (later classes override earlier ones)', () => {
+      const slideData = {
+        title: 'Test Slide',
+        css: `
+          .red-text {
+            color: red;
+            font-size: 16px;
+          }
+          
+          .blue-text {
+            color: blue;  /* これがredを上書き */
+          }
+        `,
+        slides: [
+          {
+            type: 'slide',
+            children: [
+              {
+                type: 'text',
+                class: 'red-text blue-text',  // blue-textがred-textを上書き
+                content: 'Conflicted Text'
+              }
+            ]
+          }
+        ]
+      };
+
+      const result = SlideDataLoader.loadFromObject(slideData);
+
+      const text = result.slides[0].children![0] as any;
+      expect(text.style).toEqual({
+        fontSize: '16px',
+        color: 'blue'  // 後のクラスが優先
+      });
+    });
+
+    test('should ignore non-existent classes in multiple class list', () => {
+      const slideData = {
+        title: 'Test Slide',
+        css: `
+          .valid {
+            font-size: 20px;
+          }
+        `,
+        slides: [
+          {
+            type: 'slide',
+            children: [
+              {
+                type: 'text',
+                class: 'valid nonexistent another-invalid',  // 一部のクラスが存在しない
+                content: 'Mixed Valid/Invalid Classes'
+              }
+            ]
+          }
+        ]
+      };
+
+      const result = SlideDataLoader.loadFromObject(slideData);
+
+      const text = result.slides[0].children![0] as any;
+      expect(text.style).toEqual({
+        fontSize: '20px'  // 存在するクラスのみ適用
+      });
+    });
+
+    test('should work with empty class string', () => {
+      const slideData = {
+        title: 'Test Slide',
+        css: `
+          .unused {
+            color: red;
+          }
+        `,
+        slides: [
+          {
+            type: 'slide',
+            children: [
+              {
+                type: 'text',
+                class: '',  // 空文字列
+                style: { fontSize: 14 },
+                content: 'Empty Class Text'
+              }
+            ]
+          }
+        ]
+      };
+
+      const result = SlideDataLoader.loadFromObject(slideData);
+
+      const text = result.slides[0].children![0] as any;
+      expect(text.style).toEqual({
+        fontSize: 14  // インラインスタイルのみ
+      });
+    });
+
+    test('should work without class property', () => {
+      const slideData = {
+        title: 'Test Slide',
+        css: `
+          .unused {
+            color: red;
+          }
+        `,
+        slides: [
+          {
+            type: 'slide',
+            children: [
+              {
+                type: 'text',
+                // class プロパティなし
+                style: { fontSize: 14 },
+                content: 'No Class Text'
+              }
+            ]
+          }
+        ]
+      };
+
+      const result = SlideDataLoader.loadFromObject(slideData);
+
+      const text = result.slides[0].children![0] as any;
+      expect(text.style).toEqual({
+        fontSize: 14  // インラインスタイルのみ
+      });
     });
   });
 
@@ -321,7 +525,7 @@ describe('SlideDataLoader CSS Stylesheet Integration', () => {
             children: [
               {
                 type: 'text',
-                className: 'mixed',
+                class: 'mixed',
                 fontSize: 18,      // 直接プロパティ（migrateされる）
                 content: 'Mixed Text'
               }

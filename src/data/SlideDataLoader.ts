@@ -3,8 +3,8 @@
  * JSON形式のスライドデータを読み込んでElement型に変換
  */
 
-import * as fs from "fs";
-import * as path from "path";
+import fs from "fs";
+import path from "path";
 import { Element } from "../types/elements";
 import { CSSStyleParser } from "../css-processor/CSSStyleParser";
 import { CSSStylesheetParser, StylesheetRules } from "../css-processor/CSSStylesheetParser";
@@ -43,6 +43,49 @@ export class SlideDataLoader {
     } catch (error) {
       throw new Error(
         `Failed to load slide data from ${filePath}: ${error instanceof Error ? error.message : "Unknown error"}`,
+      );
+    }
+  }
+
+  /**
+   * 外部CSSファイルと共にJSONファイルからスライドデータを読み込み
+   * @param filePath JSONファイルのパス
+   * @param cssFiles 外部CSSファイルのパス配列
+   * @returns スライドデータ
+   */
+  static loadFromFileWithExternalCSS(filePath: string, cssFiles: string[]): SlideData {
+    try {
+      const absolutePath = path.resolve(filePath);
+      const jsonContent = fs.readFileSync(absolutePath, "utf-8");
+      const data = JSON.parse(jsonContent);
+
+      // 基本的なバリデーション
+      if (!data.title || !Array.isArray(data.slides)) {
+        throw new Error(
+          "Invalid slide data format: title and slides array are required",
+        );
+      }
+
+      // 外部CSSファイルを読み込んで結合
+      let combinedCSS = data.css || '';
+      
+      for (const cssFile of cssFiles) {
+        if (fs.existsSync(cssFile)) {
+          const cssContent = fs.readFileSync(cssFile, 'utf-8');
+          combinedCSS += '\n' + cssContent;
+        } else {
+          console.warn(`Warning: CSS file not found: ${cssFile}`);
+        }
+      }
+
+      // 結合されたCSS文字列をパース
+      const stylesheetRules = this.processStylesheet(combinedCSS);
+      this.processStyleStrings(data.slides, stylesheetRules);
+      
+      return data as SlideData;
+    } catch (error) {
+      throw new Error(
+        `Failed to load slide data with external CSS from ${filePath}: ${error instanceof Error ? error.message : "Unknown error"}`,
       );
     }
   }
@@ -112,20 +155,34 @@ export class SlideDataLoader {
    */
   private static processStyleStrings(elements: any[], stylesheetRules: StylesheetRules): void {
     for (const element of elements) {
+      // 既存のインラインスタイルを保存（優先度を保つため）
+      let inlineStyle = {};
+      if (element.style) {
+        if (typeof element.style === 'string') {
+          inlineStyle = CSSStyleParser.parse(element.style);
+        } else {
+          inlineStyle = { ...element.style };
+        }
+      }
+
       // CSSクラス名が指定されている場合、対応するスタイルを適用
-      if (element.className && stylesheetRules[element.className]) {
-        const classStyle = stylesheetRules[element.className];
+      if (element.class) {
+        // スペース区切りで複数クラスをサポート
+        const classNames = element.class.split(/\s+/).filter((name: string) => name.length > 0);
         
-        // 既存のstyleオブジェクトがない場合は作成
-        if (!element.style) {
-          element.style = {};
-        } else if (typeof element.style === 'string') {
-          // style が文字列の場合は先にパース
-          element.style = CSSStyleParser.parse(element.style);
+        // 初期スタイルオブジェクトを作成
+        element.style = {};
+        
+        // 複数クラスのスタイルを順番に適用（後のクラスが優先）
+        for (const className of classNames) {
+          if (stylesheetRules[className]) {
+            const classStyle = stylesheetRules[className];
+            element.style = { ...element.style, ...classStyle };
+          }
         }
         
-        // クラススタイルを適用（既存のstyleは優先）
-        element.style = { ...classStyle, ...element.style };
+        // インラインスタイルを最後に適用（最高優先度）
+        element.style = { ...element.style, ...inlineStyle };
       }
       
       // style プロパティが文字列の場合、パースしてオブジェクトに変換
@@ -149,7 +206,7 @@ export class SlideDataLoader {
    */
   private static migrateDirectPropertiesToStyle(element: any): void {
     // テキスト関連のプロパティをstyleに移動
-    const migrateProps = ['fontSize', 'fontFamily', 'color', 'bold', 'italic'];
+    const migrateProps = ['fontSize', 'fontFamily', 'color'];
     
     for (const prop of migrateProps) {
       if (Object.prototype.hasOwnProperty.call(element, prop)) {
@@ -162,6 +219,24 @@ export class SlideDataLoader {
         element.style[prop] = element[prop];
         delete element[prop];
       }
+    }
+    
+    // bold → fontWeight 変換
+    if (Object.prototype.hasOwnProperty.call(element, 'bold')) {
+      if (!element.style) {
+        element.style = {};
+      }
+      element.style.fontWeight = element.bold ? 'bold' : 'normal';
+      delete element.bold;
+    }
+    
+    // italic → fontStyle 変換
+    if (Object.prototype.hasOwnProperty.call(element, 'italic')) {
+      if (!element.style) {
+        element.style = {};
+      }
+      element.style.fontStyle = element.italic ? 'italic' : 'normal';
+      delete element.italic;
     }
   }
 }
