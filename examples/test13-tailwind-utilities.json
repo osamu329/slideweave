@@ -1,0 +1,297 @@
+{
+  "title": "Tailwind Utilities Demo - Built-in Classes",
+  "description": "組み込みTailwindライクユーティリティクラス機能のデモンストレーション",
+  "slides": [
+    {
+      "type": "slide",
+      "title": "Tailwind Utilities Overview",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8 bg-gray-100",
+          "children": [
+            {
+              "type": "heading",
+              "class": "text-4xl font-bold text-blue-800 mb-8",
+              "content": "Tailwind Utilities Demo",
+              "level": 1
+            },
+            {
+              "type": "text",
+              "class": "text-lg text-gray-700 mb-16",
+              "content": "This slide demonstrates the built-in Tailwind-like utility classes available in SlideWeave."
+            },
+            {
+              "type": "container",
+              "class": "flex gap-8",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "flex-1 p-4 bg-white",
+                  "children": [
+                    {
+                      "type": "heading",
+                      "class": "text-xl font-bold text-red-600 mb-4",
+                      "content": "Spacing & Layout",
+                      "level": 2
+                    },
+                    {
+                      "type": "text",
+                      "class": "text-sm text-gray-700",
+                      "content": "• p-4, p-8, p-16 (padding)\\n• m-4, m-8, m-16 (margin)\\n• mt-4, mb-8, ml-4, mr-8\\n• gap-4, gap-8\\n• flex, flex-col\\n• w-full, h-auto"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "class": "flex-1 p-4 bg-blue-50",
+                  "children": [
+                    {
+                      "type": "heading",
+                      "class": "text-xl font-bold text-blue-800 mb-4",
+                      "content": "Colors",
+                      "level": 2
+                    },
+                    {
+                      "type": "text",
+                      "class": "text-sm text-gray-700",
+                      "content": "• bg-white, bg-red-500\\n• bg-blue-500, bg-green-500\\n• bg-purple-500, bg-yellow-500\\n• text-white, text-black\\n• text-red-600, text-blue-800\\n• text-gray-700"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "Practical Examples",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8 bg-green-50",
+          "children": [
+            {
+              "type": "heading",
+              "class": "text-2xl font-bold text-green-500 mb-8",
+              "content": "Practical Usage Examples",
+              "level": 1
+            },
+            {
+              "type": "container",
+              "class": "flex-col gap-8",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "p-4 bg-red-500",
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-white text-lg font-bold",
+                      "content": "Alert Box"
+                    },
+                    {
+                      "type": "text",
+                      "class": "text-white text-base",
+                      "content": "This is an alert message with red background and white text."
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "class": "p-8 bg-blue-500",
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-white text-xl font-bold",
+                      "content": "Info Card"
+                    },
+                    {
+                      "type": "text",
+                      "class": "text-white text-base",
+                      "content": "This is an informational card with larger padding and blue background."
+                    }
+                  ]
+                },
+                {
+                  "type": "container",
+                  "class": "flex gap-4",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "class": "flex-4 p-4 bg-purple-500",
+                      "children": [
+                        {
+                          "type": "text",
+                          "class": "text-white font-bold",
+                          "content": "Main Content (flex-4)"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "class": "flex-1 p-4 bg-yellow-500",
+                      "children": [
+                        {
+                          "type": "text",
+                          "class": "text-black font-bold",
+                          "content": "Sidebar (flex-1)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "Typography Showcase",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8 bg-white",
+          "children": [
+            {
+              "type": "heading",
+              "class": "text-4xl font-bold text-black mb-8",
+              "content": "Typography Scale",
+              "level": 1
+            },
+            {
+              "type": "container",
+              "class": "flex-col gap-4",
+              "children": [
+                {
+                  "type": "text",
+                  "class": "text-4xl font-bold text-gray-700",
+                  "content": "text-4xl font-bold (28px)"
+                },
+                {
+                  "type": "text",
+                  "class": "text-2xl font-bold text-gray-700",
+                  "content": "text-2xl font-bold (24px)"
+                },
+                {
+                  "type": "text",
+                  "class": "text-xl font-normal text-gray-700",
+                  "content": "text-xl font-normal (20px)"
+                },
+                {
+                  "type": "text",
+                  "class": "text-lg text-gray-700",
+                  "content": "text-lg (18px)"
+                },
+                {
+                  "type": "text",
+                  "class": "text-base text-gray-700",
+                  "content": "text-base (16px)"
+                },
+                {
+                  "type": "text",
+                  "class": "text-sm text-gray-700",
+                  "content": "text-sm (14px)"
+                },
+                {
+                  "type": "text",
+                  "class": "text-xs text-gray-700",
+                  "content": "text-xs (12px)"
+                },
+                {
+                  "type": "text",
+                  "class": "text-base italic text-blue-800",
+                  "content": "text-base italic - styled text example"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "Mixed Usage Demo",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f8f9fa"
+          },
+          "children": [
+            {
+              "type": "heading",
+              "class": "text-2xl font-bold mb-8",
+              "style": {
+                "color": "#2d3748"
+              },
+              "content": "Tailwind + Inline Styles",
+              "level": 1
+            },
+            {
+              "type": "text",
+              "class": "text-base mb-4",
+              "content": "This slide demonstrates mixing Tailwind classes with inline styles."
+            },
+            {
+              "type": "frame",
+              "class": "p-4 bg-blue-500",
+              "style": {
+                "borderRadius": "12px",
+                "border": "2px solid #1a365d"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "class": "text-white font-bold",
+                  "content": "Tailwind Padding + Custom Border"
+                },
+                {
+                  "type": "text",
+                  "class": "text-white text-sm",
+                  "content": "The frame uses Tailwind classes (p-4, bg-blue-500, text-white) combined with custom border-radius and border styles."
+                }
+              ]
+            },
+            {
+              "type": "container",
+              "class": "flex gap-4 mt-8",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "flex-1 p-4 bg-green-500",
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-white font-bold text-center",
+                      "content": "Pure Tailwind"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "class": "flex-1 bg-purple-500",
+                  "style": {
+                    "padding": "24px"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-white font-bold",
+                      "content": "Mixed: Tailwind + Custom Padding"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

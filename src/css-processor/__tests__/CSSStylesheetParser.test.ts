@@ -19,13 +19,12 @@ describe('CSSStylesheetParser', () => {
 
       const result = CSSStylesheetParser.parse(css);
 
-      expect(result.styles).toEqual({
-        container: {
-          width: '640px',
-          height: '480px',
-          padding: '16px',
-          backgroundColor: '#F0F8FF'
-        }
+      // 特定のクラスのみをテスト（Tailwindクラスは除く）
+      expect(result.styles.container).toEqual({
+        width: '640px',
+        height: '480px',
+        padding: '16px',
+        backgroundColor: '#F0F8FF'
       });
       expect(result.warnings).toHaveLength(0);
     });
@@ -46,16 +45,15 @@ describe('CSSStylesheetParser', () => {
 
       const result = CSSStylesheetParser.parse(css);
 
-      expect(result.styles).toEqual({
-        header: {
-          fontSize: 24,
-          fontWeight: 'bold',
-          color: '#333333'  // 3-digit hex is expanded to 6-digit
-        },
-        content: {
-          fontSize: 14,
-          margin: '16px'
-        }
+      // 特定のクラスのみをテスト
+      expect(result.styles.header).toEqual({
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#333333'  // 3-digit hex is expanded to 6-digit
+      });
+      expect(result.styles.content).toEqual({
+        fontSize: 14,
+        margin: '16px'
       });
       expect(result.warnings).toHaveLength(0);
     });
@@ -63,14 +61,18 @@ describe('CSSStylesheetParser', () => {
     test('should handle empty CSS input', () => {
       const result = CSSStylesheetParser.parse('');
       
-      expect(result.styles).toEqual({});
+      // 空のCSSでもTailwindクラスが含まれる
+      expect(Object.keys(result.styles).length).toBeGreaterThan(0);
+      expect(result.styles).toHaveProperty('p-4');
       expect(result.warnings).toHaveLength(0);
     });
 
     test('should handle CSS with only whitespace', () => {
       const result = CSSStylesheetParser.parse('   \n  \t  ');
       
-      expect(result.styles).toEqual({});
+      // 空白のみでもTailwindクラスが含まれる
+      expect(Object.keys(result.styles).length).toBeGreaterThan(0);
+      expect(result.styles).toHaveProperty('p-4');
       expect(result.warnings).toHaveLength(0);
     });
   });
@@ -174,9 +176,7 @@ describe('CSSStylesheetParser', () => {
       const result = CSSStylesheetParser.parse(css);
 
       // クラスセレクタのみが解析される
-      expect(result.styles).toEqual({
-        'valid-class': { width: '100px' }
-      });
+      expect(result.styles['valid-class']).toEqual({ width: '100px' });
 
       // 非対応セレクタの警告
       expect(result.warnings.some(w => w.includes('#id-selector'))).toBe(true);
@@ -193,11 +193,9 @@ describe('CSSStylesheetParser', () => {
 
       const result = CSSStylesheetParser.parse(css);
 
-      expect(result.styles).toEqual({
-        'my-class': { width: '100px' },
-        'my_class': { height: '200px' },
-        'MyClass123': { margin: '10px' }
-      });
+      expect(result.styles['my-class']).toEqual({ width: '100px' });
+      expect(result.styles['my_class']).toEqual({ height: '200px' });
+      expect(result.styles['MyClass123']).toEqual({ margin: '10px' });
       expect(result.warnings).toHaveLength(0);
     });
   });
@@ -292,11 +290,9 @@ describe('CSSStylesheetParser', () => {
       const result = CSSStylesheetParser.parse(css);
 
       // RED: この時点では@importは処理されない
-      expect(result.styles).toEqual({
-        container: {
-          width: '640px',
-          padding: '16px'
-        }
+      expect(result.styles.container).toEqual({
+        width: '640px',
+        padding: '16px'
       });
       
       // @import警告が出力されることを期待
@@ -328,14 +324,12 @@ describe('CSSStylesheetParser', () => {
         'test-styles.css': externalCSS
       });
 
-      expect(result.styles).toEqual({
-        'imported-class': {
-          color: '#FF0000',
-          fontSize: '16px'
-        },
-        'local-class': {
-          margin: '8px'
-        }
+      expect(result.styles['imported-class']).toEqual({
+        color: '#FF0000',
+        fontSize: '16px'
+      });
+      expect(result.styles['local-class']).toEqual({
+        margin: '8px'
       });
       expect(result.warnings).toHaveLength(0);
     });
@@ -358,11 +352,9 @@ describe('CSSStylesheetParser', () => {
       const result = CSSStylesheetParser.parse(css);
 
       // RED: CSS variables are not processed yet, but values are stored as-is
-      expect(result.styles).toEqual({
-        container: {
-          color: 'var(--primary-color)',
-          padding: 'var(--spacing)'
-        }
+      expect(result.styles.container).toEqual({
+        color: 'var(--primary-color)',
+        padding: 'var(--spacing)'
       });
       
       // Should have warnings about CSS variables not being supported

@@ -6,6 +6,7 @@
 import postcss, { Rule, Declaration } from 'postcss';
 import postcssImport from 'postcss-import';
 import { CSSStyleParser, ParsedStyle } from './CSSStyleParser';
+import { TailwindUtilities } from './TailwindUtilities';
 
 export interface StylesheetRules {
   [className: string]: ParsedStyle;
@@ -136,6 +137,9 @@ export class CSSStylesheetParser {
   static parse(cssText: string): ParseResult {
     const styles: StylesheetRules = {};
     const warnings: string[] = [];
+
+    // 組み込みTailwindユーティリティクラスを最初に追加
+    this.addBuiltinTailwindClasses(styles);
 
     if (!cssText || cssText.trim() === '') {
       return { styles, warnings };
@@ -308,6 +312,19 @@ export class CSSStylesheetParser {
         styles: {},
         warnings: [`❌ CSS import processing error: ${error instanceof Error ? error.message : 'Unknown error'}`]
       };
+    }
+  }
+
+  /**
+   * 組み込みTailwindユーティリティクラスをstylesに追加
+   * @param styles スタイルルールオブジェクト
+   */
+  private static addBuiltinTailwindClasses(styles: StylesheetRules): void {
+    const tailwindClasses = TailwindUtilities.getSupportedClasses();
+    
+    for (const className of tailwindClasses) {
+      const style = TailwindUtilities.parseClass(className);
+      styles[className] = style;
     }
   }
 }

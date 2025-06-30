@@ -133,11 +133,8 @@ export class SlideDataLoader {
    * @returns 解析されたスタイルルール
    */
   private static processStylesheet(css?: string): StylesheetRules {
-    if (!css) {
-      return {};
-    }
-
-    const result = CSSStylesheetParser.parse(css);
+    // CSSが空でもTailwindクラスを含むため、常にparseを実行
+    const result = CSSStylesheetParser.parse(css || '');
     
     // 警告をコンソールに出力
     if (result.warnings.length > 0) {
