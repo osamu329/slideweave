@@ -24,13 +24,13 @@ async function runTest(testFileName: string) {
     const testFilePath = path.join(__dirname, testFileName);
     const slideData = SlideDataLoader.loadFromFile(testFilePath);
     
-    // 16:9レイアウト設定
-    const slideWidth = 720;
-    const slideHeight = 405;
+    // 16:9レイアウト設定（HD解像度）
+    const slideWidth = 1280;
+    const slideHeight = 720;
     
     const renderer = new PPTXRenderer({
-      slideWidth: 10,
-      slideHeight: 5.625
+      slideWidth: 13.333,
+      slideHeight: 7.5
     });
 
     // 各スライドを処理

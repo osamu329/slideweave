@@ -16,8 +16,8 @@ export class YogaLayoutEngine implements ILayoutEngine {
 
   async renderLayout(
     element: Element,
-    containerWidth: number = 720,
-    containerHeight: number = 540,
+    containerWidth: number = 1280,
+    containerHeight: number = 720,
   ): Promise<LayoutResult> {
     // Yogaインスタンスの初期化
     if (!this.yoga) {

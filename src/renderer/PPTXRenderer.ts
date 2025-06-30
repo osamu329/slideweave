@@ -34,13 +34,13 @@ export class PPTXRenderer {
     this.pptx = new PptxGenJS();
     this.svgGenerator = new SVGGenerator();
     this.options = {
-      slideWidth: 10,
-      slideHeight: 5.625,
+      slideWidth: 13.333,
+      slideHeight: 7.5,
       theme: "light",
       ...options,
     };
 
-    // スライドサイズ設定（デフォルト: 10x5.625インチ = 16:9）
+    // スライドサイズ設定（デフォルト: 13.333x7.5インチ = 16:9 Widescreen）
     this.pptx.defineLayout({
       name: "SLIDEWEAVE_LAYOUT",
       width: this.options.slideWidth!,
@@ -525,7 +525,7 @@ export class PPTXRenderer {
    * @param layoutResult レイアウト結果
    */
   private checkBoundingBox(layoutResult: LayoutResult): void {
-    const PX_TO_INCH = 1 / 72;
+    const PX_TO_INCH = 1 / 96; // PowerPoint標準96DPI
     const slideWidthPx = this.options.slideWidth! / PX_TO_INCH;
     const slideHeightPx = this.options.slideHeight! / PX_TO_INCH;
     

@@ -71,15 +71,22 @@ def analyze_shape(shape, indent=0):
             for run in paragraph.runs:
                 if run.text.strip():
                     print(f"{prefix}  Text: \"{run.text}\"")
-                    if run.font.color.rgb:
-                        print(f"{prefix}    Font Color: #{run.font.color.rgb}")
-                    print(f"{prefix}    Font Size: {run.font.size/12700:.1f}pt")
+                    try:
+                        if run.font.color.rgb:
+                            print(f"{prefix}    Font Color: #{run.font.color.rgb}")
+                    except AttributeError:
+                        print(f"{prefix}    Font Color: default/none")
+                    font_size = run.font.size/12700 if run.font.size else "default"
+                    print(f"{prefix}    Font Size: {font_size}pt" if isinstance(font_size, float) else f"{prefix}    Font Size: {font_size}")
                     print(f"{prefix}    Bold: {run.font.bold}")
                     print(f"{prefix}    Italic: {run.font.italic}")
                     if run.font.name:
                         print(f"{prefix}    Font Family: {run.font.name}")
                     info["text"] = run.text
-                    info["font_color"] = str(run.font.color.rgb) if run.font.color.rgb else None
+                    try:
+                        info["font_color"] = str(run.font.color.rgb) if run.font.color.rgb else None
+                    except AttributeError:
+                        info["font_color"] = None
                     info["font_size"] = run.font.size/12700 if run.font.size else None
                     info["font_bold"] = run.font.bold
                     info["font_italic"] = run.font.italic
