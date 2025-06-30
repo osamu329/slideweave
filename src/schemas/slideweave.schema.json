@@ -1,0 +1,507 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://slideweave.io/schemas/slideweave.schema.json",
+  "title": "SlideWeave Document Schema",
+  "description": "JSON Schema for SlideWeave presentation documents",
+  "type": "object",
+  "properties": {
+    "type": { 
+      "const": "deck",
+      "description": "要素タイプ。トップレベルは必ずdeck"
+    },
+    "title": { 
+      "type": "string",
+      "description": "プレゼンテーションのタイトル"
+    },
+    "description": { 
+      "type": "string",
+      "description": "プレゼンテーションの説明"
+    },
+    "format": {
+      "oneOf": [
+        {
+          "const": "wide",
+          "description": "16:9のワイドスクリーン形式（1280×720px）。現在のディスプレイ標準"
+        },
+        {
+          "const": "standard",
+          "description": "4:3の標準形式（960×720px）。従来のプレゼンテーション形式"
+        }
+      ],
+      "default": "wide"
+    },
+    "style": { "$ref": "#/definitions/deckStyle" },
+    "slides": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/slide" },
+      "minItems": 1
+    }
+  },
+  "required": ["type", "slides"],
+  "additionalProperties": false,
+  "definitions": {
+    "slide": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "slide" },
+        "title": { "type": "string" },
+        "layout": { 
+          "enum": ["title", "content", "blank"] 
+        },
+        "header": { "$ref": "#/definitions/header" },
+        "footer": { "$ref": "#/definitions/footer" },
+        "background": { "$ref": "#/definitions/slideBackground" },
+        "style": { "$ref": "#/definitions/slideStyle" },
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/element" }
+        }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "header": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "header" },
+        "content": { "type": "string" },
+        "style": { "$ref": "#/definitions/baseStyle" }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "footer": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "footer" },
+        "content": { "type": "string" },
+        "style": { "$ref": "#/definitions/baseStyle" }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "slideBackground": {
+      "type": "object",
+      "properties": {
+        "color": { "$ref": "#/definitions/colorValue" },
+        "image": { 
+          "type": "string",
+          "description": "背景画像のパス。対応フォーマット: jpg, jpeg, png, gif, svg"
+        },
+        "size": { 
+          "enum": ["cover", "contain", "fit", "none"] 
+        }
+      },
+      "additionalProperties": false
+    },
+    "element": {
+      "oneOf": [
+        { "$ref": "#/definitions/container" },
+        { "$ref": "#/definitions/frame" },
+        { "$ref": "#/definitions/shape" },
+        { "$ref": "#/definitions/text" },
+        { "$ref": "#/definitions/heading" },
+        { "$ref": "#/definitions/list" },
+        { "$ref": "#/definitions/table" },
+        { "$ref": "#/definitions/image" },
+        { "$ref": "#/definitions/svg" }
+      ]
+    },
+    "container": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "container" },
+        "style": { "$ref": "#/definitions/baseStyle" },
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/element" }
+        }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "frame": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "frame" },
+        "style": { "$ref": "#/definitions/frameStyle" },
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/element" }
+        }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "shape": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "shape" },
+        "shapeType": { 
+          "enum": ["rectangle", "circle", "ellipse"] 
+        },
+        "style": { "$ref": "#/definitions/shapeStyle" }
+      },
+      "required": ["type", "shapeType"],
+      "additionalProperties": false
+    },
+    "text": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "text" },
+        "content": { 
+          "type": "string",
+          "description": "表示するテキスト内容"
+        },
+        "style": { "$ref": "#/definitions/textStyle" }
+      },
+      "required": ["type", "content"],
+      "additionalProperties": false
+    },
+    "heading": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "heading" },
+        "content": { 
+          "type": "string",
+          "description": "見出しテキスト内容"
+        },
+        "level": { 
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 6,
+          "description": "見出しレベル（1-6）。1が最大、6が最小"
+        },
+        "style": { "$ref": "#/definitions/textStyle" }
+      },
+      "required": ["type", "content"],
+      "additionalProperties": false
+    },
+    "list": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "list" },
+        "listType": { 
+          "enum": ["bullet", "number"] 
+        },
+        "style": { "$ref": "#/definitions/baseStyle" },
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/listItem" }
+        }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "listItem": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "listItem" },
+        "content": { "type": "string" },
+        "indentLevel": { 
+          "type": "integer",
+          "minimum": 0
+        },
+        "style": { "$ref": "#/definitions/baseStyle" }
+      },
+      "required": ["type", "content"],
+      "additionalProperties": false
+    },
+    "table": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "table" },
+        "columns": { 
+          "type": "integer",
+          "minimum": 1
+        },
+        "rows": { 
+          "type": "integer",
+          "minimum": 1
+        },
+        "style": { "$ref": "#/definitions/baseStyle" },
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/tableRow" }
+        }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "tableRow": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "tableRow" },
+        "style": { "$ref": "#/definitions/baseStyle" },
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/tableCell" }
+        }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "tableCell": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "tableCell" },
+        "content": { "type": "string" },
+        "colSpan": { 
+          "type": "integer",
+          "minimum": 1
+        },
+        "rowSpan": { 
+          "type": "integer",
+          "minimum": 1
+        },
+        "style": { "$ref": "#/definitions/baseStyle" },
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/element" }
+        }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "image": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "image" },
+        "src": { 
+          "type": "string",
+          "description": "画像ファイルのパス。対応フォーマット: jpg, jpeg, png, gif, svg, webp"
+        },
+        "alt": { 
+          "type": "string",
+          "description": "画像の代替テキスト（アクセシビリティ用）"
+        },
+        "style": { 
+          "$ref": "#/definitions/baseStyle",
+          "description": "画像のスタイル。width/height未指定時は元画像サイズで表示"
+        }
+      },
+      "required": ["type", "src"],
+      "additionalProperties": false
+    },
+    "svg": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "svg" },
+        "content": { 
+          "type": "string",
+          "description": "SVGマークアップコンテンツ（<svg>...タグ全体）"
+        },
+        "style": { 
+          "$ref": "#/definitions/baseStyle",
+          "description": "SVGのスタイル。width/height未指定時はSVG内viewBoxサイズで表示"
+        }
+      },
+      "required": ["type", "content"],
+      "additionalProperties": false
+    },
+    "textShadow": {
+      "type": "object",
+      "properties": {
+        "type": { 
+          "enum": ["outer", "inner"] 
+        },
+        "color": { "$ref": "#/definitions/colorValue" },
+        "blur": { 
+          "$ref": "#/definitions/pixelValue",
+          "description": "シャドウのブラー距離（px必須）"
+        },
+        "offset": { 
+          "$ref": "#/definitions/pixelValue",
+          "description": "シャドウのオフセット距離（px必須）"
+        },
+        "angle": { 
+          "type": "number",
+          "minimum": 0,
+          "maximum": 360,
+          "description": "シャドウの角度（度数、0-360）"
+        },
+        "opacity": { 
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      },
+      "required": ["type", "color", "blur", "offset", "angle"],
+      "additionalProperties": false
+    },
+    "baseStyle": {
+      "type": "object",
+      "properties": {
+        "margin": { "$ref": "#/definitions/spacingValue" },
+        "marginTop": { "$ref": "#/definitions/spacingValue" },
+        "marginRight": { "$ref": "#/definitions/spacingValue" },
+        "marginBottom": { "$ref": "#/definitions/spacingValue" },
+        "marginLeft": { "$ref": "#/definitions/spacingValue" },
+        "padding": { "$ref": "#/definitions/spacingValue" },
+        "paddingTop": { "$ref": "#/definitions/spacingValue" },
+        "paddingRight": { "$ref": "#/definitions/spacingValue" },
+        "paddingBottom": { "$ref": "#/definitions/spacingValue" },
+        "paddingLeft": { "$ref": "#/definitions/spacingValue" },
+        "gap": { "$ref": "#/definitions/spacingValue" },
+        "width": { "$ref": "#/definitions/dimension" },
+        "height": { "$ref": "#/definitions/dimension" },
+        "minWidth": { "$ref": "#/definitions/dimension" },
+        "minHeight": { "$ref": "#/definitions/dimension" },
+        "maxWidth": { "$ref": "#/definitions/dimension" },
+        "maxHeight": { "$ref": "#/definitions/dimension" },
+        "flex": { 
+          "type": "number",
+          "minimum": 0,
+          "description": "flex成長率。小数点も有効（例: 0.5, 1.5）"
+        },
+        "flexDirection": { 
+          "enum": ["row", "column"] 
+        },
+        "flexWrap": { 
+          "enum": ["nowrap", "wrap"] 
+        },
+        "justifyContent": { 
+          "enum": ["flex-start", "flex-end", "center", "space-between", "space-around"] 
+        },
+        "alignItems": { 
+          "enum": ["flex-start", "flex-end", "center", "stretch"] 
+        },
+        "alignSelf": { 
+          "enum": ["auto", "flex-start", "flex-end", "center", "stretch"] 
+        },
+        "backgroundColor": { "$ref": "#/definitions/colorValue" },
+        "backgroundImage": { 
+          "type": "string",
+          "description": "背景画像のパス。対応フォーマット: jpg, jpeg, png, gif, svg"
+        },
+        "backgroundSize": { 
+          "enum": ["cover", "contain", "fit", "none"] 
+        },
+        "color": { "$ref": "#/definitions/colorValue" },
+        "fontSize": { "$ref": "#/definitions/dimension" },
+        "fontFamily": { "type": "string" },
+        "fontWeight": { 
+          "oneOf": [
+            { "type": "string" },
+            { "type": "number" }
+          ]
+        },
+        "fontStyle": { "$ref": "#/definitions/fontStyleValue" },
+        "textAlign": {
+          "enum": ["left", "center", "right", "justify"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "frameStyle": {
+      "allOf": [
+        { "$ref": "#/definitions/baseStyle" },
+        {
+          "type": "object",
+          "properties": {
+            "borderColor": { "$ref": "#/definitions/colorValue" },
+            "borderWidth": { "$ref": "#/definitions/pixelValue" },
+            "borderRadius": { "$ref": "#/definitions/pixelValue" },
+            "borderStyle": { 
+              "enum": ["solid", "dashed", "dotted"] 
+            },
+            "glassEffect": { "type": "boolean" }
+          }
+        }
+      ]
+    },
+    "shapeStyle": {
+      "allOf": [
+        { "$ref": "#/definitions/baseStyle" },
+        {
+          "type": "object",
+          "properties": {
+            "borderColor": { "$ref": "#/definitions/colorValue" },
+            "borderWidth": { "$ref": "#/definitions/pixelValue" },
+            "borderStyle": { 
+              "enum": ["solid", "dashed", "dotted"] 
+            }
+          }
+        }
+      ]
+    },
+    "dimension": {
+      "oneOf": [
+        { "type": "number" },
+        { 
+          "type": "string",
+          "pattern": "^\\d+(\\.\\d+)?(px|%|vw|vh|em|rem)$",
+          "description": "サイズ指定。対応単位: px, %, vw, vh, em, rem"
+        }
+      ]
+    },
+    "spacingValue": {
+      "oneOf": [
+        { "type": "integer" },
+        { 
+          "type": "string",
+          "pattern": "^\\d+(\\.\\d+)?(px|%|vw|vh|em|rem)$",
+          "description": "余白指定。対応単位: px, %, vw, vh, em, rem. 整数は4px単位として扱う"
+        }
+      ]
+    },
+    "deckStyle": {
+      "type": "object",
+      "properties": {
+        "padding": { "$ref": "#/definitions/spacingValue" },
+        "paddingTop": { "$ref": "#/definitions/spacingValue" },
+        "paddingRight": { "$ref": "#/definitions/spacingValue" },
+        "paddingBottom": { "$ref": "#/definitions/spacingValue" },
+        "paddingLeft": { "$ref": "#/definitions/spacingValue" }
+      },
+      "additionalProperties": false
+    },
+    "slideStyle": {
+      "type": "object",
+      "properties": {
+        "padding": { "$ref": "#/definitions/spacingValue" },
+        "paddingTop": { "$ref": "#/definitions/spacingValue" },
+        "paddingRight": { "$ref": "#/definitions/spacingValue" },
+        "paddingBottom": { "$ref": "#/definitions/spacingValue" },
+        "paddingLeft": { "$ref": "#/definitions/spacingValue" }
+      },
+      "additionalProperties": false
+    },
+    "textStyle": {
+      "allOf": [
+        { "$ref": "#/definitions/baseStyle" },
+        {
+          "type": "object",
+          "properties": {
+            "fontWeight": {
+              "oneOf": [
+                { "enum": ["normal", "bold"], "description": "フォントの太さ。PowerPointではnormal/boldのみサポート" },
+                { "type": "number", "minimum": 100, "maximum": 900, "multipleOf": 100, "description": "フォントの太さを数値で指定（100-900）" }
+              ]
+            },
+            "fontStyle": { "$ref": "#/definitions/fontStyleValue" },
+            "textShadow": {
+              "$ref": "#/definitions/textShadow",
+              "description": "テキストのシャドウ効果"
+            }
+          }
+        }
+      ]
+    },
+    "colorValue": {
+      "type": "string",
+      "pattern": "^#[0-9A-Fa-f]{6}$",
+      "description": "16進数色コード（#RRGGBB形式）"
+    },
+    "fontStyleValue": {
+      "enum": ["normal", "italic"],
+      "default": "normal",
+      "description": "フォントスタイル。PowerPointでは斜体のみサポート"
+    },
+    "pixelValue": {
+      "type": "string",
+      "pattern": "^\\d+(\\.\\d+)?px$",
+      "description": "px単位必須の数値（PowerPoint制約）。例: \"10px\", \"2.5px\""
+    }
+  }
+}

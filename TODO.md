@@ -1,5 +1,17 @@
 # SlideWeave TODO
 
+## 進行中
+
+### deck/slide構造とJSON Schema実装（OSN-167）
+- **概要**: SlideWeaveの構造をdeck/slide階層に変更し、JSON Schemaによるバリデーション機能を実装
+- **URL**: https://linear.app/osna/issue/OSN-167/deckslide構造とjson-schema実装
+- **進捗**:
+  - [x] JSON Schema定義完了（deck/slide構造、PowerPoint制約準拠）
+  - [ ] TypeScript型定義の更新完了
+  - [ ] ajvバリデータークラス実装完了
+  - [ ] 既存サンプルファイルの新構造移行完了
+  - [ ] バリデーション機能のテスト作成完了
+
 ## 緊急課題
 
 ### スライド背景とframe要素の設計・実装問題
@@ -24,6 +36,8 @@
   - [ ] PPTXGenJSでのスライド背景API調査
   - [ ] 背景階層設計の再考（スライド背景 vs 要素背景 vs レイヤー背景）
   - [ ] PowerPoint構造制約の調査（header/footer配置ルール等）
+  - [ ] CSSライブラリ（Yoga Layout）でのem/rem単位サポート状況調査
+  - [ ] フォントサイズ継承チェーンの実装複雑度評価
 - **今後のアクション**:
   - [ ] slide要素をトップレベル必須とするJSON構造見直し
   - [ ] header/footer配置制約のバリデーション実装
