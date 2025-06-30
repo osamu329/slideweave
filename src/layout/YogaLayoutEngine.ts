@@ -229,8 +229,13 @@ export class YogaLayoutEngine implements ILayoutEngine {
       
       // SlideWeave固有（Yogaでは処理しないが有効）
       'backgroundColor', 'border', 'borderRadius', 'borderWidth', 'borderColor', 'borderStyle',
+      'borderLeft', 'borderLeftWidth', 'borderLeftColor', 'borderLeftStyle',
+      'borderTop', 'borderTopWidth', 'borderTopColor', 'borderTopStyle',
+      'borderRight', 'borderRightWidth', 'borderRightColor', 'borderRightStyle',
+      'borderBottom', 'borderBottomWidth', 'borderBottomColor', 'borderBottomStyle',
       'color', 'fontSize', 'fontWeight', 'fontStyle', 'fontFamily', 'textAlign',
       'background', 'backgroundImage', 'backgroundSize', 'backgroundPosition',
+      'lineHeight', 'boxShadow', 'cursor',
       'glassEffect', 'opacity', 'zIndex'
     ]);
     
