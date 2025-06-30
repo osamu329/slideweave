@@ -29,6 +29,9 @@ export class PPTXRenderer {
   private currentBackgroundImage: string | null = null;
   private currentBackgroundColor: string | null = null;
   private options: PPTXRenderOptions;
+  
+  // PowerPoint標準96DPI
+  private static readonly PX_TO_INCH = 1 / 96;
 
   constructor(options: PPTXRenderOptions = {}) {
     this.pptx = new PptxGenJS();
@@ -509,14 +512,13 @@ export class PPTXRenderer {
     w: number;
     h: number;
   } {
-    // ピクセル → インチ変換（72DPI想定）
-    const PX_TO_INCH = 1 / 72;
+    // ピクセル → インチ変換（96DPI標準）
 
     return {
-      x: layoutResult.left * PX_TO_INCH,
-      y: layoutResult.top * PX_TO_INCH,
-      w: layoutResult.width * PX_TO_INCH,
-      h: layoutResult.height * PX_TO_INCH,
+      x: layoutResult.left * PPTXRenderer.PX_TO_INCH,
+      y: layoutResult.top * PPTXRenderer.PX_TO_INCH,
+      w: layoutResult.width * PPTXRenderer.PX_TO_INCH,
+      h: layoutResult.height * PPTXRenderer.PX_TO_INCH,
     };
   }
 
@@ -525,9 +527,8 @@ export class PPTXRenderer {
    * @param layoutResult レイアウト結果
    */
   private checkBoundingBox(layoutResult: LayoutResult): void {
-    const PX_TO_INCH = 1 / 96; // PowerPoint標準96DPI
-    const slideWidthPx = this.options.slideWidth! / PX_TO_INCH;
-    const slideHeightPx = this.options.slideHeight! / PX_TO_INCH;
+    const slideWidthPx = this.options.slideWidth! / PPTXRenderer.PX_TO_INCH;
+    const slideHeightPx = this.options.slideHeight! / PPTXRenderer.PX_TO_INCH;
     
     const elementLeft = layoutResult.left || 0;
     const elementTop = layoutResult.top || 0;

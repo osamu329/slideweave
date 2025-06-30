@@ -1,5 +1,36 @@
 # SlideWeave TODO
 
+## 緊急課題
+
+### スライド背景とframe要素の設計・実装問題
+- **問題**: frameのbackgroundColorがスライド背景になり、さらに図形として二重描画される
+- **設計ミス**: 
+  - frameの責務が曖昧（装飾付きコンテナ vs スライド背景）
+  - スライド背景 vs 要素背景の区別が不明確
+  - トップレベル要素でのcontainer/frame使い分けルール未定義
+- **実装ミス**:
+  - renderSlideBackground()がframe背景をスライド全体に適用
+  - 72DPI/96DPI混在による座標変換エラー（修正済み）
+- **階層構造の問題**:
+  - トップレベルはslide要素でなければならない（現在はframe/containerが直接配置）
+  - header/footerはslide直下のみ配置可能（frame/container内は不可）
+  - PowerPointの構造制約に準拠した要素配置ルール未定義
+- **背景の種類と配置ルール**:
+  - スライド背景: slideレベル（全体背景色/画像）
+  - 要素背景: frame/shape等の個別要素（styleプロパティ）
+  - レイヤー背景: container/frame内（セクション背景）
+- **検証が必要**:
+  - [ ] PowerPointで画像やSVGをスライド背景として指定可能か検証
+  - [ ] PPTXGenJSでのスライド背景API調査
+  - [ ] 背景階層設計の再考（スライド背景 vs 要素背景 vs レイヤー背景）
+  - [ ] PowerPoint構造制約の調査（header/footer配置ルール等）
+- **今後のアクション**:
+  - [ ] slide要素をトップレベル必須とするJSON構造見直し
+  - [ ] header/footer配置制約のバリデーション実装
+  - [ ] スライド背景の適切な実装方法決定
+  - [ ] frame要素の責務明確化
+  - [ ] 背景描画ロジックの設計見直し
+
 ## 現在進行中
 
 ### JSX CLI統合機能実装（OSN-161拡張）

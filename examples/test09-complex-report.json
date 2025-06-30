@@ -5,8 +5,8 @@
     {
       "type": "frame",
       "style": {
-        "width": "3840px",
-        "height": "2880px",
+        "width": "100%",
+        "height": "100%",
         "padding": "16px",
         "flexDirection": "column",
         "backgroundColor": "4F46E5",
@@ -51,8 +51,8 @@
     {
       "type": "frame",
       "style": {
-        "width": "3840px",
-        "height": "2880px",
+        "width": "100%",
+        "height": "100%",
         "padding": "16px",
         "flexDirection": "column",
         "background": {
@@ -309,8 +309,8 @@
     {
       "type": "frame",
       "style": {
-        "width": "3840px",
-        "height": "2880px",
+        "width": "100%",
+        "height": "100%",
         "padding": "16px",
         "flexDirection": "column",
         "background": {
@@ -546,8 +546,8 @@
     {
       "type": "frame",
       "style": {
-        "width": "3840px",
-        "height": "2880px",
+        "width": "100%",
+        "height": "100%",
         "padding": "16px",
         "flexDirection": "column",
         "backgroundColor": "8B5CF6"
@@ -919,8 +919,8 @@
     {
       "type": "frame",
       "style": {
-        "width": "3840px",
-        "height": "2880px",
+        "width": "100%",
+        "height": "100%",
         "padding": "16px",
         "flexDirection": "column",
         "backgroundColor": "6366F1"
