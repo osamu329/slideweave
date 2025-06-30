@@ -9,12 +9,18 @@ import { transformProps } from './utils';
 /**
  * JSX Factory関数
  * JSX要素をSlideWeave Element型に変換する
+ * 関数コンポーネントもサポート
  */
 export function createSlideElement(
-  type: string,
+  type: string | Function,
   props: any,
   ...children: any[]
-): Element {
+): Element | Element[] {
+  // 関数コンポーネントの場合
+  if (typeof type === 'function') {
+    return processComponent(type, props, children);
+  }
+
   // propsがnullの場合は空オブジェクトに変換
   const safeProps = props || {};
   
@@ -52,6 +58,67 @@ export function createSlideElement(
   }
 
   return element;
+}
+
+/**
+ * 関数コンポーネントを処理する
+ */
+function processComponent(
+  component: Function,
+  props: any,
+  children: any[]
+): Element | Element[] {
+  // propsがnullの場合は空オブジェクトに変換
+  const safeProps = props || {};
+  
+  // childrenを適切に処理
+  const processedChildren = children.length > 0 ? 
+    children.flat().filter(child => 
+      child !== null && 
+      child !== undefined && 
+      child !== false &&
+      child !== ''
+    ) : undefined;
+
+  // コンポーネントpropsを作成
+  const componentProps = {
+    ...safeProps,
+    children: processedChildren
+  };
+
+  // コンポーネント関数を実行
+  const result = component(componentProps);
+  
+  // 結果を再帰的に処理（ネストしたコンポーネント対応）
+  return processComponentResult(result);
+}
+
+/**
+ * コンポーネントの実行結果を処理する（再帰対応）
+ */
+function processComponentResult(result: any): Element | Element[] {
+  if (!result) {
+    return [] as Element[];
+  }
+
+  if (Array.isArray(result)) {
+    return result.flatMap(item => processComponentResult(item));
+  }
+
+  // 結果がcreateSlideElementの呼び出し結果の場合はそのまま返す
+  if (isSlideWeaveElement(result)) {
+    return result;
+  }
+
+  // その他の場合（文字列など）
+  return result;
+}
+
+/**
+ * SlideWeave Element型かどうかを判定
+ */
+function isSlideWeaveElement(obj: any): obj is Element {
+  return obj && typeof obj === 'object' && typeof obj.type === 'string';
 }
 
 /**

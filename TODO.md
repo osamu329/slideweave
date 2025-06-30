@@ -2,7 +2,30 @@
 
 ## 現在進行中
 
-### 既存ファイルのプロパティ移行
+### JSX CLI統合機能実装（OSN-161拡張）
+- **概要**: JSXファイルをJSONに変換するcompileコマンドの実装
+- **アプローチ**: JSON変換方式（フロントエンドCLI構造）
+- **進捗**:
+  - [ ] compile コマンドの基本実装 - JSXファイルをJSONに変換
+  - [ ] tsx動的実行機能の実装 - execSyncでnpx tsx実行
+  - [ ] compile コマンドのオプション実装 (-o ファイル出力)
+  - [ ] build コマンドの--stdinオプション実装 (パイプライン対応)
+  - [ ] エラーハンドリングとバリデーションの実装
+  - [ ] JSX compile機能のテスト作成
+  - [ ] ドキュメント更新 - CLIコマンドの使用例追加
+
+### 使用例
+```bash
+# 基本機能
+slideweave compile jsx-basic.tsx > output.json
+slideweave build output.json
+
+# 高度な機能  
+slideweave compile jsx-basic.tsx -o compiled.json
+slideweave compile jsx-basic.tsx | slideweave build --stdin
+```
+
+### 既存ファイルのプロパティ移行（低優先度）
 - **概要**: examples/*.jsonファイルの直接プロパティをstyleオブジェクトに移行
 - **対象プロパティ**: fontSize, fontFamily, color, bold, italic
 - **除外**: test11-css.json（CSS文字列使用のため現状維持）
@@ -16,6 +39,7 @@
 ## 完了済み
 
 ### 最近完了したタスク
+- **OSN-161** React JSXライクなコンポーネント記述機能 ✅ (2025-06-30) - JSX Factory関数とTypeScript型定義実装
 - **OSN-164** CLI機能実装 ✅ (2025-06-29) - JSONからPPTX生成のコマンドラインツール
 - **OSN-160** テキストシャドウ機能 ✅ - フレーム内テキストの可読性向上
 - **OSN-162** PostCSSベースCSSライクスタイルシート 🔄 - Phase 1,2完了、Phase 3部分完了

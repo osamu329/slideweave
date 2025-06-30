@@ -1,0 +1,396 @@
+{
+  "title": "JSX Components Sample",
+  "description": "JSX関数コンポーネントを使用した高度なスライド作成サンプル",
+  "slides": [
+    {
+      "type": "slide",
+      "style": {
+        "padding": 24
+      },
+      "children": [
+        {
+          "type": "container",
+          "style": {
+            "padding": 32,
+            "backgroundColor": "#343a40",
+            "minHeight": 200,
+            "justifyContent": "center",
+            "alignItems": "center"
+          },
+          "children": [
+            {
+              "type": "heading",
+              "level": 1,
+              "style": {
+                "color": "white",
+                "fontSize": 36,
+                "marginBottom": 16,
+                "textAlign": "center"
+              },
+              "content": "JSXコンポーネントサンプル"
+            },
+            {
+              "type": "text",
+              "style": {
+                "color": "#f8f9fa",
+                "fontSize": 18,
+                "textAlign": "center"
+              },
+              "content": "再利用可能なコンポーネントでスライドを構築"
+            }
+          ]
+        },
+        {
+          "type": "container",
+          "style": {
+            "marginTop": 32,
+            "gap": 24
+          },
+          "children": [
+            {
+              "type": "container",
+              "style": {
+                "flexDirection": "row",
+                "gap": 24
+              },
+              "children": [
+                {
+                  "type": "container",
+                  "style": {
+                    "flex": 1
+                  },
+                  "children": [
+                    {
+                      "type": "frame",
+                      "style": {
+                        "backgroundColor": "#e3f2fd",
+                        "padding": 16,
+                        "borderRadius": 8,
+                        "borderWidth": 1,
+                        "borderColor": "#dee2e6"
+                      },
+                      "children": [
+                        {
+                          "type": "heading",
+                          "level": 3,
+                          "style": {
+                            "marginBottom": 12,
+                            "color": "#495057"
+                          },
+                          "content": "機能紹介"
+                        },
+                        {
+                          "type": "container",
+                          "style": {
+                            "gap": 16
+                          },
+                          "children": [
+                            {
+                              "type": "container",
+                              "style": {
+                                "flexDirection": "row",
+                                "gap": 12
+                              },
+                              "children": [
+                                {
+                                  "type": "container",
+                                  "style": {
+                                    "width": 40,
+                                    "alignItems": "center"
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "frame",
+                                      "style": {
+                                        "width": 32,
+                                        "height": 32,
+                                        "backgroundColor": "#007bff",
+                                        "borderRadius": 16,
+                                        "alignItems": "center",
+                                        "justifyContent": "center"
+                                      },
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "style": {
+                                            "color": "white",
+                                            "fontWeight": "bold"
+                                          },
+                                          "content": "🔧"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "container",
+                                  "style": {
+                                    "flex": 1
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "heading",
+                                      "level": 4,
+                                      "style": {
+                                        "marginBottom": 4,
+                                        "color": "#212529"
+                                      },
+                                      "content": "関数コンポーネント"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "style": {
+                                        "color": "#6c757d",
+                                        "fontSize": 14
+                                      },
+                                      "content": "React風の関数コンポーネントをサポート"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "container",
+                              "style": {
+                                "flexDirection": "row",
+                                "gap": 12
+                              },
+                              "children": [
+                                {
+                                  "type": "container",
+                                  "style": {
+                                    "width": 40,
+                                    "alignItems": "center"
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "frame",
+                                      "style": {
+                                        "width": 32,
+                                        "height": 32,
+                                        "backgroundColor": "#007bff",
+                                        "borderRadius": 16,
+                                        "alignItems": "center",
+                                        "justifyContent": "center"
+                                      },
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "style": {
+                                            "color": "white",
+                                            "fontWeight": "bold"
+                                          },
+                                          "content": "📦"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "container",
+                                  "style": {
+                                    "flex": 1
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "heading",
+                                      "level": 4,
+                                      "style": {
+                                        "marginBottom": 4,
+                                        "color": "#212529"
+                                      },
+                                      "content": "Props & Children"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "style": {
+                                        "color": "#6c757d",
+                                        "fontSize": 14
+                                      },
+                                      "content": "プロパティと子要素の受け渡しが可能"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "container",
+                              "style": {
+                                "flexDirection": "row",
+                                "gap": 12
+                              },
+                              "children": [
+                                {
+                                  "type": "container",
+                                  "style": {
+                                    "width": 40,
+                                    "alignItems": "center"
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "frame",
+                                      "style": {
+                                        "width": 32,
+                                        "height": 32,
+                                        "backgroundColor": "#007bff",
+                                        "borderRadius": 16,
+                                        "alignItems": "center",
+                                        "justifyContent": "center"
+                                      },
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "style": {
+                                            "color": "white",
+                                            "fontWeight": "bold"
+                                          },
+                                          "content": "♻️"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "container",
+                                  "style": {
+                                    "flex": 1
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "heading",
+                                      "level": 4,
+                                      "style": {
+                                        "marginBottom": 4,
+                                        "color": "#212529"
+                                      },
+                                      "content": "再利用性"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "style": {
+                                        "color": "#6c757d",
+                                        "fontSize": 14
+                                      },
+                                      "content": "一度作成したコンポーネントを何度でも使用"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "container",
+                  "style": {
+                    "flex": 1
+                  },
+                  "children": [
+                    {
+                      "type": "frame",
+                      "style": {
+                        "backgroundColor": "#f3e5f5",
+                        "padding": 16,
+                        "borderRadius": 8,
+                        "borderWidth": 1,
+                        "borderColor": "#dee2e6"
+                      },
+                      "children": [
+                        {
+                          "type": "heading",
+                          "level": 3,
+                          "style": {
+                            "marginBottom": 12,
+                            "color": "#495057"
+                          },
+                          "content": "使用例"
+                        },
+                        {
+                          "type": "text",
+                          "style": {
+                            "marginBottom": 16
+                          },
+                          "content": "コンポーネントを組み合わせて複雑なレイアウトを簡単に作成できます。"
+                        },
+                        {
+                          "type": "container",
+                          "style": {
+                            "gap": 8
+                          },
+                          "children": [
+                            {
+                              "type": "frame",
+                              "style": {
+                                "backgroundColor": "#007bff",
+                                "padding": 8,
+                                "borderRadius": 4,
+                                "alignSelf": "flex-start"
+                              },
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "style": {
+                                    "color": "white",
+                                    "fontWeight": "bold"
+                                  },
+                                  "content": "プライマリボタン"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "style": {
+                                "backgroundColor": "#6c757d",
+                                "padding": 6,
+                                "borderRadius": 4,
+                                "alignSelf": "flex-start"
+                              },
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "style": {
+                                    "color": "white",
+                                    "fontWeight": "bold"
+                                  },
+                                  "content": "セカンダリボタン"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "container",
+              "style": {
+                "marginTop": 32,
+                "padding": 16,
+                "backgroundColor": "#f8f9fa",
+                "borderRadius": 8,
+                "alignItems": "center"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "style": {
+                    "color": "#6c757d",
+                    "fontSize": 12,
+                    "textAlign": "center"
+                  },
+                  "content": "JSXコンポーネント機能により、保守性と再利用性を向上"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

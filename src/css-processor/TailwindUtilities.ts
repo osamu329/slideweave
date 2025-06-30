@@ -89,6 +89,62 @@ export class TailwindUtilities {
 
     // Typography - Font style
     'italic': { fontStyle: 'italic' },
+    'font-semibold': { fontWeight: '600' },
+
+    // Colors - Background (Extended)
+    'bg-gray-50': { backgroundColor: '#f9fafb' },
+    'bg-gray-500': { backgroundColor: '#6b7280' },
+    'bg-gray-800': { backgroundColor: '#1f2937' },
+    'bg-gray-900': { backgroundColor: '#111827' },
+    'bg-blue-100': { backgroundColor: '#dbeafe' },
+    'bg-green-100': { backgroundColor: '#dcfce7' },
+    'bg-yellow-100': { backgroundColor: '#fef3c7' },
+    'bg-red-100': { backgroundColor: '#fee2e2' },
+
+    // Colors - Text (Extended)
+    'text-gray-500': { color: '#6b7280' },
+    'text-gray-600': { color: '#4b5563' },
+    'text-gray-800': { color: '#1f2937' },
+    'text-gray-900': { color: '#111827' },
+    'text-blue-700': { color: '#1d4ed8' },
+    'text-green-700': { color: '#15803d' },
+    'text-yellow-700': { color: '#a16207' },
+    'text-red-700': { color: '#b91c1c' },
+
+    // Border
+    'border': { borderWidth: '1px', borderColor: '#e5e7eb' },
+    'border-l-4': { borderLeftWidth: '4px' },
+    'border-t': { borderTopWidth: '1px', borderTopColor: '#e5e7eb' },
+    'border-blue-200': { borderColor: '#bfdbfe' },
+    'border-blue-500': { borderColor: '#3b82f6' },
+    'border-green-500': { borderColor: '#22c55e' },
+    'border-yellow-500': { borderColor: '#eab308' },
+    'border-red-500': { borderColor: '#ef4444' },
+    'border-gray-200': { borderColor: '#e5e7eb' },
+
+    // Border Radius
+    'rounded-md': { borderRadius: '6px' },
+    'rounded-lg': { borderRadius: '8px' },
+    'rounded-full': { borderRadius: '9999px' },
+
+    // Spacing - Extended Padding
+    'px-8': { paddingLeft: '32px', paddingRight: '32px' },
+    'py-4': { paddingTop: '16px', paddingBottom: '16px' },
+    'pt-16': { paddingTop: '64px' },
+
+    // Display & Positioning
+    'inline-block': { display: 'inline-block' },
+    'text-center': { textAlign: 'center' },
+
+    // Shadows
+    'shadow-sm': { boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)' },
+    'shadow-lg': { boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)' },
+
+    // Spacing - Extended Gap
+    'gap-16': { gap: '64px' },
+    
+    // Layout - Flexbox Extended  
+    'flex-row': { flexDirection: 'row' },
   };
 
   /**

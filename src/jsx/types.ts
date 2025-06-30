@@ -156,3 +156,11 @@ declare global {
       | { [key: string]: any };
   }
 }
+
+// 関数コンポーネントサポート
+declare global {
+  namespace JSX {
+    type Element = any;
+    type ElementType = string | ((props: any) => any);
+  }
+}
