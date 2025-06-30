@@ -21,7 +21,7 @@
         {
           "type": "container",
           "style": {
-            "direction": "row",
+            "flexDirection": "row",
             "width": "100%",
             "marginTop": "8px"
           },

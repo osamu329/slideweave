@@ -70,6 +70,7 @@ const POWERPOINT_PROPERTIES: Record<string, PowerPointProperty> = {
 
   // 境界（対応）
   'border': { supported: true },
+  'border-color': { supported: true },
   'border-radius': { supported: true },
 
   // 効果（限定対応）

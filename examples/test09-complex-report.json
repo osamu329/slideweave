@@ -373,7 +373,7 @@
                 {
                   "type": "container",
                   "style": {
-                    "direction": "row",
+                    "flexDirection": "row",
                     "marginBottom": "8px",
                     "justifyContent": "space-between",
                     "alignItems": "center"
@@ -412,7 +412,7 @@
                 {
                   "type": "container",
                   "style": {
-                    "direction": "row",
+                    "flexDirection": "row",
                     "marginBottom": "8px",
                     "justifyContent": "space-between",
                     "alignItems": "center"
@@ -451,7 +451,7 @@
                 {
                   "type": "container",
                   "style": {
-                    "direction": "row",
+                    "flexDirection": "row",
                     "justifyContent": "space-between",
                     "alignItems": "center"
                   },
@@ -579,7 +579,7 @@
             {
               "type": "frame",
               "style": {
-                "direction": "row",
+                "flexDirection": "row",
                 "backgroundColor": "rgba(255,255,255,0.1)",
                 "marginBottom": "4px",
                 "padding": "8px",
@@ -641,7 +641,7 @@
             {
               "type": "container",
               "style": {
-                "direction": "row",
+                "flexDirection": "row",
                 "marginBottom": "4px",
                 "padding": "8px",
                 "alignItems": "center"
@@ -697,7 +697,7 @@
             {
               "type": "container",
               "style": {
-                "direction": "row",
+                "flexDirection": "row",
                 "marginBottom": "4px",
                 "padding": "8px",
                 "alignItems": "center"
@@ -753,7 +753,7 @@
             {
               "type": "container",
               "style": {
-                "direction": "row",
+                "flexDirection": "row",
                 "marginBottom": "4px",
                 "padding": "8px",
                 "alignItems": "center"
@@ -809,7 +809,7 @@
             {
               "type": "container",
               "style": {
-                "direction": "row",
+                "flexDirection": "row",
                 "padding": "8px",
                 "alignItems": "center"
               },
