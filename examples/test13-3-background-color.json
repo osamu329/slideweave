@@ -1,0 +1,459 @@
+{
+  "title": "Background Color Utilities Test - Tailwind Classes",
+  "description": "background-color系ユーティリティクラスの動作確認テスト（1パターン1スライド）",
+  "slides": [
+    {
+      "type": "slide",
+      "title": "bg-white",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "bg-white (#ffffff)"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "p-8 bg-white",
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-black",
+                      "content": "このフレームの背景色は白（#ffffff）です"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "bg-red-500",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "bg-red-500 (#dc2626)"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "p-8 bg-red-500",
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-white",
+                      "content": "このフレームの背景色は赤（#dc2626）です"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "bg-blue-500",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "bg-blue-500 (#2563eb)"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "p-8 bg-blue-500",
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-white",
+                      "content": "このフレームの背景色は青（#2563eb）です"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "bg-green-500",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "bg-green-500 (#16a34a)"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "p-8 bg-green-500",
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-white",
+                      "content": "このフレームの背景色は緑（#16a34a）です"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "bg-purple-500",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "bg-purple-500 (#7c3aed)"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "p-8 bg-purple-500",
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-white",
+                      "content": "このフレームの背景色は紫（#7c3aed）です"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "bg-yellow-500",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "bg-yellow-500 (#f59e0b)"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "p-8 bg-yellow-500",
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-black",
+                      "content": "このフレームの背景色は黄（#f59e0b）です"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "bg-gray-100",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "bg-gray-100 (#f3f4f6)"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "p-8 bg-gray-100",
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-black",
+                      "content": "このフレームの背景色は薄い灰色（#f3f4f6）です"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "bg-blue-50",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "bg-blue-50 (#eff6ff)"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "p-8 bg-blue-50",
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-black",
+                      "content": "このフレームの背景色は薄い青（#eff6ff）です"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "bg-green-50",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "bg-green-50 (#f0fdf4)"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "p-8 bg-green-50",
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-black",
+                      "content": "このフレームの背景色は薄い緑（#f0fdf4）です"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "複数背景色指定（優先度確認）",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "bg-red-500 bg-blue-500 (後のbg-blue-500が優先)"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "p-8 bg-red-500 bg-blue-500",
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-white",
+                      "content": "複数指定では後の値が優先されます（青）"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "bg-blue-500 + inline style (インライン併用)",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "bg-blue-500 + inline backgroundColor"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "p-8 bg-blue-500",
+                  "style": {
+                    "backgroundColor": "#ff6b6b"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-white",
+                      "content": "Tailwindのbg-blue-500にインラインスタイルで#ff6b6bを上書き"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "ネストした背景色",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "外側bg-blue-500、内側bg-white"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "p-8 bg-blue-500",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "class": "p-4 bg-white",
+                      "children": [
+                        {
+                          "type": "text",
+                          "class": "text-black",
+                          "content": "外側は青、内側は白の背景色"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

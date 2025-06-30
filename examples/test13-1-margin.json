@@ -1,0 +1,379 @@
+{
+  "title": "Margin Utilities Test - Tailwind Classes",
+  "description": "margin系ユーティリティクラスの動作確認テスト（1パターン1スライド）",
+  "slides": [
+    {
+      "type": "slide",
+      "title": "m-4 (全方向margin 16px)",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "m-4 applied (16px all sides)"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "m-4 p-4 bg-blue-500",
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-white",
+                      "content": "このフレームには全方向に16pxのmarginが適用されています"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "m-8 (全方向margin 32px)",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "m-8 applied (32px all sides)"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "m-8 p-4 bg-green-500",
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-white",
+                      "content": "このフレームには全方向に32pxのmarginが適用されています"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "mt-8 (上margin 32px)",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "mt-8 applied (32px top margin)"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "mt-8 p-4 bg-blue-500",
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-white",
+                      "content": "このフレームには上部に32pxのmarginが適用されています"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "mb-8 (下margin 32px)",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "mb-8 applied (32px bottom margin)"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "mb-8 p-4 bg-green-500",
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-white",
+                      "content": "このフレームには下部に32pxのmarginが適用されています"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "ml-8 (左margin 32px)",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "ml-8 applied (32px left margin)"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "ml-8 p-4 bg-red-500",
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-white",
+                      "content": "このフレームには左側に32pxのmarginが適用されています"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "mr-8 (右margin 32px)",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "mr-8 applied (32px right margin)"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "mr-8 p-4 bg-purple-500",
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-white",
+                      "content": "このフレームには右側に32pxのmarginが適用されています"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "mt-16 mb-16 (上下margin 64px)",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "mt-16 mb-16 applied (64px top & bottom)"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "mt-16 mb-16 p-4 bg-blue-500",
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-white",
+                      "content": "このフレームには上下に64pxのmarginが適用されています"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "ml-16 mr-16 (左右margin 64px)",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "ml-16 mr-16 applied (64px left & right)"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "ml-16 mr-16 p-4 bg-green-500",
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-white",
+                      "content": "このフレームには左右に64pxのmarginが適用されています"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "m-4 mt-16 (優先度確認)",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "m-4 mt-16 (mt-16 overrides top margin)"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "m-4 mt-16 p-4 bg-red-500",
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-white",
+                      "content": "m-4で全方向16px、mt-16で上部のみ64pxに上書き"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "m-8 + inline style (インライン併用)",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "m-8 + inline marginTop:48px"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "m-8 p-4 bg-purple-500",
+                  "style": {
+                    "marginTop": "48px"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-white",
+                      "content": "Tailwindのm-8にインラインスタイルでmarginTop:48pxを上書き"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
