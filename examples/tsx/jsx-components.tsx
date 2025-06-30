@@ -3,8 +3,8 @@
  * 再利用可能なコンポーネントでスライドを構築
  */
 
-import { createSlideElement } from '../src/jsx/index';
-import type { SlideComponent, TwoColumnLayoutProps, CardProps } from '../src/jsx/components';
+import { createSlideElement } from '../../src/jsx/index';
+import type { SlideComponent, TwoColumnLayoutProps, CardProps } from '../../src/jsx/components';
 
 // React未定義エラー回避
 global.React = { createElement: createSlideElement, Fragment: () => null };
@@ -230,14 +230,16 @@ const slide = (
   </slide>
 );
 
-// 生成されたオブジェクトの確認
-console.log('Generated JSX Component Object:', JSON.stringify(slide, null, 2));
-
 // SlideWeave形式のJSONとして出力
 const slideData = {
-  title: "JSX Components Sample",
-  description: "JSX関数コンポーネントを使用した高度なスライド作成サンプル",
+  title: "JSX Components Sample - Fixed",
+  description: "JSX関数コンポーネント（px変換済み）",
   slides: [slide]
 };
+
+// 直接実行時のみconsole.log出力（テスト実行時は呼び出し側で処理）
+if (!process.env.SLIDEWEAVE_OUTPUT_PATH && import.meta.main) {
+  console.log(JSON.stringify(slideData, null, 2));
+}
 
 export default slideData;

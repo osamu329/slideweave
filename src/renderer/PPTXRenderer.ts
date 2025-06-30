@@ -226,6 +226,9 @@ export class PPTXRenderer {
       throw new Error("スライドが初期化されていません");
     }
 
+    // 境界チェック: 要素がスライド範囲を超えていないか確認
+    this.checkBoundingBox(layoutResult);
+
     const element = layoutResult.element;
 
     switch (element.type) {
@@ -515,6 +518,43 @@ export class PPTXRenderer {
       w: layoutResult.width * PX_TO_INCH,
       h: layoutResult.height * PX_TO_INCH,
     };
+  }
+
+  /**
+   * 要素の境界チェック: スライド範囲を超えていないか確認
+   * @param layoutResult レイアウト結果
+   */
+  private checkBoundingBox(layoutResult: LayoutResult): void {
+    const PX_TO_INCH = 1 / 72;
+    const slideWidthPx = this.options.slideWidth! / PX_TO_INCH;
+    const slideHeightPx = this.options.slideHeight! / PX_TO_INCH;
+    
+    const elementLeft = layoutResult.left || 0;
+    const elementTop = layoutResult.top || 0;
+    const elementRight = elementLeft + layoutResult.width;
+    const elementBottom = elementTop + layoutResult.height;
+    
+    // スライド境界チェック
+    if (elementRight > slideWidthPx || elementBottom > slideHeightPx) {
+      const elementType = layoutResult.element?.type || 'unknown';
+      const elementContent = (layoutResult.element as any)?.content || '';
+      
+      console.warn(`⚠️  Element exceeds slide boundaries:
+  Type: ${elementType}${elementContent ? ` ("${elementContent.substring(0, 20)}...")` : ''}
+  Position: (${elementLeft.toFixed(0)}, ${elementTop.toFixed(0)})px
+  Size: ${layoutResult.width.toFixed(0)} x ${layoutResult.height.toFixed(0)}px
+  Right edge: ${elementRight.toFixed(0)}px (max: ${slideWidthPx.toFixed(0)}px)
+  Bottom edge: ${elementBottom.toFixed(0)}px (max: ${slideHeightPx.toFixed(0)}px)
+  Overflow: ${elementRight > slideWidthPx ? `${(elementRight - slideWidthPx).toFixed(0)}px right` : ''}${elementRight > slideWidthPx && elementBottom > slideHeightPx ? ', ' : ''}${elementBottom > slideHeightPx ? `${(elementBottom - slideHeightPx).toFixed(0)}px bottom` : ''}`);
+    }
+    
+    // 負の座標チェック
+    if (elementLeft < 0 || elementTop < 0) {
+      const elementType = layoutResult.element?.type || 'unknown';
+      console.warn(`⚠️  Element has negative position:
+  Type: ${elementType}
+  Position: (${elementLeft.toFixed(0)}, ${elementTop.toFixed(0)})px`);
+    }
   }
 
   /**

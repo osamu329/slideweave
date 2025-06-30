@@ -3,8 +3,8 @@
  * ImageCard, InfoCard, AlertCard等の実装例
  */
 
-import { createSlideElement, Fragment } from '../src/jsx/index';
-import type { SlideComponent } from '../src/jsx/components';
+import { createSlideElement, Fragment } from '../../src/jsx/index';
+import type { SlideComponent } from '../../src/jsx/components';
 
 // React未定義エラー回避のためのグローバル設定
 global.React = { createElement: createSlideElement, Fragment };
@@ -466,14 +466,16 @@ const slide = (
   </slide>
 );
 
-// 生成されたオブジェクトの確認
-console.log('Generated Card Components Object:', JSON.stringify(slide, null, 2));
-
 // SlideWeave形式のJSONとして出力
 const slideData = {
   title: "Card Components Collection",
   description: "ImageCard, InfoCard, AlertCard等の様々なカードコンポーネント集",
   slides: [slide]
 };
+
+// 直接実行時のみconsole.log出力（テスト実行時は呼び出し側で処理）
+if (!process.env.SLIDEWEAVE_OUTPUT_PATH && import.meta.main) {
+  console.log(JSON.stringify(slideData, null, 2));
+}
 
 export default slideData;

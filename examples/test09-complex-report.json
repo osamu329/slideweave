@@ -5,10 +5,10 @@
     {
       "type": "frame",
       "style": {
-        "width": "15360px",
-        "height": "11520px",
+        "width": "3840px",
+        "height": "2880px",
         "padding": "16px",
-        "direction": "column",
+        "flexDirection": "column",
         "backgroundColor": "4F46E5",
         "justifyContent": "center",
         "alignItems": "center"
@@ -51,10 +51,10 @@
     {
       "type": "frame",
       "style": {
-        "width": "15360px",
-        "height": "11520px",
+        "width": "3840px",
+        "height": "2880px",
         "padding": "16px",
-        "direction": "column",
+        "flexDirection": "column",
         "background": {
           "type": "linearGradient",
           "direction": "to right",
@@ -87,7 +87,7 @@
         {
           "type": "container",
           "style": {
-            "direction": "row",
+            "flexDirection": "row",
             "width": "100%",
             "marginBottom": "12px",
             "gap": "8px"
@@ -96,9 +96,9 @@
             {
               "type": "frame",
               "style": {
-                "flex": 4,
+                "flex": 1,
                 "backgroundColor": "rgba(255,255,255,0.2)",
-                "padding": "8px",
+                "padding": "16px",
                 "borderRadius": "4px",
                 "gap": "8px"
               },
@@ -134,9 +134,9 @@
             {
               "type": "frame",
               "style": {
-                "flex": 4,
+                "flex": 1,
                 "backgroundColor": "rgba(255,255,255,0.2)",
-                "padding": "8px",
+                "padding": "16px",
                 "borderRadius": "4px",
                 "gap": "8px"
               },
@@ -174,7 +174,7 @@
         {
           "type": "container",
           "style": {
-            "direction": "row",
+            "flexDirection": "row",
             "width": "100%",
             "marginBottom": "12px",
             "gap": "8px"
@@ -183,9 +183,9 @@
             {
               "type": "frame",
               "style": {
-                "flex": 4,
+                "flex": 1,
                 "backgroundColor": "rgba(255,255,255,0.2)",
-                "padding": "8px",
+                "padding": "16px",
                 "borderRadius": "4px",
                 "gap": "8px"
               },
@@ -221,9 +221,9 @@
             {
               "type": "frame",
               "style": {
-                "flex": 4,
+                "flex": 1,
                 "backgroundColor": "rgba(255,255,255,0.2)",
-                "padding": "8px",
+                "padding": "16px",
                 "borderRadius": "4px",
                 "gap": "8px"
               },
@@ -263,7 +263,7 @@
           "style": {
             "backgroundColor": "rgba(255,255,255,0.2)",
             "width": "100%",
-            "padding": "8px",
+            "padding": "16px",
             "borderRadius": "4px"
           },
           "children": [
@@ -309,10 +309,10 @@
     {
       "type": "frame",
       "style": {
-        "width": "15360px",
-        "height": "11520px",
+        "width": "3840px",
+        "height": "2880px",
         "padding": "16px",
-        "direction": "column",
+        "flexDirection": "column",
         "background": {
           "type": "linearGradient",
           "direction": "to right",
@@ -345,7 +345,7 @@
         {
           "type": "container",
           "style": {
-            "direction": "row",
+            "flexDirection": "row",
             "width": "100%",
             "gap": "4px"
           },
@@ -353,7 +353,7 @@
             {
               "type": "frame",
               "style": {
-                "flex": 4,
+                "flex": 1,
                 "backgroundColor": "rgba(255,255,255,0.2)",
                 "padding": "12px",
                 "borderRadius": "4px"
@@ -546,10 +546,10 @@
     {
       "type": "frame",
       "style": {
-        "width": "15360px",
-        "height": "11520px",
+        "width": "3840px",
+        "height": "2880px",
         "padding": "16px",
-        "direction": "column",
+        "flexDirection": "column",
         "backgroundColor": "8B5CF6"
       },
       "children": [
@@ -582,7 +582,7 @@
                 "flexDirection": "row",
                 "backgroundColor": "rgba(255,255,255,0.1)",
                 "marginBottom": "4px",
-                "padding": "8px",
+                "padding": "12px",
                 "borderRadius": "4px"
               },
               "children": [
@@ -643,7 +643,7 @@
               "style": {
                 "flexDirection": "row",
                 "marginBottom": "4px",
-                "padding": "8px",
+                "padding": "12px",
                 "alignItems": "center"
               },
               "children": [
@@ -699,7 +699,7 @@
               "style": {
                 "flexDirection": "row",
                 "marginBottom": "4px",
-                "padding": "8px",
+                "padding": "12px",
                 "alignItems": "center"
               },
               "children": [
@@ -755,7 +755,7 @@
               "style": {
                 "flexDirection": "row",
                 "marginBottom": "4px",
-                "padding": "8px",
+                "padding": "12px",
                 "alignItems": "center"
               },
               "children": [
@@ -810,7 +810,7 @@
               "type": "container",
               "style": {
                 "flexDirection": "row",
-                "padding": "8px",
+                "padding": "12px",
                 "alignItems": "center"
               },
               "children": [
@@ -919,10 +919,10 @@
     {
       "type": "frame",
       "style": {
-        "width": "15360px",
-        "height": "11520px",
+        "width": "3840px",
+        "height": "2880px",
         "padding": "16px",
-        "direction": "column",
+        "flexDirection": "column",
         "backgroundColor": "6366F1"
       },
       "children": [
@@ -942,7 +942,7 @@
         {
           "type": "container",
           "style": {
-            "direction": "row",
+            "flexDirection": "row",
             "width": "100%",
             "gap": "4px"
           },
@@ -971,7 +971,7 @@
                   "type": "frame",
                   "style": {
                     "marginBottom": "8px",
-                    "padding": "8px",
+                    "padding": "12px",
                     "borderLeft": "4px solid #10B981",
                     "backgroundColor": "rgba(16,185,129,0.1)"
                   },
@@ -998,7 +998,7 @@
                   "type": "frame",
                   "style": {
                     "marginBottom": "8px",
-                    "padding": "8px",
+                    "padding": "12px",
                     "borderLeft": "4px solid #10B981",
                     "backgroundColor": "rgba(16,185,129,0.1)"
                   },
@@ -1024,7 +1024,7 @@
                 {
                   "type": "frame",
                   "style": {
-                    "padding": "8px",
+                    "padding": "12px",
                     "borderLeft": "4px solid #10B981",
                     "backgroundColor": "rgba(16,185,129,0.1)"
                   },
@@ -1073,7 +1073,7 @@
                   "type": "frame",
                   "style": {
                     "marginBottom": "8px",
-                    "padding": "8px",
+                    "padding": "12px",
                     "borderLeft": "4px solid #F59E0B",
                     "backgroundColor": "rgba(245,158,11,0.1)"
                   },
@@ -1103,7 +1103,7 @@
                   "type": "frame",
                   "style": {
                     "marginBottom": "8px",
-                    "padding": "8px",
+                    "padding": "12px",
                     "borderLeft": "4px solid #F59E0B",
                     "backgroundColor": "rgba(245,158,11,0.1)"
                   },
@@ -1132,7 +1132,7 @@
                 {
                   "type": "frame",
                   "style": {
-                    "padding": "8px",
+                    "padding": "12px",
                     "borderLeft": "4px solid #F59E0B",
                     "backgroundColor": "rgba(245,158,11,0.1)"
                   },

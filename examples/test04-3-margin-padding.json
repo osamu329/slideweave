@@ -5,11 +5,11 @@
     {
       "type": "container",
       "style": {
-        "width": "15360px",
-        "height": "11520px",
-        "padding": "64px",
+        "width": "960px",
+        "height": "720px",
+        "padding": "16px",
         "flexDirection": "column",
-        "gap": "32px"
+        "gap": "8px"
       },
       "children": [
         {
@@ -18,7 +18,7 @@
           "content": "margin/padding動作テスト",
           "color": "1e40af",
           "style": {
-            "marginBottom": "48px"
+            "marginBottom": "12px"
           }
         },
         {
@@ -27,7 +27,7 @@
           "content": "1. margin（要素間隔）テスト",
           "color": "374151",
           "style": {
-            "marginBottom": "32px"
+            "marginBottom": "8px"
           }
         },
         {
@@ -37,7 +37,7 @@
           "color": "000000",
           "style": {
             "margin": "0px",
-            "marginBottom": "16px"
+            "marginBottom": "4px"
           }
         },
         {
@@ -46,8 +46,8 @@
           "fontSize": "14px",
           "color": "000000",
           "style": {
-            "margin": "32px",
-            "marginBottom": "16px"
+            "margin": "8px",
+            "marginBottom": "4px"
           }
         },
         {
@@ -56,8 +56,8 @@
           "fontSize": "14px",
           "color": "000000",
           "style": {
-            "margin": "64px",
-            "marginBottom": "48px"
+            "margin": "16px",
+            "marginBottom": "12px"
           }
         },
         {
@@ -66,7 +66,7 @@
           "content": "2. padding（テキストフレーム内マージン）テスト",
           "color": "374151",
           "style": {
-            "marginBottom": "32px"
+            "marginBottom": "8px"
           }
         },
         {
@@ -77,7 +77,7 @@
           "style": {
             "padding": "0px",
             "backgroundColor": "dc2626",
-            "marginBottom": "16px"
+            "marginBottom": "4px"
           }
         },
         {
@@ -86,9 +86,9 @@
           "fontSize": "14px",
           "color": "ffffff",
           "style": {
-            "padding": "32px",
+            "padding": "8px",
             "backgroundColor": "2563eb",
-            "marginBottom": "16px"
+            "marginBottom": "4px"
           }
         },
         {
@@ -97,9 +97,9 @@
           "fontSize": "14px",
           "color": "ffffff",
           "style": {
-            "padding": "64px",
+            "padding": "16px",
             "backgroundColor": "16a34a",
-            "marginBottom": "48px"
+            "marginBottom": "12px"
           }
         },
         {
@@ -108,7 +108,7 @@
           "content": "3. margin/padding組み合わせテスト",
           "color": "374151",
           "style": {
-            "marginBottom": "32px"
+            "marginBottom": "8px"
           }
         },
         {
@@ -117,10 +117,10 @@
           "fontSize": "14px",
           "color": "ffffff",
           "style": {
-            "margin": "16px",
-            "padding": "16px",
+            "margin": "4px",
+            "padding": "4px",
             "backgroundColor": "7c3aed",
-            "marginBottom": "16px"
+            "marginBottom": "4px"
           }
         },
         {
@@ -129,10 +129,10 @@
           "fontSize": "14px",
           "color": "ffffff",
           "style": {
-            "margin": "48px",
-            "padding": "48px",
+            "margin": "12px",
+            "padding": "12px",
             "backgroundColor": "f59e0b",
-            "marginBottom": "16px"
+            "marginBottom": "4px"
           }
         },
         {
@@ -141,9 +141,9 @@
           "fontSize": "14px",
           "color": "000000",
           "style": {
-            "margin": "32px",
+            "margin": "8px",
             "padding": "0px",
-            "marginBottom": "16px"
+            "marginBottom": "4px"
           }
         }
       ]

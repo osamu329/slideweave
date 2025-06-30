@@ -81,8 +81,11 @@ export class YogaLayoutEngine implements ILayoutEngine {
    * スタイルをYogaノードに適用（無次元数値のみ変換、他はYogaに委譲）
    */
   private applyStyleToNode(node: any, style: any, element: Element): void {
+    // 未サポートプロパティの警告
+    this.checkUnsupportedProperties(style, element);
+    
     // FlexDirection
-    if (style.direction === "row") {
+    if (style.flexDirection === "row") {
       node.setFlexDirection(this.yoga.FLEX_DIRECTION_ROW);
     } else {
       node.setFlexDirection(this.yoga.FLEX_DIRECTION_COLUMN);
@@ -196,6 +199,61 @@ export class YogaLayoutEngine implements ILayoutEngine {
       }
     }
     return 0;
+  }
+
+  /**
+   * 未サポートのスタイルプロパティをチェックして警告
+   */
+  private checkUnsupportedProperties(style: any, element: Element): void {
+    if (!style) return;
+    
+    // Yogaでサポートされているプロパティのリスト
+    const supportedProperties = new Set([
+      // レイアウト
+      'flexDirection', 'justifyContent', 'alignItems', 'alignContent', 'alignSelf',
+      'flex', 'flexGrow', 'flexShrink', 'flexBasis', 'flexWrap',
+      
+      // サイズ
+      'width', 'height', 'minWidth', 'minHeight', 'maxWidth', 'maxHeight',
+      
+      // 間隔
+      'margin', 'marginTop', 'marginRight', 'marginBottom', 'marginLeft',
+      'padding', 'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft',
+      'gap', 'rowGap', 'columnGap',
+      
+      // 位置
+      'position', 'top', 'right', 'bottom', 'left',
+      
+      // 表示
+      'display', 'overflow',
+      
+      // SlideWeave固有（Yogaでは処理しないが有効）
+      'backgroundColor', 'border', 'borderRadius', 'borderWidth', 'borderColor', 'borderStyle',
+      'color', 'fontSize', 'fontWeight', 'fontStyle', 'fontFamily', 'textAlign',
+      'background', 'backgroundImage', 'backgroundSize', 'backgroundPosition',
+      'glassEffect', 'opacity', 'zIndex'
+    ]);
+    
+    // レガシープロパティのマッピング
+    const legacyPropertyMap: Record<string, string> = {
+      'direction': 'flexDirection'
+    };
+    
+    // スタイルプロパティをチェック
+    for (const prop in style) {
+      if (!supportedProperties.has(prop)) {
+        // レガシープロパティの場合
+        if (legacyPropertyMap[prop]) {
+          const newProp = legacyPropertyMap[prop];
+          const elementInfo = element.type + (element.id ? ` (id: ${element.id})` : '');
+          console.warn(`⚠️  Deprecated style property "${prop}" in ${elementInfo}. Use "${newProp}" instead.`);
+        } else {
+          // 完全に未知のプロパティ
+          const elementInfo = element.type + (element.id ? ` (id: ${element.id})` : '');
+          console.warn(`⚠️  Unknown style property "${prop}" in ${elementInfo}. This property will be ignored.`);
+        }
+      }
+    }
   }
 
   /**

@@ -5,10 +5,10 @@
     {
       "type": "container",
       "style": {
-        "width": "3840px",
-        "height": "2880px",
+        "width": "960px",
+        "height": "720px",
         "flexDirection": "column",
-        "padding": "64px"
+        "padding": "16px"
       },
       "children": [
         {
@@ -17,15 +17,15 @@
           "style": {
             "fontSize": "24px",
             "fontWeight": "bold",
-            "marginBottom": "32px"
+            "marginBottom": "8px"
           }
         },
         {
           "type": "frame",
           "style": {
-            "width": "1856px",
-            "height": "256px",
-            "marginBottom": "16px",
+            "width": "464px",
+            "height": "64px",
+            "marginBottom": "4px",
             "background": {
               "type": "linearGradient",
               "direction": "to right",
@@ -45,9 +45,9 @@
         {
           "type": "frame",
           "style": {
-            "width": "1856px",
-            "height": "256px",
-            "marginBottom": "16px",
+            "width": "464px",
+            "height": "64px",
+            "marginBottom": "4px",
             "background": {
               "type": "linearGradient",
               "direction": "to bottom",
@@ -67,9 +67,9 @@
         {
           "type": "frame",
           "style": {
-            "width": "1856px",
-            "height": "256px",
-            "marginBottom": "16px",
+            "width": "464px",
+            "height": "64px",
+            "marginBottom": "4px",
             "background": {
               "type": "radialGradient",
               "stops": [
@@ -88,8 +88,8 @@
         {
           "type": "frame",
           "style": {
-            "width": "1856px",
-            "height": "256px",
+            "width": "464px",
+            "height": "64px",
             "background": {
               "type": "linearGradient",
               "direction": "45deg",

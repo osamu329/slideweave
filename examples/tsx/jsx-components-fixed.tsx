@@ -3,8 +3,8 @@
  * レイアウト崩れを修正し、PowerPoint対応を強化
  */
 
-import { createSlideElement, Fragment } from '../src/jsx/index';
-import type { SlideComponent, TwoColumnLayoutProps, CardProps } from '../src/jsx/components';
+import { createSlideElement, Fragment } from '../../src/jsx/index';
+import type { SlideComponent, TwoColumnLayoutProps, CardProps } from '../../src/jsx/components';
 
 // React未定義エラー回避
 global.React = { createElement: createSlideElement, Fragment };
@@ -264,14 +264,16 @@ const slide = (
   </slide>
 );
 
-// 生成されたオブジェクトの確認
-console.log('Generated Fixed JSX Object:', JSON.stringify(slide, null, 2));
-
 // SlideWeave形式のJSONとして出力
 const slideData = {
   title: "JSX Components Fixed",
   description: "レイアウト崩れを修正したJSXコンポーネントサンプル",
   slides: [slide]
 };
+
+// 直接実行時のみconsole.log出力（テスト実行時は呼び出し側で処理）
+if (!process.env.SLIDEWEAVE_OUTPUT_PATH && import.meta.main) {
+  console.log(JSON.stringify(slideData, null, 2));
+}
 
 export default slideData;

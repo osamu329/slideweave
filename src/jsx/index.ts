@@ -29,12 +29,23 @@ export function createSlideElement(
   
   // childrenの処理
   const processedChildren = children.length > 0 ? 
-    children.flat().filter(child => 
-      child !== null && 
-      child !== undefined && 
-      child !== false &&
-      child !== ''
-    ) : undefined;
+    children.flat()
+      .filter(child => 
+        child !== null && 
+        child !== undefined && 
+        child !== false &&
+        child !== ''
+      )
+      .map(child => {
+        // 文字列やプリミティブ値を自動的にtext要素に変換
+        if (typeof child === 'string' || typeof child === 'number') {
+          return {
+            type: 'text',
+            content: String(child)
+          } as Element;
+        }
+        return child;
+      }) : undefined;
 
   // SlideWeave Element型に変換
   const element: Element = {
@@ -43,16 +54,19 @@ export function createSlideElement(
     children: processedChildren
   } as Element;
 
-  // text/heading要素の特別処理: childrenの文字列をcontentに変換
+  // text/heading要素の特別処理: childrenのtext要素をcontentに統合
   if ((type === 'text' || type === 'heading') && processedChildren) {
-    const textContent = processedChildren
-      .filter(child => typeof child === 'string')
-      .join('');
+    const textElements = processedChildren
+      .filter(child => child && typeof child === 'object' && child.type === 'text')
+      .map(child => (child as any).content)
+      .filter(content => content);
     
-    if (textContent && !(element as any).content) {
-      (element as any).content = textContent;
-      // テキストコンテンツはchildrenから除外
-      const nonTextChildren = processedChildren.filter(child => typeof child !== 'string');
+    if (textElements.length > 0 && !(element as any).content) {
+      (element as any).content = textElements.join('');
+      // text要素はchildrenから除外（非text要素のみ残す）
+      const nonTextChildren = processedChildren.filter(child => 
+        !(child && typeof child === 'object' && child.type === 'text')
+      );
       (element as any).children = nonTextChildren.length > 0 ? nonTextChildren : undefined;
     }
   }

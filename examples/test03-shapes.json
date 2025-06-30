@@ -5,14 +5,14 @@
     {
       "type": "frame",
       "style": {
-        "width": "3840px",
-        "height": "2880px",
+        "width": "960px",
+        "height": "720px",
         "backgroundColor": "f0f0f0",
-        "padding": "64px",
+        "padding": "16px",
         "flexDirection": "column",
         "justifyContent": "flex-start",
         "alignItems": "flex-start",
-        "gap": "32px"
+        "gap": "8px"
       },
       "children": [
         {
@@ -21,7 +21,7 @@
           "content": "shape要素のテスト",
           "color": "000080",
           "style": {
-            "margin": "32px"
+            "margin": "8px"
           }
         },
         {
@@ -29,8 +29,8 @@
           "shapeType": "rectangle",
           "style": {
             "backgroundColor": "ff0000",
-            "width": "1600px",
-            "height": "400px"
+            "width": "400px",
+            "height": "100px"
           }
         },
         {
@@ -38,9 +38,9 @@
           "shapeType": "circle",
           "style": {
             "backgroundColor": "0000ff",
-            "width": "1600px",
-            "height": "400px",
-            "marginTop": "32px"
+            "width": "400px",
+            "height": "100px",
+            "marginTop": "8px"
           }
         },
         {
@@ -48,9 +48,9 @@
           "shapeType": "ellipse",
           "style": {
             "backgroundColor": "008000",
-            "width": "1600px",
-            "height": "400px",
-            "marginTop": "32px"
+            "width": "400px",
+            "height": "100px",
+            "marginTop": "8px"
           }
         }
       ]

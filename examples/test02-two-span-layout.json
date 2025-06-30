@@ -78,7 +78,7 @@
         {
           "type": "frame",
           "style": {
-            "direction": "column",
+            "flexDirection": "column",
             "width": "100%",
             "marginTop": "8px",
             "backgroundColor": "000000"

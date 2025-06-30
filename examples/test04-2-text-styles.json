@@ -5,11 +5,11 @@
     {
       "type": "container",
       "style": {
-        "width": "15360px",
-        "height": "11520px",
-        "padding": "64px",
+        "width": "960px",
+        "height": "720px",
+        "padding": "16px",
         "flexDirection": "column",
-        "gap": "32px"
+        "gap": "8px"
       },
       "children": [
         {
@@ -18,7 +18,7 @@
           "content": "テキストスタイルテスト",
           "color": "1e40af",
           "style": {
-            "marginBottom": "48px"
+            "marginBottom": "12px"
           }
         },
         {
@@ -27,8 +27,8 @@
           "fontSize": "16px",
           "color": "000000",
           "style": {
-            "marginBottom": "32px",
-            "padding": "16px"
+            "marginBottom": "8px",
+            "padding": "4px"
           }
         },
         {
@@ -38,8 +38,8 @@
           "color": "000000",
           "bold": true,
           "style": {
-            "marginBottom": "32px",
-            "padding": "32px"
+            "marginBottom": "8px",
+            "padding": "8px"
           }
         },
         {
@@ -49,8 +49,8 @@
           "color": "000000",
           "italic": true,
           "style": {
-            "marginBottom": "32px",
-            "padding": "32px"
+            "marginBottom": "8px",
+            "padding": "8px"
           }
         },
         {
@@ -61,8 +61,8 @@
           "bold": true,
           "italic": true,
           "style": {
-            "marginBottom": "32px",
-            "padding": "48px"
+            "marginBottom": "8px",
+            "padding": "12px"
           }
         },
         {
@@ -71,8 +71,8 @@
           "content": "見出しでのスタイル",
           "color": "374151",
           "style": {
-            "marginBottom": "32px",
-            "padding": "32px"
+            "marginBottom": "8px",
+            "padding": "8px"
           }
         },
         {
@@ -81,8 +81,8 @@
           "content": "通常見出し",
           "color": "374151",
           "style": {
-            "marginBottom": "16px",
-            "padding": "16px"
+            "marginBottom": "4px",
+            "padding": "4px"
           }
         },
         {
@@ -92,8 +92,8 @@
           "color": "374151",
           "bold": true,
           "style": {
-            "marginBottom": "16px",
-            "padding": "16px"
+            "marginBottom": "4px",
+            "padding": "4px"
           }
         },
         {
@@ -103,8 +103,8 @@
           "color": "374151",
           "italic": true,
           "style": {
-            "marginBottom": "16px",
-            "padding": "16px"
+            "marginBottom": "4px",
+            "padding": "4px"
           }
         },
         {
@@ -115,7 +115,7 @@
           "bold": true,
           "italic": true,
           "style": {
-            "padding": "32px"
+            "padding": "8px"
           }
         }
       ]

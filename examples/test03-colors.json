@@ -5,14 +5,14 @@
     {
       "type": "frame",
       "style": {
-        "width": "3840px",
-        "height": "2880px",
+        "width": "960px",
+        "height": "720px",
         "backgroundColor": "f0f0f0",
-        "padding": "64px",
+        "padding": "16px",
         "flexDirection": "column",
         "justifyContent": "flex-start",
         "alignItems": "flex-start",
-        "gap": "32px"
+        "gap": "8px"
       },
       "children": [
         {
@@ -21,16 +21,16 @@
           "content": "色設定のテスト",
           "color": "000080",
           "style": {
-            "margin": "32px"
+            "margin": "8px"
           }
         },
         {
           "type": "frame",
           "style": {
             "backgroundColor": "ff0000",
-            "padding": "32px",
-            "width": "1600px",
-            "height": "400px"
+            "padding": "8px",
+            "width": "400px",
+            "height": "100px"
           },
           "children": [
             {
@@ -45,10 +45,10 @@
           "type": "frame",
           "style": {
             "backgroundColor": "0000ff",
-            "padding": "32px",
-            "width": "1600px",
-            "height": "400px",
-            "marginTop": "32px"
+            "padding": "8px",
+            "width": "400px",
+            "height": "100px",
+            "marginTop": "8px"
           },
           "children": [
             {
@@ -63,10 +63,10 @@
           "type": "frame",
           "style": {
             "backgroundColor": "008000",
-            "padding": "32px",
-            "width": "1600px",
-            "height": "400px",
-            "marginTop": "32px"
+            "padding": "8px",
+            "width": "400px",
+            "height": "100px",
+            "marginTop": "8px"
           },
           "children": [
             {

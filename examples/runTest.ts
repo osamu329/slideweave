@@ -10,6 +10,7 @@ import { SlideDataLoader } from '../src/data/SlideDataLoader';
 import { LayoutResult } from '../src/layout/LayoutEngine';
 import * as path from 'path';
 import * as fs from 'fs';
+import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -84,4 +85,49 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   runTest(testFile).catch(console.error);
 }
 
-export { runTest };
+/**
+ * TSXファイルを実行してPPTXを生成
+ */
+async function runTsxTest(tsxFileName: string) {
+  try {
+    const tsxFilePath = path.join(__dirname, tsxFileName);
+    
+    // 出力JSONファイルパスを決定
+    const baseName = path.basename(tsxFileName, '.tsx');
+    const tempJsonFileName = `${baseName}-temp.json`;
+    const tempJsonPath = path.join(__dirname, tempJsonFileName);
+    
+    // dynamic importでTSXファイルからslideDataを取得
+    const tsxModule = await import(tsxFilePath);
+    const slideData = tsxModule.default;
+    
+    // JSONファイルとして出力
+    fs.writeFileSync(tempJsonPath, JSON.stringify(slideData, null, 2), 'utf8');
+    
+    // 生成されたJSONファイルが存在するか確認
+    if (!fs.existsSync(tempJsonPath)) {
+      throw new Error(`TSXファイルの実行でJSONファイルが生成されませんでした: ${tempJsonPath}`);
+    }
+    
+    try {
+      // JSON → PPTX変換を実行
+      await runTest(tempJsonFileName);
+      
+      // 一時ファイルを削除
+      fs.unlinkSync(tempJsonPath);
+      
+    } catch (error) {
+      // エラーが発生した場合も一時ファイルを削除
+      if (fs.existsSync(tempJsonPath)) {
+        fs.unlinkSync(tempJsonPath);
+      }
+      throw error;
+    }
+    
+  } catch (error) {
+    console.error('❌ TSXテスト実行エラー:', error);
+    throw error;
+  }
+}
+
+export { runTest, runTsxTest };
