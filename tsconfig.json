@@ -5,7 +5,6 @@
     "moduleResolution": "node",
     "lib": ["ES2022"],
     "outDir": "./dist",
-    "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -18,8 +17,11 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noUnusedLocals": false,
-    "noUnusedParameters": false
+    "noUnusedParameters": false,
+    "jsx": "react",
+    "jsxFactory": "createSlideElement",
+    "jsxFragmentFactory": "Fragment"
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "**/*.test.ts"]
+  "exclude": ["node_modules", "dist", "**/*.test.ts", "examples/**/*"]
 }

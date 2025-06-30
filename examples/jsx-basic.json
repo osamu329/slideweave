@@ -1,0 +1,71 @@
+{
+  "title": "JSX Basic Test",
+  "description": "JSX Factory関数を使用した基本的なスライド作成テスト",
+  "slides": [
+    {
+      "type": "slide",
+      "style": {
+        "padding": 16
+      },
+      "children": [
+        {
+          "type": "heading",
+          "level": 1,
+          "fontSize": 24,
+          "style": {
+            "marginBottom": 16
+          },
+          "content": "JSX Test Slide"
+        },
+        {
+          "type": "container",
+          "style": {
+            "flexDirection": "row",
+            "gap": 16
+          },
+          "children": [
+            {
+              "type": "container",
+              "style": {
+                "flex": 1,
+                "backgroundColor": "#f0f8ff",
+                "padding": 12
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "fontSize": 16,
+                  "content": "左カラムのコンテンツ"
+                }
+              ]
+            },
+            {
+              "type": "container",
+              "style": {
+                "flex": 1,
+                "backgroundColor": "#fff0f0",
+                "padding": 12
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "fontSize": 16,
+                  "content": "右カラムのコンテンツ"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "style": {
+            "marginTop": 16,
+            "fontSize": 14,
+            "color": "#666"
+          },
+          "content": "JSXライクな記述でSlideWeaveスライドを作成できます。"
+        }
+      ]
+    }
+  ]
+}
