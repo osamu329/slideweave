@@ -37,6 +37,7 @@ coverage/
 
 # Generated test outputs
 examples/output/
+examples/temp/
 output/
 
 # Python
