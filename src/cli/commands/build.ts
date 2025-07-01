@@ -14,7 +14,8 @@ import { loadConfig, resolveOutputPath } from '../utils/config.js';
 // SlideWeave core modules
 import { renderLayout } from '../../layout/LayoutEngine.js';
 import { PPTXRenderer } from '../../renderer/PPTXRenderer.js';
-import { ElementValidator } from '../../elements/validator.js';
+import { SchemaValidator } from '../../elements/SchemaValidator.js';
+import { RuntimeValidator } from '../../elements/RuntimeValidator.js';
 import { SlideDataLoader } from '../../data/SlideDataLoader.js';
 
 interface BuildOptions {
@@ -51,7 +52,7 @@ export async function buildSlides(inputPath: string, options: BuildOptions) {
     const spinner = ora('Loading slide data...').start();
 
     // JSONファイルを読み込み (外部CSSファイルがあれば一緒に処理)
-    const slideData = options.css && options.css.length > 0
+    const deckData = options.css && options.css.length > 0
       ? SlideDataLoader.loadFromFileWithExternalCSS(inputPath, options.css)
       : SlideDataLoader.loadFromFile(inputPath);
     spinner.succeed('Slide data loaded');
@@ -67,33 +68,46 @@ export async function buildSlides(inputPath: string, options: BuildOptions) {
       slideHeight: slideHeight / 72
     });
 
-    // 各スライドを処理
-    const processSpinner = ora(`Processing ${slideData.slides.length} slide(s)...`).start();
-
-    for (let i = 0; i < slideData.slides.length; i++) {
-      const slide = slideData.slides[i];
-      
-      processSpinner.text = `Processing slide ${i + 1}/${slideData.slides.length}`;
-      
-      // バリデーション
-      const validation = ElementValidator.validate(slide);
-      if (!validation.isValid) {
-        processSpinner.fail(`Validation failed for slide ${i + 1}`);
-        throw new CLIError(
-          `Slide ${i + 1} validation failed`,
-          2,
-          validation.errors.join('\n')
-        );
-      }
-      
-      // レイアウト計算
-      const slideLayout = await renderLayout(slide, slideWidth, slideHeight);
-      
-      // レンダリング
-      await renderer.render(slideLayout);
+    // JSONSchemaバリデーション
+    const schemaValidator = new SchemaValidator();
+    const schemaValidation = schemaValidator.validate(deckData);
+    if (!schemaValidation.isValid) {
+      throw new CLIError(
+        'JSON Schema validation failed',
+        2,
+        schemaValidator.formatValidationResult(schemaValidation)
+      );
     }
 
-    processSpinner.succeed(`Processed ${slideData.slides.length} slide(s)`);
+    // 実行時バリデーション（ファイル存在チェック等）
+    const runtimeValidator = new RuntimeValidator();
+    const runtimeValidation = runtimeValidator.validate(deckData);
+    if (!runtimeValidation.isValid) {
+      throw new CLIError(
+        'Runtime validation failed',
+        2,
+        runtimeValidator.formatValidationResult(runtimeValidation)
+      );
+    }
+
+    // 各スライドを処理
+    const processSpinner = ora(`Processing ${deckData.slides.length} slide(s)...`).start();
+
+    for (let i = 0; i < deckData.slides.length; i++) {
+      const slide = deckData.slides[i];
+      
+      processSpinner.text = `Processing slide ${i + 1}/${deckData.slides.length}`;
+      
+      // 各子要素をレイアウト計算してレンダリング
+      if (slide.children) {
+        for (const child of slide.children) {
+          const slideLayout = await renderLayout(child, slideWidth, slideHeight);
+          await renderer.render(slideLayout);
+        }
+      }
+    }
+
+    processSpinner.succeed(`Processed ${deckData.slides.length} slide(s)`);
 
     // 出力ディレクトリを作成
     const outputDir = path.dirname(outputPath);

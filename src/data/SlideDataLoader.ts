@@ -5,7 +5,7 @@
 
 import fs from "fs";
 import path from "path";
-import { Element } from "../types/elements";
+import { Element, DeckElement } from "../types/elements";
 import { CSSStyleParser } from "../css-processor/CSSStyleParser";
 import { CSSStylesheetParser, StylesheetRules } from "../css-processor/CSSStylesheetParser";
 
@@ -20,26 +20,32 @@ export class SlideDataLoader {
   /**
    * JSONファイルからスライドデータを読み込み
    * @param filePath JSONファイルのパス
-   * @returns スライドデータ
+   * @returns DeckElement
    */
-  static loadFromFile(filePath: string): SlideData {
+  static loadFromFile(filePath: string): DeckElement {
     try {
       const absolutePath = path.resolve(filePath);
       const jsonContent = fs.readFileSync(absolutePath, "utf-8");
       const data = JSON.parse(jsonContent);
 
-      // 基本的なバリデーション
-      if (!data.title || !Array.isArray(data.slides)) {
+      // deck/slide構造のバリデーション
+      if (data.type !== "deck" || !Array.isArray(data.slides)) {
         throw new Error(
-          "Invalid slide data format: title and slides array are required",
+          "Invalid deck data format: type must be 'deck' and slides array is required",
         );
       }
 
       // CSS文字列をパース
       const stylesheetRules = this.processStylesheet(data.css);
-      this.processStyleStrings(data.slides, stylesheetRules);
       
-      return data as SlideData;
+      // 各スライドの子要素を処理
+      data.slides.forEach((slide: any) => {
+        if (slide.children) {
+          this.processStyleStrings(slide.children, stylesheetRules);
+        }
+      });
+      
+      return data as DeckElement;
     } catch (error) {
       throw new Error(
         `Failed to load slide data from ${filePath}: ${error instanceof Error ? error.message : "Unknown error"}`,
@@ -51,18 +57,18 @@ export class SlideDataLoader {
    * 外部CSSファイルと共にJSONファイルからスライドデータを読み込み
    * @param filePath JSONファイルのパス
    * @param cssFiles 外部CSSファイルのパス配列
-   * @returns スライドデータ
+   * @returns DeckElement
    */
-  static loadFromFileWithExternalCSS(filePath: string, cssFiles: string[]): SlideData {
+  static loadFromFileWithExternalCSS(filePath: string, cssFiles: string[]): DeckElement {
     try {
       const absolutePath = path.resolve(filePath);
       const jsonContent = fs.readFileSync(absolutePath, "utf-8");
       const data = JSON.parse(jsonContent);
 
-      // 基本的なバリデーション
-      if (!data.title || !Array.isArray(data.slides)) {
+      // deck/slide構造のバリデーション
+      if (data.type !== "deck" || !Array.isArray(data.slides)) {
         throw new Error(
-          "Invalid slide data format: title and slides array are required",
+          "Invalid deck data format: type must be 'deck' and slides array is required",
         );
       }
 
@@ -80,9 +86,15 @@ export class SlideDataLoader {
 
       // 結合されたCSS文字列をパース
       const stylesheetRules = this.processStylesheet(combinedCSS);
-      this.processStyleStrings(data.slides, stylesheetRules);
       
-      return data as SlideData;
+      // 各スライドの子要素を処理
+      data.slides.forEach((slide: any) => {
+        if (slide.children) {
+          this.processStyleStrings(slide.children, stylesheetRules);
+        }
+      });
+      
+      return data as DeckElement;
     } catch (error) {
       throw new Error(
         `Failed to load slide data with external CSS from ${filePath}: ${error instanceof Error ? error.message : "Unknown error"}`,
@@ -91,38 +103,44 @@ export class SlideDataLoader {
   }
 
   /**
-   * JSONオブジェクトからスライドデータを読み込み
+   * JSONオブジェクトからデックデータを読み込み
    * @param jsonData JSONオブジェクト
-   * @returns スライドデータ
+   * @returns DeckElement
    */
-  static loadFromObject(jsonData: any): SlideData {
-    // 基本的なバリデーション
-    if (!jsonData.title || !Array.isArray(jsonData.slides)) {
+  static loadFromObject(jsonData: any): DeckElement {
+    // deck/slide構造のバリデーション
+    if (jsonData.type !== "deck" || !Array.isArray(jsonData.slides)) {
       throw new Error(
-        "Invalid slide data format: title and slides array are required",
+        "Invalid deck data format: type must be 'deck' and slides array is required",
       );
     }
 
     // CSS文字列をパース
     const stylesheetRules = this.processStylesheet(jsonData.css);
-    this.processStyleStrings(jsonData.slides, stylesheetRules);
     
-    return jsonData as SlideData;
+    // 各スライドの子要素を処理
+    jsonData.slides.forEach((slide: any) => {
+      if (slide.children) {
+        this.processStyleStrings(slide.children, stylesheetRules);
+      }
+    });
+    
+    return jsonData as DeckElement;
   }
 
   /**
-   * スライドデータをJSONファイルに保存
-   * @param data スライドデータ
+   * デックデータをJSONファイルに保存
+   * @param data デックデータ
    * @param filePath 保存先パス
    */
-  static saveToFile(data: SlideData, filePath: string): void {
+  static saveToFile(data: DeckElement, filePath: string): void {
     try {
       const absolutePath = path.resolve(filePath);
       const jsonContent = JSON.stringify(data, null, 2);
       fs.writeFileSync(absolutePath, jsonContent, "utf-8");
     } catch (error) {
       throw new Error(
-        `Failed to save slide data to ${filePath}: ${error instanceof Error ? error.message : "Unknown error"}`,
+        `Failed to save deck data to ${filePath}: ${error instanceof Error ? error.message : "Unknown error"}`,
       );
     }
   }

@@ -1,0 +1,193 @@
+{
+  "title": "CSS Stylesheet Test - PostCSS Based Styling",
+  "description": "CSSライクスタイルシート機能のテスト。クラス名でスタイルを指定",
+  "css": ".slide-container { padding: 24px; background-color: #F8F9FA; flex-direction: column; } .header-section { padding: 16px; background-color: #E3F2FD; margin-bottom: 16px; border-radius: 8px; } .content-area { flex-direction: row; } .text-column { padding: 20px; background-color: white; border-radius: 6px; margin-right: 8px; } .highlight-box { padding: 16px; background-color: #FFF3E0; border-radius: 4px; margin-bottom: 12px; } .main-title { font-size: 28pt; font-weight: bold; color: #1565C0; margin-bottom: 8px; } .section-title { font-size: 20pt; font-weight: bold; color: #333333; margin-bottom: 12px; } .body-text { font-size: 14pt; color: #555555; } .highlight-text { font-size: 16pt; color: #E65100; font-weight: bold; } .footer-note { font-size: 12pt; color: #666666; font-style: italic; margin-top: 16px; }",
+  "slides": [
+    {
+      "type": "slide",
+      "title": "CSS Stylesheet Demo",
+      "children": [
+        {
+          "type": "container",
+          "className": "slide-container",
+          "children": [
+            {
+              "type": "frame",
+              "className": "header-section",
+              "children": [
+                {
+                  "type": "heading",
+                  "className": "main-title",
+                  "content": "PostCSS Based CSS Stylesheet",
+                  "level": 1
+                },
+                {
+                  "type": "text",
+                  "className": "body-text",
+                  "content": "This slide demonstrates the new CSS-like stylesheet functionality using PostCSS parsing."
+                }
+              ]
+            },
+            {
+              "type": "container",
+              "className": "content-area",
+              "children": [
+                {
+                  "type": "frame",
+                  "className": "text-column",
+                  "children": [
+                    {
+                      "type": "heading",
+                      "className": "section-title",
+                      "content": "Left Column",
+                      "level": 2
+                    },
+                    {
+                      "type": "frame",
+                      "className": "highlight-box",
+                      "children": [
+                        {
+                          "type": "text",
+                          "className": "highlight-text",
+                          "content": "Supported Properties"
+                        },
+                        {
+                          "type": "text",
+                          "className": "body-text",
+                          "content": "• width, height, padding, margin\\n• background-color, font-size, color\\n• border, border-radius\\n• flex-direction, gap"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "className": "body-text",
+                      "content": "All CSS properties are validated for PowerPoint compatibility. Unsupported properties generate warnings with alternative suggestions."
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "className": "text-column",
+                  "children": [
+                    {
+                      "type": "heading",
+                      "className": "section-title",
+                      "content": "Right Column",
+                      "level": 2
+                    },
+                    {
+                      "type": "frame",
+                      "className": "highlight-box",
+                      "children": [
+                        {
+                          "type": "text",
+                          "className": "highlight-text",
+                          "content": "CSS Class Benefits"
+                        },
+                        {
+                          "type": "text",
+                          "className": "body-text",
+                          "content": "• Reusable style definitions\\n• Consistent design system\\n• Easy maintenance\\n• PowerPoint-optimized"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "className": "body-text",
+                      "content": "Inline styles override class styles, allowing for flexible customization while maintaining a consistent base design."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "className": "footer-note",
+              "content": "This example uses OSN-162 PostCSS-based CSS stylesheet functionality"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "Class Override Demo",
+      "children": [
+        {
+          "type": "container",
+          "className": "slide-container",
+          "children": [
+            {
+              "type": "frame",
+              "className": "header-section",
+              "children": [
+                {
+                  "type": "heading",
+                  "className": "main-title",
+                  "content": "Class + Inline Style Mixing",
+                  "level": 1
+                },
+                {
+                  "type": "text",
+                  "className": "body-text",
+                  "content": "Demonstration of how inline styles override class styles"
+                }
+              ]
+            },
+            {
+              "type": "container",
+              "className": "content-area",
+              "children": [
+                {
+                  "type": "frame",
+                  "className": "text-column",
+                  "style": {
+                    "backgroundColor": "#E8F5E8"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "className": "section-title",
+                      "style": {
+                        "color": "#2E7D32"
+                      },
+                      "content": "Override Example 1"
+                    },
+                    {
+                      "type": "text",
+                      "className": "body-text",
+                      "content": "This frame uses 'text-column' class but overrides backgroundColor with inline style."
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "className": "text-column",
+                  "style": {
+                    "backgroundColor": "#FFF3E0",
+                    "padding": "128px"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "className": "section-title",
+                      "style": {
+                        "color": "#F57C00"
+                      },
+                      "content": "Override Example 2"
+                    },
+                    {
+                      "type": "text",
+                      "className": "body-text",
+                      "content": "This frame overrides both backgroundColor and padding from the class definition."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

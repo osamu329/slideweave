@@ -1,0 +1,124 @@
+{
+  "title": "テキストスタイルのテスト",
+  "description": "bold、italic属性の組み合わせテスト",
+  "slides": [
+    {
+      "type": "container",
+      "style": {
+        "width": "1280px",
+        "height": "720px",
+        "padding": "22px",
+        "flexDirection": "column",
+        "gap": "11px"
+      },
+      "children": [
+        {
+          "type": "heading",
+          "level": 1,
+          "content": "テキストスタイルテスト",
+          "style": {
+            "color": "1e40af",
+            "marginBottom": "17px"
+          }
+        },
+        {
+          "type": "text",
+          "content": "通常テキスト",
+          "style": {
+            "fontSize": "22px",
+            "color": "000000",
+            "marginBottom": "11px",
+            "padding": "6px"
+          }
+        },
+        {
+          "type": "text",
+          "content": "太字テキスト",
+          "bold": true,
+          "style": {
+            "fontSize": "22px",
+            "color": "000000",
+            "marginBottom": "11px",
+            "padding": "11px"
+          }
+        },
+        {
+          "type": "text",
+          "content": "斜体テキスト",
+          "italic": true,
+          "style": {
+            "fontSize": "22px",
+            "color": "000000",
+            "marginBottom": "11px",
+            "padding": "11px"
+          }
+        },
+        {
+          "type": "text",
+          "content": "太字＋斜体テキスト",
+          "bold": true,
+          "italic": true,
+          "style": {
+            "fontSize": "22px",
+            "color": "000000",
+            "marginBottom": "11px",
+            "padding": "17px"
+          }
+        },
+        {
+          "type": "heading",
+          "level": 2,
+          "content": "見出しでのスタイル",
+          "style": {
+            "color": "374151",
+            "marginBottom": "11px",
+            "padding": "11px"
+          }
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "content": "通常見出し",
+          "style": {
+            "color": "374151",
+            "marginBottom": "6px",
+            "padding": "6px"
+          }
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "content": "太字見出し",
+          "bold": true,
+          "style": {
+            "color": "374151",
+            "marginBottom": "6px",
+            "padding": "6px"
+          }
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "content": "斜体見出し",
+          "italic": true,
+          "style": {
+            "color": "374151",
+            "marginBottom": "6px",
+            "padding": "6px"
+          }
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "content": "太字＋斜体見出し",
+          "bold": true,
+          "italic": true,
+          "style": {
+            "color": "374151",
+            "padding": "11px"
+          }
+        }
+      ]
+    }
+  ]
+}

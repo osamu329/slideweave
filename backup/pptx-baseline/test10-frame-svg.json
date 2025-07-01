@@ -1,0 +1,134 @@
+{
+  "title": "Frame SVG Test",
+  "slides": [
+    {
+      "name": "Frame SVG Rendering",
+      "type": "container",
+      "style": {
+        "flexDirection": "column",
+        "padding": "16px",
+        "gap": "12px"
+      },
+      "children": [
+        {
+          "type": "heading",
+          "level": 1,
+          "content": "Frame SVG Rendering Test",
+          "style": {
+            "color": "1a1a1a"
+          }
+        },
+        {
+          "type": "container",
+          "style": {
+            "flexDirection": "row",
+            "gap": "8px"
+          },
+          "children": [
+            {
+              "type": "frame",
+              "style": {
+                "width": "120px",
+                "height": "80px",
+                "backgroundColor": "ef4444"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "content": "Simple red background",
+                  "style": {
+                    "color": "ffffff",
+                    "padding": "8px"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "style": {
+                "width": "120px",
+                "height": "80px",
+                "backgroundColor": "3b82f6",
+                "borderRadius": "16px"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "content": "Rounded corners (16px)",
+                  "style": {
+                    "color": "ffffff",
+                    "padding": "8px"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "container",
+          "style": {
+            "flexDirection": "row",
+            "gap": "8px"
+          },
+          "children": [
+            {
+              "type": "frame",
+              "style": {
+                "width": "120px",
+                "height": "80px",
+                "backgroundColor": "10b981",
+                "borderRadius": "8px"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "content": "Small radius (8px)",
+                  "style": {
+                    "color": "ffffff",
+                    "padding": "8px"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "style": {
+                "width": "120px",
+                "height": "80px",
+                "backgroundColor": "f59e0b",
+                "borderRadius": "24px"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "content": "Large radius (24px)",
+                  "style": {
+                    "color": "ffffff",
+                    "padding": "8px"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "style": {
+            "width": "248px",
+            "height": "60px",
+            "borderRadius": "16px"
+          },
+          "children": [
+            {
+              "type": "text",
+              "content": "Transparent frame with no background - should not be visible",
+              "style": {
+                "padding": "8px"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

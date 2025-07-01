@@ -1,0 +1,11 @@
+.test-container {
+  padding: 16px;
+  background-color: #F0F8FF;
+  flex-direction: column;
+}
+
+.test-text {
+  font-size: 18px;
+  color: #333333;
+  font-weight: bold;
+}

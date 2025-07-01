@@ -1,0 +1,80 @@
+{
+  "title": "RGBA Transparency Test",
+  "slides": [
+    {
+      "type": "frame",
+      "style": {
+        "width": "960px",
+        "height": "720px",
+        "backgroundColor": "f0f0f0",
+        "padding": "16px",
+        "flexDirection": "column",
+        "gap": "12px"
+      },
+      "children": [
+        {
+          "type": "heading",
+          "level": 1,
+          "content": "RGBA Transparency Test",
+          "style": {
+            "color": "1a1a1a"
+          }
+        },
+        {
+          "type": "frame",
+          "style": {
+            "width": "160px",
+            "height": "80px",
+            "backgroundColor": "rgba(255,0,0,0.5)"
+          },
+          "children": [
+            {
+              "type": "text",
+              "content": "50% Red",
+              "style": {
+                "color": "ffffff",
+                "padding": "8px"
+              }
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "style": {
+            "width": "160px",
+            "height": "80px",
+            "backgroundColor": "rgba(0,255,0,0.3)"
+          },
+          "children": [
+            {
+              "type": "text",
+              "content": "30% Green",
+              "style": {
+                "color": "000000",
+                "padding": "8px"
+              }
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "style": {
+            "width": "160px",
+            "height": "80px",
+            "backgroundColor": "rgba(0,0,255,0.8)"
+          },
+          "children": [
+            {
+              "type": "text",
+              "content": "80% Blue",
+              "style": {
+                "color": "ffffff",
+                "padding": "8px"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

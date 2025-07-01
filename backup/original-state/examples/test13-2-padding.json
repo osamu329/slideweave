@@ -1,0 +1,510 @@
+{
+  "title": "Padding Utilities Test - Tailwind Classes",
+  "description": "padding系ユーティリティクラスの動作確認テスト（1パターン1スライド）",
+  "slides": [
+    {
+      "type": "slide",
+      "title": "p-4 (全方向padding 16px)",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "p-4 applied (16px all sides)"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "p-4 bg-blue-500",
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-white",
+                      "content": "このフレームには全方向に16pxのpaddingが適用されています"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "p-8 (全方向padding 32px)",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "p-8 applied (32px all sides)"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "p-8 bg-green-500",
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-white",
+                      "content": "このフレームには全方向に32pxのpaddingが適用されています"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "p-0 (padding無し)",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "p-0 applied (no padding)"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "p-0 bg-red-500",
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-white",
+                      "content": "p-0でpaddingなし"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "p-16 (全方向padding 64px)",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "p-16 applied (64px all sides)"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "p-16 bg-purple-500",
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-white",
+                      "content": "このフレームには全方向に64pxのpaddingが適用されています"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "段階的padding比較",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "Padding値の視覚的比較"
+            },
+            {
+              "type": "container",
+              "class": "flex-col gap-4",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "bg-gray-700 p-0",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "class": "p-0 bg-blue-500",
+                      "children": [
+                        {
+                          "type": "text",
+                          "class": "text-white text-sm",
+                          "content": "p-0 (0px)"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "class": "bg-gray-700 p-0",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "class": "p-4 bg-blue-500",
+                      "children": [
+                        {
+                          "type": "text",
+                          "class": "text-white text-sm",
+                          "content": "p-4 (16px)"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "class": "bg-gray-700 p-0",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "class": "p-8 bg-blue-500",
+                      "children": [
+                        {
+                          "type": "text",
+                          "class": "text-white text-sm",
+                          "content": "p-8 (32px)"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "class": "bg-gray-700 p-0",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "class": "p-16 bg-blue-500",
+                      "children": [
+                        {
+                          "type": "text",
+                          "class": "text-white text-sm",
+                          "content": "p-16 (64px)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "ネストしたpadding",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "外側p-8、内側p-4のネスト構造"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "p-8 bg-green-500",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "class": "p-4 bg-white",
+                      "children": [
+                        {
+                          "type": "text",
+                          "class": "text-black",
+                          "content": "外側のフレームにp-8、内側のフレームにp-4が適用"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "p-4 m-8 (padding + margin)",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "p-4 m-8 併用"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "m-8 p-4 bg-blue-500",
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-white",
+                      "content": "margin 32px + padding 16px"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "p-8 m-4 (大padding + 小margin)",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "p-8 m-4 併用"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "m-4 p-8 bg-green-500",
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-white",
+                      "content": "margin 16px + padding 32px"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "複数padding指定（優先度確認）",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "p-8 p-4 (後のp-4が優先)"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "p-8 p-4 bg-red-500",
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-white",
+                      "content": "複数指定では後の値が優先されます（16px）"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "p-8 + inline style (インライン併用)",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "p-8 + inline padding:48px"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "p-8 bg-purple-500",
+                  "style": {
+                    "padding": "48px"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-white",
+                      "content": "Tailwindのp-8にインラインスタイルでpadding:48pxを上書き"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "テキスト要素のpadding",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "text要素にp-8適用"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "text",
+                  "class": "p-8 text-white bg-blue-500",
+                  "content": "テキスト要素に直接paddingを適用した例"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "長文でのpadding効果",
+      "children": [
+        {
+          "type": "container",
+          "class": "p-8",
+          "style": {
+            "backgroundColor": "#f5f5f5"
+          },
+          "children": [
+            {
+              "type": "text",
+              "class": "text-base font-bold mb-4",
+              "content": "p-16で長文を囲む"
+            },
+            {
+              "type": "frame",
+              "class": "bg-gray-700 p-0",
+              "children": [
+                {
+                  "type": "frame",
+                  "class": "p-16 bg-green-500",
+                  "children": [
+                    {
+                      "type": "text",
+                      "class": "text-white text-sm",
+                      "content": "paddingを適切に設定することで、テキストコンテンツが枠線から離れ、視認性と可読性が向上します。特に長い文章の場合、十分なpaddingを確保することで、読み手にとって快適な余白が生まれ、情報の理解を助けます。このフレームはp-16（64px）のpaddingが適用されています。"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

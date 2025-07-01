@@ -1,0 +1,58 @@
+{
+  "title": "Test2: 2段組みレイアウトテスト",
+  "description": "左右2段組みレイアウトでのコンテンツ配置検証用テストケース",
+  "slides": [
+    {
+      "type": "slide",
+      "style": "padding: 8px",
+      "children": [
+        {
+          "type": "heading",
+          "content": "2段組みレイアウトデモ",
+          "level": 1,
+          "style": "font-size: 28pt; margin-bottom: 4px; width: 100%"
+        },
+        {
+          "type": "container",
+          "style": "flex-direction: row; width: 100%; margin-top: 8px",
+          "children": [
+            {
+              "type": "container",
+              "style": "flex: 4; background-color: #f0f8ff",
+              "children": [
+                {
+                  "type": "heading",
+                  "content": "左カラム",
+                  "level": 3,
+                  "style": "margin-bottom: 4px; font-size: 20pt"
+                },
+                {
+                  "type": "text",
+                  "content": "これは左側のカラムです。2段組みレイアウトでは、コンテンツを左右に分割して表示します。この部分では主要な情報を記載します。",
+                  "style": "font-size: 14pt"
+                }
+              ]
+            },
+            {
+              "type": "container",
+              "style": "flex: 4; margin-left: 8px; background-color: #F0FFF0",
+              "children": [
+                {
+                  "type": "heading",
+                  "content": "右カラム",
+                  "level": 3,
+                  "style": "margin-bottom: 4px; font-size:20pt"
+                },
+                {
+                  "type": "text",
+                  "content": "これは右側のカラムです。補足情報や詳細な説明、関連するデータなどを配置します。レイアウトエンジンの横並び配置機能をテストします。",
+                  "style": "font-size: 14pt"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
