@@ -1,5 +1,6 @@
 import { PPTXRenderer } from '../PPTXRenderer';
 import { YogaLayoutEngine } from '../../layout/YogaLayoutEngine';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 describe('Frame Background Color Rendering', () => {
   let renderer: PPTXRenderer;
@@ -33,14 +34,14 @@ describe('Frame Background Color Rendering', () => {
 
     // Mock PPTX slide to capture calls
     const mockSlide = {
-      addShape: jest.fn(),
-      addText: jest.fn(),
-      addImage: jest.fn()
+      addShape: vi.fn(),
+      addText: vi.fn(),
+      addImage: vi.fn()
     };
 
     // Mock the PPTXRenderer render method to track slide creation
     const mockPptx = {
-      addSlide: jest.fn().mockReturnValue(mockSlide)
+      addSlide: vi.fn().mockReturnValue(mockSlide)
     };
 
     // Override the private pptx property for testing
@@ -79,13 +80,13 @@ describe('Frame Background Color Rendering', () => {
     const layoutResult = layoutEngine.renderLayout(containerData, 960, 720);
 
     const mockSlide = {
-      addShape: jest.fn(),
-      addText: jest.fn(),
-      addImage: jest.fn()
+      addShape: vi.fn(),
+      addText: vi.fn(),
+      addImage: vi.fn()
     };
 
     const mockPptx = {
-      addSlide: jest.fn().mockReturnValue(mockSlide)
+      addSlide: vi.fn().mockReturnValue(mockSlide)
     };
 
     (renderer as any).pptx = mockPptx;

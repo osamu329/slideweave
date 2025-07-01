@@ -5,8 +5,7 @@
 
 import { renderLayout } from '../src/layout/LayoutEngine';
 import { PPTXRenderer } from '../src/renderer/PPTXRenderer';
-import { ElementValidator } from '../src/elements/validator';
-import { GridSystem } from '../src/grid/GridSystem';
+import { SchemaValidator } from '../src/elements/SchemaValidator';
 import { Element, ContainerElement, TextElement } from '../src/types/elements';
 
 describe('SlideWeave 統合テスト', () => {
@@ -22,7 +21,15 @@ describe('SlideWeave 統合テスト', () => {
       };
 
       // 1. バリデーション
-      const validationResult = ElementValidator.validate(element);
+      const validator = new SchemaValidator();
+      const validationResult = validator.validate({
+        type: 'deck',
+        title: 'Test',
+        slides: [{
+          type: 'slide',
+          children: [element]
+        }]
+      });
       expect(validationResult.isValid).toBe(true);
       expect(validationResult.errors).toHaveLength(0);
 

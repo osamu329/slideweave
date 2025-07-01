@@ -6,6 +6,7 @@
 import { PPTXRenderer } from "../PPTXRenderer";
 import { LayoutResult } from "../../layout/LayoutEngine";
 import { TextElement, HeadingElement } from "../../types/elements";
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 describe("PPTXRenderer - margin/padding概念の正しい実装", () => {
   let renderer: PPTXRenderer;
@@ -34,7 +35,7 @@ describe("PPTXRenderer - margin/padding概念の正しい実装", () => {
       };
 
       // When: PowerPointのaddTextメソッドをモック
-      const mockAddText = jest.fn();
+      const mockAddText = vi.fn();
       const mockSlide = {
         addText: mockAddText
       };
@@ -72,7 +73,7 @@ describe("PPTXRenderer - margin/padding概念の正しい実装", () => {
       };
 
       // When: PowerPointのaddTextメソッドをモック
-      const mockAddText = jest.fn();
+      const mockAddText = vi.fn();
       const mockSlide = {
         addText: mockAddText
       };
@@ -111,7 +112,7 @@ describe("PPTXRenderer - margin/padding概念の正しい実装", () => {
       };
 
       // When: PowerPointのaddTextメソッドをモック
-      const mockAddText = jest.fn();
+      const mockAddText = vi.fn();
       const mockSlide = {
         addText: mockAddText
       };
@@ -149,7 +150,7 @@ describe("PPTXRenderer - margin/padding概念の正しい実装", () => {
       };
 
       // When: PowerPointのaddTextメソッドをモック
-      const mockAddText = jest.fn();
+      const mockAddText = vi.fn();
       const mockSlide = {
         addText: mockAddText
       };
@@ -184,7 +185,7 @@ describe("PPTXRenderer - margin/padding概念の正しい実装", () => {
       };
 
       // When: PowerPointのaddTextメソッドをモック
-      const mockAddText = jest.fn();
+      const mockAddText = vi.fn();
       const mockSlide = {
         addText: mockAddText
       };
@@ -224,7 +225,7 @@ describe("PPTXRenderer - margin/padding概念の正しい実装", () => {
       };
 
       // When: PowerPointのaddTextメソッドをモック
-      const mockAddText = jest.fn();
+      const mockAddText = vi.fn();
       const mockSlide = {
         addText: mockAddText
       };

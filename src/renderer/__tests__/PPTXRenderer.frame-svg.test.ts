@@ -1,11 +1,12 @@
 import { PPTXRenderer } from '../PPTXRenderer';
 import { LayoutResult } from '../../layout/ILayoutEngine';
 import { FrameElement } from '../../types/elements';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 // Mock SVGGenerator to reproduce the actual size issue
-jest.mock('../../svg/SVGGenerator', () => ({
-  SVGGenerator: jest.fn().mockImplementation(() => ({
-    generateFrameSVG: jest.fn().mockImplementation((options) => {
+vi.mock('../../svg/SVGGenerator', () => ({
+  SVGGenerator: vi.fn().mockImplementation(() => ({
+    generateFrameSVG: vi.fn().mockImplementation((options) => {
       const { width, height, backgroundColor, borderRadius } = options;
       
       // Add # prefix for colors without it (like real implementation)
@@ -25,17 +26,17 @@ jest.mock('../../svg/SVGGenerator', () => ({
 // Mock pptxgenjs
 let mockSlideInstance: any;
 
-jest.mock('pptxgenjs', () => {
-  return jest.fn().mockImplementation(() => {
+vi.mock('pptxgenjs', () => {
+  return vi.fn().mockImplementation(() => {
     mockSlideInstance = {
-      addImage: jest.fn(),
-      addShape: jest.fn(),
-      addText: jest.fn()
+      addImage: vi.fn(),
+      addShape: vi.fn(),
+      addText: vi.fn()
     };
     
     return {
-      addSlide: jest.fn().mockReturnValue(mockSlideInstance),
-      defineLayout: jest.fn(),
+      addSlide: vi.fn().mockReturnValue(mockSlideInstance),
+      defineLayout: vi.fn(),
       layout: 'SLIDEWEAVE_LAYOUT'
     };
   });
@@ -45,7 +46,7 @@ describe('PPTXRenderer - Frame SVG rendering', () => {
   let renderer: PPTXRenderer;
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     renderer = new PPTXRenderer();
   });
 

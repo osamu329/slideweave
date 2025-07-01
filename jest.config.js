@@ -9,6 +9,13 @@ export default {
       useESM: true
     }],
   },
+  transformIgnorePatterns: [
+    'node_modules/(?!(yoga-layout|@babel|babel)/)'
+  ],
+  moduleNameMapper: {
+    '^(\\.{1,2}/.*)\\.js$': '$1',
+    '^yoga-layout$': '<rootDir>/src/layout/__tests__/__mocks__/yoga-layout.js',
+  },
   collectCoverageFrom: [
     'src/**/*.ts',
     '!src/**/*.d.ts',

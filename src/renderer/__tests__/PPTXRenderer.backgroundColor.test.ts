@@ -6,6 +6,7 @@
 
 import { PPTXRenderer } from "../PPTXRenderer";
 import { TextElement, HeadingElement } from "../../types/elements";
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 describe("PPTXRenderer backgroundColor support", () => {
   let renderer: PPTXRenderer;
@@ -34,7 +35,7 @@ describe("PPTXRenderer backgroundColor support", () => {
       };
 
       // When: PowerPointのaddTextメソッドをモック
-      const mockAddText = jest.fn();
+      const mockAddText = vi.fn();
       const mockSlide = {
         addText: mockAddText
       };
@@ -65,7 +66,7 @@ describe("PPTXRenderer backgroundColor support", () => {
       };
 
       // When: PowerPointのaddTextメソッドをモック
-      const mockAddText = jest.fn();
+      const mockAddText = vi.fn();
       const mockSlide = {
         addText: mockAddText
       };
@@ -102,7 +103,7 @@ describe("PPTXRenderer backgroundColor support", () => {
       };
 
       // When: PowerPointのaddTextメソッドをモック
-      const mockAddText = jest.fn();
+      const mockAddText = vi.fn();
       const mockSlide = {
         addText: mockAddText
       };
@@ -134,7 +135,7 @@ describe("PPTXRenderer backgroundColor support", () => {
       };
 
       // When: PowerPointのaddTextメソッドをモック
-      const mockAddText = jest.fn();
+      const mockAddText = vi.fn();
       const mockSlide = {
         addText: mockAddText
       };
@@ -171,7 +172,7 @@ describe("PPTXRenderer backgroundColor support", () => {
       };
 
       // When: PowerPointのaddTextメソッドをモック
-      const mockAddText = jest.fn();
+      const mockAddText = vi.fn();
       const mockSlide = {
         addText: mockAddText
       };

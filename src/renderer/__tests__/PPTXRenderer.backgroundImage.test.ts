@@ -2,9 +2,10 @@ import { PPTXRenderer } from '../PPTXRenderer';
 import { SlideElement } from '../../types/elements';
 import { LayoutResult } from '../../layout/ILayoutEngine';
 import PptxGenJS from 'pptxgenjs';
+import { describe, it, expect, beforeEach, vi, test } from 'vitest';
 
 // PPTXGenJSのモック
-jest.mock('pptxgenjs');
+vi.mock('pptxgenjs');
 
 describe('PPTXRenderer - Background Image', () => {
   let renderer: PPTXRenderer;
@@ -14,15 +15,15 @@ describe('PPTXRenderer - Background Image', () => {
   beforeEach(() => {
     // モックのセットアップ
     mockSlide = {
-      addImage: jest.fn(),
-      addText: jest.fn(),
-      addShape: jest.fn(),
+      addImage: vi.fn(),
+      addText: vi.fn(),
+      addShape: vi.fn(),
     };
     
     mockPptx = {
-      addSlide: jest.fn().mockReturnValue(mockSlide),
-      writeFile: jest.fn().mockResolvedValue(undefined),
-      defineLayout: jest.fn(),
+      addSlide: vi.fn().mockReturnValue(mockSlide),
+      writeFile: vi.fn().mockResolvedValue(undefined),
+      defineLayout: vi.fn(),
       layout: 'SLIDEWEAVE_LAYOUT',
     };
 
