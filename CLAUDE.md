@@ -407,3 +407,194 @@ const textOptions = {
 - 開発は、issueの特定・計画・実装にわけて行います
 - すぐにコードを修正せず、まずテストケースで問題を明確化します
 - Linear issueは実装前に作成し、受け入れ条件を明確にします
+
+## Branded Type システム ✅
+
+**Status**: 実装完了 (OSN-169)
+
+SlideWeaveでは型安全性を確保するため、Branded Type システムを採用しています。
+
+### 単位別Branded Type定義
+
+```typescript
+// src/types/units.ts
+export type Pixels = number & { __brand: 'px' };
+export type Points = number & { __brand: 'pt' };  
+export type Inches = number & { __brand: 'inch' };
+
+// ファクトリー関数
+export const createPixels = (value: number): Pixels => value as Pixels;
+export const createPoints = (value: number): Points => value as Points;
+export const createInches = (value: number): Inches => value as Inches;
+```
+
+### 領域別の中心単位
+
+#### 1. レイアウトエンジン（YogaLayoutEngine）
+- **中心単位**: `Pixels` (px)
+- **責務**: レイアウト計算、要素配置
+- **変換**: CSS単位文字列をYogaライブラリに直接渡す
+- **例**: `"640px"`, `"50%"`, `"100vw"`
+
+#### 2. PowerPoint出力（PPTXWrapper/PPTXRenderer）
+- **中心単位**: `Inches` (inch) 
+- **責務**: PowerPoint座標系での描画
+- **変換**: DPIConverterでpx→inch変換
+- **例**: `position: { x: 1.5, y: 2.0, w: 4.0, h: 3.0 }` (inch)
+
+#### 3. フォントサイズ処理
+- **レイアウト**: `Pixels` (px) - Yogaでの文字測定
+- **PowerPoint**: `Points` (pt) - PPTXGenJSでの実際の描画
+- **変換**: DPIConverter.pxToPt()で変換
+- **例**: `"16px"` → 12pt (PowerPoint)
+
+#### 4. DPIConverter（変換ハブ）
+- **責務**: 全単位間の相互変換
+- **主要変換**:
+  - `pxToInch()`: Pixels → Inches
+  - `pxToPt()`: Pixels → Points  
+  - `inchToPx()`: Inches → Pixels
+- **DPI基準**: 96 DPI（標準）
+
+### 型安全な変換パターン
+
+```typescript
+// ✅ 推奨: Branded Typeを使用
+const widthPx = createPixels(640);
+const widthInch = dpiConverter.pxToInch(widthPx);
+
+// ✅ PPTXGenJS統合時のパターン
+const fontSizePx = createPixels(16);
+const fontSizePt = dpiConverter.pxToPt(fontSizePx) as number; // PPTXGenJS用
+
+// ❌ 避ける: 生の数値の直接使用
+const width = 640; // 単位が不明
+```
+
+### LayoutResult型定義
+
+```typescript
+export interface LayoutResult {
+  left: Pixels;    // レイアウト座標（px）
+  top: Pixels;     // レイアウト座標（px） 
+  width: Pixels;   // 要素サイズ（px）
+  height: Pixels;  // 要素サイズ（px）
+  element: Element;
+  children?: LayoutResult[];
+}
+```
+
+### PPTXWrapper薄いラッパーパターン
+
+```typescript
+export class PPTXWrapper {
+  // 単位変換を内部で処理
+  addText(content: string, options: SlideWeaveTextOptions): void {
+    const pptxOptions = {
+      ...options,
+      fontSize: this.dpiConverter.pxToPt(options.fontSize) as number,
+    };
+    this.currentSlide.addText(content, pptxOptions);
+  }
+}
+```
+
+### fontSize型システム統一
+
+**Before (OSN-169前)**:
+```typescript
+// 後方互換性で複雑化
+fontSize?: number | string;
+```
+
+**After (OSN-169後)**:
+```typescript  
+// 単位付き文字列に統一
+fontSize?: string; // "16px", "14pt", etc.
+```
+
+### JSON記法の標準化
+
+```json
+{
+  "type": "text",
+  "content": "サンプルテキスト", 
+  "style": {
+    "fontSize": "16pt",      // PowerPoint用 (pt)
+    "width": "300px",        // レイアウト用 (px) 
+    "margin": "8px",         // 間隔 (px)
+    "padding": "4px"         // パディング (px)
+  }
+}
+```
+
+### デフォルト値管理
+
+- **デッキレベル**: SlideDataLoaderで`14pt`
+- **YogaLayoutEngine**: デフォルト値なし（上流から必須）
+- **PPTXRenderer**: fallback値は避ける
+
+## デバッグコード管理 🚨
+
+### 問題：DEBUGメッセージの本番コード残存
+
+**なぜ残るのか:**
+1. **開発時の一時的デバッグコード** - 特定の問題解決のために追加されたが削除を忘れる
+2. **条件分岐による発見の困難** - 特定のテキスト（例: "左カラム"）でのみ実行されるため見落とす
+3. **レビュー・検査体制の不備** - console.logの本番残存をチェックする仕組みがない
+
+**対策:**
+
+### 1. ESLintルールによる自動検出
+```json
+// .eslintrc.json
+{
+  "rules": {
+    "no-console": ["error", { "allow": ["warn", "error"] }]
+  }
+}
+```
+
+### 2. Git Hook による事前チェック
+```bash
+# .git/hooks/pre-commit
+#!/bin/sh
+if grep -r "console\.log" src/ --include="*.ts" --exclude-dir="__tests__" --exclude-dir="test"; then
+  echo "❌ console.log found in source code!"
+  exit 1
+fi
+```
+
+### 3. コードレビューチェックリスト
+- [ ] `grep -r "console.log" src/` でDEBUGコードなし
+- [ ] `grep -r "DEBUG" src/` で開発用コメントなし
+- [ ] 条件分岐内のデバッグコード確認
+
+### 4. ビルド時の自動削除（将来対応）
+```javascript
+// webpack.config.js
+plugins: [
+  new webpack.DefinePlugin({
+    'process.env.NODE_ENV': JSON.stringify('production')
+  })
+]
+```
+
+### 5. デバッグコード記述規則
+- **本番コード**: `console.log`は絶対禁止
+- **テストコード**: `console.log`は許可
+- **開発時のみ**: `if (process.env.NODE_ENV === 'development') console.log(...)`
+
+### 修正済み削除例
+```typescript
+// ❌ 削除済み：本番コードに残っていたDEBUGメッセージ
+// if (content === "左カラム") {
+//   console.log(`[DEBUG] 左カラム測定:`, { ... });
+// }
+```
+
+## メモリー
+
+- DPIや変換にあちこちに定義しない。DPIConverterがその役目も果たす。
+
+</invoke>
