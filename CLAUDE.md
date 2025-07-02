@@ -135,6 +135,9 @@ npx tsx src/cli/index.ts build examples/test01-basic-layout.json
 # 例：カスタム出力ファイル名
 npx tsx src/cli/index.ts build examples/test03-colors.json -o output.pptx
 
+# 例：examples/output/に出力
+npx tsx src/cli/index.ts build examples/test03-colors.json -o examples/output/test03-colors.pptx
+
 # 例：詳細ログ
 npx tsx src/cli/index.ts build examples/test01-basic-layout.json --verbose
 
