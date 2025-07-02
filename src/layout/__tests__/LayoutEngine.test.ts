@@ -5,7 +5,8 @@
 import { renderLayout, flattenLayout } from "../LayoutEngine";
 import { SlideDataLoader } from "../../data/SlideDataLoader";
 import { PPTXRenderer } from "../../renderer/PPTXRenderer";
-import { ElementValidator } from "../../elements/validator";
+import { SchemaValidator } from "../../elements/SchemaValidator";
+import { RuntimeValidator } from "../../elements/RuntimeValidator";
 import * as path from "path";
 
 describe("LayoutEngine", () => {

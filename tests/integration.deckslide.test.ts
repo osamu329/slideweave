@@ -50,7 +50,11 @@ describe('SlideWeave Integration Test (Deck/Slide Structure)', () => {
       expect(layoutResults[0].element.type).toBe('text');
 
       // 3. PPTX rendering
-      const renderer = new PPTXRenderer();
+      const renderer = new PPTXRenderer({
+      widthPx: 1280,
+      heightPx: 720,
+      dpi: 96
+    });
       
       for (const layoutResult of layoutResults) {
         await renderer.render(layoutResult);
@@ -92,7 +96,11 @@ describe('SlideWeave Integration Test (Deck/Slide Structure)', () => {
       expect(validationResult.isValid).toBe(true);
 
       // Process each slide
-      const renderer = new PPTXRenderer();
+      const renderer = new PPTXRenderer({
+      widthPx: 1280,
+      heightPx: 720,
+      dpi: 96
+    });
       
       for (const slide of deckData.slides) {
         for (const child of slide.children || []) {
@@ -151,7 +159,11 @@ describe('SlideWeave Integration Test (Deck/Slide Structure)', () => {
       expect(layoutResult.element.type).toBe('container');
       expect(layoutResult.children).toHaveLength(2);
       
-      const renderer = new PPTXRenderer();
+      const renderer = new PPTXRenderer({
+      widthPx: 1280,
+      heightPx: 720,
+      dpi: 96
+    });
       await renderer.render(layoutResult);
     });
   });

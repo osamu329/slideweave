@@ -6,11 +6,12 @@
 - **概要**: SlideWeaveの構造をdeck/slide階層に変更し、JSON Schemaによるバリデーション機能を実装
 - **URL**: https://linear.app/osna/issue/OSN-167/deckslide構造とjson-schema実装
 - **進捗**:
-  - [x] JSON Schema定義完了（deck/slide構造、PowerPoint制約準拠）
   - [ ] TypeScript型定義の更新完了
-  - [ ] ajvバリデータークラス実装完了
-  - [ ] 既存サンプルファイルの新構造移行完了
+  - [x] ajvバリデータークラス実装完了（SchemaValidator.ts）
+  - [ ] 既存サンプルファイルの新構造移行完了（test01進行中）
   - [ ] バリデーション機能のテスト作成完了
+  - [x] TailwindUtilities.tsから外部CSSファイルへの移行完了
+  - [x] プリセット対応ディレクトリ構造実装完了（styles/standard/, styles/wide/）
 
 ## 緊急課題
 

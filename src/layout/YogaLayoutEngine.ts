@@ -27,12 +27,20 @@ export class YogaLayoutEngine implements ILayoutEngine {
     // Yogaノードツリーを作成
     const yogaNode = this.createYogaNode(element);
 
-    // コンテナサイズを設定
-    yogaNode.setWidth(containerWidth);
-    yogaNode.setHeight(containerHeight);
+    // ルートノードに明示的なサイズがない場合のみコンテナサイズを設定
+    if (!('width' in (element.style || {}))) {
+      yogaNode.setWidth(containerWidth);
+    }
+    if (!('height' in (element.style || {}))) {
+      yogaNode.setHeight(containerHeight);
+    }
 
     // レイアウト計算実行
-    yogaNode.calculateLayout(containerWidth, containerHeight, this.yoga.DIRECTION_LTR);
+    yogaNode.calculateLayout(
+      containerWidth,
+      containerHeight,
+      this.yoga.DIRECTION_LTR,
+    );
 
     // 計算結果をLayoutResult形式に変換
     const result = this.convertToLayoutResult(yogaNode, element);
@@ -83,7 +91,7 @@ export class YogaLayoutEngine implements ILayoutEngine {
   private applyStyleToNode(node: any, style: any, element: Element): void {
     // 未サポートプロパティの警告
     this.checkUnsupportedProperties(style, element);
-    
+
     // FlexDirection
     if (style.flexDirection === "row") {
       node.setFlexDirection(this.yoga.FLEX_DIRECTION_ROW);
@@ -93,61 +101,97 @@ export class YogaLayoutEngine implements ILayoutEngine {
 
     // Gap プロパティ: 単位付き文字列をYogaに直接渡す
     if (style.gap !== undefined) {
-      const gapValue = StyleConverter.convertSpacingUnit(style.gap, 'gap');
+      const gapValue = StyleConverter.convertSpacingUnit(style.gap, "gap");
       node.setGap(this.yoga.GUTTER_ALL, gapValue);
     }
 
     // Spacing: 単位付き文字列をYogaに直接渡す
     if (style.margin !== undefined) {
-      const marginValue = StyleConverter.convertSpacingUnit(style.margin, 'margin');
+      const marginValue = StyleConverter.convertSpacingUnit(
+        style.margin,
+        "margin",
+      );
       node.setMargin(this.yoga.EDGE_ALL, marginValue);
     }
     if (style.marginTop !== undefined) {
-      const marginTopValue = StyleConverter.convertSpacingUnit(style.marginTop, 'marginTop');
+      const marginTopValue = StyleConverter.convertSpacingUnit(
+        style.marginTop,
+        "marginTop",
+      );
       node.setMargin(this.yoga.EDGE_TOP, marginTopValue);
     }
     if (style.marginRight !== undefined) {
-      const marginRightValue = StyleConverter.convertSpacingUnit(style.marginRight, 'marginRight');
+      const marginRightValue = StyleConverter.convertSpacingUnit(
+        style.marginRight,
+        "marginRight",
+      );
       node.setMargin(this.yoga.EDGE_RIGHT, marginRightValue);
     }
     if (style.marginBottom !== undefined) {
-      const marginBottomValue = StyleConverter.convertSpacingUnit(style.marginBottom, 'marginBottom');
+      const marginBottomValue = StyleConverter.convertSpacingUnit(
+        style.marginBottom,
+        "marginBottom",
+      );
       node.setMargin(this.yoga.EDGE_BOTTOM, marginBottomValue);
     }
     if (style.marginLeft !== undefined) {
-      const marginLeftValue = StyleConverter.convertSpacingUnit(style.marginLeft, 'marginLeft');
+      const marginLeftValue = StyleConverter.convertSpacingUnit(
+        style.marginLeft,
+        "marginLeft",
+      );
       node.setMargin(this.yoga.EDGE_LEFT, marginLeftValue);
     }
 
     if (style.padding !== undefined) {
-      const paddingValue = StyleConverter.convertSpacingUnit(style.padding, 'padding');
+      const paddingValue = StyleConverter.convertSpacingUnit(
+        style.padding,
+        "padding",
+      );
       node.setPadding(this.yoga.EDGE_ALL, paddingValue);
     }
     if (style.paddingTop !== undefined) {
-      const paddingTopValue = StyleConverter.convertSpacingUnit(style.paddingTop, 'paddingTop');
+      const paddingTopValue = StyleConverter.convertSpacingUnit(
+        style.paddingTop,
+        "paddingTop",
+      );
       node.setPadding(this.yoga.EDGE_TOP, paddingTopValue);
     }
     if (style.paddingRight !== undefined) {
-      const paddingRightValue = StyleConverter.convertSpacingUnit(style.paddingRight, 'paddingRight');
+      const paddingRightValue = StyleConverter.convertSpacingUnit(
+        style.paddingRight,
+        "paddingRight",
+      );
       node.setPadding(this.yoga.EDGE_RIGHT, paddingRightValue);
     }
     if (style.paddingBottom !== undefined) {
-      const paddingBottomValue = StyleConverter.convertSpacingUnit(style.paddingBottom, 'paddingBottom');
+      const paddingBottomValue = StyleConverter.convertSpacingUnit(
+        style.paddingBottom,
+        "paddingBottom",
+      );
       node.setPadding(this.yoga.EDGE_BOTTOM, paddingBottomValue);
     }
     if (style.paddingLeft !== undefined) {
-      const paddingLeftValue = StyleConverter.convertSpacingUnit(style.paddingLeft, 'paddingLeft');
+      const paddingLeftValue = StyleConverter.convertSpacingUnit(
+        style.paddingLeft,
+        "paddingLeft",
+      );
       node.setPadding(this.yoga.EDGE_LEFT, paddingLeftValue);
     }
 
     // Dimensions: 単位付き文字列をYogaに直接渡す
     if (style.width !== undefined) {
-      const widthValue = StyleConverter.convertDimensionUnit(style.width, 'width');
+      const widthValue = StyleConverter.convertDimensionUnit(
+        style.width,
+        "width",
+      );
       // YogaライブラリのsetWidthに文字列を渡す（Yogaが適切に処理）
       node.setWidth(widthValue);
     }
     if (style.height !== undefined) {
-      const heightValue = StyleConverter.convertDimensionUnit(style.height, 'height');
+      const heightValue = StyleConverter.convertDimensionUnit(
+        style.height,
+        "height",
+      );
       node.setHeight(heightValue);
     }
 
@@ -189,10 +233,10 @@ export class YogaLayoutEngine implements ILayoutEngine {
    * CSS単位付き値から数値を抽出
    */
   private extractNumericValue(value: string | number | undefined): number {
-    if (typeof value === 'number') {
+    if (typeof value === "number") {
       return value;
     }
-    if (typeof value === 'string') {
+    if (typeof value === "string") {
       const numMatch = value.match(/^(\d+(?:\.\d+)?)/);
       if (numMatch) {
         return parseFloat(numMatch[1]);
@@ -206,56 +250,119 @@ export class YogaLayoutEngine implements ILayoutEngine {
    */
   private checkUnsupportedProperties(style: any, element: Element): void {
     if (!style) return;
-    
+
     // Yogaでサポートされているプロパティのリスト
     const supportedProperties = new Set([
       // レイアウト
-      'flexDirection', 'justifyContent', 'alignItems', 'alignContent', 'alignSelf',
-      'flex', 'flexGrow', 'flexShrink', 'flexBasis', 'flexWrap',
-      
+      "flexDirection",
+      "justifyContent",
+      "alignItems",
+      "alignContent",
+      "alignSelf",
+      "flex",
+      "flexGrow",
+      "flexShrink",
+      "flexBasis",
+      "flexWrap",
+
       // サイズ
-      'width', 'height', 'minWidth', 'minHeight', 'maxWidth', 'maxHeight',
-      
+      "width",
+      "height",
+      "minWidth",
+      "minHeight",
+      "maxWidth",
+      "maxHeight",
+
       // 間隔
-      'margin', 'marginTop', 'marginRight', 'marginBottom', 'marginLeft',
-      'padding', 'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft',
-      'gap', 'rowGap', 'columnGap',
-      
+      "margin",
+      "marginTop",
+      "marginRight",
+      "marginBottom",
+      "marginLeft",
+      "padding",
+      "paddingTop",
+      "paddingRight",
+      "paddingBottom",
+      "paddingLeft",
+      "gap",
+      "rowGap",
+      "columnGap",
+
       // 位置
-      'position', 'top', 'right', 'bottom', 'left',
-      
+      "position",
+      "top",
+      "right",
+      "bottom",
+      "left",
+
       // 表示
-      'display', 'overflow',
-      
+      "display",
+      "overflow",
+
       // SlideWeave固有（Yogaでは処理しないが有効）
-      'backgroundColor', 'border', 'borderRadius', 'borderWidth', 'borderColor', 'borderStyle',
-      'borderLeft', 'borderLeftWidth', 'borderLeftColor', 'borderLeftStyle',
-      'borderTop', 'borderTopWidth', 'borderTopColor', 'borderTopStyle',
-      'borderRight', 'borderRightWidth', 'borderRightColor', 'borderRightStyle',
-      'borderBottom', 'borderBottomWidth', 'borderBottomColor', 'borderBottomStyle',
-      'color', 'fontSize', 'fontWeight', 'fontStyle', 'fontFamily', 'textAlign',
-      'background', 'backgroundImage', 'backgroundSize', 'backgroundPosition',
-      'lineHeight', 'boxShadow', 'cursor',
-      'glassEffect', 'opacity', 'zIndex'
+      "backgroundColor",
+      "border",
+      "borderRadius",
+      "borderWidth",
+      "borderColor",
+      "borderStyle",
+      "borderLeft",
+      "borderLeftWidth",
+      "borderLeftColor",
+      "borderLeftStyle",
+      "borderTop",
+      "borderTopWidth",
+      "borderTopColor",
+      "borderTopStyle",
+      "borderRight",
+      "borderRightWidth",
+      "borderRightColor",
+      "borderRightStyle",
+      "borderBottom",
+      "borderBottomWidth",
+      "borderBottomColor",
+      "borderBottomStyle",
+      "color",
+      "fontSize",
+      "fontWeight",
+      "fontStyle",
+      "fontFamily",
+      "textAlign",
+      "background",
+      "backgroundImage",
+      "backgroundSize",
+      "backgroundPosition",
+      "lineHeight",
+      "boxShadow",
+      "cursor",
+      "glassEffect",
+      "opacity",
+      "zIndex",
     ]);
-    
+
     // レガシープロパティのマッピング
     const legacyPropertyMap: Record<string, string> = {
-      'direction': 'flexDirection'
+      direction: "flexDirection",
     };
-    
+
     // スタイルプロパティをチェック
     for (const prop in style) {
       if (!supportedProperties.has(prop)) {
         // レガシープロパティの場合
         if (legacyPropertyMap[prop]) {
           const newProp = legacyPropertyMap[prop];
-          const elementInfo = element.type + (element.id ? ` (id: ${element.id})` : '');
-          console.warn(`⚠️  Deprecated style property "${prop}" in ${elementInfo}. Use "${newProp}" instead.`);
+          const elementInfo =
+            element.type + (element.id ? ` (id: ${element.id})` : "");
+          console.warn(
+            `⚠️  Deprecated style property "${prop}" in ${elementInfo}. Use "${newProp}" instead.`,
+          );
         } else {
           // 完全に未知のプロパティ
-          const elementInfo = element.type + (element.id ? ` (id: ${element.id})` : '');
-          console.warn(`⚠️  Unknown style property "${prop}" in ${elementInfo}. This property will be ignored.`);
+          const elementInfo =
+            element.type + (element.id ? ` (id: ${element.id})` : "");
+          console.warn(
+            `⚠️  Unknown style property "${prop}" in ${elementInfo}. This property will be ignored.`,
+          );
         }
       }
     }
@@ -267,71 +374,94 @@ export class YogaLayoutEngine implements ILayoutEngine {
   private setupTextMeasurement(node: any, element: Element): void {
     // テキスト・見出し要素の型チェック
     let fontSize = 14; // デフォルト値
-    
-    if ('fontSize' in element) {
+
+    if ("fontSize" in element) {
       // element.fontSizeプロパティから取得
       fontSize = this.extractNumericValue(element.fontSize) || 14;
     }
-    
-    if (element.style && 'fontSize' in element.style && element.style.fontSize) {
+
+    if (
+      element.style &&
+      "fontSize" in element.style &&
+      element.style.fontSize
+    ) {
       // element.style.fontSizeから取得（こちらを優先）
       fontSize = this.extractNumericValue(element.style.fontSize) || fontSize;
     }
-    
+
     // headingの場合のデフォルトフォントサイズ
-    if (element.type === 'heading' && 'level' in element) {
+    if (element.type === "heading" && "level" in element) {
       const fontSizeMap: Record<number, number> = {
-        1: 24, 2: 20, 3: 18, 4: 16, 5: 14, 6: 12,
+        1: 24,
+        2: 20,
+        3: 18,
+        4: 16,
+        5: 14,
+        6: 12,
       };
       const level = element.level || 1;
       // fontSizeが明示的に設定されていない場合のみデフォルト値を使用
-      if (!element.style?.fontSize && !('fontSize' in element)) {
+      if (!element.style?.fontSize && !("fontSize" in element)) {
         fontSize = fontSizeMap[level] || 16;
       }
     }
-    
-    const content = ('content' in element) ? element.content || "" : "";
 
-    node.setMeasureFunc((width: number, widthMode: number, _height: number, _heightMode: number) => {
+    const content = "content" in element ? element.content || "" : "";
 
-      // フォントメトリクス計算（言語別文字幅係数適用）
-      const charWidth = this.getCharWidth(content, fontSize);
-      const lineHeight = fontSize * 1.0;
-      const naturalWidth = content.length * charWidth;
+    node.setMeasureFunc(
+      (
+        width: number,
+        widthMode: number,
+        _height: number,
+        _heightMode: number,
+      ) => {
+        // フォントメトリクス計算（言語別文字幅係数適用）
+        const charWidth = this.getCharWidth(content, fontSize);
+        const lineHeight = fontSize * 1.0;
+        const naturalWidth = content.length * charWidth;
 
-      let resultWidth = naturalWidth;
-      let resultHeight = lineHeight;
+        let resultWidth = naturalWidth;
+        let resultHeight = lineHeight;
 
-      // 幅制約の処理
-      if (widthMode !== this.yoga.MEASURE_MODE_UNDEFINED && width > 0) {
-        if (naturalWidth <= width) {
-          // 制約幅内に収まる
-          resultWidth = naturalWidth;
-          resultHeight = lineHeight;
-        } else {
-          // 制約幅を超える：折り返し計算
-          resultWidth = width;
-          const estimatedLines = Math.ceil(naturalWidth / width);
-          resultHeight = lineHeight * estimatedLines;
+        // 幅制約の処理
+        if (widthMode !== this.yoga.MEASURE_MODE_UNDEFINED && width > 0) {
+          if (naturalWidth <= width) {
+            // 制約幅内に収まる
+            resultWidth = naturalWidth;
+            resultHeight = lineHeight;
+          } else {
+            // 制約幅を超える：折り返し計算
+            resultWidth = width;
+            const estimatedLines = Math.ceil(naturalWidth / width);
+            resultHeight = lineHeight * estimatedLines;
+          }
         }
-      }
 
-      // グリッド整列（textとheadingのみオフ）
-      const isTextElement = element.type === 'text' || element.type === 'heading';
-      const alignedWidth = isTextElement ? resultWidth : Math.ceil(resultWidth / 8) * 4;
-      const alignedHeight = isTextElement ? resultHeight : Math.ceil(resultHeight / 8) * 4;
+        // グリッド整列（textとheadingのみオフ）
+        const isTextElement =
+          element.type === "text" || element.type === "heading";
+        const alignedWidth = isTextElement
+          ? resultWidth
+          : Math.ceil(resultWidth / 8) * 4;
+        const alignedHeight = isTextElement
+          ? resultHeight
+          : Math.ceil(resultHeight / 8) * 4;
 
-      return {
-        width: alignedWidth,
-        height: alignedHeight,
-      };
-    });
+        return {
+          width: alignedWidth,
+          height: alignedHeight,
+        };
+      },
+    );
   }
 
   /**
    * YogaノードからLayoutResultに変換
    */
-  private convertToLayoutResult(yogaNode: any, originalElement: Element): LayoutResult {
+  private convertToLayoutResult(
+    yogaNode: any,
+    originalElement: Element,
+  ): LayoutResult {
     const result: LayoutResult = {
       left: yogaNode.getComputedLeft(),
       top: yogaNode.getComputedTop(),
@@ -356,7 +486,9 @@ export class YogaLayoutEngine implements ILayoutEngine {
    */
   private getCharWidth(content: string, fontSize: number): number {
     // 日本語文字（ひらがな、カタカナ、漢字）の検出
-    const hasJapanese = /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/.test(content);
+    const hasJapanese = /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/.test(
+      content,
+    );
     const ratio = hasJapanese ? 1.2 : 0.8; // 日本語: 1.2（全角+余裕）, 英語: 0.8（半角）
     return fontSize * ratio;
   }
@@ -366,7 +498,7 @@ export class YogaLayoutEngine implements ILayoutEngine {
    */
   private freeYogaNode(node: any): void {
     if (!node) return;
-    
+
     try {
       const childCount = node.getChildCount();
       for (let i = 0; i < childCount; i++) {
@@ -376,7 +508,7 @@ export class YogaLayoutEngine implements ILayoutEngine {
       node.free();
     } catch (error) {
       // Yogaノードが既に解放されている場合は無視
-      console.warn('Warning: Yoga node already freed or invalid:', error);
+      console.warn("Warning: Yoga node already freed or invalid:", error);
     }
   }
 }

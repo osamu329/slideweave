@@ -43,7 +43,7 @@ export interface TextShadow {
   type: "outer" | "inner";
   color: string; // #RRGGBB format
   blur: string; // px unit required
-  offset: string; // px unit required  
+  offset: string; // px unit required
   angle: number; // 0-360 degrees
   opacity?: number; // 0-1
 }
@@ -61,7 +61,7 @@ export interface BaseStyle {
   paddingBottom?: number | string;
   paddingLeft?: number | string;
   gap?: number | string;
-  
+
   // Dimensions
   width?: number | string;
   height?: number | string;
@@ -69,20 +69,25 @@ export interface BaseStyle {
   minHeight?: number | string;
   maxWidth?: number | string;
   maxHeight?: number | string;
-  
+
   // Flexbox Layout
   flex?: number;
   flexDirection?: "row" | "column";
   flexWrap?: "nowrap" | "wrap";
-  justifyContent?: "flex-start" | "flex-end" | "center" | "space-between" | "space-around";
+  justifyContent?:
+    | "flex-start"
+    | "flex-end"
+    | "center"
+    | "space-between"
+    | "space-around";
   alignItems?: "flex-start" | "flex-end" | "center" | "stretch";
   alignSelf?: "auto" | "flex-start" | "flex-end" | "center" | "stretch";
-  
+
   // Background
   backgroundColor?: string; // #RRGGBB format
   backgroundImage?: string;
   backgroundSize?: "cover" | "contain" | "fit" | "none";
-  
+
   // Text
   color?: string; // #RRGGBB format
   fontSize?: number | string;
@@ -94,8 +99,8 @@ export interface BaseStyle {
 
 export interface BaseElement {
   type: ElementType;
-  id?: string;  // 要素のID（レイアウトエンジン用）
-  class?: string;  // CSSクラス名（単一または複数のクラスをスペース区切りで指定）
+  id?: string; // 要素のID（レイアウトエンジン用）
+  class?: string; // CSSクラス名（単一または複数のクラスをスペース区切りで指定）
   style?: BaseStyle;
   children?: Element[];
 }

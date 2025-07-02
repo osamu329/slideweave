@@ -48,7 +48,11 @@ export async function renderLayout(
   containerWidth = 720,
   containerHeight = 540,
 ): Promise<LayoutResult> {
-  const result = currentEngine.renderLayout(element, containerWidth, containerHeight);
+  const result = currentEngine.renderLayout(
+    element,
+    containerWidth,
+    containerHeight,
+  );
   return result instanceof Promise ? await result : result;
 }
 

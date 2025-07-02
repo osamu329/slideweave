@@ -2,7 +2,7 @@
  * Logger utility for CLI with colored output
  */
 
-import chalk from 'chalk';
+import chalk from "chalk";
 
 export class Logger {
   private verbose: boolean;
@@ -12,29 +12,29 @@ export class Logger {
   }
 
   info(message: string) {
-    console.log(chalk.blue('ℹ'), message);
+    console.log(chalk.blue("ℹ"), message);
   }
 
   success(message: string) {
-    console.log(chalk.green('✅'), message);
+    console.log(chalk.green("✅"), message);
   }
 
   warning(message: string) {
-    console.log(chalk.yellow('⚠'), message);
+    console.log(chalk.yellow("⚠"), message);
   }
 
   error(message: string) {
-    console.error(chalk.red('❌'), message);
+    console.error(chalk.red("❌"), message);
   }
 
   debug(message: string) {
     if (this.verbose) {
-      console.log(chalk.gray('🔍'), chalk.gray(message));
+      console.log(chalk.gray("🔍"), chalk.gray(message));
     }
   }
 
   step(message: string) {
-    console.log(chalk.cyan('▶'), message);
+    console.log(chalk.cyan("▶"), message);
   }
 
   setVerbose(verbose: boolean) {

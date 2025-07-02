@@ -19,13 +19,13 @@ describe("SchemaValidator", () => {
         type: "deck",
         slides: [
           {
-            type: "slide"
-          }
-        ]
+            type: "slide",
+          },
+        ],
       };
 
       const result = validator.validate(validDeck);
-      
+
       expect(result.isValid).toBe(true);
       expect(result.errors).toHaveLength(0);
       expect(result.data).toEqual(validDeck);
@@ -33,48 +33,58 @@ describe("SchemaValidator", () => {
 
     test("typeプロパティが必須", () => {
       const invalidDeck = {
-        slides: [{ type: "slide" }]
+        slides: [{ type: "slide" }],
       };
 
       const result = validator.validate(invalidDeck);
-      
+
       expect(result.isValid).toBe(false);
-      expect(result.errors.some(e => e.message.includes("必須プロパティ 'type'"))).toBe(true);
+      expect(
+        result.errors.some((e) => e.message.includes("必須プロパティ 'type'")),
+      ).toBe(true);
     });
 
     test("slidesプロパティが必須", () => {
       const invalidDeck = {
-        type: "deck"
+        type: "deck",
       };
 
       const result = validator.validate(invalidDeck);
-      
+
       expect(result.isValid).toBe(false);
-      expect(result.errors.some(e => e.message.includes("必須プロパティ 'slides'"))).toBe(true);
+      expect(
+        result.errors.some((e) =>
+          e.message.includes("必須プロパティ 'slides'"),
+        ),
+      ).toBe(true);
     });
 
     test("typeは'deck'でなければならない", () => {
       const invalidDeck = {
-        type: "slide",  // 間違った型
-        slides: [{ type: "slide" }]
+        type: "slide", // 間違った型
+        slides: [{ type: "slide" }],
       };
 
       const result = validator.validate(invalidDeck);
-      
+
       expect(result.isValid).toBe(false);
-      expect(result.errors.some(e => e.message.includes("期待値: deck"))).toBe(true);
+      expect(
+        result.errors.some((e) => e.message.includes("期待値: deck")),
+      ).toBe(true);
     });
 
     test("slidesは最低1つの要素が必要", () => {
       const invalidDeck = {
         type: "deck",
-        slides: []  // 空の配列
+        slides: [], // 空の配列
       };
 
       const result = validator.validate(invalidDeck);
-      
+
       expect(result.isValid).toBe(false);
-      expect(result.errors.some(e => e.message.includes("最少: 1個"))).toBe(true);
+      expect(result.errors.some((e) => e.message.includes("最少: 1個"))).toBe(
+        true,
+      );
     });
   });
 
@@ -89,29 +99,29 @@ describe("SchemaValidator", () => {
             layout: "content",
             header: {
               type: "header",
-              content: "ヘッダー"
+              content: "ヘッダー",
             },
             footer: {
               type: "footer",
-              content: "フッター"
+              content: "フッター",
             },
             background: {
               color: "#FFFFFF",
               image: "background.png",
-              size: "cover"
+              size: "cover",
             },
             children: [
               {
                 type: "text",
-                content: "テキスト"
-              }
-            ]
-          }
-        ]
+                content: "テキスト",
+              },
+            ],
+          },
+        ],
       };
 
       const result = validator.validate(validDeck);
-      
+
       expect(result.isValid).toBe(true);
       expect(result.errors).toHaveLength(0);
     });
@@ -122,15 +132,19 @@ describe("SchemaValidator", () => {
         slides: [
           {
             type: "slide",
-            layout: "invalid-layout"  // 無効な値
-          }
-        ]
+            layout: "invalid-layout", // 無効な値
+          },
+        ],
       };
 
       const result = validator.validate(invalidDeck);
-      
+
       expect(result.isValid).toBe(false);
-      expect(result.errors.some(e => e.message.includes("許可値: [title, content, blank]"))).toBe(true);
+      expect(
+        result.errors.some((e) =>
+          e.message.includes("許可値: [title, content, blank]"),
+        ),
+      ).toBe(true);
     });
   });
 
@@ -143,18 +157,22 @@ describe("SchemaValidator", () => {
             type: "slide",
             children: [
               {
-                type: "text"
+                type: "text",
                 // content が不足
-              }
-            ]
-          }
-        ]
+              },
+            ],
+          },
+        ],
       };
 
       const result = validator.validate(invalidDeck);
-      
+
       expect(result.isValid).toBe(false);
-      expect(result.errors.some(e => e.message.includes("必須プロパティ 'content'"))).toBe(true);
+      expect(
+        result.errors.some((e) =>
+          e.message.includes("必須プロパティ 'content'"),
+        ),
+      ).toBe(true);
     });
 
     test("heading要素のlevel制限", () => {
@@ -167,17 +185,19 @@ describe("SchemaValidator", () => {
               {
                 type: "heading",
                 content: "見出し",
-                level: 7  // 1-6の範囲外
-              }
-            ]
-          }
-        ]
+                level: 7, // 1-6の範囲外
+              },
+            ],
+          },
+        ],
       };
 
       const result = validator.validate(invalidDeck);
-      
+
       expect(result.isValid).toBe(false);
-      expect(result.errors.some(e => e.message.includes("must be <= 6"))).toBe(true);
+      expect(
+        result.errors.some((e) => e.message.includes("must be <= 6")),
+      ).toBe(true);
     });
 
     test("shape要素のshapeType必須", () => {
@@ -188,18 +208,22 @@ describe("SchemaValidator", () => {
             type: "slide",
             children: [
               {
-                type: "shape"
+                type: "shape",
                 // shapeType が不足
-              }
-            ]
-          }
-        ]
+              },
+            ],
+          },
+        ],
       };
 
       const result = validator.validate(invalidDeck);
-      
+
       expect(result.isValid).toBe(false);
-      expect(result.errors.some(e => e.message.includes("必須プロパティ 'shapeType'"))).toBe(true);
+      expect(
+        result.errors.some((e) =>
+          e.message.includes("必須プロパティ 'shapeType'"),
+        ),
+      ).toBe(true);
     });
 
     test("image要素のsrc必須", () => {
@@ -210,18 +234,20 @@ describe("SchemaValidator", () => {
             type: "slide",
             children: [
               {
-                type: "image"
+                type: "image",
                 // src が不足
-              }
-            ]
-          }
-        ]
+              },
+            ],
+          },
+        ],
       };
 
       const result = validator.validate(invalidDeck);
-      
+
       expect(result.isValid).toBe(false);
-      expect(result.errors.some(e => e.message.includes("必須プロパティ 'src'"))).toBe(true);
+      expect(
+        result.errors.some((e) => e.message.includes("必須プロパティ 'src'")),
+      ).toBe(true);
     });
   });
 
@@ -237,18 +263,20 @@ describe("SchemaValidator", () => {
                 type: "text",
                 content: "テキスト",
                 style: {
-                  color: "red"  // #RRGGBB形式でない
-                }
-              }
-            ]
-          }
-        ]
+                  color: "red", // #RRGGBB形式でない
+                },
+              },
+            ],
+          },
+        ],
       };
 
       const result = validator.validate(invalidDeck);
-      
+
       expect(result.isValid).toBe(false);
-      expect(result.errors.some(e => e.message.includes("パターン"))).toBe(true);
+      expect(result.errors.some((e) => e.message.includes("パターン"))).toBe(
+        true,
+      );
     });
 
     test("px単位の形式チェック", () => {
@@ -261,18 +289,20 @@ describe("SchemaValidator", () => {
               {
                 type: "frame",
                 style: {
-                  borderWidth: "10"  // px単位がない
-                }
-              }
-            ]
-          }
-        ]
+                  borderWidth: "10", // px単位がない
+                },
+              },
+            ],
+          },
+        ],
       };
 
       const result = validator.validate(invalidDeck);
-      
+
       expect(result.isValid).toBe(false);
-      expect(result.errors.some(e => e.message.includes("パターン"))).toBe(true);
+      expect(result.errors.some((e) => e.message.includes("パターン"))).toBe(
+        true,
+      );
     });
 
     test("有効なスタイル値を受け入れる", () => {
@@ -289,18 +319,21 @@ describe("SchemaValidator", () => {
                   color: "#FF0000",
                   fontSize: "16px",
                   margin: "8px",
-                  padding: "4px"
-                }
-              }
-            ]
-          }
-        ]
+                  padding: "4px",
+                },
+              },
+            ],
+          },
+        ],
       };
 
       const result = validator.validate(validDeck);
-      
+
       if (!result.isValid) {
-        console.log("Valid style test errors:", result.errors.map(e => e.message));
+        console.log(
+          "Valid style test errors:",
+          result.errors.map((e) => e.message),
+        );
       }
       expect(result.isValid).toBe(true);
       expect(result.errors).toHaveLength(0);
@@ -317,19 +350,19 @@ describe("SchemaValidator", () => {
                 type: "text",
                 content: "テキスト",
                 style: {
-                  padding: 4,  // 無次元数値は不可
-                  margin: 8    // 無次元数値は不可
-                }
-              }
-            ]
-          }
-        ]
+                  padding: 4, // 無次元数値は不可
+                  margin: 8, // 無次元数値は不可
+                },
+              },
+            ],
+          },
+        ],
       };
 
       const result = validator.validate(invalidDeck);
-      
+
       expect(result.isValid).toBe(false);
-      expect(result.errors.some(e => e.message.includes("type"))).toBe(true);
+      expect(result.errors.some((e) => e.message.includes("type"))).toBe(true);
     });
   });
 
@@ -343,27 +376,33 @@ describe("SchemaValidator", () => {
             children: [
               {
                 type: "text",
-                content: "テキスト"
-              }
-            ]
-          }
-        ]
+                content: "テキスト",
+              },
+            ],
+          },
+        ],
       };
 
       const errors = validator.validatePowerPointConstraints(validDeck);
-      
+
       expect(errors).toHaveLength(0);
     });
 
     test("スライド数制限チェック", () => {
       const largeDeck: DeckElement = {
         type: "deck",
-        slides: new Array(1001).fill(null).map(() => ({ type: "slide" as const }))
+        slides: new Array(1001)
+          .fill(null)
+          .map(() => ({ type: "slide" as const })),
       };
 
       const errors = validator.validatePowerPointConstraints(largeDeck);
-      
-      expect(errors.some(e => e.message.includes("スライド数が上限を超えています"))).toBe(true);
+
+      expect(
+        errors.some((e) =>
+          e.message.includes("スライド数が上限を超えています"),
+        ),
+      ).toBe(true);
     });
   });
 
@@ -372,11 +411,11 @@ describe("SchemaValidator", () => {
       const validResult = {
         isValid: true,
         errors: [],
-        data: { type: "deck", slides: [] } as any
+        data: { type: "deck", slides: [] } as any,
       };
 
       const message = validator.formatValidationResult(validResult);
-      
+
       expect(message).toContain("✅ バリデーション成功");
     });
 
@@ -385,12 +424,12 @@ describe("SchemaValidator", () => {
         isValid: false,
         errors: [
           { path: "/slides", message: "必須プロパティが不足" },
-          { path: "/type", message: "型が不正" }
-        ]
+          { path: "/type", message: "型が不正" },
+        ],
       };
 
       const message = validator.formatValidationResult(errorResult);
-      
+
       expect(message).toContain("❌ バリデーションエラー:");
       expect(message).toContain("1. /slides: 必須プロパティが不足");
       expect(message).toContain("2. /type: 型が不正");

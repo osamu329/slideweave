@@ -28,10 +28,10 @@ export class SchemaValidator {
   constructor() {
     this.ajv = new Ajv({
       allErrors: true, // すべてのエラーを収集
-      verbose: true,   // 詳細なエラー情報
-      strict: false    // 厳密モードを無効（PowerPoint制約に対応）
+      verbose: true, // 詳細なエラー情報
+      strict: false, // 厳密モードを無効（PowerPoint制約に対応）
     });
-    
+
     this.loadSchema();
   }
 
@@ -39,8 +39,11 @@ export class SchemaValidator {
    * JSON Schemaを読み込み
    */
   private loadSchema(): void {
-    const schemaPath = path.join(__dirname, "../schemas/slideweave.schema.json");
-    
+    const schemaPath = path.join(
+      process.cwd(),
+      "src/schemas/slideweave.schema.json",
+    );
+
     if (!fs.existsSync(schemaPath)) {
       throw new Error(`Schema file not found: ${schemaPath}`);
     }
@@ -49,7 +52,9 @@ export class SchemaValidator {
       const schemaContent = fs.readFileSync(schemaPath, "utf-8");
       this.schema = JSON.parse(schemaContent);
     } catch (error) {
-      throw new Error(`Failed to load schema: ${error instanceof Error ? error.message : String(error)}`);
+      throw new Error(
+        `Failed to load schema: ${error instanceof Error ? error.message : String(error)}`,
+      );
     }
   }
 
@@ -61,27 +66,29 @@ export class SchemaValidator {
   validate(data: any): SchemaValidationResult {
     // ajvでバリデーション実行
     const isValid = this.ajv.validate(this.schema, data);
-    
+
     if (isValid) {
       return {
         isValid: true,
         errors: [],
-        data: data as DeckElement
+        data: data as DeckElement,
       };
     }
 
     // エラー情報を変換
-    const errors: SchemaValidationError[] = (this.ajv.errors || []).map(error => ({
-      path: error.instancePath || error.schemaPath || "root",
-      message: this.formatErrorMessage(error),
-      value: error.data,
-      schemaPath: error.schemaPath
-    }));
+    const errors: SchemaValidationError[] = (this.ajv.errors || []).map(
+      (error) => ({
+        path: error.instancePath || error.schemaPath || "root",
+        message: this.formatErrorMessage(error),
+        value: error.data,
+        schemaPath: error.schemaPath,
+      }),
+    );
 
     return {
       isValid: false,
       errors,
-      data: undefined
+      data: undefined,
     };
   }
 
@@ -93,39 +100,39 @@ export class SchemaValidator {
   private formatErrorMessage(error: any): string {
     const path = error.instancePath || "";
     const keyword = error.keyword;
-    
+
     switch (keyword) {
       case "required":
         const missingProperty = error.params?.missingProperty;
         return `必須プロパティ '${missingProperty}' が不足しています ${path}`;
-        
+
       case "type":
         const expectedType = error.params?.type;
         return `プロパティ ${path} の型が不正です。期待値: ${expectedType}`;
-        
+
       case "const":
         const expectedValue = error.params?.allowedValue;
         return `プロパティ ${path} の値が不正です。期待値: ${expectedValue}`;
-        
+
       case "enum":
         const allowedValues = error.params?.allowedValues?.join(", ");
         return `プロパティ ${path} の値が不正です。許可値: [${allowedValues}]`;
-        
+
       case "pattern":
         const pattern = error.params?.pattern;
         return `プロパティ ${path} の形式が不正です。パターン: ${pattern}`;
-        
+
       case "minItems":
         const minItems = error.params?.limit;
         return `配列 ${path} の要素数が不足しています。最少: ${minItems}個`;
-        
+
       case "additionalProperties":
         const additionalProperty = error.params?.additionalProperty;
         return `プロパティ ${path} に許可されていないプロパティ '${additionalProperty}' があります`;
-        
+
       case "oneOf":
         return `プロパティ ${path} がいずれの型定義にも一致しません`;
-        
+
       default:
         return `${path}: ${error.message || "バリデーションエラー"}`;
     }
@@ -139,12 +146,12 @@ export class SchemaValidator {
    */
   validatePowerPointConstraints(data: DeckElement): SchemaValidationError[] {
     const errors: SchemaValidationError[] = [];
-    
+
     // スライド数制限チェック（PowerPointの実用的制限）
     if (data.slides.length > 1000) {
       errors.push({
         path: "/slides",
-        message: "スライド数が上限を超えています。推奨: 1000枚以下"
+        message: "スライド数が上限を超えています。推奨: 1000枚以下",
       });
     }
 
@@ -162,16 +169,20 @@ export class SchemaValidator {
    * @param slideIndex スライドインデックス
    * @param errors エラー配列（参照渡し）
    */
-  private validateSlideConstraints(slide: any, slideIndex: number, errors: SchemaValidationError[]): void {
+  private validateSlideConstraints(
+    slide: any,
+    slideIndex: number,
+    errors: SchemaValidationError[],
+  ): void {
     const slidePath = `/slides/${slideIndex}`;
-    
+
     // header/footerがslide直下にのみ存在することをチェック
     if (slide.children) {
       slide.children.forEach((child: any, childIndex: number) => {
         if (child.type === "header" || child.type === "footer") {
           errors.push({
             path: `${slidePath}/children/${childIndex}`,
-            message: `${child.type}要素はslide直下のheader/footerプロパティとしてのみ配置可能です`
+            message: `${child.type}要素はslide直下のheader/footerプロパティとしてのみ配置可能です`,
           });
         }
       });
@@ -179,7 +190,11 @@ export class SchemaValidator {
 
     // 子要素の再帰的チェック
     if (slide.children) {
-      this.validateElementConstraints(slide.children, `${slidePath}/children`, errors);
+      this.validateElementConstraints(
+        slide.children,
+        `${slidePath}/children`,
+        errors,
+      );
     }
   }
 
@@ -189,26 +204,42 @@ export class SchemaValidator {
    * @param basePath ベースパス
    * @param errors エラー配列（参照渡し）
    */
-  private validateElementConstraints(elements: any[], basePath: string, errors: SchemaValidationError[]): void {
+  private validateElementConstraints(
+    elements: any[],
+    basePath: string,
+    errors: SchemaValidationError[],
+  ): void {
     elements.forEach((element, index) => {
       const elementPath = `${basePath}/${index}`;
-      
+
       // shape要素の子要素チェック
-      if (element.type === "shape" && element.children && element.children.length > 0) {
+      if (
+        element.type === "shape" &&
+        element.children &&
+        element.children.length > 0
+      ) {
         errors.push({
           path: elementPath,
-          message: "shape要素は子要素を持つことができません"
+          message: "shape要素は子要素を持つことができません",
         });
       }
 
       // CSS単位形式チェック（パターンマッチで基本チェックは済んでいるが、実用性をチェック）
       if (element.style) {
-        this.validateStyleConstraints(element.style, `${elementPath}/style`, errors);
+        this.validateStyleConstraints(
+          element.style,
+          `${elementPath}/style`,
+          errors,
+        );
       }
 
       // 再帰的チェック
       if (element.children) {
-        this.validateElementConstraints(element.children, `${elementPath}/children`, errors);
+        this.validateElementConstraints(
+          element.children,
+          `${elementPath}/children`,
+          errors,
+        );
       }
     });
   }
@@ -219,7 +250,11 @@ export class SchemaValidator {
    * @param stylePath スタイルパス
    * @param errors エラー配列（参照渡し）
    */
-  private validateStyleConstraints(style: any, stylePath: string, errors: SchemaValidationError[]): void {
+  private validateStyleConstraints(
+    style: any,
+    stylePath: string,
+    errors: SchemaValidationError[],
+  ): void {
     // フォントサイズの実用範囲チェック
     if (style.fontSize) {
       const fontSize = this.extractNumericValue(style.fontSize);
@@ -227,20 +262,20 @@ export class SchemaValidator {
         errors.push({
           path: `${stylePath}/fontSize`,
           message: "フォントサイズは6pt〜144ptの範囲で指定してください",
-          value: style.fontSize
+          value: style.fontSize,
         });
       }
     }
 
     // 色値の妥当性チェック（#RRGGBB形式）
     const colorProps = ["color", "backgroundColor", "borderColor"];
-    colorProps.forEach(prop => {
+    colorProps.forEach((prop) => {
       if (style[prop] && typeof style[prop] === "string") {
         if (!style[prop].match(/^#[0-9A-Fa-f]{6}$/)) {
           errors.push({
             path: `${stylePath}/${prop}`,
             message: "色は#RRGGBB形式で指定してください",
-            value: style[prop]
+            value: style[prop],
           });
         }
       }
@@ -277,9 +312,9 @@ export class SchemaValidator {
 
     const errorLines = [
       "❌ バリデーションエラー:",
-      ...result.errors.map((error, index) => 
-        `  ${index + 1}. ${error.path}: ${error.message}`
-      )
+      ...result.errors.map(
+        (error, index) => `  ${index + 1}. ${error.path}: ${error.message}`,
+      ),
     ];
 
     return errorLines.join("\n");

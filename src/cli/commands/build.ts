@@ -3,20 +3,27 @@
  * JSON ファイルから PowerPoint スライドを生成
  */
 
-import { Command } from 'commander';
-import ora from 'ora';
-import path from 'path';
-import fs from 'fs';
-import { logger } from '../utils/logger.js';
-import { CLIError, handleError, validateInputFile, validateJSONSyntax } from '../utils/errors.js';
-import { loadConfig, resolveOutputPath } from '../utils/config.js';
+import { Command } from "commander";
+import ora from "ora";
+import path from "path";
+import fs from "fs";
+import { logger } from "../utils/logger.js";
+import {
+  CLIError,
+  handleError,
+  validateInputFile,
+  validateJSONSyntax,
+} from "../utils/errors.js";
+import { loadConfig, resolveOutputPath } from "../utils/config.js";
 
 // SlideWeave core modules
-import { renderLayout } from '../../layout/LayoutEngine.js';
-import { PPTXRenderer } from '../../renderer/PPTXRenderer.js';
-import { SchemaValidator } from '../../elements/SchemaValidator.js';
-import { RuntimeValidator } from '../../elements/RuntimeValidator.js';
-import { SlideDataLoader } from '../../data/SlideDataLoader.js';
+import { renderLayout } from "../../layout/LayoutEngine.js";
+import { PPTXRenderer } from "../../renderer/PPTXRenderer.js";
+import { SchemaValidator } from "../../elements/SchemaValidator.js";
+import { RuntimeValidator } from "../../elements/RuntimeValidator.js";
+import { SlideDataLoader } from "../../data/SlideDataLoader.js";
+import { DPIConverter } from "../../utils/DPIConverter.js";
+import { SLIDE_FORMATS } from "../../utils/SlideFormats.js";
 
 interface BuildOptions {
   output?: string;
@@ -43,39 +50,40 @@ export async function buildSlides(inputPath: string, options: BuildOptions) {
     logger.info(`Building slides from ${path.basename(inputPath)}`);
     logger.debug(`Input: ${inputPath}`);
     logger.debug(`Output: ${outputPath}`);
-    
+
     if (options.css && options.css.length > 0) {
-      logger.info(`Using external CSS files: ${options.css.map(f => path.basename(f)).join(', ')}`);
-      options.css.forEach(cssFile => logger.debug(`CSS: ${cssFile}`));
+      logger.info(
+        `Using external CSS files: ${options.css.map((f) => path.basename(f)).join(", ")}`,
+      );
+      options.css.forEach((cssFile) => logger.debug(`CSS: ${cssFile}`));
     }
 
-    const spinner = ora('Loading slide data...').start();
+    const spinner = ora("Loading slide data...").start();
 
     // JSONファイルを読み込み (外部CSSファイルがあれば一緒に処理)
-    const deckData = options.css && options.css.length > 0
-      ? SlideDataLoader.loadFromFileWithExternalCSS(inputPath, options.css)
-      : SlideDataLoader.loadFromFile(inputPath);
-    spinner.succeed('Slide data loaded');
+    const deckData =
+      options.css && options.css.length > 0
+        ? SlideDataLoader.loadFromFileWithExternalCSS(inputPath, options.css)
+        : SlideDataLoader.loadFromFile(inputPath);
+    spinner.succeed("Slide data loaded");
 
-    // レイアウト設定（16:9デフォルト）
-    const slideWidth = config.slide.width;
-    const slideHeight = config.slide.height;
+    // format別のデフォルトサイズ決定
+    const slideConfig = SLIDE_FORMATS[deckData.format || "wide"];
 
-    logger.debug(`Slide dimensions: ${slideWidth}x${slideHeight}`);
+    logger.debug(
+      `Slide dimensions: ${slideConfig.widthPx}x${slideConfig.heightPx}px, DPI: ${slideConfig.dpi}`,
+    );
 
-    const renderer = new PPTXRenderer({
-      slideWidth: slideWidth / 72, // ピクセル → インチ変換
-      slideHeight: slideHeight / 72
-    });
+    const renderer = new PPTXRenderer(slideConfig);
 
     // JSONSchemaバリデーション
     const schemaValidator = new SchemaValidator();
     const schemaValidation = schemaValidator.validate(deckData);
     if (!schemaValidation.isValid) {
       throw new CLIError(
-        'JSON Schema validation failed',
+        "JSON Schema validation failed",
         2,
-        schemaValidator.formatValidationResult(schemaValidation)
+        schemaValidator.formatValidationResult(schemaValidation),
       );
     }
 
@@ -84,24 +92,48 @@ export async function buildSlides(inputPath: string, options: BuildOptions) {
     const runtimeValidation = runtimeValidator.validate(deckData);
     if (!runtimeValidation.isValid) {
       throw new CLIError(
-        'Runtime validation failed',
+        "Runtime validation failed",
         2,
-        runtimeValidator.formatValidationResult(runtimeValidation)
+        runtimeValidator.formatValidationResult(runtimeValidation),
       );
     }
 
     // 各スライドを処理
-    const processSpinner = ora(`Processing ${deckData.slides.length} slide(s)...`).start();
+    const processSpinner = ora(
+      `Processing ${deckData.slides.length} slide(s)...`,
+    ).start();
 
     for (let i = 0; i < deckData.slides.length; i++) {
       const slide = deckData.slides[i];
-      
+
       processSpinner.text = `Processing slide ${i + 1}/${deckData.slides.length}`;
-      
-      // 各子要素をレイアウト計算してレンダリング
-      if (slide.children) {
-        for (const child of slide.children) {
-          const slideLayout = await renderLayout(child, slideWidth, slideHeight);
+
+      // スライドの子要素をコンテナとしてまとめてレイアウト計算
+      if (slide.children && slide.children.length > 0) {
+        // 子要素が複数ある場合は、暗黙的なコンテナでラップ
+        if (slide.children.length === 1) {
+          const slideLayout = await renderLayout(
+            slide.children[0],
+            slideConfig.widthPx,
+            slideConfig.heightPx,
+          );
+          await renderer.render(slideLayout);
+        } else {
+          // 複数の子要素を持つ場合、コンテナでラップ
+          const containerElement = {
+            type: "container" as const,
+            style: {
+              width: `${slideConfig.widthPx}px`,
+              height: `${slideConfig.heightPx}px`,
+              flexDirection: "column" as const,
+            },
+            children: slide.children,
+          };
+          const slideLayout = await renderLayout(
+            containerElement,
+            slideConfig.widthPx,
+            slideConfig.heightPx,
+          );
           await renderer.render(slideLayout);
         }
       }
@@ -114,26 +146,25 @@ export async function buildSlides(inputPath: string, options: BuildOptions) {
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir, { recursive: true });
     }
-    
+
     // ファイル保存
-    const saveSpinner = ora('Saving PowerPoint file...').start();
+    const saveSpinner = ora("Saving PowerPoint file...").start();
     await renderer.save(outputPath);
-    saveSpinner.succeed('PowerPoint file saved');
+    saveSpinner.succeed("PowerPoint file saved");
 
     logger.success(`Successfully generated: ${outputPath}`);
-    
   } catch (error) {
     handleError(error);
   }
 }
 
-export const buildCommand = new Command('build')
-  .description('Build PowerPoint slides from JSON file')
-  .argument('<input>', 'Input JSON file path')
-  .option('-o, --output <file>', 'Output PowerPoint file path')
-  .option('--css <files...>', 'External CSS files to include')
-  .option('-c, --config <file>', 'Configuration file path')
-  .option('--verbose', 'Enable verbose logging')
+export const buildCommand = new Command("build")
+  .description("Build PowerPoint slides from JSON file")
+  .argument("<input>", "Input JSON file path")
+  .option("-o, --output <file>", "Output PowerPoint file path")
+  .option("--css <files...>", "External CSS files to include")
+  .option("-c, --config <file>", "Configuration file path")
+  .option("--verbose", "Enable verbose logging")
   .action(async (input: string, options: BuildOptions) => {
     await buildSlides(input, options);
   });

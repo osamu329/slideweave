@@ -15,11 +15,12 @@ import {
 } from "../types/elements";
 import { SVGGenerator, BackgroundBlurOptions } from "../svg/SVGGenerator";
 import { TempFileManager } from "../utils/TempFileManager";
+import { DPIConverter } from "../utils/DPIConverter";
 
 export interface PPTXRenderOptions {
-  slideWidth?: number; // インチ
-  slideHeight?: number; // インチ
-  theme?: "light" | "dark";
+  widthPx: number;
+  heightPx: number;
+  dpi: number;
 }
 
 export class PPTXRenderer {
@@ -28,26 +29,26 @@ export class PPTXRenderer {
   private svgGenerator: SVGGenerator;
   private currentBackgroundImage: string | null = null;
   private currentBackgroundColor: string | null = null;
-  private options: PPTXRenderOptions;
-  
-  // PowerPoint標準96DPI
-  private static readonly PX_TO_INCH = 1 / 96;
+  private slideWidthInch: number;
+  private slideHeightInch: number;
+  private dpiConverter: DPIConverter;
 
-  constructor(options: PPTXRenderOptions = {}) {
+  constructor(options: PPTXRenderOptions) {
     this.pptx = new PptxGenJS();
     this.svgGenerator = new SVGGenerator();
-    this.options = {
-      slideWidth: 13.333,
-      slideHeight: 7.5,
-      theme: "light",
-      ...options,
-    };
 
-    // スライドサイズ設定（デフォルト: 13.333x7.5インチ = 16:9 Widescreen）
+    // DPI変換器を初期化
+    this.dpiConverter = new DPIConverter(options.dpi);
+
+    // ピクセル値からインチ値を内部で計算
+    this.slideWidthInch = this.dpiConverter.pxToInch(options.widthPx);
+    this.slideHeightInch = this.dpiConverter.pxToInch(options.heightPx);
+
+    // スライドサイズ設定
     this.pptx.defineLayout({
       name: "SLIDEWEAVE_LAYOUT",
-      width: this.options.slideWidth!,
-      height: this.options.slideHeight!,
+      width: this.slideWidthInch,
+      height: this.slideHeightInch,
     });
     this.pptx.layout = "SLIDEWEAVE_LAYOUT";
   }
@@ -69,7 +70,10 @@ export class PPTXRenderer {
   /**
    * 背景ブラーオプションを作成
    */
-  private createBackgroundBlurOptions(layoutResult: LayoutResult, style: any): BackgroundBlurOptions | undefined {
+  private createBackgroundBlurOptions(
+    layoutResult: LayoutResult,
+    style: any,
+  ): BackgroundBlurOptions | undefined {
     if (!style?.glassEffect) {
       return undefined;
     }
@@ -79,8 +83,8 @@ export class PPTXRenderer {
       return undefined;
     }
 
-    const slideWidthPx = this.options.slideWidth! * 96; // インチをピクセルに変換 (96 DPI)
-    const slideHeightPx = this.options.slideHeight! * 96;
+    const slideWidthPx = this.dpiConverter.inchToPx(this.slideWidthInch); // インチをピクセルに変換
+    const slideHeightPx = this.dpiConverter.inchToPx(this.slideHeightInch);
 
     return {
       backgroundImagePath: this.currentBackgroundImage || undefined,
@@ -93,7 +97,7 @@ export class PPTXRenderer {
       slideHeight: slideHeightPx,
       borderRadius: style?.borderRadius ? `${style.borderRadius}px` : undefined,
       blurStrength: 5, // 適度なブラー強度（輪郭が分かるレベル）
-      quality: 70 // ファイルサイズ抑制のため低めの品質
+      quality: 70, // ファイルサイズ抑制のため低めの品質
     };
   }
 
@@ -103,7 +107,10 @@ export class PPTXRenderer {
    * @param layoutResults レイアウト計算結果配列 (要素配列の場合のみ)
    * @returns PPTXGenJS インスタンス
    */
-  async render(elementsOrLayoutResult: any[] | LayoutResult, layoutResults?: LayoutResult[]): Promise<PptxGenJS> {
+  async render(
+    elementsOrLayoutResult: any[] | LayoutResult,
+    layoutResults?: LayoutResult[],
+  ): Promise<PptxGenJS> {
     // 新しいスライドを作成
     this.currentSlide = this.pptx.addSlide();
 
@@ -148,12 +155,16 @@ export class PPTXRenderer {
     const style = element.style;
 
     // 背景情報を保存
-    if (style && 'backgroundImage' in style && style.backgroundImage) {
+    if (style && "backgroundImage" in style && style.backgroundImage) {
       this.currentBackgroundImage = style.backgroundImage; // 背景画像パスを保存
-      this.addBackgroundImage(style.backgroundImage, style.backgroundSize, layoutResult);
+      this.addBackgroundImage(
+        style.backgroundImage,
+        style.backgroundSize,
+        layoutResult,
+      );
     }
-    
-    if (style && 'backgroundColor' in style && style.backgroundColor) {
+
+    if (style && "backgroundColor" in style && style.backgroundColor) {
       this.currentBackgroundColor = style.backgroundColor; // 背景色を保存
       // スライドの背景色を設定
       this.currentSlide.background = { color: style.backgroundColor };
@@ -169,15 +180,15 @@ export class PPTXRenderer {
   private addBackgroundImage(
     imagePath: string,
     backgroundSize: "cover" | "contain" | "fit" | "none" | undefined,
-    layoutResult: LayoutResult
+    layoutResult: LayoutResult,
   ): void {
     if (!this.currentSlide) return;
 
     const position = this.pixelsToInches(layoutResult);
-    
+
     // backgroundSizeに応じたsizingオプションを設定
     let sizingOption: any = undefined;
-    
+
     if (backgroundSize !== "none") {
       const sizeType = this.mapBackgroundSizeToSizing(backgroundSize);
       sizingOption = {
@@ -208,7 +219,9 @@ export class PPTXRenderer {
    * @param backgroundSize backgroundSizeの値
    * @returns PPTXGenJSのsizingタイプ
    */
-  private mapBackgroundSizeToSizing(backgroundSize: "cover" | "contain" | "fit" | "none" | undefined): string {
+  private mapBackgroundSizeToSizing(
+    backgroundSize: "cover" | "contain" | "fit" | "none" | undefined,
+  ): string {
     switch (backgroundSize) {
       case "contain":
         return "contain";
@@ -273,7 +286,10 @@ export class PPTXRenderer {
    * @param layoutResult レイアウト結果
    * @param element frame要素
    */
-  private async renderFrame(layoutResult: LayoutResult, element: FrameElement): Promise<void> {
+  private async renderFrame(
+    layoutResult: LayoutResult,
+    element: FrameElement,
+  ): Promise<void> {
     if (!this.currentSlide) return;
 
     const position = this.pixelsToInches(layoutResult);
@@ -282,18 +298,20 @@ export class PPTXRenderer {
     // SVGを生成してframeを描画
     // SVGの座標系を実際のピクセルサイズに合わせる
     const svgOptions = {
-      width: layoutResult.width,   // 実際のレイアウトサイズ（ピクセル）
+      width: layoutResult.width, // 実際のレイアウトサイズ（ピクセル）
       height: layoutResult.height, // 実際のレイアウトサイズ（ピクセル）
       backgroundColor: style?.backgroundColor,
       background: style?.background, // グラデーション対応
       borderRadius: style?.borderRadius ? `${style.borderRadius}px` : undefined, // 数値をpx文字列に変換
       glassEffect: style?.glassEffect, // ガラス風効果
-      backgroundBlur: this.createBackgroundBlurOptions(layoutResult, style) // 背景ブラー効果
+      backgroundBlur: this.createBackgroundBlurOptions(layoutResult, style), // 背景ブラー効果
     };
 
     // 背景ブラー画像を先に配置
     if (svgOptions.backgroundBlur) {
-      const blurredImagePath = await this.svgGenerator.processBackgroundBlur(svgOptions.backgroundBlur);
+      const blurredImagePath = await this.svgGenerator.processBackgroundBlur(
+        svgOptions.backgroundBlur,
+      );
       if (blurredImagePath) {
         this.currentSlide.addImage({
           path: blurredImagePath, // 既に絶対パス
@@ -306,9 +324,9 @@ export class PPTXRenderer {
     }
 
     const svg = await this.svgGenerator.generateFrameSVG(svgOptions);
-    
+
     // SVGをBase64エンコード
-    const svgBase64 = Buffer.from(svg).toString('base64');
+    const svgBase64 = Buffer.from(svg).toString("base64");
     const dataUri = `data:image/svg+xml;base64,${svgBase64}`;
 
     // addImageでSVGを描画（ガラス効果オーバーレイ）
@@ -317,7 +335,7 @@ export class PPTXRenderer {
       x: position.x,
       y: position.y,
       w: position.w,
-      h: position.h
+      h: position.h,
     });
   }
 
@@ -326,27 +344,33 @@ export class PPTXRenderer {
    * @param layoutResult レイアウト結果
    * @param element shape要素
    */
-  private async renderShape(layoutResult: LayoutResult, element: ShapeElement): Promise<void> {
+  private async renderShape(
+    layoutResult: LayoutResult,
+    element: ShapeElement,
+  ): Promise<void> {
     if (!this.currentSlide) return;
 
     const position = this.pixelsToInches(layoutResult);
     const style = element.style;
 
     // グラデーション背景がある場合はSVG描画、そうでなければ従来のshape描画
-    if (style?.background && typeof style.background !== 'string') {
+    if (style?.background && typeof style.background !== "string") {
       // SVGを生成してshapeを描画（グラデーション用）
       const svgOptions = {
         width: layoutResult.width,
         height: layoutResult.height,
         backgroundColor: style?.backgroundColor,
         background: style?.background,
-        borderRadius: element.shapeType === 'circle' ? `${Math.min(layoutResult.width, layoutResult.height) / 2}px` : undefined
+        borderRadius:
+          element.shapeType === "circle"
+            ? `${Math.min(layoutResult.width, layoutResult.height) / 2}px`
+            : undefined,
       };
 
       const svg = await this.svgGenerator.generateFrameSVG(svgOptions);
-      
+
       // SVGをBase64エンコード
-      const svgBase64 = Buffer.from(svg).toString('base64');
+      const svgBase64 = Buffer.from(svg).toString("base64");
       const dataUri = `data:image/svg+xml;base64,${svgBase64}`;
 
       // addImageでSVGを描画
@@ -355,7 +379,7 @@ export class PPTXRenderer {
         x: position.x,
         y: position.y,
         w: position.w,
-        h: position.h
+        h: position.h,
       });
     } else {
       // 従来のshape描画（単色背景用）
@@ -367,8 +391,14 @@ export class PPTXRenderer {
       };
 
       // 背景色設定
-      if (style?.backgroundColor || (style?.background && typeof style.background === 'string')) {
-        const color = style.background && typeof style.background === 'string' ? style.background : style.backgroundColor;
+      if (
+        style?.backgroundColor ||
+        (style?.background && typeof style.background === "string")
+      ) {
+        const color =
+          style.background && typeof style.background === "string"
+            ? style.background
+            : style.backgroundColor;
         shapeOptions.fill = { color };
       }
 
@@ -409,10 +439,10 @@ export class PPTXRenderer {
    * @returns 数値
    */
   private extractNumericValue(value: string | number | undefined): number {
-    if (typeof value === 'number') {
+    if (typeof value === "number") {
       return value;
     }
-    if (typeof value === 'string') {
+    if (typeof value === "string") {
       const numMatch = value.match(/^(\d+(?:\.\d+)?)/);
       if (numMatch) {
         return parseFloat(numMatch[1]);
@@ -430,9 +460,12 @@ export class PPTXRenderer {
     if (!this.currentSlide) return;
 
     const position = this.pixelsToInches(layoutResult);
-    const fontSize = this.extractNumericValue(element.style?.fontSize) || this.extractNumericValue(element.fontSize) || 12;
+    const fontSize =
+      this.extractNumericValue(element.style?.fontSize) ||
+      this.extractNumericValue(element.fontSize) ||
+      12;
     const padding = this.extractNumericValue(element.style?.padding) || 0;
-    
+
     const textOptions: any = {
       ...position,
       fontSize,
@@ -444,7 +477,9 @@ export class PPTXRenderer {
       // paddingのみをテキストフレーム内マージンとして適用
       margin: padding, // paddingをPowerPointのmarginに適用（4pxグリッドシステム廃止のため乗算なし）
       valign: "top" as const, // 縦位置を上揃えに設定
-      fill: element.style?.backgroundColor ? { color: element.style.backgroundColor } : undefined, // 背景色設定（型定義に合わせてオブジェクト形式）
+      fill: element.style?.backgroundColor
+        ? { color: element.style.backgroundColor }
+        : undefined, // 背景色設定（型定義に合わせてオブジェクト形式）
     };
 
     // shadowプロパティが指定されている場合は追加
@@ -478,7 +513,11 @@ export class PPTXRenderer {
       6: 12,
     };
     const level = element.level || 1;
-    const fontSize = this.extractNumericValue(element.style?.fontSize) || this.extractNumericValue(element.fontSize) || fontSizeMap[level] || 16;
+    const fontSize =
+      this.extractNumericValue(element.style?.fontSize) ||
+      this.extractNumericValue(element.fontSize) ||
+      fontSizeMap[level] ||
+      16;
     const padding = this.extractNumericValue(element.style?.padding) || 0;
 
     const textOptions: any = {
@@ -490,7 +529,9 @@ export class PPTXRenderer {
       italic: this.isItalic(element.style?.fontStyle),
       margin: padding, // paddingのみをPowerPointのmarginに適用（4pxグリッドシステム廃止のため乗算なし）
       valign: "top" as const, // 縦位置を上揃えに設定
-      fill: element.style?.backgroundColor ? { color: element.style.backgroundColor } : undefined, // 背景色設定（型定義に合わせてオブジェクト形式）
+      fill: element.style?.backgroundColor
+        ? { color: element.style.backgroundColor }
+        : undefined, // 背景色設定（型定義に合わせてオブジェクト形式）
     };
 
     // shadowプロパティが指定されている場合は追加
@@ -515,10 +556,10 @@ export class PPTXRenderer {
     // ピクセル → インチ変換（96DPI標準）
 
     return {
-      x: layoutResult.left * PPTXRenderer.PX_TO_INCH,
-      y: layoutResult.top * PPTXRenderer.PX_TO_INCH,
-      w: layoutResult.width * PPTXRenderer.PX_TO_INCH,
-      h: layoutResult.height * PPTXRenderer.PX_TO_INCH,
+      x: this.dpiConverter.pxToInch(layoutResult.left),
+      y: this.dpiConverter.pxToInch(layoutResult.top),
+      w: this.dpiConverter.pxToInch(layoutResult.width),
+      h: this.dpiConverter.pxToInch(layoutResult.height),
     };
   }
 
@@ -527,31 +568,31 @@ export class PPTXRenderer {
    * @param layoutResult レイアウト結果
    */
   private checkBoundingBox(layoutResult: LayoutResult): void {
-    const slideWidthPx = this.options.slideWidth! / PPTXRenderer.PX_TO_INCH;
-    const slideHeightPx = this.options.slideHeight! / PPTXRenderer.PX_TO_INCH;
-    
+    const slideWidthPx = this.dpiConverter.inchToPx(this.slideWidthInch);
+    const slideHeightPx = this.dpiConverter.inchToPx(this.slideHeightInch);
+
     const elementLeft = layoutResult.left || 0;
     const elementTop = layoutResult.top || 0;
     const elementRight = elementLeft + layoutResult.width;
     const elementBottom = elementTop + layoutResult.height;
-    
+
     // スライド境界チェック
     if (elementRight > slideWidthPx || elementBottom > slideHeightPx) {
-      const elementType = layoutResult.element?.type || 'unknown';
-      const elementContent = (layoutResult.element as any)?.content || '';
-      
+      const elementType = layoutResult.element?.type || "unknown";
+      const elementContent = (layoutResult.element as any)?.content || "";
+
       console.warn(`⚠️  Element exceeds slide boundaries:
-  Type: ${elementType}${elementContent ? ` ("${elementContent.substring(0, 20)}...")` : ''}
+  Type: ${elementType}${elementContent ? ` ("${elementContent.substring(0, 20)}...")` : ""}
   Position: (${elementLeft.toFixed(0)}, ${elementTop.toFixed(0)})px
   Size: ${layoutResult.width.toFixed(0)} x ${layoutResult.height.toFixed(0)}px
   Right edge: ${elementRight.toFixed(0)}px (max: ${slideWidthPx.toFixed(0)}px)
   Bottom edge: ${elementBottom.toFixed(0)}px (max: ${slideHeightPx.toFixed(0)}px)
-  Overflow: ${elementRight > slideWidthPx ? `${(elementRight - slideWidthPx).toFixed(0)}px right` : ''}${elementRight > slideWidthPx && elementBottom > slideHeightPx ? ', ' : ''}${elementBottom > slideHeightPx ? `${(elementBottom - slideHeightPx).toFixed(0)}px bottom` : ''}`);
+  Overflow: ${elementRight > slideWidthPx ? `${(elementRight - slideWidthPx).toFixed(0)}px right` : ""}${elementRight > slideWidthPx && elementBottom > slideHeightPx ? ", " : ""}${elementBottom > slideHeightPx ? `${(elementBottom - slideHeightPx).toFixed(0)}px bottom` : ""}`);
     }
-    
+
     // 負の座標チェック
     if (elementLeft < 0 || elementTop < 0) {
-      const elementType = layoutResult.element?.type || 'unknown';
+      const elementType = layoutResult.element?.type || "unknown";
       console.warn(`⚠️  Element has negative position:
   Type: ${elementType}
   Position: (${elementLeft.toFixed(0)}, ${elementTop.toFixed(0)})px`);
@@ -566,10 +607,10 @@ export class PPTXRenderer {
   async save(filename: string): Promise<string> {
     try {
       const result = await this.pptx.writeFile({ fileName: filename });
-      
+
       // PPTX生成完了後に一時ファイルをクリーンアップ
       TempFileManager.getInstance().cleanupAll();
-      
+
       return result;
     } catch (error) {
       // エラー時でもクリーンアップを実行
@@ -609,14 +650,21 @@ export class PPTXRenderer {
    * @param defaultValue デフォルト値
    * @returns bold かどうか
    */
-  private isBold(fontWeight?: string | number | boolean, defaultValue: boolean = false): boolean {
-    if (typeof fontWeight === 'boolean') {
+  private isBold(
+    fontWeight?: string | number | boolean,
+    defaultValue: boolean = false,
+  ): boolean {
+    if (typeof fontWeight === "boolean") {
       return fontWeight;
     }
-    if (typeof fontWeight === 'string') {
-      return fontWeight === 'bold' || fontWeight === 'bolder' || parseInt(fontWeight) >= 700;
+    if (typeof fontWeight === "string") {
+      return (
+        fontWeight === "bold" ||
+        fontWeight === "bolder" ||
+        parseInt(fontWeight) >= 700
+      );
     }
-    if (typeof fontWeight === 'number') {
+    if (typeof fontWeight === "number") {
       return fontWeight >= 700;
     }
     return defaultValue;
@@ -628,13 +676,12 @@ export class PPTXRenderer {
    * @returns italic かどうか
    */
   private isItalic(fontStyle?: string | boolean): boolean {
-    if (typeof fontStyle === 'boolean') {
+    if (typeof fontStyle === "boolean") {
       return fontStyle;
     }
-    if (typeof fontStyle === 'string') {
-      return fontStyle === 'italic' || fontStyle === 'oblique';
+    if (typeof fontStyle === "string") {
+      return fontStyle === "italic" || fontStyle === "oblique";
     }
     return false;
   }
-
 }

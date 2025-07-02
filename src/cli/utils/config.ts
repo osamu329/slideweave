@@ -2,8 +2,8 @@
  * Configuration management for SlideWeave CLI
  */
 
-import { cosmiconfigSync } from 'cosmiconfig';
-import path from 'path';
+import { cosmiconfigSync } from "cosmiconfig";
+import path from "path";
 
 export interface SlideWeaveConfig {
   output: {
@@ -14,32 +14,22 @@ export interface SlideWeaveConfig {
     files: string[];
     postcssPlugins: string[];
   };
-  slide: {
-    width: number;
-    height: number;
-    gridSize: number;
-  };
 }
 
 const defaultConfig: SlideWeaveConfig = {
   output: {
-    directory: './output',
-    filename: '[name].pptx'
+    directory: "./output",
+    filename: "[name].pptx",
   },
   css: {
     files: [],
-    postcssPlugins: []
+    postcssPlugins: [],
   },
-  slide: {
-    width: 720,
-    height: 405,
-    gridSize: 4
-  }
 };
 
 export function loadConfig(configPath?: string): SlideWeaveConfig {
-  const explorer = cosmiconfigSync('slideweave');
-  
+  const explorer = cosmiconfigSync("slideweave");
+
   let result;
   if (configPath) {
     result = explorer.load(configPath);
@@ -50,22 +40,26 @@ export function loadConfig(configPath?: string): SlideWeaveConfig {
   if (result) {
     return {
       ...defaultConfig,
-      ...result.config
+      ...result.config,
     };
   }
 
   return defaultConfig;
 }
 
-export function resolveOutputPath(inputPath: string, outputOption?: string, config?: SlideWeaveConfig): string {
+export function resolveOutputPath(
+  inputPath: string,
+  outputOption?: string,
+  config?: SlideWeaveConfig,
+): string {
   if (outputOption) {
     return path.resolve(outputOption);
   }
 
   const cfg = config || defaultConfig;
   const inputName = path.basename(inputPath, path.extname(inputPath));
-  const filename = cfg.output.filename.replace('[name]', inputName);
-  
+  const filename = cfg.output.filename.replace("[name]", inputName);
+
   return path.resolve(cfg.output.directory, filename);
 }
 

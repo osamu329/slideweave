@@ -1,18 +1,22 @@
 /**
  * backgroundColor適用のTDDテスト
- * 
+ *
  * Red: 失敗するテストを先に書く
  */
 
 import { PPTXRenderer } from "../PPTXRenderer";
 import { TextElement, HeadingElement } from "../../types/elements";
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from "vitest";
 
 describe("PPTXRenderer backgroundColor support", () => {
   let renderer: PPTXRenderer;
 
   beforeEach(() => {
-    renderer = new PPTXRenderer();
+    renderer = new PPTXRenderer({
+      widthPx: 1280,
+      heightPx: 720,
+      dpi: 96
+    });
   });
 
   describe("text element background color", () => {
@@ -22,8 +26,8 @@ describe("PPTXRenderer backgroundColor support", () => {
         type: "text",
         content: "背景色付きテキスト",
         style: {
-          backgroundColor: "ff0000"
-        }
+          backgroundColor: "ff0000",
+        },
       };
 
       const layoutResult = {
@@ -31,30 +35,33 @@ describe("PPTXRenderer backgroundColor support", () => {
         top: 20,
         width: 100,
         height: 30,
-        element: textElement
+        element: textElement,
       };
 
       // When: PowerPointのaddTextメソッドをモック
       const mockAddText = vi.fn();
       const mockSlide = {
-        addText: mockAddText
+        addText: mockAddText,
       };
       (renderer as any).currentSlide = mockSlide;
-      
+
       // renderTextを直接呼び出し
       (renderer as any).renderText(layoutResult, textElement);
 
       // Then: fillオプションが正しく設定される
-      expect(mockAddText).toHaveBeenCalledWith("背景色付きテキスト", expect.objectContaining({
-        fill: { color: "ff0000" }
-      }));
+      expect(mockAddText).toHaveBeenCalledWith(
+        "背景色付きテキスト",
+        expect.objectContaining({
+          fill: { color: "ff0000" },
+        }),
+      );
     });
 
     it("should not set fill when backgroundColor is not specified", () => {
       // Given: backgroundColor未指定のtext要素
       const textElement: TextElement = {
         type: "text",
-        content: "通常テキスト"
+        content: "通常テキスト",
       };
 
       const layoutResult = {
@@ -62,23 +69,26 @@ describe("PPTXRenderer backgroundColor support", () => {
         top: 20,
         width: 100,
         height: 30,
-        element: textElement
+        element: textElement,
       };
 
       // When: PowerPointのaddTextメソッドをモック
       const mockAddText = vi.fn();
       const mockSlide = {
-        addText: mockAddText
+        addText: mockAddText,
       };
       (renderer as any).currentSlide = mockSlide;
-      
+
       // renderTextを直接呼び出し
       (renderer as any).renderText(layoutResult, textElement);
 
       // Then: fillオプションは設定されない
-      expect(mockAddText).toHaveBeenCalledWith("通常テキスト", expect.not.objectContaining({
-        fill: expect.anything()
-      }));
+      expect(mockAddText).toHaveBeenCalledWith(
+        "通常テキスト",
+        expect.not.objectContaining({
+          fill: expect.anything(),
+        }),
+      );
     });
   });
 
@@ -90,8 +100,8 @@ describe("PPTXRenderer backgroundColor support", () => {
         level: 2,
         content: "背景色付き見出し",
         style: {
-          backgroundColor: "0000ff"
-        }
+          backgroundColor: "0000ff",
+        },
       };
 
       const layoutResult = {
@@ -99,23 +109,26 @@ describe("PPTXRenderer backgroundColor support", () => {
         top: 20,
         width: 100,
         height: 30,
-        element: headingElement
+        element: headingElement,
       };
 
       // When: PowerPointのaddTextメソッドをモック
       const mockAddText = vi.fn();
       const mockSlide = {
-        addText: mockAddText
+        addText: mockAddText,
       };
       (renderer as any).currentSlide = mockSlide;
-      
+
       // renderHeadingを直接呼び出し
       (renderer as any).renderHeading(layoutResult, headingElement);
 
       // Then: fillオプションが正しく設定される
-      expect(mockAddText).toHaveBeenCalledWith("背景色付き見出し", expect.objectContaining({
-        fill: { color: "0000ff" }
-      }));
+      expect(mockAddText).toHaveBeenCalledWith(
+        "背景色付き見出し",
+        expect.objectContaining({
+          fill: { color: "0000ff" },
+        }),
+      );
     });
 
     it("should not set fill when backgroundColor is not specified for heading", () => {
@@ -123,7 +136,7 @@ describe("PPTXRenderer backgroundColor support", () => {
       const headingElement: HeadingElement = {
         type: "heading",
         level: 1,
-        content: "通常見出し"
+        content: "通常見出し",
       };
 
       const layoutResult = {
@@ -131,23 +144,26 @@ describe("PPTXRenderer backgroundColor support", () => {
         top: 20,
         width: 100,
         height: 30,
-        element: headingElement
+        element: headingElement,
       };
 
       // When: PowerPointのaddTextメソッドをモック
       const mockAddText = vi.fn();
       const mockSlide = {
-        addText: mockAddText
+        addText: mockAddText,
       };
       (renderer as any).currentSlide = mockSlide;
-      
+
       // renderHeadingを直接呼び出し
       (renderer as any).renderHeading(layoutResult, headingElement);
 
       // Then: fillオプションは設定されない
-      expect(mockAddText).toHaveBeenCalledWith("通常見出し", expect.not.objectContaining({
-        fill: expect.anything()
-      }));
+      expect(mockAddText).toHaveBeenCalledWith(
+        "通常見出し",
+        expect.not.objectContaining({
+          fill: expect.anything(),
+        }),
+      );
     });
   });
 
@@ -159,8 +175,8 @@ describe("PPTXRenderer backgroundColor support", () => {
         content: "padding+背景色テキスト",
         style: {
           padding: 2,
-          backgroundColor: "00ff00"
-        }
+          backgroundColor: "00ff00",
+        },
       };
 
       const layoutResult = {
@@ -168,24 +184,27 @@ describe("PPTXRenderer backgroundColor support", () => {
         top: 20,
         width: 100,
         height: 30,
-        element: textElement
+        element: textElement,
       };
 
       // When: PowerPointのaddTextメソッドをモック
       const mockAddText = vi.fn();
       const mockSlide = {
-        addText: mockAddText
+        addText: mockAddText,
       };
       (renderer as any).currentSlide = mockSlide;
-      
+
       // renderTextを直接呼び出し
       (renderer as any).renderText(layoutResult, textElement);
 
       // Then: paddingとbackgroundColor両方が適用される
-      expect(mockAddText).toHaveBeenCalledWith("padding+背景色テキスト", expect.objectContaining({
-        margin: 16, // padding: 2 * 8 = 16
-        fill: { color: "00ff00" }
-      }));
+      expect(mockAddText).toHaveBeenCalledWith(
+        "padding+背景色テキスト",
+        expect.objectContaining({
+          margin: 16, // padding: 2 * 8 = 16
+          fill: { color: "00ff00" },
+        }),
+      );
     });
   });
 });

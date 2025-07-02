@@ -1,6 +1,6 @@
 /**
  * margin/padding適用戦略のテスト
- * 
+ *
  * 戦略:
  * - margin: レイアウトレベルで処理（要素間隔）
  * - padding: PowerPointレベルで処理（テキストフレーム内マージン）
@@ -8,13 +8,17 @@
 
 import { PPTXRenderer } from "../PPTXRenderer";
 import { TextElement, HeadingElement } from "../../types/elements";
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from "vitest";
 
 describe("PPTXRenderer margin/padding strategy", () => {
   let renderer: PPTXRenderer;
 
   beforeEach(() => {
-    renderer = new PPTXRenderer();
+    renderer = new PPTXRenderer({
+      widthPx: 1280,
+      heightPx: 720,
+      dpi: 96
+    });
   });
 
   describe("text element rendering", () => {
@@ -25,8 +29,8 @@ describe("PPTXRenderer margin/padding strategy", () => {
         content: "Test text",
         style: {
           margin: 2,
-          padding: 3
-        }
+          padding: 3,
+        },
       };
 
       const layoutResult = {
@@ -34,24 +38,27 @@ describe("PPTXRenderer margin/padding strategy", () => {
         top: 20,
         width: 100,
         height: 30,
-        element: textElement
+        element: textElement,
       };
 
       // When: PowerPointのaddTextメソッドをモック
       const mockAddText = vi.fn();
       const mockSlide = {
-        addText: mockAddText
+        addText: mockAddText,
       };
       (renderer as any).currentSlide = mockSlide;
-      
+
       // renderTextを直接呼び出し
       (renderer as any).renderText(layoutResult, textElement);
 
       // Then: paddingのみがPowerPointのmarginオプションに適用される
-      expect(mockAddText).toHaveBeenCalledWith("Test text", expect.objectContaining({
-        margin: 24, // padding: 3 * 8 = 24
-        // marginプロパティは要素のmarginを使用しない
-      }));
+      expect(mockAddText).toHaveBeenCalledWith(
+        "Test text",
+        expect.objectContaining({
+          margin: 24, // padding: 3 * 8 = 24
+          // marginプロパティは要素のmarginを使用しない
+        }),
+      );
     });
 
     it("should apply 0 margin when no padding is specified", () => {
@@ -60,8 +67,8 @@ describe("PPTXRenderer margin/padding strategy", () => {
         type: "text",
         content: "Test text",
         style: {
-          margin: 2 // marginのみ指定
-        }
+          margin: 2, // marginのみ指定
+        },
       };
 
       const layoutResult = {
@@ -69,23 +76,26 @@ describe("PPTXRenderer margin/padding strategy", () => {
         top: 20,
         width: 100,
         height: 30,
-        element: textElement
+        element: textElement,
       };
 
       // When: PowerPointのaddTextメソッドをモック
       const mockAddText = vi.fn();
       const mockSlide = {
-        addText: mockAddText
+        addText: mockAddText,
       };
       (renderer as any).currentSlide = mockSlide;
-      
+
       // renderTextを直接呼び出し
       (renderer as any).renderText(layoutResult, textElement);
 
       // Then: PowerPointのmarginは0になる
-      expect(mockAddText).toHaveBeenCalledWith("Test text", expect.objectContaining({
-        margin: 0, // paddingが未指定なので0
-      }));
+      expect(mockAddText).toHaveBeenCalledWith(
+        "Test text",
+        expect.objectContaining({
+          margin: 0, // paddingが未指定なので0
+        }),
+      );
     });
   });
 
@@ -98,8 +108,8 @@ describe("PPTXRenderer margin/padding strategy", () => {
         content: "Test heading",
         style: {
           margin: 2,
-          padding: 4
-        }
+          padding: 4,
+        },
       };
 
       const layoutResult = {
@@ -107,29 +117,35 @@ describe("PPTXRenderer margin/padding strategy", () => {
         top: 20,
         width: 100,
         height: 30,
-        element: headingElement
+        element: headingElement,
       };
 
       // When: PowerPointのaddTextメソッドをモック
       const mockAddText = vi.fn();
       const mockSlide = {
-        addText: mockAddText
+        addText: mockAddText,
       };
       (renderer as any).currentSlide = mockSlide;
-      
+
       // renderHeadingを直接呼び出し
       (renderer as any).renderHeading(layoutResult, headingElement);
 
       // Then: paddingのみがPowerPointのmarginオプションに適用される
-      expect(mockAddText).toHaveBeenCalledWith("Test heading", expect.objectContaining({
-        margin: 32, // padding: 4 * 8 = 32
-        // marginプロパティは要素のmarginを使用しない
-      }));
-      
+      expect(mockAddText).toHaveBeenCalledWith(
+        "Test heading",
+        expect.objectContaining({
+          margin: 32, // padding: 4 * 8 = 32
+          // marginプロパティは要素のmarginを使用しない
+        }),
+      );
+
       // paddingプロパティは存在しないことを確認
-      expect(mockAddText).toHaveBeenCalledWith("Test heading", expect.not.objectContaining({
-        padding: expect.anything()
-      }));
+      expect(mockAddText).toHaveBeenCalledWith(
+        "Test heading",
+        expect.not.objectContaining({
+          padding: expect.anything(),
+        }),
+      );
     });
 
     it("should apply 0 margin when no padding is specified for heading", () => {
@@ -139,8 +155,8 @@ describe("PPTXRenderer margin/padding strategy", () => {
         level: 1,
         content: "Test heading",
         style: {
-          margin: 3 // marginのみ指定
-        }
+          margin: 3, // marginのみ指定
+        },
       };
 
       const layoutResult = {
@@ -148,23 +164,26 @@ describe("PPTXRenderer margin/padding strategy", () => {
         top: 20,
         width: 100,
         height: 30,
-        element: headingElement
+        element: headingElement,
       };
 
       // When: PowerPointのaddTextメソッドをモック
       const mockAddText = vi.fn();
       const mockSlide = {
-        addText: mockAddText
+        addText: mockAddText,
       };
       (renderer as any).currentSlide = mockSlide;
-      
+
       // renderHeadingを直接呼び出し
       (renderer as any).renderHeading(layoutResult, headingElement);
 
       // Then: PowerPointのmarginは0になる
-      expect(mockAddText).toHaveBeenCalledWith("Test heading", expect.objectContaining({
-        margin: 0, // paddingが未指定なので0
-      }));
+      expect(mockAddText).toHaveBeenCalledWith(
+        "Test heading",
+        expect.objectContaining({
+          margin: 0, // paddingが未指定なので0
+        }),
+      );
     });
   });
 
@@ -176,8 +195,8 @@ describe("PPTXRenderer margin/padding strategy", () => {
         content: "Test text",
         style: {
           margin: 10, // 大きなmargin値
-          padding: 1   // 小さなpadding値
-        }
+          padding: 1, // 小さなpadding値
+        },
       };
 
       const layoutResult = {
@@ -185,23 +204,26 @@ describe("PPTXRenderer margin/padding strategy", () => {
         top: 20,
         width: 100,
         height: 30,
-        element: textElement
+        element: textElement,
       };
 
       // When: PowerPointのaddTextメソッドをモック
       const mockAddText = vi.fn();
       const mockSlide = {
-        addText: mockAddText
+        addText: mockAddText,
       };
       (renderer as any).currentSlide = mockSlide;
-      
+
       // renderTextを直接呼び出し
       (renderer as any).renderText(layoutResult, textElement);
 
       // Then: margin値（10 * 8 = 80）ではなく、padding値（1 * 8 = 8）が適用される
-      expect(mockAddText).toHaveBeenCalledWith("Test text", expect.objectContaining({
-        margin: 8, // padding: 1 * 8 = 8（margin: 10は無視される）
-      }));
+      expect(mockAddText).toHaveBeenCalledWith(
+        "Test text",
+        expect.objectContaining({
+          margin: 8, // padding: 1 * 8 = 8（margin: 10は無視される）
+        }),
+      );
     });
   });
 });

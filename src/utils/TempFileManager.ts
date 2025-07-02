@@ -1,6 +1,6 @@
-import * as fs from 'fs';
-import * as path from 'path';
-import * as os from 'os';
+import * as fs from "fs";
+import * as path from "path";
+import * as os from "os";
 
 /**
  * 一時ファイルの管理とクリーンアップを行うクラス
@@ -29,12 +29,12 @@ export class TempFileManager {
   getTempDir(): string {
     if (!this.tempDir) {
       try {
-        this.tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'slideweave-'));
+        this.tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "slideweave-"));
         this.tempDirs.add(this.tempDir);
       } catch (error) {
-        console.warn('Failed to create temp directory, using fallback:', error);
+        console.warn("Failed to create temp directory, using fallback:", error);
         // フォールバック：examples/outputディレクトリ
-        this.tempDir = path.join(process.cwd(), 'examples', 'output');
+        this.tempDir = path.join(process.cwd(), "examples", "output");
         if (!fs.existsSync(this.tempDir)) {
           fs.mkdirSync(this.tempDir, { recursive: true });
         }
@@ -102,14 +102,17 @@ export class TempFileManager {
       if (!fs.existsSync(directory)) return;
 
       const files = fs.readdirSync(directory);
-      files.forEach(file => {
+      files.forEach((file) => {
         if (pattern.test(file)) {
           const fullPath = path.join(directory, file);
           this.cleanupFile(fullPath);
         }
       });
     } catch (error) {
-      console.warn(`Failed to cleanup files by pattern in ${directory}:`, error);
+      console.warn(
+        `Failed to cleanup files by pattern in ${directory}:`,
+        error,
+      );
     }
   }
 
@@ -124,30 +127,30 @@ export class TempFileManager {
     };
 
     // 通常終了
-    process.on('exit', cleanup);
-    
+    process.on("exit", cleanup);
+
     // Ctrl+C
-    process.on('SIGINT', () => {
+    process.on("SIGINT", () => {
       cleanup();
       process.exit(0);
     });
-    
+
     // kill command
-    process.on('SIGTERM', () => {
+    process.on("SIGTERM", () => {
       cleanup();
       process.exit(0);
     });
-    
+
     // 未処理例外
-    process.on('uncaughtException', (error) => {
-      console.error('Uncaught Exception:', error);
+    process.on("uncaughtException", (error) => {
+      console.error("Uncaught Exception:", error);
       cleanup();
       process.exit(1);
     });
-    
+
     // 未処理Promise rejection
-    process.on('unhandledRejection', (reason, promise) => {
-      console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+    process.on("unhandledRejection", (reason, promise) => {
+      console.error("Unhandled Rejection at:", promise, "reason:", reason);
       cleanup();
       process.exit(1);
     });

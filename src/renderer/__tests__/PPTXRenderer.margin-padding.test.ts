@@ -6,13 +6,17 @@
 import { PPTXRenderer } from "../PPTXRenderer";
 import { LayoutResult } from "../../layout/LayoutEngine";
 import { TextElement, HeadingElement } from "../../types/elements";
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from "vitest";
 
 describe("PPTXRenderer - margin/padding概念の正しい実装", () => {
   let renderer: PPTXRenderer;
 
   beforeEach(() => {
-    renderer = new PPTXRenderer();
+    renderer = new PPTXRenderer({
+      widthPx: 1280,
+      heightPx: 720,
+      dpi: 96
+    });
   });
 
   describe("marginの仕様", () => {
@@ -37,10 +41,10 @@ describe("PPTXRenderer - margin/padding概念の正しい実装", () => {
       // When: PowerPointのaddTextメソッドをモック
       const mockAddText = vi.fn();
       const mockSlide = {
-        addText: mockAddText
+        addText: mockAddText,
       };
       (renderer as any).currentSlide = mockSlide;
-      
+
       // renderTextを直接呼び出し
       (renderer as any).renderText(layoutResult, textElement);
 
@@ -48,8 +52,8 @@ describe("PPTXRenderer - margin/padding概念の正しい実装", () => {
       expect(mockAddText).toHaveBeenCalledWith(
         "テストテキスト",
         expect.objectContaining({
-          margin: 0 // marginは要素間隔なのでPowerPointには渡されない
-        })
+          margin: 0, // marginは要素間隔なのでPowerPointには渡されない
+        }),
       );
     });
 
@@ -75,10 +79,10 @@ describe("PPTXRenderer - margin/padding概念の正しい実装", () => {
       // When: PowerPointのaddTextメソッドをモック
       const mockAddText = vi.fn();
       const mockSlide = {
-        addText: mockAddText
+        addText: mockAddText,
       };
       (renderer as any).currentSlide = mockSlide;
-      
+
       // renderHeadingを直接呼び出し
       (renderer as any).renderHeading(layoutResult, headingElement);
 
@@ -86,8 +90,8 @@ describe("PPTXRenderer - margin/padding概念の正しい実装", () => {
       expect(mockAddText).toHaveBeenCalledWith(
         "テスト見出し",
         expect.objectContaining({
-          margin: 0 // marginは要素間隔なのでPowerPointには渡されない
-        })
+          margin: 0, // marginは要素間隔なのでPowerPointには渡されない
+        }),
       );
     });
   });
@@ -114,10 +118,10 @@ describe("PPTXRenderer - margin/padding概念の正しい実装", () => {
       // When: PowerPointのaddTextメソッドをモック
       const mockAddText = vi.fn();
       const mockSlide = {
-        addText: mockAddText
+        addText: mockAddText,
       };
       (renderer as any).currentSlide = mockSlide;
-      
+
       // renderTextを直接呼び出し
       (renderer as any).renderText(layoutResult, textElement);
 
@@ -125,8 +129,8 @@ describe("PPTXRenderer - margin/padding概念の正しい実装", () => {
       expect(mockAddText).toHaveBeenCalledWith(
         "パディングテスト",
         expect.objectContaining({
-          margin: 8 // padding: 1 → 1 * 8 = 8ピクセル
-        })
+          margin: 8, // padding: 1 → 1 * 8 = 8ピクセル
+        }),
       );
     });
 
@@ -152,10 +156,10 @@ describe("PPTXRenderer - margin/padding概念の正しい実装", () => {
       // When: PowerPointのaddTextメソッドをモック
       const mockAddText = vi.fn();
       const mockSlide = {
-        addText: mockAddText
+        addText: mockAddText,
       };
       (renderer as any).currentSlide = mockSlide;
-      
+
       // renderHeadingを直接呼び出し
       (renderer as any).renderHeading(layoutResult, headingElement);
 
@@ -163,8 +167,8 @@ describe("PPTXRenderer - margin/padding概念の正しい実装", () => {
       expect(mockAddText).toHaveBeenCalledWith(
         "パディング見出し",
         expect.objectContaining({
-          margin: 16 // padding: 2 → 2 * 8 = 16ピクセル
-        })
+          margin: 16, // padding: 2 → 2 * 8 = 16ピクセル
+        }),
       );
     });
 
@@ -187,10 +191,10 @@ describe("PPTXRenderer - margin/padding概念の正しい実装", () => {
       // When: PowerPointのaddTextメソッドをモック
       const mockAddText = vi.fn();
       const mockSlide = {
-        addText: mockAddText
+        addText: mockAddText,
       };
       (renderer as any).currentSlide = mockSlide;
-      
+
       // renderTextを直接呼び出し
       (renderer as any).renderText(layoutResult, textElement);
 
@@ -198,8 +202,8 @@ describe("PPTXRenderer - margin/padding概念の正しい実装", () => {
       expect(mockAddText).toHaveBeenCalledWith(
         "デフォルトパディング",
         expect.objectContaining({
-          margin: 0 // paddingが未設定なので0
-        })
+          margin: 0, // paddingが未設定なので0
+        }),
       );
     });
   });
@@ -211,7 +215,7 @@ describe("PPTXRenderer - margin/padding概念の正しい実装", () => {
         type: "text",
         content: "併用テスト",
         style: {
-          margin: 3,  // 要素間隔（PowerPointには反映されない）
+          margin: 3, // 要素間隔（PowerPointには反映されない）
           padding: 1, // テキスト内側マージン（PowerPointに反映される）
         },
       };
@@ -227,10 +231,10 @@ describe("PPTXRenderer - margin/padding概念の正しい実装", () => {
       // When: PowerPointのaddTextメソッドをモック
       const mockAddText = vi.fn();
       const mockSlide = {
-        addText: mockAddText
+        addText: mockAddText,
       };
       (renderer as any).currentSlide = mockSlide;
-      
+
       // renderTextを直接呼び出し
       (renderer as any).renderText(layoutResult, textElement);
 
@@ -238,8 +242,8 @@ describe("PPTXRenderer - margin/padding概念の正しい実装", () => {
       expect(mockAddText).toHaveBeenCalledWith(
         "併用テスト",
         expect.objectContaining({
-          margin: 8 // padding: 1 → 1 * 8 = 8ピクセル（marginは無視）
-        })
+          margin: 8, // padding: 1 → 1 * 8 = 8ピクセル（marginは無視）
+        }),
       );
     });
   });

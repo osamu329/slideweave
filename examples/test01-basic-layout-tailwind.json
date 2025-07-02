@@ -1,0 +1,30 @@
+{
+  "type": "deck",
+  "title": "Test1: 基本レイアウトテスト (Tailwind)",
+  "description": "Tailwindクラスを使った見出しと長文テキストの縦並びレイアウト検証",
+  "css": ".text-2xl { font-size: 24px; } .text-base { font-size: 16px; } .my-2 { margin-top: 8px; margin-bottom: 8px; } .p-4 { padding: 16px; } .w-full { width: 100%; }",
+  "slides": [
+    {
+      "type": "slide",
+      "children": [
+        {
+          "type": "heading",
+          "content": "レイアウトテスト用スライド",
+          "level": 2,
+          "class": "text-2xl my-2"
+        },
+        {
+          "type": "container",
+          "class": "my-2 w-full",
+          "children": [
+            {
+              "type": "text",
+              "content": "これは複数行にわたる長いテキストです。この文章は意図的に長くして、テキストの折り返し処理とレイアウトエンジンの動作を確認するために作成されています。日本語の文字幅計算や改行処理が正しく動作するかをテストします。",
+              "class": "text-base"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

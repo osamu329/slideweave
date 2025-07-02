@@ -1,0 +1,46 @@
+{
+  "type": "deck",
+  "title": "Test1: 基本レイアウトテスト（style版）",
+  "description": "見出しと長文テキストの縦並びレイアウト検証用テストケース",
+  "format": "wide",
+  "slides": [
+    {
+      "type": "slide",
+      "style": {
+        "padding": "16px"
+      },
+      "children": [
+        {
+          "type": "heading",
+          "content": "レイアウトテスト用スライド",
+          "level": 2,
+          "style": {
+            "fontSize": "24px",
+            "fontWeight": "bold",
+            "marginTop": "8px",
+            "marginBottom": "8px"
+          }
+        },
+        {
+          "type": "container",
+          "style": {
+            "padding": "16px",
+            "width": "100%",
+            "marginTop": "8px",
+            "marginBottom": "8px"
+          },
+          "children": [
+            {
+              "type": "text",
+              "content": "これは複数行にわたる長いテキストです。この文章は意図的に長くして、テキストの折り返し処理とレイアウトエンジンの動作を確認するために作成されています。日本語の文字幅計算や改行処理が正しく動作するかをテストします。",
+              "style": {
+                "fontSize": "16px",
+                "color": "#374151"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

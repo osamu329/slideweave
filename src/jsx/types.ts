@@ -21,15 +21,15 @@ import type {
   FrameStyle,
   ShapeStyle,
   ShapeType,
-  TextShadow
-} from '../types/elements';
+  TextShadow,
+} from "../types/elements";
 
 // 共通のJSXプロパティ
 interface BaseJSXProps {
   children?: React.ReactNode;
   class?: string;
-  className?: string;  // classNameもサポート（classに変換される）
-  style?: BaseStyle | string;  // オブジェクトまたはCSS文字列
+  className?: string; // classNameもサポート（classに変換される）
+  style?: BaseStyle | string; // オブジェクトまたはCSS文字列
 }
 
 // 各要素のJSXプロパティ型定義
@@ -48,7 +48,7 @@ export interface FrameProps extends BaseJSXProps {
 }
 
 export interface TextProps extends BaseJSXProps {
-  content?: string;  // contentがない場合はchildren使用
+  content?: string; // contentがない場合はchildren使用
   fontSize?: number | string;
   fontFamily?: string;
   color?: string;
@@ -59,7 +59,7 @@ export interface TextProps extends BaseJSXProps {
 }
 
 export interface HeadingProps extends BaseJSXProps {
-  content?: string;  // contentがない場合はchildren使用
+  content?: string; // contentがない場合はchildren使用
   level?: 1 | 2 | 3 | 4 | 5 | 6;
   fontSize?: number | string;
   fontFamily?: string;
@@ -81,7 +81,7 @@ export interface ListProps extends BaseJSXProps {
 }
 
 export interface ListItemProps extends BaseJSXProps {
-  content?: string;  // contentがない場合はchildren使用
+  content?: string; // contentがない場合はchildren使用
   indentLevel?: number;
   style?: BaseStyle | string;
 }
@@ -97,7 +97,7 @@ export interface TableRowProps extends BaseJSXProps {
 }
 
 export interface TableCellProps extends BaseJSXProps {
-  content?: string;  // contentがない場合はchildren使用
+  content?: string; // contentがない場合はchildren使用
   colSpan?: number;
   rowSpan?: number;
   style?: BaseStyle | string;
@@ -112,7 +112,7 @@ export interface ImageProps extends BaseJSXProps {
 }
 
 export interface SvgProps extends BaseJSXProps {
-  content?: string;  // contentがない場合はchildren使用
+  content?: string; // contentがない場合はchildren使用
   width?: number;
   height?: number;
   style?: BaseStyle | string;
@@ -146,13 +146,13 @@ declare global {
 // React.ReactNode の簡易定義（React非依存）
 declare global {
   namespace React {
-    type ReactNode = 
-      | string 
-      | number 
-      | boolean 
-      | null 
-      | undefined 
-      | ReactNode[] 
+    type ReactNode =
+      | string
+      | number
+      | boolean
+      | null
+      | undefined
+      | ReactNode[]
       | { [key: string]: any };
   }
 }

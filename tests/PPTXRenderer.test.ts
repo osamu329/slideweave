@@ -1,12 +1,17 @@
 import { PPTXRenderer } from '../src/renderer/PPTXRenderer';
 import { renderLayout } from '../src/layout/LayoutEngine';
 import { TextElement, ContainerElement } from '../src/types/elements';
+import { SLIDE_FORMATS } from '../src/utils/SlideFormats';
 
 describe('PPTXRenderer', () => {
   let renderer: PPTXRenderer;
 
   beforeEach(() => {
-    renderer = new PPTXRenderer();
+    renderer = new PPTXRenderer({
+      widthPx: SLIDE_FORMATS.wide.widthPx,
+      heightPx: SLIDE_FORMATS.wide.heightPx,
+      dpi: SLIDE_FORMATS.wide.dpi
+    });
   });
 
   describe('基本レンダリング', () => {

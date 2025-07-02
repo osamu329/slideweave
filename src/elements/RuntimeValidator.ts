@@ -26,7 +26,7 @@ export class RuntimeValidator {
    */
   validate(data: DeckElement): RuntimeValidationResult {
     const errors: RuntimeValidationError[] = [];
-    
+
     // 各スライドをチェック
     data.slides.forEach((slide, slideIndex) => {
       this.validateSlideResources(slide, slideIndex, errors);
@@ -34,7 +34,7 @@ export class RuntimeValidator {
 
     return {
       isValid: errors.length === 0,
-      errors
+      errors,
     };
   }
 
@@ -44,17 +44,29 @@ export class RuntimeValidator {
    * @param slideIndex スライドインデックス
    * @param errors エラー配列（参照渡し）
    */
-  private validateSlideResources(slide: any, slideIndex: number, errors: RuntimeValidationError[]): void {
+  private validateSlideResources(
+    slide: any,
+    slideIndex: number,
+    errors: RuntimeValidationError[],
+  ): void {
     const slidePath = `/slides/${slideIndex}`;
-    
+
     // スライド背景画像のチェック
     if (slide.background?.image) {
-      this.validateFileExists(slide.background.image, `${slidePath}/background/image`, errors);
+      this.validateFileExists(
+        slide.background.image,
+        `${slidePath}/background/image`,
+        errors,
+      );
     }
 
     // 子要素のリソースチェック
     if (slide.children) {
-      this.validateElementResources(slide.children, `${slidePath}/children`, errors);
+      this.validateElementResources(
+        slide.children,
+        `${slidePath}/children`,
+        errors,
+      );
     }
   }
 
@@ -64,10 +76,14 @@ export class RuntimeValidator {
    * @param basePath ベースパス
    * @param errors エラー配列（参照渡し）
    */
-  private validateElementResources(elements: any[], basePath: string, errors: RuntimeValidationError[]): void {
+  private validateElementResources(
+    elements: any[],
+    basePath: string,
+    errors: RuntimeValidationError[],
+  ): void {
     elements.forEach((element, index) => {
       const elementPath = `${basePath}/${index}`;
-      
+
       // image要素のsrcチェック
       if (element.type === "image" && element.src) {
         this.validateFileExists(element.src, `${elementPath}/src`, errors);
@@ -75,12 +91,20 @@ export class RuntimeValidator {
 
       // 背景画像のチェック
       if (element.style?.backgroundImage) {
-        this.validateFileExists(element.style.backgroundImage, `${elementPath}/style/backgroundImage`, errors);
+        this.validateFileExists(
+          element.style.backgroundImage,
+          `${elementPath}/style/backgroundImage`,
+          errors,
+        );
       }
 
       // 再帰的チェック
       if (element.children) {
-        this.validateElementResources(element.children, `${elementPath}/children`, errors);
+        this.validateElementResources(
+          element.children,
+          `${elementPath}/children`,
+          errors,
+        );
       }
     });
   }
@@ -91,15 +115,21 @@ export class RuntimeValidator {
    * @param jsonPath JSONパス
    * @param errors エラー配列（参照渡し）
    */
-  private validateFileExists(filePath: string, jsonPath: string, errors: RuntimeValidationError[]): void {
+  private validateFileExists(
+    filePath: string,
+    jsonPath: string,
+    errors: RuntimeValidationError[],
+  ): void {
     // 相対パスの場合は絶対パスに変換
-    const absolutePath = path.isAbsolute(filePath) ? filePath : path.resolve(filePath);
-    
+    const absolutePath = path.isAbsolute(filePath)
+      ? filePath
+      : path.resolve(filePath);
+
     if (!fs.existsSync(absolutePath)) {
       errors.push({
         path: jsonPath,
         message: `ファイルが見つかりません: ${filePath}`,
-        value: filePath
+        value: filePath,
       });
     }
   }
@@ -116,9 +146,9 @@ export class RuntimeValidator {
 
     const errorLines = [
       "❌ 実行時バリデーションエラー:",
-      ...result.errors.map((error, index) => 
-        `  ${index + 1}. ${error.path}: ${error.message}`
-      )
+      ...result.errors.map(
+        (error, index) => `  ${index + 1}. ${error.path}: ${error.message}`,
+      ),
     ];
 
     return errorLines.join("\n");

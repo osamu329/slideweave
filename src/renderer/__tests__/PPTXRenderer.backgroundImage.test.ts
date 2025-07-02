@@ -1,13 +1,13 @@
-import { PPTXRenderer } from '../PPTXRenderer';
-import { SlideElement } from '../../types/elements';
-import { LayoutResult } from '../../layout/ILayoutEngine';
-import PptxGenJS from 'pptxgenjs';
-import { describe, it, expect, beforeEach, vi, test } from 'vitest';
+import { PPTXRenderer } from "../PPTXRenderer";
+import { SlideElement } from "../../types/elements";
+import { LayoutResult } from "../../layout/ILayoutEngine";
+import PptxGenJS from "pptxgenjs";
+import { describe, it, expect, beforeEach, vi, test } from "vitest";
 
 // PPTXGenJSのモック
-vi.mock('pptxgenjs');
+vi.mock("pptxgenjs");
 
-describe('PPTXRenderer - Background Image', () => {
+describe("PPTXRenderer - Background Image", () => {
   let renderer: PPTXRenderer;
   let mockPptx: any;
   let mockSlide: any;
@@ -19,24 +19,28 @@ describe('PPTXRenderer - Background Image', () => {
       addText: vi.fn(),
       addShape: vi.fn(),
     };
-    
+
     mockPptx = {
       addSlide: vi.fn().mockReturnValue(mockSlide),
       writeFile: vi.fn().mockResolvedValue(undefined),
       defineLayout: vi.fn(),
-      layout: 'SLIDEWEAVE_LAYOUT',
+      layout: "SLIDEWEAVE_LAYOUT",
     };
 
     (PptxGenJS as any).mockImplementation(() => mockPptx);
-    
-    renderer = new PPTXRenderer();
+
+    renderer = new PPTXRenderer({
+      widthPx: 1280,
+      heightPx: 720,
+      dpi: 96
+    });
   });
 
-  test('should add background image to slide', () => {
+  test("should add background image to slide", () => {
     const slideElement: SlideElement = {
-      type: 'slide',
+      type: "slide",
       style: {
-        backgroundImage: './tmp/slide1.png',
+        backgroundImage: "./tmp/slide1.png",
         padding: 16,
       },
       children: [],
@@ -55,28 +59,28 @@ describe('PPTXRenderer - Background Image', () => {
 
     // 背景画像が追加されることを確認
     expect(mockSlide.addImage).toHaveBeenCalledWith({
-      path: './tmp/slide1.png',
+      path: "./tmp/slide1.png",
       x: 0,
       y: 0,
-      w: '100%',
-      h: '100%',
-      sizing: { type: 'cover', w: 13.333333333333332, h: 7.5 }, // 960x540ピクセル = 13.33x7.5インチ (72DPI)
+      w: "100%",
+      h: "100%",
+      sizing: { type: "cover", w: 13.333333333333332, h: 7.5 }, // 960x540ピクセル = 13.33x7.5インチ (72DPI)
     });
   });
 
-  test('should handle relative and absolute paths', () => {
+  test("should handle relative and absolute paths", () => {
     const testCases = [
-      { path: './images/bg.png', expected: './images/bg.png' },
-      { path: '../assets/bg.jpg', expected: '../assets/bg.jpg' },
-      { path: '/absolute/path/bg.png', expected: '/absolute/path/bg.png' },
-      { path: 'C:\\Windows\\bg.png', expected: 'C:\\Windows\\bg.png' },
+      { path: "./images/bg.png", expected: "./images/bg.png" },
+      { path: "../assets/bg.jpg", expected: "../assets/bg.jpg" },
+      { path: "/absolute/path/bg.png", expected: "/absolute/path/bg.png" },
+      { path: "C:\\Windows\\bg.png", expected: "C:\\Windows\\bg.png" },
     ];
 
     testCases.forEach(({ path, expected }) => {
       mockSlide.addImage.mockClear();
-      
+
       const slideElement: SlideElement = {
-        type: 'slide',
+        type: "slide",
         style: {
           backgroundImage: path,
         },
@@ -97,42 +101,45 @@ describe('PPTXRenderer - Background Image', () => {
       expect(mockSlide.addImage).toHaveBeenCalledWith(
         expect.objectContaining({
           path: expected,
-        })
+        }),
       );
     });
   });
 
-  test('should support backgroundSize options', () => {
-    const sizeOptions: Array<{ size?: 'cover' | 'contain' | 'fit' | 'none', expected: any }> = [
+  test("should support backgroundSize options", () => {
+    const sizeOptions: Array<{
+      size?: "cover" | "contain" | "fit" | "none";
+      expected: any;
+    }> = [
       {
-        size: 'cover',
-        expected: { type: 'cover', w: 13.333333333333332, h: 7.5 },
+        size: "cover",
+        expected: { type: "cover", w: 13.333333333333332, h: 7.5 },
       },
       {
-        size: 'contain',
-        expected: { type: 'contain', w: 13.333333333333332, h: 7.5 },
+        size: "contain",
+        expected: { type: "contain", w: 13.333333333333332, h: 7.5 },
       },
       {
-        size: 'fit',
-        expected: { type: 'crop', w: 13.333333333333332, h: 7.5 },
+        size: "fit",
+        expected: { type: "crop", w: 13.333333333333332, h: 7.5 },
       },
       {
-        size: 'none',
+        size: "none",
         expected: undefined, // オリジナルサイズ
       },
       {
         size: undefined,
-        expected: { type: 'cover', w: 13.333333333333332, h: 7.5 }, // デフォルトはcover
+        expected: { type: "cover", w: 13.333333333333332, h: 7.5 }, // デフォルトはcover
       },
     ];
 
     sizeOptions.forEach(({ size, expected }) => {
       mockSlide.addImage.mockClear();
-      
+
       const slideElement: SlideElement = {
-        type: 'slide',
+        type: "slide",
         style: {
-          backgroundImage: './bg.png',
+          backgroundImage: "./bg.png",
           backgroundSize: size,
         },
         children: [],
@@ -153,21 +160,21 @@ describe('PPTXRenderer - Background Image', () => {
         expect(mockSlide.addImage).toHaveBeenCalledWith(
           expect.objectContaining({
             sizing: expected,
-          })
+          }),
         );
       } else {
         expect(mockSlide.addImage).toHaveBeenCalledWith(
           expect.not.objectContaining({
             sizing: expect.anything(),
-          })
+          }),
         );
       }
     });
   });
 
-  test('should not add image if backgroundImage is not specified', () => {
+  test("should not add image if backgroundImage is not specified", () => {
     const slideElement: SlideElement = {
-      type: 'slide',
+      type: "slide",
       style: {
         padding: 16,
       },
@@ -189,16 +196,16 @@ describe('PPTXRenderer - Background Image', () => {
     expect(mockSlide.addImage).not.toHaveBeenCalled();
   });
 
-  test('should add background image before other elements', () => {
+  test("should add background image before other elements", () => {
     const slideElement: SlideElement = {
-      type: 'slide',
+      type: "slide",
       style: {
-        backgroundImage: './bg.png',
+        backgroundImage: "./bg.png",
       },
       children: [
         {
-          type: 'text',
-          content: 'Hello World',
+          type: "text",
+          content: "Hello World",
         },
       ],
     };
@@ -215,7 +222,7 @@ describe('PPTXRenderer - Background Image', () => {
           top: 10,
           width: 100,
           height: 20,
-          element: { type: 'text', content: 'Hello World' },
+          element: { type: "text", content: "Hello World" },
           children: [],
         },
       ],
@@ -226,7 +233,7 @@ describe('PPTXRenderer - Background Image', () => {
     // 呼び出し順序を確認（背景画像が先）
     const calls = mockSlide.addImage.mock.invocationCallOrder[0];
     const textCalls = mockSlide.addText.mock.invocationCallOrder[0];
-    
+
     expect(calls).toBeLessThan(textCalls);
   });
 });

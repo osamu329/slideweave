@@ -7,12 +7,15 @@ import fs from "fs";
 import path from "path";
 import { Element, DeckElement } from "../types/elements";
 import { CSSStyleParser } from "../css-processor/CSSStyleParser";
-import { CSSStylesheetParser, StylesheetRules } from "../css-processor/CSSStylesheetParser";
+import {
+  CSSStylesheetParser,
+  StylesheetRules,
+} from "../css-processor/CSSStylesheetParser";
 
 export interface SlideData {
   title: string;
   description?: string;
-  css?: string;  // CSSスタイルシート（CSSライクスタイルシート機能用）
+  css?: string; // CSSスタイルシート（CSSライクスタイルシート機能用）
   slides: Element[];
 }
 
@@ -37,14 +40,14 @@ export class SlideDataLoader {
 
       // CSS文字列をパース
       const stylesheetRules = this.processStylesheet(data.css);
-      
+
       // 各スライドの子要素を処理
       data.slides.forEach((slide: any) => {
         if (slide.children) {
           this.processStyleStrings(slide.children, stylesheetRules);
         }
       });
-      
+
       return data as DeckElement;
     } catch (error) {
       throw new Error(
@@ -59,7 +62,10 @@ export class SlideDataLoader {
    * @param cssFiles 外部CSSファイルのパス配列
    * @returns DeckElement
    */
-  static loadFromFileWithExternalCSS(filePath: string, cssFiles: string[]): DeckElement {
+  static loadFromFileWithExternalCSS(
+    filePath: string,
+    cssFiles: string[],
+  ): DeckElement {
     try {
       const absolutePath = path.resolve(filePath);
       const jsonContent = fs.readFileSync(absolutePath, "utf-8");
@@ -73,12 +79,12 @@ export class SlideDataLoader {
       }
 
       // 外部CSSファイルを読み込んで結合
-      let combinedCSS = data.css || '';
-      
+      let combinedCSS = data.css || "";
+
       for (const cssFile of cssFiles) {
         if (fs.existsSync(cssFile)) {
-          const cssContent = fs.readFileSync(cssFile, 'utf-8');
-          combinedCSS += '\n' + cssContent;
+          const cssContent = fs.readFileSync(cssFile, "utf-8");
+          combinedCSS += "\n" + cssContent;
         } else {
           console.warn(`Warning: CSS file not found: ${cssFile}`);
         }
@@ -86,14 +92,14 @@ export class SlideDataLoader {
 
       // 結合されたCSS文字列をパース
       const stylesheetRules = this.processStylesheet(combinedCSS);
-      
+
       // 各スライドの子要素を処理
       data.slides.forEach((slide: any) => {
         if (slide.children) {
           this.processStyleStrings(slide.children, stylesheetRules);
         }
       });
-      
+
       return data as DeckElement;
     } catch (error) {
       throw new Error(
@@ -117,14 +123,14 @@ export class SlideDataLoader {
 
     // CSS文字列をパース
     const stylesheetRules = this.processStylesheet(jsonData.css);
-    
+
     // 各スライドの子要素を処理
     jsonData.slides.forEach((slide: any) => {
       if (slide.children) {
         this.processStyleStrings(slide.children, stylesheetRules);
       }
     });
-    
+
     return jsonData as DeckElement;
   }
 
@@ -151,13 +157,13 @@ export class SlideDataLoader {
    * @returns 解析されたスタイルルール
    */
   private static processStylesheet(css?: string): StylesheetRules {
-    // CSSが空でもTailwindクラスを含むため、常にparseを実行
-    const result = CSSStylesheetParser.parse(css || '');
-    
+    // CSSが空でもデフォルトクラスを含むため、常にparseを実行
+    const result = CSSStylesheetParser.parse(css || "");
+
     // 警告をコンソールに出力
     if (result.warnings.length > 0) {
-      console.warn('CSS Stylesheet Warnings:');
-      result.warnings.forEach(warning => console.warn(warning));
+      console.warn("CSS Stylesheet Warnings:");
+      result.warnings.forEach((warning) => console.warn(warning));
     }
 
     return result.styles;
@@ -168,12 +174,15 @@ export class SlideDataLoader {
    * @param elements 要素配列
    * @param stylesheetRules CSSスタイルシートルール
    */
-  private static processStyleStrings(elements: any[], stylesheetRules: StylesheetRules): void {
+  private static processStyleStrings(
+    elements: any[],
+    stylesheetRules: StylesheetRules,
+  ): void {
     for (const element of elements) {
       // 既存のインラインスタイルを保存（優先度を保つため）
       let inlineStyle = {};
       if (element.style) {
-        if (typeof element.style === 'string') {
+        if (typeof element.style === "string") {
           inlineStyle = CSSStyleParser.parse(element.style);
         } else {
           inlineStyle = { ...element.style };
@@ -183,11 +192,13 @@ export class SlideDataLoader {
       // CSSクラス名が指定されている場合、対応するスタイルを適用
       if (element.class) {
         // スペース区切りで複数クラスをサポート
-        const classNames = element.class.split(/\s+/).filter((name: string) => name.length > 0);
-        
+        const classNames = element.class
+          .split(/\s+/)
+          .filter((name: string) => name.length > 0);
+
         // 初期スタイルオブジェクトを作成
         element.style = {};
-        
+
         // 複数クラスのスタイルを順番に適用（後のクラスが優先）
         for (const className of classNames) {
           if (stylesheetRules[className]) {
@@ -195,19 +206,19 @@ export class SlideDataLoader {
             element.style = { ...element.style, ...classStyle };
           }
         }
-        
+
         // インラインスタイルを最後に適用（最高優先度）
         element.style = { ...element.style, ...inlineStyle };
       }
-      
+
       // style プロパティが文字列の場合、パースしてオブジェクトに変換
-      if (typeof element.style === 'string') {
+      if (typeof element.style === "string") {
         element.style = CSSStyleParser.parse(element.style);
       }
-      
+
       // 従来の直接プロパティをstyleに移動
       this.migrateDirectPropertiesToStyle(element);
-      
+
       // 子要素があれば再帰的に処理
       if (Array.isArray(element.children)) {
         this.processStyleStrings(element.children, stylesheetRules);
@@ -221,36 +232,36 @@ export class SlideDataLoader {
    */
   private static migrateDirectPropertiesToStyle(element: any): void {
     // テキスト関連のプロパティをstyleに移動
-    const migrateProps = ['fontSize', 'fontFamily', 'color'];
-    
+    const migrateProps = ["fontSize", "fontFamily", "color"];
+
     for (const prop of migrateProps) {
       if (Object.prototype.hasOwnProperty.call(element, prop)) {
         // styleオブジェクトがなければ作成
         if (!element.style) {
           element.style = {};
         }
-        
+
         // プロパティを移動
         element.style[prop] = element[prop];
         delete element[prop];
       }
     }
-    
+
     // bold → fontWeight 変換
-    if (Object.prototype.hasOwnProperty.call(element, 'bold')) {
+    if (Object.prototype.hasOwnProperty.call(element, "bold")) {
       if (!element.style) {
         element.style = {};
       }
-      element.style.fontWeight = element.bold ? 'bold' : 'normal';
+      element.style.fontWeight = element.bold ? "bold" : "normal";
       delete element.bold;
     }
-    
+
     // italic → fontStyle 変換
-    if (Object.prototype.hasOwnProperty.call(element, 'italic')) {
+    if (Object.prototype.hasOwnProperty.call(element, "italic")) {
       if (!element.style) {
         element.style = {};
       }
-      element.style.fontStyle = element.italic ? 'italic' : 'normal';
+      element.style.fontStyle = element.italic ? "italic" : "normal";
       delete element.italic;
     }
   }
