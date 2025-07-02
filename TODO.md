@@ -85,6 +85,7 @@ slideweave compile jsx-basic.tsx | slideweave build --stdin
 ## 完了済み
 
 ### 最近完了したタスク
+- **OSN-168** DPI設定一貫性確保とformat別対応実装 ✅ (2025-07-02) - wide=96DPI、standard=72DPI、DPIConverter実装、measure関数修正
 - **OSN-161** React JSXライクなコンポーネント記述機能 ✅ (2025-06-30) - JSX Factory関数とTypeScript型定義実装
 - **OSN-164** CLI機能実装 ✅ (2025-06-29) - JSONからPPTX生成のコマンドラインツール
 - **OSN-160** テキストシャドウ機能 ✅ - フレーム内テキストの可読性向上
