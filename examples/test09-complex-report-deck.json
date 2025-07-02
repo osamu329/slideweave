@@ -1,0 +1,1204 @@
+{
+  "type": "deck",
+  "title": "広告運用レポート",
+  "description": "ファッションECサイト「StyleHub」2025年5月実績レポート（改良版）",
+  "format": "wide",
+  "slides": [
+    {
+      "type": "slide",
+      "style": {
+        "width": "100%",
+        "height": "100%",
+        "padding": "16px",
+        "flexDirection": "column",
+        "backgroundColor": "#4F46E5",
+        "justifyContent": "center",
+        "alignItems": "center"
+      },
+      "children": [
+        {
+          "type": "heading",
+          "content": "広告運用レポート",
+          "level": 1,
+          "style": {
+            "fontSize": "27px",
+            "marginBottom": "12px",
+            "textAlign": "center",
+            "color": "#FFFFFF",
+            "fontWeight": "bold"
+          }
+        },
+        {
+          "type": "heading",
+          "content": "ファッションECサイト「StyleHub」",
+          "level": 2,
+          "style": {
+            "fontSize": "24px",
+            "marginBottom": "8px",
+            "textAlign": "center",
+            "color": "#FFFFFF"
+          }
+        },
+        {
+          "type": "text",
+          "content": "2025年5月実績",
+          "style": {
+            "fontSize": "15px",
+            "textAlign": "center",
+            "color": "#E5E7EB"
+          }
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "style": {
+        "width": "100%",
+        "height": "100%",
+        "padding": "16px",
+        "flexDirection": "column",
+        "background": {
+          "type": "linearGradient",
+          "direction": "to right",
+          "stops": [
+            {
+              "color": "#10B981",
+              "offset": 0
+            },
+            {
+              "color": "#0D9488",
+              "offset": 1
+            }
+          ]
+        }
+      },
+      "children": [
+        {
+          "type": "heading",
+          "content": "📊 月次サマリー",
+          "level": 2,
+          "style": {
+            "fontSize": "27px",
+            "marginBottom": "16px",
+            "gap": "4px",
+            "width": "100%",
+            "color": "#FFFFFF",
+            "fontWeight": "bold"
+          }
+        },
+        {
+          "type": "container",
+          "style": {
+            "flexDirection": "row",
+            "width": "100%",
+            "marginBottom": "12px",
+            "gap": "8px"
+          },
+          "children": [
+            {
+              "type": "frame",
+              "style": {
+                "flex": 1,
+                "backgroundColor": "rgba(255,255,255,0.2)",
+                "padding": "16px",
+                "borderRadius": "4px",
+                "gap": "8px"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "content": "売上",
+                  "style": {
+                    "fontSize": "12px",
+                    "color": "#FFFFFF",
+                    "fontWeight": "bold",
+                    "marginBottom": "8px"
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "¥12,500,000",
+                  "style": {
+                    "fontSize": "20px",
+                    "color": "#FFFFFF",
+                    "fontWeight": "bold",
+                    "marginBottom": "4px"
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "+15.2%",
+                  "style": {
+                    "fontSize": "10px",
+                    "color": "#86EFAC"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "style": {
+                "flex": 1,
+                "backgroundColor": "rgba(255,255,255,0.2)",
+                "padding": "16px",
+                "borderRadius": "4px",
+                "gap": "8px"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "content": "広告費",
+                  "style": {
+                    "fontSize": "12px",
+                    "color": "#FFFFFF",
+                    "fontWeight": "bold",
+                    "marginBottom": "8px"
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "¥2,800,000",
+                  "style": {
+                    "fontSize": "20px",
+                    "color": "#FFFFFF",
+                    "fontWeight": "bold",
+                    "marginBottom": "4px"
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "+8.3%",
+                  "style": {
+                    "fontSize": "10px",
+                    "color": "#FCA5A5"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "container",
+          "style": {
+            "flexDirection": "row",
+            "width": "100%",
+            "marginBottom": "12px",
+            "gap": "8px"
+          },
+          "children": [
+            {
+              "type": "frame",
+              "style": {
+                "flex": 1,
+                "backgroundColor": "rgba(255,255,255,0.2)",
+                "padding": "16px",
+                "borderRadius": "4px",
+                "gap": "8px"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "content": "ROAS",
+                  "style": {
+                    "fontSize": "12px",
+                    "color": "#FFFFFF",
+                    "fontWeight": "bold",
+                    "marginBottom": "8px"
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "4.46",
+                  "style": {
+                    "fontSize": "20px",
+                    "color": "#FFFFFF",
+                    "fontWeight": "bold",
+                    "marginBottom": "4px"
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "+0.32pt",
+                  "style": {
+                    "fontSize": "10px",
+                    "color": "#86EFAC"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "style": {
+                "flex": 1,
+                "backgroundColor": "rgba(255,255,255,0.2)",
+                "padding": "16px",
+                "borderRadius": "4px",
+                "gap": "8px"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "content": "CPA",
+                  "style": {
+                    "fontSize": "12px",
+                    "color": "#FFFFFF",
+                    "fontWeight": "bold",
+                    "marginBottom": "8px"
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "¥3,200",
+                  "style": {
+                    "fontSize": "20px",
+                    "color": "#FFFFFF",
+                    "fontWeight": "bold",
+                    "marginBottom": "4px"
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "-12.5%",
+                  "style": {
+                    "fontSize": "10px",
+                    "color": "#86EFAC"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "style": {
+            "backgroundColor": "rgba(255,255,255,0.2)",
+            "width": "100%",
+            "padding": "16px",
+            "borderRadius": "4px"
+          },
+          "children": [
+            {
+              "type": "heading",
+              "content": "ハイライト",
+              "level": 3,
+              "style": {
+                "fontSize": "15px",
+                "color": "#FFFFFF",
+                "fontWeight": "bold",
+                "marginBottom": "8px"
+              }
+            },
+            {
+              "type": "text",
+              "content": "✅ 母の日キャンペーンが大成功",
+              "style": {
+                "fontSize": "9px",
+                "color": "#FFFFFF",
+                "marginBottom": "4px"
+              }
+            },
+            {
+              "type": "text",
+              "content": "✅ リターゲティング施策でROAS改善",
+              "style": {
+                "fontSize": "9px",
+                "color": "#FFFFFF",
+                "marginBottom": "4px"
+              }
+            },
+            {
+              "type": "text",
+              "content": "✅ 新規顧客獲得数が過去最高を記録",
+              "style": {
+                "fontSize": "9px",
+                "color": "#FFFFFF"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "style": {
+        "width": "100%",
+        "height": "100%",
+        "padding": "16px",
+        "flexDirection": "column",
+        "background": {
+          "type": "linearGradient",
+          "direction": "to right",
+          "stops": [
+            {
+              "color": "#F59E0B",
+              "offset": 0
+            },
+            {
+              "color": "#DC2626",
+              "offset": 1
+            }
+          ]
+        }
+      },
+      "children": [
+        {
+          "type": "heading",
+          "content": "📈 パフォーマンス推移",
+          "level": 2,
+          "style": {
+            "fontSize": "27px",
+            "marginBottom": "20px",
+            "gap": "4px",
+            "width": "100%",
+            "color": "#FFFFFF",
+            "fontWeight": "bold"
+          }
+        },
+        {
+          "type": "container",
+          "style": {
+            "flexDirection": "row",
+            "width": "100%",
+            "gap": "4px"
+          },
+          "children": [
+            {
+              "type": "frame",
+              "style": {
+                "flex": 1,
+                "backgroundColor": "rgba(255,255,255,0.2)",
+                "padding": "12px",
+                "borderRadius": "4px"
+              },
+              "children": [
+                {
+                  "type": "heading",
+                  "content": "売上・ROAS推移",
+                  "level": 3,
+                  "style": {
+                    "fontSize": "15px",
+                    "color": "#FFFFFF",
+                    "fontWeight": "bold",
+                    "marginBottom": "8px"
+                  }
+                },
+                {
+                  "type": "container",
+                  "style": {
+                    "flexDirection": "row",
+                    "marginBottom": "8px",
+                    "justifyContent": "space-between",
+                    "alignItems": "center"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "3月",
+                      "style": {
+                        "fontSize": "13px",
+                        "fontWeight": "bold",
+                        "color": "#FFFFFF"
+                      }
+                    },
+                    {
+                      "type": "container",
+                      "style": {
+                        "alignItems": "flex-end"
+                      },
+                      "children": [
+                        {
+                          "type": "text",
+                          "content": "980万円",
+                          "style": {
+                            "fontSize": "9px",
+                            "color": "#FFFFFF",
+                            "fontWeight": "bold"
+                          }
+                        },
+                        {
+                          "type": "text",
+                          "content": "ROAS: 3.85",
+                          "style": {
+                            "fontSize": "9px",
+                            "color": "#E5E7EB"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "container",
+                  "style": {
+                    "flexDirection": "row",
+                    "marginBottom": "8px",
+                    "justifyContent": "space-between",
+                    "alignItems": "center"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "4月",
+                      "style": {
+                        "fontSize": "13px",
+                        "fontWeight": "bold",
+                        "color": "#FFFFFF"
+                      }
+                    },
+                    {
+                      "type": "container",
+                      "style": {
+                        "alignItems": "flex-end"
+                      },
+                      "children": [
+                        {
+                          "type": "text",
+                          "content": "1,085万円",
+                          "style": {
+                            "fontSize": "9px",
+                            "color": "#FFFFFF",
+                            "fontWeight": "bold"
+                          }
+                        },
+                        {
+                          "type": "text",
+                          "content": "ROAS: 4.14",
+                          "style": {
+                            "fontSize": "9px",
+                            "color": "#E5E7EB"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "container",
+                  "style": {
+                    "flexDirection": "row",
+                    "justifyContent": "space-between",
+                    "alignItems": "center"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "5月",
+                      "style": {
+                        "fontSize": "13px",
+                        "fontWeight": "bold",
+                        "color": "#FFFFFF"
+                      }
+                    },
+                    {
+                      "type": "container",
+                      "style": {
+                        "alignItems": "flex-end"
+                      },
+                      "children": [
+                        {
+                          "type": "text",
+                          "content": "1,250万円",
+                          "style": {
+                            "fontSize": "9px",
+                            "color": "#FFFFFF",
+                            "fontWeight": "bold"
+                          }
+                        },
+                        {
+                          "type": "text",
+                          "content": "ROAS: 4.46",
+                          "style": {
+                            "fontSize": "9px",
+                            "color": "#E5E7EB"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "style": {
+                "flex": 4,
+                "backgroundColor": "rgba(255,255,255,0.2)",
+                "padding": "12px",
+                "borderRadius": "4px"
+              },
+              "children": [
+                {
+                  "type": "heading",
+                  "content": "主要改善要因",
+                  "level": 3,
+                  "style": {
+                    "fontSize": "15px",
+                    "color": "#FFFFFF",
+                    "fontWeight": "bold",
+                    "marginBottom": "8px"
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "• 商品ラインナップ最適化: 春夏商品の早期投入",
+                  "style": {
+                    "fontSize": "10px",
+                    "color": "#FFFFFF",
+                    "marginBottom": "8px",
+                    "lineHeight": 1.5
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "• ターゲティング精度向上: 類似オーディエンス活用",
+                  "style": {
+                    "fontSize": "10px",
+                    "color": "#FFFFFF",
+                    "marginBottom": "8px",
+                    "lineHeight": 1.5
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "• クリエイティブテスト: 動画広告のCTR +25%",
+                  "style": {
+                    "fontSize": "10px",
+                    "color": "#FFFFFF",
+                    "lineHeight": 1.5
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "style": {
+        "width": "100%",
+        "height": "100%",
+        "padding": "16px",
+        "flexDirection": "column",
+        "backgroundColor": "#8B5CF6"
+      },
+      "children": [
+        {
+          "type": "heading",
+          "content": "🎯 チャネル別分析",
+          "level": 2,
+          "style": {
+            "fontSize": "27px",
+            "marginBottom": "12px",
+            "gap": "4px",
+            "width": "100%",
+            "color": "#FFFFFF",
+            "fontWeight": "bold"
+          }
+        },
+        {
+          "type": "frame",
+          "style": {
+            "backgroundColor": "rgba(255,255,255,0.2)",
+            "width": "100%",
+            "marginBottom": "8px",
+            "gap": "4px",
+            "borderRadius": "4px"
+          },
+          "children": [
+            {
+              "type": "frame",
+              "style": {
+                "flexDirection": "row",
+                "backgroundColor": "rgba(255,255,255,0.1)",
+                "marginBottom": "4px",
+                "padding": "12px",
+                "borderRadius": "4px"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "content": "チャネル",
+                  "style": {
+                    "fontSize": "9px",
+                    "fontWeight": "bold",
+                    "color": "#FFFFFF",
+                    "width": "25%"
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "広告費",
+                  "style": {
+                    "fontSize": "9px",
+                    "fontWeight": "bold",
+                    "color": "#FFFFFF",
+                    "width": "20%"
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "売上",
+                  "style": {
+                    "fontSize": "9px",
+                    "fontWeight": "bold",
+                    "color": "#FFFFFF",
+                    "width": "20%"
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "ROAS",
+                  "style": {
+                    "fontSize": "9px",
+                    "fontWeight": "bold",
+                    "color": "#FFFFFF",
+                    "width": "15%"
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "前月比",
+                  "style": {
+                    "fontSize": "9px",
+                    "fontWeight": "bold",
+                    "color": "#FFFFFF",
+                    "width": "20%"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "container",
+              "style": {
+                "flexDirection": "row",
+                "marginBottom": "4px",
+                "padding": "12px",
+                "alignItems": "center"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "content": "Google検索",
+                  "style": {
+                    "fontSize": "10px",
+                    "color": "#FFFFFF",
+                    "width": "25%"
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "120万円",
+                  "style": {
+                    "fontSize": "10px",
+                    "color": "#FFFFFF",
+                    "width": "20%"
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "600万円",
+                  "style": {
+                    "fontSize": "10px",
+                    "color": "#FFFFFF",
+                    "width": "20%"
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "5.00",
+                  "style": {
+                    "fontSize": "10px",
+                    "color": "#FFFFFF",
+                    "width": "15%"
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "+0.45",
+                  "style": {
+                    "fontSize": "10px",
+                    "color": "#86EFAC",
+                    "width": "20%"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "container",
+              "style": {
+                "flexDirection": "row",
+                "marginBottom": "4px",
+                "padding": "12px",
+                "alignItems": "center"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "content": "Meta広告",
+                  "style": {
+                    "fontSize": "10px",
+                    "color": "#FFFFFF",
+                    "width": "25%"
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "80万円",
+                  "style": {
+                    "fontSize": "10px",
+                    "color": "#FFFFFF",
+                    "width": "20%"
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "320万円",
+                  "style": {
+                    "fontSize": "10px",
+                    "color": "#FFFFFF",
+                    "width": "20%"
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "4.00",
+                  "style": {
+                    "fontSize": "10px",
+                    "color": "#FFFFFF",
+                    "width": "15%"
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "+0.28",
+                  "style": {
+                    "fontSize": "10px",
+                    "color": "#86EFAC",
+                    "width": "20%"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "container",
+              "style": {
+                "flexDirection": "row",
+                "marginBottom": "4px",
+                "padding": "12px",
+                "alignItems": "center"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "content": "Yahoo!検索",
+                  "style": {
+                    "fontSize": "10px",
+                    "color": "#FFFFFF",
+                    "width": "25%"
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "50万円",
+                  "style": {
+                    "fontSize": "10px",
+                    "color": "#FFFFFF",
+                    "width": "20%"
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "210万円",
+                  "style": {
+                    "fontSize": "10px",
+                    "color": "#FFFFFF",
+                    "width": "20%"
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "4.20",
+                  "style": {
+                    "fontSize": "10px",
+                    "color": "#FFFFFF",
+                    "width": "15%"
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "+0.15",
+                  "style": {
+                    "fontSize": "10px",
+                    "color": "#86EFAC",
+                    "width": "20%"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "container",
+              "style": {
+                "flexDirection": "row",
+                "padding": "12px",
+                "alignItems": "center"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "content": "YouTube",
+                  "style": {
+                    "fontSize": "10px",
+                    "color": "#FFFFFF",
+                    "width": "25%"
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "30万円",
+                  "style": {
+                    "fontSize": "10px",
+                    "color": "#FFFFFF",
+                    "width": "20%"
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "120万円",
+                  "style": {
+                    "fontSize": "10px",
+                    "color": "#FFFFFF",
+                    "width": "20%"
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "4.00",
+                  "style": {
+                    "fontSize": "10px",
+                    "color": "#FFFFFF",
+                    "width": "15%"
+                  }
+                },
+                {
+                  "type": "text",
+                  "content": "+0.80",
+                  "style": {
+                    "fontSize": "10px",
+                    "color": "#86EFAC",
+                    "width": "20%"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "style": {
+            "backgroundColor": "rgba(255,255,255,0.2)",
+            "width": "100%",
+            "marginBottom": "8px",
+            "borderRadius": "4px"
+          },
+          "children": [
+            {
+              "type": "heading",
+              "content": "📌 チャネル別insights",
+              "level": 3,
+              "style": {
+                "fontSize": "15px",
+                "color": "#FFFFFF",
+                "fontWeight": "bold",
+                "marginBottom": "8px"
+              }
+            },
+            {
+              "type": "text",
+              "content": "Google検索: ブランドキーワードが好調",
+              "style": {
+                "fontSize": "10px",
+                "color": "#FFFFFF",
+                "marginBottom": "4px",
+                "lineHeight": 1.5
+              }
+            },
+            {
+              "type": "text",
+              "content": "Meta広告: リール動画のエンゲージメント向上",
+              "style": {
+                "fontSize": "10px",
+                "color": "#FFFFFF",
+                "marginBottom": "4px",
+                "lineHeight": 1.5
+              }
+            },
+            {
+              "type": "text",
+              "content": "YouTube: 認知拡大効果で間接効果も増加",
+              "style": {
+                "fontSize": "10px",
+                "color": "#FFFFFF",
+                "lineHeight": 1.5
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "style": {
+        "width": "100%",
+        "height": "100%",
+        "padding": "16px",
+        "flexDirection": "column",
+        "backgroundColor": "#6366F1"
+      },
+      "children": [
+        {
+          "type": "heading",
+          "content": "🚀 実施施策と今後の戦略",
+          "level": 2,
+          "style": {
+            "fontSize": "27px",
+            "marginBottom": "12px",
+            "gap": "4px",
+            "width": "100%",
+            "color": "#FFFFFF",
+            "fontWeight": "bold"
+          }
+        },
+        {
+          "type": "container",
+          "style": {
+            "flexDirection": "row",
+            "width": "100%",
+            "gap": "4px"
+          },
+          "children": [
+            {
+              "type": "frame",
+              "style": {
+                "flex": 4,
+                "backgroundColor": "rgba(255,255,255,0.2)",
+                "marginBottom": "8px",
+                "borderRadius": "4px"
+              },
+              "children": [
+                {
+                  "type": "heading",
+                  "content": "5月実施施策",
+                  "level": 3,
+                  "style": {
+                    "fontSize": "15px",
+                    "color": "#FFFFFF",
+                    "fontWeight": "bold",
+                    "marginBottom": "8px"
+                  }
+                },
+                {
+                  "type": "frame",
+                  "style": {
+                    "marginBottom": "8px",
+                    "padding": "12px",
+                    "borderLeft": "4px solid #10B981",
+                    "backgroundColor": "rgba(16,185,129,0.1)"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "母の日特集ページ制作",
+                      "style": {
+                        "fontSize": "9px",
+                        "color": "#FFFFFF",
+                        "fontWeight": "bold",
+                        "marginBottom": "4px"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "content": "CVR +18%",
+                      "style": {
+                        "fontSize": "10px",
+                        "color": "#86EFAC"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "style": {
+                    "marginBottom": "8px",
+                    "padding": "12px",
+                    "borderLeft": "4px solid #10B981",
+                    "backgroundColor": "rgba(16,185,129,0.1)"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "リターゲティング配信強化",
+                      "style": {
+                        "fontSize": "9px",
+                        "color": "#FFFFFF",
+                        "fontWeight": "bold",
+                        "marginBottom": "4px"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "content": "ROAS +0.6pt",
+                      "style": {
+                        "fontSize": "10px",
+                        "color": "#86EFAC"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "style": {
+                    "padding": "12px",
+                    "borderLeft": "4px solid #10B981",
+                    "backgroundColor": "rgba(16,185,129,0.1)"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "商品レビュー活用クリエイティブ",
+                      "style": {
+                        "fontSize": "9px",
+                        "color": "#FFFFFF",
+                        "fontWeight": "bold",
+                        "marginBottom": "4px"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "content": "CTR +22%",
+                      "style": {
+                        "fontSize": "10px",
+                        "color": "#86EFAC"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "style": {
+                "flex": 4,
+                "backgroundColor": "rgba(255,255,255,0.2)",
+                "padding": "12px",
+                "borderRadius": "4px"
+              },
+              "children": [
+                {
+                  "type": "heading",
+                  "content": "6月の重点施策",
+                  "level": 3,
+                  "style": {
+                    "fontSize": "15px",
+                    "color": "#FFFFFF",
+                    "fontWeight": "bold",
+                    "marginBottom": "8px"
+                  }
+                },
+                {
+                  "type": "frame",
+                  "style": {
+                    "marginBottom": "8px",
+                    "padding": "12px",
+                    "borderLeft": "4px solid #F59E0B",
+                    "backgroundColor": "rgba(245,158,11,0.1)"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "父の日キャンペーン準備",
+                      "style": {
+                        "fontSize": "9px",
+                        "color": "#FFFFFF",
+                        "fontWeight": "bold",
+                        "marginBottom": "4px"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "content": "メンズアイテム訴求強化・ギフト需要に合わせた配信設計",
+                      "style": {
+                        "fontSize": "9px",
+                        "color": "#E5E7EB",
+                        "lineHeight": 1.4
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "style": {
+                    "marginBottom": "8px",
+                    "padding": "12px",
+                    "borderLeft": "4px solid #F59E0B",
+                    "backgroundColor": "rgba(245,158,11,0.1)"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "夏物商品プロモーション",
+                      "style": {
+                        "fontSize": "9px",
+                        "color": "#FFFFFF",
+                        "fontWeight": "bold",
+                        "marginBottom": "4px"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "content": "季節商品の早期露出・気温連動型配信テスト",
+                      "style": {
+                        "fontSize": "9px",
+                        "color": "#E5E7EB",
+                        "lineHeight": 1.4
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "style": {
+                    "padding": "12px",
+                    "borderLeft": "4px solid #F59E0B",
+                    "backgroundColor": "rgba(245,158,11,0.1)"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "新規顧客獲得強化",
+                      "style": {
+                        "fontSize": "9px",
+                        "color": "#FFFFFF",
+                        "fontWeight": "bold",
+                        "marginBottom": "4px"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "content": "拡張配信の精度向上・動画クリエイティブ拡充",
+                      "style": {
+                        "fontSize": "9px",
+                        "color": "#E5E7EB",
+                        "lineHeight": 1.4
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
