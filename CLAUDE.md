@@ -650,6 +650,59 @@ plugins: [
 
 **原則**: 個人の記憶・注意力に依存する解決策は無効。システム・プロセスで解決する。
 
+## PostCSSプラグイン活用方針
+
+### PostCSSプラグイン vs 手動実装の判断基準
+
+#### PostCSSプラグインを選ぶべき場合：
+1. **CSS仕様の複雑な処理**: ショートハンド展開、ベンダープレフィックス等
+2. **責務分離が必要**: CSS処理とSlideWeave固有処理を分離したい場合
+3. **再利用性**: 他プロジェクトでも使用可能な汎用的な処理
+4. **保守性重視**: 既存コードを複雑化させたくない場合
+
+#### 手動実装を選ぶべき場合：
+1. **単純な処理**: 正規表現で簡単に処理できる場合
+2. **SlideWeave固有**: PowerPoint出力に特化した処理
+3. **依存関係最小化**: 外部ライブラリを増やしたくない場合
+
+### 実装例: postcss-border-shorthand-expand
+
+OSN-178で実装したborderショートハンド展開は、PostCSSプラグインとして実装：
+
+```typescript
+// src/css-processor/postcss-border-shorthand-expand.ts
+export const borderShorthandExpand = (): Plugin => {
+  return {
+    postcssPlugin: "border-shorthand-expand",
+    Declaration(decl) {
+      if (decl.prop === "border") {
+        const borderParts = parseBorderValue(decl.value);
+        decl.cloneBefore({ prop: "border-width", value: borderParts.width });
+        decl.cloneBefore({ prop: "border-style", value: borderParts.style });
+        decl.cloneBefore({ prop: "border-color", value: borderParts.color });
+        decl.remove();
+      }
+    }
+  };
+};
+
+// CSSStyleParserへの統合
+const root = postcss([borderShorthandExpand()]).process(wrappedCSS).root;
+```
+
+### PostCSSプラグイン開発のベストプラクティス
+
+1. **TDD実践**: Red-Green-Refactorサイクルで品質確保
+2. **単一責任**: 1プラグイン1機能に特化
+3. **エラーハンドリング**: CSS解析エラーを適切に処理
+4. **テスト網羅**: エッジケース（rgba色、特殊値等）も考慮
+
+### 今後の拡張候補
+
+- **margin/padding ショートハンド**: `margin: 10px 20px` → 個別プロパティ
+- **background ショートハンド**: 複雑な背景指定の分解
+- **font ショートハンド**: フォント関連プロパティの展開
+
 ## メモリー
 
 - DPIや変換にあちこちに定義しない。DPIConverterがその役目も果たす。

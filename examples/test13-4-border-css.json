@@ -1,0 +1,51 @@
+{
+  "type": "deck",
+  "title": "Border Test - CSS Shorthand",
+  "description": "CSSクラス経由でborderショートハンドをテスト",
+  "slides": [
+    {
+      "type": "slide", 
+      "title": "CSS Border Shorthand Test",
+      "children": [
+        {
+          "type": "container",
+          "style": {
+            "padding": "40px",
+            "backgroundColor": "#ffffff"
+          },
+          "children": [
+            {
+              "type": "text",
+              "style": {
+                "fontSize": "16pt",
+                "fontWeight": "bold",
+                "marginBottom": "20px",
+                "color": "#333333"
+              },
+              "content": "CSS Border Shorthand: 4px solid #dc2626"
+            },
+            {
+              "type": "frame",
+              "class": "test-border-shorthand",
+              "style": {
+                "padding": "30px",
+                "backgroundColor": "#f9f9f9"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "style": {
+                    "color": "#000000",
+                    "fontSize": "14pt"
+                  },
+                  "content": "CSS経由の赤いボーダー"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "css": ".test-border-shorthand { border: 4px solid #dc2626; }"
+}
