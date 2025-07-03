@@ -136,6 +136,10 @@
       "type": "object",
       "properties": {
         "type": { "const": "frame" },
+        "class": {
+          "type": "string",
+          "description": "CSSクラス名（ユーティリティクラス等）"
+        },
         "style": { "$ref": "#/definitions/frameStyle" },
         "children": {
           "type": "array",
@@ -151,6 +155,10 @@
         "type": { "const": "shape" },
         "shapeType": { 
           "enum": ["rectangle", "circle", "ellipse"] 
+        },
+        "class": {
+          "type": "string",
+          "description": "CSSクラス名（ユーティリティクラス等）"
         },
         "style": { "$ref": "#/definitions/shapeStyle" }
       },
