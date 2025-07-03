@@ -1,0 +1,35 @@
+{
+  "type": "deck",
+  "title": "FlexBasis Test - Container Version",
+  "format": "wide",
+  "slides": [
+    {
+      "type": "slide",
+      "title": "FlexBasis: 50px (container)",
+      "children": [
+        {
+          "type": "container",
+          "style": {
+            "width": "200px",
+            "height": "200px",
+            "padding": "10px",
+            "margin": "50px",
+            "borderWidth": "1px",
+            "borderStyle": "solid",
+            "borderColor": "#666666"
+          },
+          "children": [
+            {
+              "type": "frame",
+              "style": {
+                "margin": "5px",
+                "flexBasis": "50px",
+                "backgroundColor": "#FF6B6B"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

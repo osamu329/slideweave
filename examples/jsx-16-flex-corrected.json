@@ -1,0 +1,472 @@
+{
+  "type": "deck",
+  "title": "Flexbox Properties Test Deck",
+  "format": "wide",
+  "description": "test16シリーズのflexプロパティテストケースをまとめたテストデッキ",
+  "slides": [
+    {
+      "type": "slide",
+      "title": "AlignContent: flex-start",
+      "children": [
+        {
+          "type": "frame",
+          "style": {
+            "width": "200px",
+            "height": "250px",
+            "padding": "10px",
+            "margin": "50px",
+            "alignContent": "flex-start",
+            "flexWrap": "wrap",
+            "borderWidth": "1px",
+            "borderStyle": "solid",
+            "borderColor": "#666666"
+          },
+          "children": [
+            {
+              "type": "frame",
+              "style": {
+                "margin": "5px",
+                "height": "50px",
+                "width": "50px",
+                "backgroundColor": "#FF6B6B"
+              }
+            },
+            {
+              "type": "frame",
+              "style": {
+                "margin": "5px",
+                "height": "50px",
+                "width": "50px",
+                "backgroundColor": "#4ECDC4"
+              }
+            },
+            {
+              "type": "frame",
+              "style": {
+                "margin": "5px",
+                "height": "50px",
+                "width": "50px",
+                "backgroundColor": "#45B7D1"
+              }
+            },
+            {
+              "type": "frame",
+              "style": {
+                "margin": "5px",
+                "height": "50px",
+                "width": "50px",
+                "backgroundColor": "#96CEB4"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "AlignSelf: center",
+      "children": [
+        {
+          "type": "frame",
+          "style": {
+            "width": "200px",
+            "height": "250px",
+            "padding": "10px",
+            "margin": "50px",
+            "alignItems": "flex-start",
+            "borderWidth": "1px",
+            "borderStyle": "solid",
+            "borderColor": "#666666"
+          },
+          "children": [
+            {
+              "type": "frame",
+              "style": {
+                "margin": "5px",
+                "height": "50px",
+                "width": "50px",
+                "alignSelf": "center",
+                "backgroundColor": "#FF6B6B"
+              }
+            },
+            {
+              "type": "frame",
+              "style": {
+                "margin": "5px",
+                "height": "50px",
+                "width": "50px",
+                "backgroundColor": "#4ECDC4"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "FlexBasis: 50px",
+      "children": [
+        {
+          "type": "frame",
+          "style": {
+            "width": "200px",
+            "height": "200px",
+            "padding": "10px",
+            "margin": "50px",
+            "borderWidth": "1px",
+            "borderStyle": "solid",
+            "borderColor": "#666666"
+          },
+          "children": [
+            {
+              "type": "frame",
+              "style": {
+                "margin": "5px",
+                "flexBasis": "50px",
+                "backgroundColor": "#FF6B6B"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "FlexGrow: 0.25 vs 0.75",
+      "children": [
+        {
+          "type": "frame",
+          "style": {
+            "width": "200px",
+            "height": "200px",
+            "padding": "10px",
+            "margin": "50px",
+            "borderWidth": "1px",
+            "borderStyle": "solid",
+            "borderColor": "#666666"
+          },
+          "children": [
+            {
+              "type": "frame",
+              "style": {
+                "margin": "5px",
+                "flexGrow": 0.25,
+                "backgroundColor": "#FF6B6B"
+              }
+            },
+            {
+              "type": "frame",
+              "style": {
+                "margin": "5px",
+                "flexGrow": 0.75,
+                "backgroundColor": "#4ECDC4"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "FlexShrink: 5 vs 10",
+      "children": [
+        {
+          "type": "frame",
+          "style": {
+            "width": "200px",
+            "height": "200px",
+            "padding": "10px",
+            "margin": "50px",
+            "borderWidth": "1px",
+            "borderStyle": "solid",
+            "borderColor": "#666666"
+          },
+          "children": [
+            {
+              "type": "frame",
+              "style": {
+                "margin": "5px",
+                "flexShrink": 5,
+                "height": "150px",
+                "backgroundColor": "#FF6B6B"
+              }
+            },
+            {
+              "type": "frame",
+              "style": {
+                "margin": "5px",
+                "flexShrink": 10,
+                "height": "150px",
+                "backgroundColor": "#4ECDC4"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "FlexDirection: column",
+      "children": [
+        {
+          "type": "frame",
+          "style": {
+            "width": "200px",
+            "height": "200px",
+            "padding": "10px",
+            "margin": "50px",
+            "flexDirection": "column",
+            "borderWidth": "1px",
+            "borderStyle": "solid",
+            "borderColor": "#666666"
+          },
+          "children": [
+            {
+              "type": "frame",
+              "style": {
+                "margin": "5px",
+                "height": "50px",
+                "width": "50px",
+                "backgroundColor": "#FF6B6B"
+              }
+            },
+            {
+              "type": "frame",
+              "style": {
+                "margin": "5px",
+                "height": "50px",
+                "width": "50px",
+                "backgroundColor": "#4ECDC4"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "Gap: 10px with flexWrap",
+      "children": [
+        {
+          "type": "frame",
+          "style": {
+            "width": "200px",
+            "height": "250px",
+            "padding": "10px",
+            "margin": "50px",
+            "flexWrap": "wrap",
+            "gap": "10px",
+            "borderWidth": "1px",
+            "borderStyle": "solid",
+            "borderColor": "#666666"
+          },
+          "children": [
+            {
+              "type": "frame",
+              "style": {
+                "height": "50px",
+                "width": "50px",
+                "backgroundColor": "#FF6B6B"
+              }
+            },
+            {
+              "type": "frame",
+              "style": {
+                "height": "50px",
+                "width": "50px",
+                "backgroundColor": "#4ECDC4"
+              }
+            },
+            {
+              "type": "frame",
+              "style": {
+                "height": "50px",
+                "width": "50px",
+                "backgroundColor": "#45B7D1"
+              }
+            },
+            {
+              "type": "frame",
+              "style": {
+                "height": "50px",
+                "width": "50px",
+                "backgroundColor": "#96CEB4"
+              }
+            },
+            {
+              "type": "frame",
+              "style": {
+                "height": "50px",
+                "width": "50px",
+                "backgroundColor": "#FFEAA7"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "Inset: top/left positioning",
+      "children": [
+        {
+          "type": "frame",
+          "style": {
+            "width": "200px",
+            "height": "200px",
+            "margin": "50px",
+            "borderWidth": "1px",
+            "borderStyle": "solid",
+            "borderColor": "#666666"
+          },
+          "children": [
+            {
+              "type": "frame",
+              "style": {
+                "height": "50px",
+                "width": "50px",
+                "top": "50px",
+                "left": "50px",
+                "backgroundColor": "#FF6B6B"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "JustifyContent: flex-start",
+      "children": [
+        {
+          "type": "frame",
+          "style": {
+            "width": "200px",
+            "height": "200px",
+            "padding": "10px",
+            "margin": "50px",
+            "justifyContent": "flex-start",
+            "borderWidth": "1px",
+            "borderStyle": "solid",
+            "borderColor": "#666666"
+          },
+          "children": [
+            {
+              "type": "frame",
+              "style": {
+                "margin": "5px",
+                "height": "50px",
+                "width": "50px",
+                "backgroundColor": "#FF6B6B"
+              }
+            },
+            {
+              "type": "frame",
+              "style": {
+                "margin": "5px",
+                "height": "50px",
+                "width": "50px",
+                "backgroundColor": "#4ECDC4"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "Position: relative",
+      "children": [
+        {
+          "type": "frame",
+          "style": {
+            "width": "200px",
+            "height": "200px",
+            "padding": "10px",
+            "margin": "50px",
+            "borderWidth": "1px",
+            "borderStyle": "solid",
+            "borderColor": "#666666"
+          },
+          "children": [
+            {
+              "type": "frame",
+              "style": {
+                "margin": "5px",
+                "height": "50px",
+                "top": "20px",
+                "position": "relative",
+                "backgroundColor": "#FF6B6B"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "title": "Min-Max Width and Height",
+      "children": [
+        {
+          "type": "frame",
+          "style": {
+            "width": "200px",
+            "height": "250px",
+            "padding": "10px",
+            "margin": "50px",
+            "borderWidth": "1px",
+            "borderStyle": "solid",
+            "borderColor": "#666666"
+          },
+          "children": [
+            {
+              "type": "frame",
+              "style": {
+                "margin": "5px",
+                "height": "25px",
+                "backgroundColor": "#FF6B6B"
+              }
+            },
+            {
+              "type": "frame",
+              "style": {
+                "margin": "5px",
+                "height": "100px",
+                "maxHeight": "25px",
+                "backgroundColor": "#4ECDC4"
+              }
+            },
+            {
+              "type": "frame",
+              "style": {
+                "margin": "5px",
+                "height": "25px",
+                "minHeight": "50px",
+                "backgroundColor": "#45B7D1"
+              }
+            },
+            {
+              "type": "frame",
+              "style": {
+                "margin": "5px",
+                "height": "25px",
+                "maxWidth": "25px",
+                "backgroundColor": "#96CEB4"
+              }
+            },
+            {
+              "type": "frame",
+              "style": {
+                "margin": "5px",
+                "height": "25px",
+                "width": "25px",
+                "minWidth": "50px",
+                "backgroundColor": "#FFEAA7"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
