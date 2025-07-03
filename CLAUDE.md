@@ -707,4 +707,23 @@ const root = postcss([borderShorthandExpand()]).process(wrappedCSS).root;
 
 - DPIや変換にあちこちに定義しない。DPIConverterがその役目も果たす。
 
+## PPTXGenJS APIドキュメント
+
+### 主要APIリファレンス
+- **Images**: [docs/pptxgenjs/api-images.md](docs/pptxgenjs/api-images.md)
+- **Media**: [docs/pptxgenjs/api-media.md](docs/pptxgenjs/api-media.md)
+- **Shapes**: [docs/pptxgenjs/api-shapes.md](docs/pptxgenjs/api-shapes.md)
+- **Tables**: [docs/pptxgenjs/api-tables.md](docs/pptxgenjs/api-tables.md)
+- **Text**: [docs/pptxgenjs/api-text.md](docs/pptxgenjs/api-text.md)
+- **Masters**: [docs/pptxgenjs/masters.md](docs/pptxgenjs/masters.md)
+- **Sections**: [docs/pptxgenjs/sections.md](docs/pptxgenjs/sections.md)
+- **Shapes and Schemes**: [docs/pptxgenjs/shapes-and-schemes.md](docs/pptxgenjs/shapes-and-schemes.md)
+- **Speaker Notes**: [docs/pptxgenjs/speaker-notes.md](docs/pptxgenjs/speaker-notes.md)
+- **Types**: [docs/pptxgenjs/types.md](docs/pptxgenjs/types.md)
+
+### よく参照するAPI
+- **addImage**: path vs data パラメータの使い分け（[Images API](docs/pptxgenjs/api-images.md)）
+- **背景画像設定**: スライド背景でのData URI対応（[Media API](docs/pptxgenjs/api-media.md)）
+- **SVG処理**: Data URI形式での画像埋め込み（[Images API](docs/pptxgenjs/api-images.md)）
+
 </invoke>
