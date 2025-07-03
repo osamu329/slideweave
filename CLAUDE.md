@@ -141,6 +141,10 @@ npx tsx src/cli/index.ts build examples/test03-colors.json -o examples/output/te
 # 例：詳細ログ
 npx tsx src/cli/index.ts build examples/test01-basic-layout.json --verbose
 
+# 注意：examplesディレクトリのJSONファイルからPPTX生成する場合
+# examples/output/以下に出力することを推奨
+npx tsx src/cli/index.ts build examples/<file>.json -o examples/output/<file>.pptx
+
 # 設定ファイル初期化  
 npx tsx src/cli/index.ts init
 

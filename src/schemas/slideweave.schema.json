@@ -411,7 +411,7 @@
           "enum": ["left", "center", "right", "justify"]
         }
       },
-      "additionalProperties": false
+      "additionalProperties": true
     },
     "frameStyle": {
       "allOf": [
@@ -478,7 +478,14 @@
         "paddingTop": { "$ref": "#/definitions/spacingValue" },
         "paddingRight": { "$ref": "#/definitions/spacingValue" },
         "paddingBottom": { "$ref": "#/definitions/spacingValue" },
-        "paddingLeft": { "$ref": "#/definitions/spacingValue" }
+        "paddingLeft": { "$ref": "#/definitions/spacingValue" },
+        "backgroundImage": { 
+          "type": "string",
+          "description": "背景画像のパス。対応フォーマット: jpg, jpeg, png, gif, svg"
+        },
+        "backgroundSize": { 
+          "enum": ["cover", "contain", "fit", "none"] 
+        }
       },
       "additionalProperties": false
     },
@@ -505,8 +512,16 @@
     },
     "colorValue": {
       "type": "string",
-      "pattern": "^#[0-9A-Fa-f]{6}$",
-      "description": "16進数色コード（#RRGGBB形式）"
+      "oneOf": [
+        {
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "description": "16進数色コード（#RRGGBB形式）"
+        },
+        {
+          "pattern": "^rgba?\\(\\s*\\d+\\s*,\\s*\\d+\\s*,\\s*\\d+\\s*(,\\s*[0-9]*\\.?[0-9]+\\s*)?\\)$",
+          "description": "RGB/RGBA色コード（rgb(r,g,b)またはrgba(r,g,b,a)形式）"
+        }
+      ]
     },
     "fontStyleValue": {
       "enum": ["normal", "italic"],

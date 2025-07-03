@@ -1,0 +1,121 @@
+{
+  "type": "deck",
+  "title": "Test04-4: Frame Border Radius",
+  "description": "borderRadiusプロパティの視認性確認用テスト - 背景なしでボーダーの丸みを検証",
+  "format": "wide",
+  "slides": [
+    {
+      "type": "slide",
+      "style": {
+        "padding": "32px"
+      },
+      "children": [
+        {
+          "type": "heading",
+          "content": "Border Radius テスト",
+          "level": 1,
+          "style": {
+            "fontSize": "32px",
+            "fontWeight": "bold",
+            "color": "#333333",
+            "marginBottom": "24px",
+            "textAlign": "center"
+          }
+        },
+        {
+          "type": "container",
+          "style": {
+            "flexDirection": "column",
+            "gap": "16px"
+          },
+          "children": [
+            {
+              "type": "frame",
+              "style": {
+                "backgroundColor": "#ff6b6b",
+                "borderRadius": "8px",
+                "padding": "16px",
+                "width": "300px",
+                "height": "80px"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "content": "borderRadius: 8px",
+                  "style": {
+                    "fontSize": "16px",
+                    "color": "#ffffff",
+                    "fontWeight": "bold"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "style": {
+                "backgroundColor": "#4ecdc4",
+                "borderRadius": "16px",
+                "padding": "16px",
+                "width": "300px",
+                "height": "80px"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "content": "borderRadius: 16px",
+                  "style": {
+                    "fontSize": "16px",
+                    "color": "#ffffff",
+                    "fontWeight": "bold"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "style": {
+                "backgroundColor": "#45b7d1",
+                "borderRadius": "24px",
+                "padding": "16px",
+                "width": "300px",
+                "height": "80px"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "content": "borderRadius: 24px",
+                  "style": {
+                    "fontSize": "16px",
+                    "color": "#ffffff",
+                    "fontWeight": "bold"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "style": {
+                "backgroundColor": "#f9ca24",
+                "borderRadius": "40px",
+                "padding": "16px",
+                "width": "300px",
+                "height": "80px"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "content": "borderRadius: 40px",
+                  "style": {
+                    "fontSize": "16px",
+                    "color": "#333333",
+                    "fontWeight": "bold"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

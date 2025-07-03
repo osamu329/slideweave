@@ -71,8 +71,8 @@ describe("SVGGenerator", () => {
   });
 
   describe("borderRadius pixel parsing", () => {
-    it("should parse borderRadius string values correctly", () => {
-      const svg = generator.generateFrameSVG({
+    it("should parse borderRadius string values correctly", async () => {
+      const svg = await generator.generateFrameSVG({
         width: 100,
         height: 100,
         backgroundColor: "#ff0000",
@@ -83,8 +83,8 @@ describe("SVGGenerator", () => {
       expect(svg).toContain('ry="12"');
     });
 
-    it("should handle borderRadius string values without px suffix", () => {
-      const svg = generator.generateFrameSVG({
+    it("should handle borderRadius string values without px suffix", async () => {
+      const svg = await generator.generateFrameSVG({
         width: 100,
         height: 100,
         backgroundColor: "#ff0000",
@@ -95,8 +95,8 @@ describe("SVGGenerator", () => {
       expect(svg).toContain('ry="8"');
     });
 
-    it("should limit borderRadius to element size", () => {
-      const svg = generator.generateFrameSVG({
+    it("should limit borderRadius to element size", async () => {
+      const svg = await generator.generateFrameSVG({
         width: 20,
         height: 10,
         backgroundColor: "#ff0000",
@@ -110,8 +110,8 @@ describe("SVGGenerator", () => {
   });
 
   describe("generateFrameSVG", () => {
-    it("should generate SVG for frame with background color", () => {
-      const svg = generator.generateFrameSVG({
+    it("should generate SVG for frame with background color", async () => {
+      const svg = await generator.generateFrameSVG({
         width: 200,
         height: 100,
         backgroundColor: "#ff0000",
@@ -124,8 +124,8 @@ describe("SVGGenerator", () => {
       expect(svg).toContain("<rect");
     });
 
-    it("should generate SVG with # prefix for hex colors without #", () => {
-      const svg = generator.generateFrameSVG({
+    it("should generate SVG with # prefix for hex colors without #", async () => {
+      const svg = await generator.generateFrameSVG({
         width: 200,
         height: 100,
         backgroundColor: "ff0000",
@@ -134,8 +134,8 @@ describe("SVGGenerator", () => {
       expect(svg).toContain('fill="#ff0000"');
     });
 
-    it("should generate SVG for frame with rounded corners", () => {
-      const svg = generator.generateFrameSVG({
+    it("should generate SVG for frame with rounded corners", async () => {
+      const svg = await generator.generateFrameSVG({
         width: 300,
         height: 200,
         backgroundColor: "#00ff00",
@@ -146,8 +146,8 @@ describe("SVGGenerator", () => {
       expect(svg).toContain('ry="16"');
     });
 
-    it("should generate transparent frame when no backgroundColor", () => {
-      const svg = generator.generateFrameSVG({
+    it("should generate transparent frame when no backgroundColor", async () => {
+      const svg = await generator.generateFrameSVG({
         width: 100,
         height: 100,
       });
@@ -157,8 +157,8 @@ describe("SVGGenerator", () => {
       expect(svg).toContain('fill="none"');
     });
 
-    it("should support RGBA color format", () => {
-      const svg = generator.generateFrameSVG({
+    it("should support RGBA color format", async () => {
+      const svg = await generator.generateFrameSVG({
         width: 200,
         height: 100,
         backgroundColor: "rgba(255,0,0,0.5)",
@@ -169,8 +169,8 @@ describe("SVGGenerator", () => {
       expect(svg).toContain('fill="rgba(255,0,0,0.5)"');
     });
 
-    it("should support RGBA color format with spaces", () => {
-      const svg = generator.generateFrameSVG({
+    it("should support RGBA color format with spaces", async () => {
+      const svg = await generator.generateFrameSVG({
         width: 200,
         height: 100,
         backgroundColor: "rgba(255, 0, 0, 0.5)",
@@ -179,8 +179,8 @@ describe("SVGGenerator", () => {
       expect(svg).toContain('fill="rgba(255, 0, 0, 0.5)"');
     });
 
-    it("should support RGB color format", () => {
-      const svg = generator.generateFrameSVG({
+    it("should support RGB color format", async () => {
+      const svg = await generator.generateFrameSVG({
         width: 200,
         height: 100,
         backgroundColor: "rgb(255,0,0)",

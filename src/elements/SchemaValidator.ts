@@ -267,19 +267,6 @@ export class SchemaValidator {
       }
     }
 
-    // 色値の妥当性チェック（#RRGGBB形式）
-    const colorProps = ["color", "backgroundColor", "borderColor"];
-    colorProps.forEach((prop) => {
-      if (style[prop] && typeof style[prop] === "string") {
-        if (!style[prop].match(/^#[0-9A-Fa-f]{6}$/)) {
-          errors.push({
-            path: `${stylePath}/${prop}`,
-            message: "色は#RRGGBB形式で指定してください",
-            value: style[prop],
-          });
-        }
-      }
-    });
   }
 
   /**
