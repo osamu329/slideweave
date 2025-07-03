@@ -4,7 +4,6 @@
  */
 
 import postcss, { Rule, Declaration } from "postcss";
-import postcssImport from "postcss-import";
 import * as fs from "fs";
 import * as path from "path";
 import { CSSStyleParser, ParsedStyle } from "./CSSStyleParser";

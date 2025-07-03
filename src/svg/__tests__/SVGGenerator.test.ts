@@ -1,4 +1,5 @@
 import { SVGGenerator } from "../SVGGenerator";
+import { vi } from "vitest";
 
 describe("SVGGenerator", () => {
   let generator: SVGGenerator;
@@ -187,6 +188,24 @@ describe("SVGGenerator", () => {
       });
 
       expect(svg).toContain('fill="rgb(255,0,0)"');
+    });
+
+    it("should provide informative warning message for RGBA colors", async () => {
+      const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      
+      await generator.generateFrameSVG({
+        width: 200,
+        height: 100,
+        backgroundColor: "rgba(255,0,0,0.5)",
+      });
+
+      expect(consoleSpy).toHaveBeenCalledWith(
+        "⚠️  RGBA/RGB colors are converted to SVG format for PowerPoint compatibility. " +
+        "Transparency may appear differently than expected. " +
+        "For consistent results, consider using hex colors (#RRGGBB)."
+      );
+      
+      consoleSpy.mockRestore();
     });
   });
 });

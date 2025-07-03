@@ -14,7 +14,7 @@
           "style": {
             "width": "960px",
             "height": "720px",
-            "backgroundColor": "#f0f0f0",
+            "backgroundImage": "examples/510.jpg",
             "padding": "16px",
             "flexDirection": "column",
             "gap": "12px"

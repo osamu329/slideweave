@@ -1,7 +1,7 @@
 {
   "type": "deck",
-  "title": "Background Image with Text",
-  "description": "背景画像 + 半透明フレーム + テキストの組み合わせテスト",
+  "title": "SVG Checkerboard Background Test",
+  "description": "市松模様SVG背景 + 半透明フレーム + テキストの組み合わせテスト",
   "format": "wide",
   "slides": [
     {
@@ -13,7 +13,7 @@
         {
           "type": "frame",
           "style": {
-            "backgroundImage": "examples/510.jpg",
+            "backgroundImage": "examples/checkerboard.svg",
             "width": "100%",
             "height": "100%",
             "padding": "32px"
@@ -30,7 +30,7 @@
               "children": [
                 {
                   "type": "heading",
-                  "content": "美しい風景",
+                  "content": "市松模様背景テスト",
                   "level": 1,
                   "style": {
                     "fontSize": "28px",
@@ -41,7 +41,7 @@
                 },
                 {
                   "type": "text",
-                  "content": "自然の雄大さと静寂が調和した絶景。透明度の高い湖面に映る空と雲が美しい。",
+                  "content": "SVGの市松模様パターンを背景に使用したテストです。透過効果がわかりやすく確認できます。",
                   "style": {
                     "fontSize": "16px",
                     "color": "#E0E0E0"

@@ -327,7 +327,9 @@ export class SVGGenerator {
         // PPTXGenJSはrgba()をサポートしないため、16進数色に変換が必要
         // しかし、ここでは単純に透明度情報を失わないよう処理を変更
         console.warn(
-          "rgba/rgb colors in SVG may not render correctly in PowerPoint",
+          "⚠️  RGBA/RGB colors are converted to SVG format for PowerPoint compatibility. " +
+          "Transparency may appear differently than expected. " +
+          "For consistent results, consider using hex colors (#RRGGBB)."
         );
         fill = backgroundColor;
       } else if (!backgroundColor.startsWith("#")) {
