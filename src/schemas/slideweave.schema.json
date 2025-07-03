@@ -49,6 +49,10 @@
       "properties": {
         "type": { "const": "slide" },
         "title": { "type": "string" },
+        "name": { 
+          "type": "string",
+          "description": "スライドの名前（識別用）"
+        },
         "layout": { 
           "enum": ["title", "content", "blank"] 
         },
@@ -502,6 +506,10 @@
         "paddingRight": { "$ref": "#/definitions/spacingValue" },
         "paddingBottom": { "$ref": "#/definitions/spacingValue" },
         "paddingLeft": { "$ref": "#/definitions/spacingValue" },
+        "flexDirection": { 
+          "enum": ["row", "column"] 
+        },
+        "gap": { "$ref": "#/definitions/dimension" },
         "backgroundImage": { 
           "type": "string",
           "description": "背景画像のパス。対応フォーマット: jpg, jpeg, png, gif, svg"
