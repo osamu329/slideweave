@@ -15,6 +15,9 @@ export interface RectOptions {
   fill?: string;
   rx?: number;
   ry?: number;
+  stroke?: string;
+  strokeWidth?: number;
+  strokeDasharray?: string;
 }
 
 export interface FrameSVGOptions {
@@ -23,6 +26,9 @@ export interface FrameSVGOptions {
   backgroundColor?: string;
   background?: Background;
   borderRadius?: string; // "12px"形式の文字列のみ
+  borderWidth?: string; // "2px"形式のボーダー幅
+  borderColor?: string; // "#ff0000"形式のボーダー色
+  borderStyle?: "solid" | "dashed" | "dotted"; // ボーダースタイル
   glassEffect?: boolean; // ガラス風効果を有効化
   backgroundBlur?: BackgroundBlurOptions; // 背景画像ブラー効果
 }
@@ -267,6 +273,18 @@ export class SVGGenerator {
       attrs.push(`ry="${options.ry}"`);
     }
 
+    if (options.stroke !== undefined) {
+      attrs.push(`stroke="${options.stroke}"`);
+    }
+
+    if (options.strokeWidth !== undefined) {
+      attrs.push(`stroke-width="${options.strokeWidth}"`);
+    }
+
+    if (options.strokeDasharray !== undefined) {
+      attrs.push(`stroke-dasharray="${options.strokeDasharray}"`);
+    }
+
     return `<rect ${attrs.join(" ")} />`;
   }
 
@@ -277,6 +295,9 @@ export class SVGGenerator {
       backgroundColor,
       background,
       borderRadius,
+      borderWidth,
+      borderColor,
+      borderStyle,
       glassEffect,
     } = options;
 
@@ -328,6 +349,28 @@ export class SVGGenerator {
       const radius = this.parseBorderRadius(borderRadius, width, height);
       rectOptions.rx = radius;
       rectOptions.ry = radius;
+    }
+
+    // Border処理: borderWidthが指定されている場合のみborderを描画
+    if (borderWidth !== undefined) {
+      const strokeWidth = parseFloat(borderWidth.replace("px", ""));
+      rectOptions.strokeWidth = strokeWidth;
+
+      // borderColor処理
+      if (borderColor !== undefined) {
+        const stroke = borderColor.startsWith("#") ? borderColor : `#${borderColor}`;
+        rectOptions.stroke = stroke;
+      } else {
+        rectOptions.stroke = "#000000"; // デフォルト黒
+      }
+
+      // borderStyle処理
+      if (borderStyle === "dashed") {
+        rectOptions.strokeDasharray = `${strokeWidth * 3} ${strokeWidth}`;
+      } else if (borderStyle === "dotted") {
+        rectOptions.strokeDasharray = `${strokeWidth} ${strokeWidth}`;
+      }
+      // solid の場合は strokeDasharray なし（デフォルト）
     }
 
     let rect = this.createRect(rectOptions);

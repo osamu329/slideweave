@@ -136,6 +136,30 @@ export class PPTXWrapper {
   }
 
   /**
+   * SVGを追加（SlideWeave単位系で）
+   * SVG文字列をBase64変換してPowerPointに追加
+   */
+  addSVG(svg: string, options: { x: Inches, y: Inches, w: Inches, h: Inches }): void {
+    if (!this.currentSlide) {
+      throw new Error("スライドが初期化されていません");
+    }
+
+    // SVG→Base64変換をラッパー内で実行
+    const svgBase64 = Buffer.from(svg).toString("base64");
+    const dataUri = `data:image/svg+xml;base64,${svgBase64}`;
+
+    const pptxOptions = {
+      x: options.x as number,
+      y: options.y as number,
+      w: options.w as number,
+      h: options.h as number,
+      data: dataUri
+    };
+
+    this.currentSlide.addImage(pptxOptions);
+  }
+
+  /**
    * 現在のスライドが存在するかチェック
    */
   hasCurrentSlide(): boolean {

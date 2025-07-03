@@ -341,7 +341,10 @@ export class PPTXRenderer {
       height: layoutResult.height, // 実際のレイアウトサイズ（ピクセル）
       backgroundColor: style?.backgroundColor,
       background: style?.background, // グラデーション対応
-      borderRadius: style?.borderRadius ? `${style.borderRadius}px` : undefined, // 数値をpx文字列に変換
+      borderRadius: style?.borderRadius, // 既に"8px"形式
+      borderWidth: style?.borderWidth, // "2px"形式のボーダー幅
+      borderColor: style?.borderColor, // "#ff0000"形式のボーダー色
+      borderStyle: style?.borderStyle, // "solid" | "dashed" | "dotted"
       glassEffect: style?.glassEffect, // ガラス風効果
       backgroundBlur: this.createBackgroundBlurOptions(layoutResult, style), // 背景ブラー効果
     };
@@ -364,13 +367,8 @@ export class PPTXRenderer {
 
     const svg = await this.svgGenerator.generateFrameSVG(svgOptions);
 
-    // SVGをBase64エンコード
-    const svgBase64 = Buffer.from(svg).toString("base64");
-    const dataUri = `data:image/svg+xml;base64,${svgBase64}`;
-
-    // addImageでSVGを描画（ガラス効果オーバーレイ）
-    this.pptxWrapper.addImage({
-      data: dataUri,
+    // addSVGでSVGを描画（Base64変換はラッパー内で実行）
+    this.pptxWrapper.addSVG(svg, {
       x: position.x,
       y: position.y,
       w: position.w,
