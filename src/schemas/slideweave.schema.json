@@ -383,10 +383,10 @@
         "gap": { "$ref": "#/definitions/spacingValue" },
         "width": { "$ref": "#/definitions/dimension" },
         "height": { "$ref": "#/definitions/dimension" },
-        "minWidth": { "$ref": "#/definitions/dimension" },
-        "minHeight": { "$ref": "#/definitions/dimension" },
-        "maxWidth": { "$ref": "#/definitions/dimension" },
-        "maxHeight": { "$ref": "#/definitions/dimension" },
+        "minWidth": { "$ref": "#/definitions/dimensionNoPt" },
+        "minHeight": { "$ref": "#/definitions/dimensionNoPt" },
+        "maxWidth": { "$ref": "#/definitions/dimensionNoPt" },
+        "maxHeight": { "$ref": "#/definitions/dimensionNoPt" },
         "flex": { 
           "type": "number",
           "minimum": 0,
@@ -473,6 +473,16 @@
           "type": "string",
           "pattern": "^\\d+(\\.\\d+)?(px|%|vw|vh|em|rem|pt)$",
           "description": "サイズ指定。対応単位: px, %, vw, vh, em, rem, pt"
+        }
+      ]
+    },
+    "dimensionNoPt": {
+      "oneOf": [
+        { "type": "number" },
+        { 
+          "type": "string",
+          "pattern": "^\\d+(\\.\\d+)?(px|%|em|rem)$",
+          "description": "サイズ指定。対応単位: px, %, em, rem (pt, vh, vw不可)"
         }
       ]
     },
