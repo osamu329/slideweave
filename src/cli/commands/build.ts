@@ -150,7 +150,7 @@ export async function buildSlides(inputPath: string, options: BuildOptions) {
 
     logger.success(`Successfully generated: ${outputPath}`);
   } catch (error) {
-    handleError(error);
+    throw error;
   }
 }
 
@@ -162,5 +162,9 @@ export const buildCommand = new Command("build")
   .option("-c, --config <file>", "Configuration file path")
   .option("--verbose", "Enable verbose logging")
   .action(async (input: string, options: BuildOptions) => {
-    await buildSlides(input, options);
+    try {
+      await buildSlides(input, options);
+    } catch (error) {
+      handleError(error);
+    }
   });

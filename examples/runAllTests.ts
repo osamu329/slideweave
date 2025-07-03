@@ -10,6 +10,39 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+/**
+ * エラーメッセージから簡潔な理由を抽出
+ */
+function getSimpleErrorReason(errorMessage: string): string {
+  if (errorMessage.includes('JSON Schema validation failed')) {
+    return 'スキーマバリデーション失敗';
+  }
+  if (errorMessage.includes('Schema file not found')) {
+    return 'スキーマファイル未発見';
+  }
+  if (errorMessage.includes('SYSTEM BUG: fontSize missing')) {
+    return 'フォントサイズ設定エラー';
+  }
+  if (errorMessage.includes('pt units not supported')) {
+    return 'pt単位非対応';
+  }
+  if (errorMessage.includes('Background blur processing failed')) {
+    return '背景ブラー処理失敗';
+  }
+  if (errorMessage.includes('Unable to parse color')) {
+    return '色形式エラー';
+  }
+  if (errorMessage.includes('Cannot find module')) {
+    return 'モジュール未発見';
+  }
+  if (errorMessage.includes('期待値: slide')) {
+    return '古い形式 (slide必須)';
+  }
+  
+  // 一般的なエラー
+  return errorMessage.split('\n')[0].substring(0, 30) + '...';
+}
+
 async function runAllTests() {
   console.log('🚀 examples以下のJSON・TSXテストケースを一括実行開始');
   
@@ -37,6 +70,7 @@ async function runAllTests() {
   
   let successCount = 0;
   let failureCount = 0;
+  const failedFiles: { file: string; reason: string }[] = [];
   
   // 各JSONファイルを順次実行
   for (const jsonFile of jsonFiles) {
@@ -50,7 +84,9 @@ async function runAllTests() {
       
     } catch (error) {
       failureCount++;
-      console.log(`❌`);
+      const reason = getSimpleErrorReason(error.message);
+      failedFiles.push({ file: jsonFile, reason });
+      console.log(`❌ (スキップ)`);
       console.error(`  エラー: ${error.message}`);
     }
   }
@@ -67,7 +103,9 @@ async function runAllTests() {
       
     } catch (error) {
       failureCount++;
-      console.log(`❌`);
+      const reason = getSimpleErrorReason(error.message);
+      failedFiles.push({ file: tsxFile, reason });
+      console.log(`❌ (スキップ)`);
       console.error(`  エラー: ${error.message}`);
     }
   }
@@ -79,6 +117,13 @@ async function runAllTests() {
   console.log(`✅ 成功: ${successCount}個`);
   console.log(`❌ 失敗: ${failureCount}個`);
   console.log(`📁 合計: ${totalFiles}個`);
+  
+  if (failureCount > 0) {
+    console.log(`\n❌ 失敗したファイル一覧:`);
+    failedFiles.forEach((failure, index) => {
+      console.log(`  ${index + 1}. ${failure.file} - ${failure.reason}`);
+    });
+  }
   
   if (failureCount === 0) {
     console.log('\n🎉 すべてのテストケースが正常に処理されました！');
