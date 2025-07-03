@@ -1,0 +1,198 @@
+{
+  "type": "deck",
+  "format": "wide",
+  "slides": [
+    {
+      "type": "slide",
+      "children": [
+        {
+          "type": "container",
+          "style": {
+            "flexDirection": "column",
+            "width": "100%",
+            "height": "100%",
+            "padding": "40px",
+            "gap": "20px",
+            "alignItems": "center"
+          },
+          "children": [
+            {
+              "type": "text",
+              "content": "Min/Max Width Test - Percentage Units",
+              "style": {
+                "fontSize": "28pt",
+                "color": "#7B1FA2",
+                "textAlign": "center",
+                "marginBottom": "20px"
+              }
+            },
+            {
+              "type": "container",
+              "style": {
+                "flexDirection": "row",
+                "width": "100%",
+                "gap": "20px",
+                "alignItems": "stretch"
+              },
+              "children": [
+                {
+                  "type": "frame",
+                  "style": {
+                    "backgroundColor": "#F3E5F5",
+                    "padding": "20px",
+                    "minWidth": "15%",
+                    "maxWidth": "25%",
+                    "flex": 1
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "Constrained Width",
+                      "style": {
+                        "fontSize": "18pt",
+                        "color": "#7B1FA2",
+                        "marginBottom": "10px"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "content": "minWidth: 15%\nmaxWidth: 25%\nflex: 1\n\nThis box will be between 15% and 25% of container width.",
+                      "style": {
+                        "fontSize": "14pt",
+                        "color": "#424242"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "style": {
+                    "backgroundColor": "#E0F2F1",
+                    "padding": "20px",
+                    "width": "30%"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "Fixed Width",
+                      "style": {
+                        "fontSize": "18pt",
+                        "color": "#00695C",
+                        "marginBottom": "10px"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "content": "width: 30%\n\nThis box has a fixed width of 30% of the container.",
+                      "style": {
+                        "fontSize": "14pt",
+                        "color": "#424242"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "style": {
+                    "backgroundColor": "#FFF3E0",
+                    "padding": "20px",
+                    "minWidth": "10%",
+                    "flex": 2
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "Min Width Only",
+                      "style": {
+                        "fontSize": "18pt",
+                        "color": "#E65100",
+                        "marginBottom": "10px"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "content": "minWidth: 10%\nflex: 2\n\nThis box has minimum 10% width and can grow freely.",
+                      "style": {
+                        "fontSize": "14pt",
+                        "color": "#424242"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "container",
+              "style": {
+                "flexDirection": "row",
+                "width": "100%",
+                "gap": "15px",
+                "alignItems": "stretch",
+                "marginTop": "30px"
+              },
+              "children": [
+                {
+                  "type": "frame",
+                  "style": {
+                    "backgroundColor": "#E3F2FD",
+                    "padding": "20px",
+                    "maxWidth": "40%",
+                    "flex": 1
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "Max Width Only",
+                      "style": {
+                        "fontSize": "18pt",
+                        "color": "#1976D2",
+                        "marginBottom": "10px"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "content": "maxWidth: 40%\nflex: 1\n\nThis box will not exceed 40% of container width even with flex growth.",
+                      "style": {
+                        "fontSize": "14pt",
+                        "color": "#424242"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "style": {
+                    "backgroundColor": "#FFEBEE",
+                    "padding": "20px",
+                    "minWidth": "20%",
+                    "maxWidth": "35%",
+                    "flex": 1
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "Both Constraints",
+                      "style": {
+                        "fontSize": "18pt",
+                        "color": "#D32F2F",
+                        "marginBottom": "10px"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "content": "minWidth: 20%\nmaxWidth: 35%\nflex: 1\n\nThis box is constrained between 20% and 35% of container width.",
+                      "style": {
+                        "fontSize": "14pt",
+                        "color": "#424242"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

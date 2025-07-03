@@ -1,0 +1,168 @@
+{
+  "type": "deck",
+  "format": "wide",
+  "slides": [
+    {
+      "type": "slide",
+      "children": [
+        {
+          "type": "container",
+          "style": {
+            "flexDirection": "row",
+            "width": "100%",
+            "height": "100%",
+            "padding": "40px",
+            "gap": "20px",
+            "alignItems": "stretch"
+          },
+          "children": [
+            {
+              "type": "container",
+              "style": {
+                "flexDirection": "column",
+                "width": "100%",
+                "height": "100%",
+                "gap": "15px"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "content": "Min/Max Height Test - Percentage Units",
+                  "style": {
+                    "fontSize": "28pt",
+                    "color": "#D32F2F",
+                    "textAlign": "center",
+                    "marginBottom": "20px"
+                  }
+                },
+                {
+                  "type": "container",
+                  "style": {
+                    "flexDirection": "column",
+                    "width": "100%",
+                    "flex": 1,
+                    "gap": "15px"
+                  },
+                  "children": [
+                    {
+                      "type": "frame",
+                      "style": {
+                        "backgroundColor": "#FFEBEE",
+                        "padding": "20px",
+                        "minHeight": "15%",
+                        "maxHeight": "25%",
+                        "flex": 1
+                      },
+                      "children": [
+                        {
+                          "type": "text",
+                          "content": "Constrained Height",
+                          "style": {
+                            "fontSize": "18pt",
+                            "color": "#D32F2F",
+                            "marginBottom": "10px"
+                          }
+                        },
+                        {
+                          "type": "text",
+                          "content": "minHeight: 15%, maxHeight: 25%, flex: 1\n\nThis box will be between 15% and 25% of container height.",
+                          "style": {
+                            "fontSize": "14pt",
+                            "color": "#424242"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "style": {
+                        "backgroundColor": "#E0F2F1",
+                        "padding": "20px",
+                        "height": "20%"
+                      },
+                      "children": [
+                        {
+                          "type": "text",
+                          "content": "Fixed Height",
+                          "style": {
+                            "fontSize": "18pt",
+                            "color": "#00695C",
+                            "marginBottom": "10px"
+                          }
+                        },
+                        {
+                          "type": "text",
+                          "content": "height: 20%\n\nThis box has a fixed height of 20% of the container.",
+                          "style": {
+                            "fontSize": "14pt",
+                            "color": "#424242"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "style": {
+                        "backgroundColor": "#FFF3E0",
+                        "padding": "20px",
+                        "minHeight": "10%",
+                        "flex": 2
+                      },
+                      "children": [
+                        {
+                          "type": "text",
+                          "content": "Min Height Only",
+                          "style": {
+                            "fontSize": "18pt",
+                            "color": "#E65100",
+                            "marginBottom": "10px"
+                          }
+                        },
+                        {
+                          "type": "text",
+                          "content": "minHeight: 10%, flex: 2\n\nThis box has minimum 10% height and can grow freely with double flex weight.",
+                          "style": {
+                            "fontSize": "14pt",
+                            "color": "#424242"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "style": {
+                        "backgroundColor": "#F3E5F5",
+                        "padding": "20px",
+                        "maxHeight": "18%",
+                        "flex": 1
+                      },
+                      "children": [
+                        {
+                          "type": "text",
+                          "content": "Max Height Only",
+                          "style": {
+                            "fontSize": "18pt",
+                            "color": "#7B1FA2",
+                            "marginBottom": "10px"
+                          }
+                        },
+                        {
+                          "type": "text",
+                          "content": "maxHeight: 18%, flex: 1\n\nThis box will not exceed 18% of container height even with flex growth.",
+                          "style": {
+                            "fontSize": "14pt",
+                            "color": "#424242"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

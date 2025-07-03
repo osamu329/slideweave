@@ -1,0 +1,41 @@
+{
+  "type": "deck",
+  "title": "FlexShrink Test",
+  "format": "wide",
+  "slides": [
+    {
+      "type": "slide",
+      "title": "FlexShrink: 5 vs 10",
+      "children": [
+        {
+          "type": "container",
+          "style": {
+            "width": "200px",
+            "height": "200px",
+            "padding": "10px"
+          },
+          "children": [
+            {
+              "type": "frame",
+              "style": {
+                "margin": "5px",
+                "flexShrink": 5,
+                "height": "150px",
+                "backgroundColor": "#FF6B6B"
+              }
+            },
+            {
+              "type": "frame",
+              "style": {
+                "margin": "5px",
+                "flexShrink": 10,
+                "height": "150px",
+                "backgroundColor": "#4ECDC4"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

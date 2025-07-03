@@ -1,0 +1,39 @@
+{
+  "type": "deck",
+  "title": "FlexGrow Test",
+  "format": "wide",
+  "slides": [
+    {
+      "type": "slide",
+      "title": "FlexGrow: 0.25 vs 0.75",
+      "children": [
+        {
+          "type": "container",
+          "style": {
+            "width": "200px",
+            "height": "200px",
+            "padding": "10px"
+          },
+          "children": [
+            {
+              "type": "frame",
+              "style": {
+                "margin": "5px",
+                "flexGrow": 0.25,
+                "backgroundColor": "#FF6B6B"
+              }
+            },
+            {
+              "type": "frame",
+              "style": {
+                "margin": "5px",
+                "flexGrow": 0.75,
+                "backgroundColor": "#4ECDC4"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

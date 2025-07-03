@@ -1,0 +1,168 @@
+{
+  "type": "deck",
+  "format": "wide",
+  "slides": [
+    {
+      "type": "slide",
+      "children": [
+        {
+          "type": "container",
+          "style": {
+            "flexDirection": "row",
+            "width": "100%",
+            "height": "100%",
+            "padding": "40px",
+            "gap": "20px",
+            "alignItems": "stretch"
+          },
+          "children": [
+            {
+              "type": "container",
+              "style": {
+                "flexDirection": "column",
+                "width": "100%",
+                "height": "100%",
+                "gap": "15px"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "content": "Min/Max Height Test - Pixel Units",
+                  "style": {
+                    "fontSize": "28pt",
+                    "color": "#2E7D32",
+                    "textAlign": "center",
+                    "marginBottom": "20px"
+                  }
+                },
+                {
+                  "type": "container",
+                  "style": {
+                    "flexDirection": "column",
+                    "width": "100%",
+                    "flex": 1,
+                    "gap": "15px"
+                  },
+                  "children": [
+                    {
+                      "type": "frame",
+                      "style": {
+                        "backgroundColor": "#E8F5E9",
+                        "padding": "20px",
+                        "minHeight": "80px",
+                        "maxHeight": "120px",
+                        "flex": 1
+                      },
+                      "children": [
+                        {
+                          "type": "text",
+                          "content": "Constrained Height",
+                          "style": {
+                            "fontSize": "18pt",
+                            "color": "#2E7D32",
+                            "marginBottom": "10px"
+                          }
+                        },
+                        {
+                          "type": "text",
+                          "content": "minHeight: 80px, maxHeight: 120px, flex: 1\n\nThis box will be between 80px and 120px tall, even with flex growth.",
+                          "style": {
+                            "fontSize": "14pt",
+                            "color": "#424242"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "style": {
+                        "backgroundColor": "#E3F2FD",
+                        "padding": "20px",
+                        "height": "100px"
+                      },
+                      "children": [
+                        {
+                          "type": "text",
+                          "content": "Fixed Height",
+                          "style": {
+                            "fontSize": "18pt",
+                            "color": "#1976D2",
+                            "marginBottom": "10px"
+                          }
+                        },
+                        {
+                          "type": "text",
+                          "content": "height: 100px\n\nThis box has a fixed height of 100px for comparison.",
+                          "style": {
+                            "fontSize": "14pt",
+                            "color": "#424242"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "style": {
+                        "backgroundColor": "#FFF3E0",
+                        "padding": "20px",
+                        "minHeight": "60px",
+                        "flex": 2
+                      },
+                      "children": [
+                        {
+                          "type": "text",
+                          "content": "Min Height Only",
+                          "style": {
+                            "fontSize": "18pt",
+                            "color": "#E65100",
+                            "marginBottom": "10px"
+                          }
+                        },
+                        {
+                          "type": "text",
+                          "content": "minHeight: 60px, flex: 2\n\nThis box has minimum 60px height and can grow freely with double flex weight.",
+                          "style": {
+                            "fontSize": "14pt",
+                            "color": "#424242"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "style": {
+                        "backgroundColor": "#F3E5F5",
+                        "padding": "20px",
+                        "maxHeight": "90px",
+                        "flex": 1
+                      },
+                      "children": [
+                        {
+                          "type": "text",
+                          "content": "Max Height Only",
+                          "style": {
+                            "fontSize": "18pt",
+                            "color": "#7B1FA2",
+                            "marginBottom": "10px"
+                          }
+                        },
+                        {
+                          "type": "text",
+                          "content": "maxHeight: 90px, flex: 1\n\nThis box will not exceed 90px height even with flex growth.",
+                          "style": {
+                            "fontSize": "14pt",
+                            "color": "#424242"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

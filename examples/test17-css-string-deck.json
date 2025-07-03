@@ -1,0 +1,165 @@
+{
+  "type": "deck",
+  "format": "wide",
+  "slides": [
+    {
+      "type": "slide",
+      "children": [
+        {
+          "type": "container",
+          "style": "flex-direction: column; width: 100%; height: 100%; padding: 40px; gap: 20px; justify-content: space-around;",
+          "children": [
+            {
+              "type": "text",
+              "content": "CSS String Format Test",
+              "style": "font-size: 28pt; color: #1976D2; text-align: center; margin-bottom: 20px;"
+            },
+            {
+              "type": "frame",
+              "style": "background-color: #E3F2FD; padding: 20px; border-radius: 8px; min-width: 200px; max-width: 600px;",
+              "children": [
+                {
+                  "type": "text",
+                  "content": "Frame with CSS String Style",
+                  "style": "font-size: 18pt; color: #1976D2; margin-bottom: 10px;"
+                },
+                {
+                  "type": "text",
+                  "content": "This frame uses CSS string format for styling:\n• background-color: #E3F2FD\n• padding: 20px\n• border-radius: 8px\n• min-width: 200px\n• max-width: 600px",
+                  "style": "font-size: 14pt; color: #424242;"
+                }
+              ]
+            },
+            {
+              "type": "container",
+              "style": "flex-direction: row; justify-content: space-between; width: 100%; gap: 15px;",
+              "children": [
+                {
+                  "type": "frame",
+                  "style": "background-color: #E8F5E9; padding: 15px; flex: 1; min-height: 100px; max-height: 150px;",
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "Left Box",
+                      "style": "font-size: 16pt; color: #2E7D32; text-align: center;"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "style": "background-color: #FFF3E0; padding: 15px; flex: 1; min-height: 100px; max-height: 150px;",
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "Center Box",
+                      "style": "font-size: 16pt; color: #E65100; text-align: center;"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "style": "background-color: #F3E5F5; padding: 15px; flex: 1; min-height: 100px; max-height: 150px;",
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "Right Box",
+                      "style": "font-size: 16pt; color: #7B1FA2; text-align: center;"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "children": [
+        {
+          "type": "container",
+          "style": "flex-direction: row; width: 100%; height: 100%; padding: 30px; gap: 20px;",
+          "children": [
+            {
+              "type": "container",
+              "style": "flex-direction: column; justify-content: flex-start; width: 50%; height: 100%; background-color: #FFEBEE; padding: 20px; gap: 10px;",
+              "children": [
+                {
+                  "type": "text",
+                  "content": "justify-content: flex-start",
+                  "style": "font-size: 18pt; color: #D32F2F; text-align: center; margin-bottom: 15px;"
+                },
+                {
+                  "type": "frame",
+                  "style": "background-color: #D32F2F; width: 100%; height: 60px;",
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "Item 1",
+                      "style": "color: #FFFFFF; text-align: center; font-size: 16pt;"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "style": "background-color: #D32F2F; width: 100%; height: 60px;",
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "Item 2",
+                      "style": "color: #FFFFFF; text-align: center; font-size: 16pt;"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "container",
+              "style": "flex-direction: column; justify-content: space-evenly; width: 50%; height: 100%; background-color: #E0F2F1; padding: 20px;",
+              "children": [
+                {
+                  "type": "text",
+                  "content": "justify-content: space-evenly",
+                  "style": "font-size: 18pt; color: #00695C; text-align: center;"
+                },
+                {
+                  "type": "frame",
+                  "style": "background-color: #00695C; width: 100%; height: 60px;",
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "Item 1",
+                      "style": "color: #FFFFFF; text-align: center; font-size: 16pt;"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "style": "background-color: #00695C; width: 100%; height: 60px;",
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "Item 2",
+                      "style": "color: #FFFFFF; text-align: center; font-size: 16pt;"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "style": "background-color: #00695C; width: 100%; height: 60px;",
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "Item 3",
+                      "style": "color: #FFFFFF; text-align: center; font-size: 16pt;"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

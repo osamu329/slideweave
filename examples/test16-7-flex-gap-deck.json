@@ -1,0 +1,65 @@
+{
+  "type": "deck",
+  "title": "Gap Test",
+  "format": "wide",
+  "slides": [
+    {
+      "type": "slide",
+      "title": "Gap: 10px with flexWrap",
+      "children": [
+        {
+          "type": "container",
+          "style": {
+            "width": "200px",
+            "height": "250px",
+            "padding": "10px",
+            "flexWrap": "wrap",
+            "gap": "10px"
+          },
+          "children": [
+            {
+              "type": "frame",
+              "style": {
+                "height": "50px",
+                "width": "50px",
+                "backgroundColor": "#FF6B6B"
+              }
+            },
+            {
+              "type": "frame",
+              "style": {
+                "height": "50px",
+                "width": "50px",
+                "backgroundColor": "#4ECDC4"
+              }
+            },
+            {
+              "type": "frame",
+              "style": {
+                "height": "50px",
+                "width": "50px",
+                "backgroundColor": "#45B7D1"
+              }
+            },
+            {
+              "type": "frame",
+              "style": {
+                "height": "50px",
+                "width": "50px",
+                "backgroundColor": "#96CEB4"
+              }
+            },
+            {
+              "type": "frame",
+              "style": {
+                "height": "50px",
+                "width": "50px",
+                "backgroundColor": "#FFEAA7"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "type": "deck",
+  "title": "FlexBasis Test",
+  "format": "wide",
+  "slides": [
+    {
+      "type": "slide",
+      "title": "FlexBasis: 50px",
+      "children": [
+        {
+          "type": "container",
+          "style": {
+            "width": "200px",
+            "height": "200px",
+            "padding": "10px"
+          },
+          "children": [
+            {
+              "type": "frame",
+              "style": {
+                "margin": "5px",
+                "flexBasis": "50px",
+                "backgroundColor": "#FF6B6B"
+              }
+            },
+            {
+              "type": "frame",
+              "style": {
+                "margin": "5px",
+                "flexBasis": "80px",
+                "backgroundColor": "#4ECDC4"
+              }
+            },
+            {
+              "type": "frame",
+              "style": {
+                "margin": "5px",
+                "flexBasis": "30px",
+                "backgroundColor": "#45B7D1"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

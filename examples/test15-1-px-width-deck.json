@@ -1,0 +1,335 @@
+{
+  "type": "deck",
+  "format": "wide",
+  "slides": [
+    {
+      "type": "slide",
+      "children": [
+        {
+          "type": "container",
+          "style": {
+            "flexDirection": "column",
+            "width": "100%",
+            "height": "100%",
+            "padding": "40px",
+            "gap": "30px",
+            "alignItems": "center"
+          },
+          "children": [
+            {
+              "type": "text",
+              "content": "Min/Max Width Test - Simple (No Flex)",
+              "style": {
+                "fontSize": "28pt",
+                "color": "#1976D2",
+                "textAlign": "center",
+                "marginBottom": "20px"
+              }
+            },
+            {
+              "type": "container",
+              "style": {
+                "flexDirection": "column",
+                "width": "100%",
+                "gap": "25px",
+                "alignItems": "center"
+              },
+              "children": [
+                {
+                  "type": "frame",
+                  "style": {
+                    "backgroundColor": "#E3F2FD",
+                    "padding": "15px",
+                    "minWidth": "150px"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "Min Width: 150px (13%)",
+                      "style": {
+                        "fontSize": "16pt",
+                        "color": "#1976D2",
+                        "textAlign": "center",
+                        "marginBottom": "8px"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "content": "Short text",
+                      "style": {
+                        "fontSize": "14pt",
+                        "color": "#424242",
+                        "textAlign": "center"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "style": {
+                    "backgroundColor": "#E8F5E9",
+                    "padding": "15px",
+                    "maxWidth": "200px"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "Max Width: 200px (17%)",
+                      "style": {
+                        "fontSize": "16pt",
+                        "color": "#2E7D32",
+                        "textAlign": "center",
+                        "marginBottom": "8px"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "content": "This is a much longer text that would normally make the box wider but is constrained by maxWidth",
+                      "style": {
+                        "fontSize": "14pt",
+                        "color": "#424242",
+                        "textAlign": "center"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "style": {
+                    "backgroundColor": "#FFF3E0",
+                    "padding": "15px",
+                    "minWidth": "120px",
+                    "maxWidth": "250px"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "Min: 120px, Max: 250px",
+                      "style": {
+                        "fontSize": "16pt",
+                        "color": "#E65100",
+                        "textAlign": "center",
+                        "marginBottom": "8px"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "content": "Medium length text content",
+                      "style": {
+                        "fontSize": "14pt",
+                        "color": "#424242",
+                        "textAlign": "center"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "content": "Note: These boxes have no flex property, so they size naturally based on content and min/max constraints.",
+              "style": {
+                "fontSize": "16pt",
+                "color": "#757575",
+                "textAlign": "center",
+                "fontStyle": "italic"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "children": [
+        {
+          "type": "container",
+          "style": {
+            "flexDirection": "column",
+            "width": "100%",
+            "height": "100%",
+            "padding": "40px",
+            "gap": "20px",
+            "alignItems": "center"
+          },
+          "children": [
+            {
+              "type": "text",
+              "content": "Min/Max Width Test - Pixel Units",
+              "style": {
+                "fontSize": "28pt",
+                "color": "#1976D2",
+                "textAlign": "center",
+                "marginBottom": "20px"
+              }
+            },
+            {
+              "type": "container",
+              "style": {
+                "flexDirection": "row",
+                "width": "100%",
+                "gap": "20px",
+                "alignItems": "stretch"
+              },
+              "children": [
+                {
+                  "type": "frame",
+                  "style": {
+                    "backgroundColor": "#E3F2FD",
+                    "padding": "20px",
+                    "minWidth": "150px",
+                    "maxWidth": "250px",
+                    "flex": 1
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "Constrained Width",
+                      "style": {
+                        "fontSize": "18pt",
+                        "color": "#1976D2",
+                        "marginBottom": "10px"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "content": "minWidth: 150px\nmaxWidth: 250px\nflex: 1\n\nThis box will be at least 150px wide and at most 250px wide, even with flex growth.",
+                      "style": {
+                        "fontSize": "14pt",
+                        "color": "#424242"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "style": {
+                    "backgroundColor": "#E8F5E9",
+                    "padding": "20px",
+                    "width": "200px"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "Fixed Width",
+                      "style": {
+                        "fontSize": "18pt",
+                        "color": "#2E7D32",
+                        "marginBottom": "10px"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "content": "width: 200px\n\nThis box has a fixed width of 200px for comparison.",
+                      "style": {
+                        "fontSize": "14pt",
+                        "color": "#424242"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "style": {
+                    "backgroundColor": "#FFF3E0",
+                    "padding": "20px",
+                    "minWidth": "100px",
+                    "flex": 2
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "Min Width Only",
+                      "style": {
+                        "fontSize": "18pt",
+                        "color": "#E65100",
+                        "marginBottom": "10px"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "content": "minWidth: 100px\nflex: 2\n\nThis box has only minimum width constraint and can grow freely.",
+                      "style": {
+                        "fontSize": "14pt",
+                        "color": "#424242"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "container",
+              "style": {
+                "flexDirection": "row",
+                "width": "100%",
+                "gap": "15px",
+                "alignItems": "stretch",
+                "marginTop": "30px"
+              },
+              "children": [
+                {
+                  "type": "frame",
+                  "style": {
+                    "backgroundColor": "#F3E5F5",
+                    "padding": "20px",
+                    "maxWidth": "300px",
+                    "flex": 1
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "Max Width Only",
+                      "style": {
+                        "fontSize": "18pt",
+                        "color": "#7B1FA2",
+                        "marginBottom": "10px"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "content": "maxWidth: 300px\nflex: 1\n\nThis box will not exceed 300px width even with flex growth.",
+                      "style": {
+                        "fontSize": "14pt",
+                        "color": "#424242"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "style": {
+                    "backgroundColor": "#FFEBEE",
+                    "padding": "20px",
+                    "minWidth": "180px",
+                    "maxWidth": "320px",
+                    "flex": 1
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "Both Constraints",
+                      "style": {
+                        "fontSize": "18pt",
+                        "color": "#D32F2F",
+                        "marginBottom": "10px"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "content": "minWidth: 180px\nmaxWidth: 320px\nflex: 1\n\nThis box is constrained between 180px and 320px.",
+                      "style": {
+                        "fontSize": "14pt",
+                        "color": "#424242"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

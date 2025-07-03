@@ -62,6 +62,13 @@ export interface BaseStyle {
   paddingLeft?: number | string;
   gap?: number | string;
 
+  // Positioning
+  top?: number | string;
+  right?: number | string;
+  bottom?: number | string;
+  left?: number | string;
+  position?: "relative" | "absolute" | "static";
+
   // Dimensions
   width?: number | string;
   height?: number | string;
@@ -79,7 +86,8 @@ export interface BaseStyle {
     | "flex-end"
     | "center"
     | "space-between"
-    | "space-around";
+    | "space-around"
+    | "space-evenly";
   alignItems?: "flex-start" | "flex-end" | "center" | "stretch";
   alignSelf?: "auto" | "flex-start" | "flex-end" | "center" | "stretch";
 
