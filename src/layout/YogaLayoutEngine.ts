@@ -343,9 +343,12 @@ export class YogaLayoutEngine {
         break;
 
       case "container":
-        // コンテナのデフォルト設定
-        node.setJustifyContent(this.yoga.JUSTIFY_FLEX_START);
-        node.setAlignItems(this.yoga.ALIGN_FLEX_START);
+        // コンテナのデフォルト設定をframeと同じ（設定なし）にする
+        // frameと同じデフォルト動作を使用
+        break;
+        
+      case "frame":
+        // フレームはデフォルト動作（設定なし）
         break;
 
       case "slide":

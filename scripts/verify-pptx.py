@@ -15,9 +15,67 @@ python-pptxを使用してPPTXの実際の内容を解析し、レポートを�
 
 import sys
 import json
+import re
+import base64
 from pathlib import Path
 from pptx import Presentation
 from pptx.enum.shapes import MSO_SHAPE_TYPE
+
+def extract_svg_info(image_blob):
+    """SVG画像データから全ての情報を抽出"""
+    try:
+        svg_content = None
+        # 画像データをテキストとしてデコード（SVGの場合）
+        if image_blob.startswith(b'<svg') or b'<svg' in image_blob[:100]:
+            svg_content = image_blob.decode('utf-8')
+        # Data URIの場合（base64エンコード済みSVG）
+        elif image_blob.startswith(b'data:image/svg+xml;base64,'):
+            base64_data = image_blob[26:]  # プレフィックスを除去
+            svg_content = base64.b64decode(base64_data).decode('utf-8')
+        
+        if svg_content:
+            info = {}
+            # fill属性
+            fill_match = re.search(r'fill="([^"]+)"', svg_content)
+            if fill_match:
+                info['fill'] = fill_match.group(1)
+            
+            # width/height属性
+            width_match = re.search(r'width="([^"]+)"', svg_content)
+            height_match = re.search(r'height="([^"]+)"', svg_content)
+            if width_match:
+                info['width'] = width_match.group(1)
+            if height_match:
+                info['height'] = height_match.group(1)
+            
+            # stroke関連
+            stroke_match = re.search(r'stroke="([^"]+)"', svg_content)
+            if stroke_match:
+                info['stroke'] = stroke_match.group(1)
+            
+            stroke_width_match = re.search(r'stroke-width="([^"]+)"', svg_content)
+            if stroke_width_match:
+                info['stroke_width'] = stroke_width_match.group(1)
+                
+            # opacity
+            opacity_match = re.search(r'opacity="([^"]+)"', svg_content)
+            if opacity_match:
+                info['opacity'] = opacity_match.group(1)
+                
+            # rect要素の確認
+            rect_matches = re.findall(r'<rect[^>]*>', svg_content)
+            if rect_matches:
+                info['rect_count'] = len(rect_matches)
+                info['rects'] = rect_matches
+            
+            # SVG全体のサイズが0でないか確認
+            if svg_content.strip() == '' or len(svg_content) < 50:
+                info['error'] = 'SVG content too short'
+            
+            return info
+    except Exception as e:
+        return {'error': str(e)}
+    return None
 
 def analyze_shape(shape, indent=0):
     """シェイプの情報を解析"""
@@ -43,6 +101,28 @@ def analyze_shape(shape, indent=0):
             if fill.fore_color.rgb:
                 print(f"{prefix}  Fill Color: #{fill.fore_color.rgb}")
             info["fill_color"] = str(fill.fore_color.rgb) if fill.fore_color.rgb else None
+    
+    # SVG画像の場合、全情報を抽出
+    if shape.shape_type == MSO_SHAPE_TYPE.PICTURE:
+        try:
+            # 画像データからSVGの全情報を抽出
+            image = shape.image
+            if image:
+                # SVGデータから全情報を抽出（SlideWeave生成の場合）
+                svg_info = extract_svg_info(image.blob)
+                if svg_info:
+                    print(f"{prefix}  SVG Info:")
+                    for key, value in svg_info.items():
+                        if key == 'rects':
+                            print(f"{prefix}    {key}: {len(value)} rect elements")
+                            for i, rect in enumerate(value):
+                                print(f"{prefix}      rect {i}: {rect}")
+                        else:
+                            print(f"{prefix}    {key}: {value}")
+                    info["svg_info"] = svg_info
+        except Exception as e:
+            print(f"{prefix}  SVG Error: {e}")
+            pass  # 画像の場合はスキップ
     
     # テキストの確認
     if shape.has_text_frame:
