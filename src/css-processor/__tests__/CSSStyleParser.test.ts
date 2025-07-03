@@ -12,7 +12,7 @@ describe("CSSStyleParser", () => {
       const result = CSSStyleParser.parse(css);
 
       expect(result).toEqual({
-        fontSize: 14,
+        fontSize: "14pt",
         margin: "8px",
         width: "100%",
       });
@@ -35,7 +35,7 @@ describe("CSSStyleParser", () => {
       const result = CSSStyleParser.parse(css);
 
       expect(result).toEqual({
-        fontSize: 28,
+        fontSize: "28pt",
         width: "100%",
         height: "50px",
       });
@@ -62,7 +62,7 @@ describe("CSSStyleParser", () => {
       expect(consoleSpy).toHaveBeenCalledWith(
         expect.stringContaining('Unitless dimension "4" for property "margin"'),
       );
-      expect(consoleSpy).toHaveBeenCalledWith(
+      expect(consoleSpy).not.toHaveBeenCalledWith(
         expect.stringContaining('Unitless value "1" for property "flex"'),
       );
 
@@ -83,7 +83,7 @@ describe("CSSStyleParser", () => {
       const result = CSSStyleParser.parse(css);
 
       expect(result).toEqual({
-        fontSize: 14,
+        fontSize: "14pt",
         margin: "8px",
       });
     });

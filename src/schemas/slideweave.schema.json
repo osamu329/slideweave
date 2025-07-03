@@ -140,7 +140,7 @@
           "type": "string",
           "description": "CSSクラス名（ユーティリティクラス等）"
         },
-        "style": { "$ref": "#/definitions/frameStyle" },
+        "style": { "$ref": "#/definitions/styleValue" },
         "children": {
           "type": "array",
           "items": { "$ref": "#/definitions/element" }
@@ -177,7 +177,7 @@
           "type": "string",
           "description": "CSSクラス名（ユーティリティクラス等）"
         },
-        "style": { "$ref": "#/definitions/textStyle" }
+        "style": { "$ref": "#/definitions/styleValue" }
       },
       "required": ["type", "content"],
       "additionalProperties": false
@@ -200,7 +200,7 @@
           "type": "string",
           "description": "CSSクラス名（ユーティリティクラス等）"
         },
-        "style": { "$ref": "#/definitions/textStyle" }
+        "style": { "$ref": "#/definitions/styleValue" }
       },
       "required": ["type", "content"],
       "additionalProperties": false
@@ -358,8 +358,14 @@
       "additionalProperties": false
     },
     "baseStyle": {
-      "type": "object",
-      "properties": {
+      "oneOf": [
+        {
+          "type": "string",
+          "description": "CSS文字列形式のスタイル（例: \"padding: 8px; margin: 4px\"）"
+        },
+        {
+          "type": "object",
+          "properties": {
         "margin": { "$ref": "#/definitions/spacingValue" },
         "marginTop": { "$ref": "#/definitions/spacingValue" },
         "marginRight": { "$ref": "#/definitions/spacingValue" },
@@ -420,6 +426,8 @@
         }
       },
       "additionalProperties": true
+        }
+      ]
     },
     "frameStyle": {
       "allOf": [
@@ -480,8 +488,14 @@
       "additionalProperties": false
     },
     "slideStyle": {
-      "type": "object",
-      "properties": {
+      "oneOf": [
+        {
+          "type": "string",
+          "description": "CSS文字列形式のスタイル（例: \"padding: 8px\"）"
+        },
+        {
+          "type": "object",
+          "properties": {
         "padding": { "$ref": "#/definitions/spacingValue" },
         "paddingTop": { "$ref": "#/definitions/spacingValue" },
         "paddingRight": { "$ref": "#/definitions/spacingValue" },
@@ -496,6 +510,8 @@
         }
       },
       "additionalProperties": false
+        }
+      ]
     },
     "textStyle": {
       "allOf": [
@@ -515,6 +531,18 @@
               "description": "テキストのシャドウ効果"
             }
           }
+        }
+      ]
+    },
+    "styleValue": {
+      "oneOf": [
+        {
+          "type": "string",
+          "description": "CSS文字列形式のスタイル（例: \"padding: 8px; margin: 4px\"）"
+        },
+        {
+          "type": "object",
+          "additionalProperties": true
         }
       ]
     },
