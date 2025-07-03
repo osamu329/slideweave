@@ -9,6 +9,7 @@ describe("SlideDataLoader CSS Stylesheet Integration", () => {
   describe("CSS stylesheet processing", () => {
     test("should apply class styles to elements with className", () => {
       const slideData = {
+        type: "deck",
         title: "Test Slide",
         css: `
           .container {
@@ -64,6 +65,7 @@ describe("SlideDataLoader CSS Stylesheet Integration", () => {
 
     test("should merge class styles with inline styles (inline styles take precedence)", () => {
       const slideData = {
+        type: "deck",
         title: "Test Slide",
         css: `
           .base {
@@ -102,6 +104,7 @@ describe("SlideDataLoader CSS Stylesheet Integration", () => {
 
     test("should handle CSS string inline styles with class styles", () => {
       const slideData = {
+        type: "deck",
         title: "Test Slide",
         css: `
           .text {
@@ -136,6 +139,7 @@ describe("SlideDataLoader CSS Stylesheet Integration", () => {
 
     test("should work without CSS stylesheet", () => {
       const slideData = {
+        type: "deck",
         title: "Test Slide",
         // css プロパティなし
         slides: [
@@ -163,6 +167,7 @@ describe("SlideDataLoader CSS Stylesheet Integration", () => {
 
     test("should handle nested elements with different classes", () => {
       const slideData = {
+        type: "deck",
         title: "Test Slide",
         css: `
           .outer {
@@ -230,9 +235,10 @@ describe("SlideDataLoader CSS Stylesheet Integration", () => {
 
   describe("CSS warnings integration", () => {
     test("should warn about unsupported CSS properties", () => {
-      const consoleSpy = jest.spyOn(console, "warn").mockImplementation();
+      const consoleSpy = vi.spyOn(console, "warn").mockImplementation();
 
       const slideData = {
+        type: "deck",
         title: "Test Slide",
         css: `
           .unsupported {
@@ -278,6 +284,7 @@ describe("SlideDataLoader CSS Stylesheet Integration", () => {
   describe("class attribute support", () => {
     test('should support single class name with "class" property', () => {
       const slideData = {
+        type: "deck",
         title: "Test Slide",
         css: `
           .primary {
@@ -310,6 +317,7 @@ describe("SlideDataLoader CSS Stylesheet Integration", () => {
 
     test('should support multiple class names with "class" property (space-separated)', () => {
       const slideData = {
+        type: "deck",
         title: "Test Slide",
         css: `
           .primary {
@@ -352,6 +360,7 @@ describe("SlideDataLoader CSS Stylesheet Integration", () => {
 
     test("should handle class conflicts (later classes override earlier ones)", () => {
       const slideData = {
+        type: "deck",
         title: "Test Slide",
         css: `
           .red-text {
@@ -388,6 +397,7 @@ describe("SlideDataLoader CSS Stylesheet Integration", () => {
 
     test("should ignore non-existent classes in multiple class list", () => {
       const slideData = {
+        type: "deck",
         title: "Test Slide",
         css: `
           .valid {
@@ -418,6 +428,7 @@ describe("SlideDataLoader CSS Stylesheet Integration", () => {
 
     test("should work with empty class string", () => {
       const slideData = {
+        type: "deck",
         title: "Test Slide",
         css: `
           .unused {
@@ -449,6 +460,7 @@ describe("SlideDataLoader CSS Stylesheet Integration", () => {
 
     test("should work without class property", () => {
       const slideData = {
+        type: "deck",
         title: "Test Slide",
         css: `
           .unused {

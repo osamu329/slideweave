@@ -90,7 +90,7 @@ export interface BaseStyle {
 
   // Text
   color?: string; // #RRGGBB format
-  fontSize?: number | string;
+  fontSize?: string; // Must include unit: "16px", "12pt", etc.
   fontFamily?: string;
   fontWeight?: "normal" | "bold" | number;
   fontStyle?: "normal" | "italic";
@@ -105,12 +105,19 @@ export interface BaseElement {
   children?: Element[];
 }
 
+export interface DeckDefaults {
+  fontSize?: string; // Default font size for all text elements
+  fontFamily?: string;
+  color?: string;
+}
+
 export interface DeckElement extends BaseElement {
   type: "deck";
   title?: string;
   description?: string;
   format?: "wide" | "standard";
   style?: DeckStyle;
+  defaults?: DeckDefaults;
   slides: SlideElement[];
 }
 
@@ -185,13 +192,6 @@ export interface TextElement extends BaseElement {
   type: "text";
   content: string;
   style?: TextStyle;
-  // 後方互換性のため一時的に保留
-  fontSize?: number;
-  fontFamily?: string;
-  color?: string;
-  bold?: boolean;
-  italic?: boolean;
-  shadow?: TextShadow;
 }
 
 export interface HeadingElement extends BaseElement {
@@ -199,13 +199,6 @@ export interface HeadingElement extends BaseElement {
   content: string;
   level?: 1 | 2 | 3 | 4 | 5 | 6;
   style?: TextStyle;
-  // 後方互換性のため一時的に保留
-  fontSize?: number;
-  fontFamily?: string;
-  color?: string;
-  bold?: boolean;
-  italic?: boolean;
-  shadow?: TextShadow;
 }
 
 export interface ListElement extends BaseElement {

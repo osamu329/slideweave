@@ -17,12 +17,10 @@ import {
 import { loadConfig, resolveOutputPath } from "../utils/config.js";
 
 // SlideWeave core modules
-import { renderLayout } from "../../layout/LayoutEngine.js";
 import { PPTXRenderer } from "../../renderer/PPTXRenderer.js";
 import { SchemaValidator } from "../../elements/SchemaValidator.js";
 import { RuntimeValidator } from "../../elements/RuntimeValidator.js";
 import { SlideDataLoader } from "../../data/SlideDataLoader.js";
-import { DPIConverter } from "../../utils/DPIConverter.js";
 import { SLIDE_FORMATS } from "../../utils/SlideFormats.js";
 
 interface BuildOptions {
@@ -112,12 +110,11 @@ export async function buildSlides(inputPath: string, options: BuildOptions) {
       if (slide.children && slide.children.length > 0) {
         // 子要素が複数ある場合は、暗黙的なコンテナでラップ
         if (slide.children.length === 1) {
-          const slideLayout = await renderLayout(
+          await renderer.render(
             slide.children[0],
             slideConfig.widthPx,
             slideConfig.heightPx,
           );
-          await renderer.render(slideLayout);
         } else {
           // 複数の子要素を持つ場合、コンテナでラップ
           const containerElement = {
@@ -129,12 +126,11 @@ export async function buildSlides(inputPath: string, options: BuildOptions) {
             },
             children: slide.children,
           };
-          const slideLayout = await renderLayout(
+          await renderer.render(
             containerElement,
             slideConfig.widthPx,
             slideConfig.heightPx,
           );
-          await renderer.render(slideLayout);
         }
       }
     }

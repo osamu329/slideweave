@@ -3,8 +3,7 @@
  * レイアウト計算結果をPPTXGenJSオブジェクトに変換
  */
 
-import PptxGenJS from "pptxgenjs";
-import { LayoutResult, flattenLayout } from "../layout/ILayoutEngine";
+import { LayoutResult, flattenLayout, YogaLayoutEngine } from "../layout/YogaLayoutEngine";
 import {
   TextElement,
   HeadingElement,
@@ -16,41 +15,79 @@ import {
 import { SVGGenerator, BackgroundBlurOptions } from "../svg/SVGGenerator";
 import { TempFileManager } from "../utils/TempFileManager";
 import { DPIConverter } from "../utils/DPIConverter";
+import { StyleConverter } from "../layout/StyleConverter";
+import { Pixels, Inches, createPixels, createPoints } from "../types/units";
+import { PPTXWrapper } from "./PPTXWrapper";
 
 export interface PPTXRenderOptions {
-  widthPx: number;
-  heightPx: number;
+  widthPx: Pixels;
+  heightPx: Pixels;
   dpi: number;
 }
 
 export class PPTXRenderer {
-  private pptx: PptxGenJS;
-  private currentSlide: PptxGenJS.Slide | null = null;
+  private pptxWrapper: PPTXWrapper;
   private svgGenerator: SVGGenerator;
   private currentBackgroundImage: string | null = null;
   private currentBackgroundColor: string | null = null;
-  private slideWidthInch: number;
-  private slideHeightInch: number;
+  private slideWidthInch: Inches;
+  private slideHeightInch: Inches;
   private dpiConverter: DPIConverter;
+  private styleConverter: StyleConverter;
+  private layoutEngine: YogaLayoutEngine;
 
   constructor(options: PPTXRenderOptions) {
-    this.pptx = new PptxGenJS();
     this.svgGenerator = new SVGGenerator();
 
     // DPI変換器を初期化
     this.dpiConverter = new DPIConverter(options.dpi);
 
+    // StyleConverter初期化（format別DPI使用）
+    this.styleConverter = new StyleConverter(options.dpi);
+
     // ピクセル値からインチ値を内部で計算
     this.slideWidthInch = this.dpiConverter.pxToInch(options.widthPx);
     this.slideHeightInch = this.dpiConverter.pxToInch(options.heightPx);
 
-    // スライドサイズ設定
-    this.pptx.defineLayout({
-      name: "SLIDEWEAVE_LAYOUT",
-      width: this.slideWidthInch,
-      height: this.slideHeightInch,
-    });
-    this.pptx.layout = "SLIDEWEAVE_LAYOUT";
+    // PPTXWrapperを初期化
+    this.pptxWrapper = new PPTXWrapper(options.dpi, this.slideWidthInch, this.slideHeightInch);
+    
+    // YogaLayoutEngineを初期化
+    this.layoutEngine = new YogaLayoutEngine();
+  }
+
+  /**
+   * 要素をレイアウト処理用に前処理（pt→px変換）
+   */
+  private preprocessElement(element: any): any {
+    const processedElement = { ...element };
+    
+    if (element.style?.fontSize?.endsWith('pt')) {
+      const ptValue = parseFloat(element.style.fontSize);
+      const pxValue = this.dpiConverter.ptToPx(createPoints(ptValue));
+      
+      processedElement.style = {
+        ...element.style,
+        fontSizeInPixel: pxValue  // 変換済みpx値を追加
+        // 元のfontSizeも保持（PowerPoint出力用）
+      };
+    } else if (element.style?.fontSize?.endsWith('px')) {
+      const pxValue = parseFloat(element.style.fontSize);
+      
+      processedElement.style = {
+        ...element.style,
+        fontSizeInPixel: createPixels(pxValue)  // px値をそのまま設定
+      };
+    }
+    
+    // 子要素も再帰的に処理
+    if (element.children) {
+      processedElement.children = element.children.map((child: any) => 
+        this.preprocessElement(child)
+      );
+    }
+    
+    return processedElement;
   }
 
   /**
@@ -102,46 +139,42 @@ export class PPTXRenderer {
   }
 
   /**
-   * レイアウト結果からPPTXファイルを生成
-   * @param elementsOrLayoutResult 要素配列またはレイアウト結果
-   * @param layoutResults レイアウト計算結果配列 (要素配列の場合のみ)
+   * 要素からPPTXファイルを生成（レイアウト処理込み）
+   * @param element 要素
+   * @param containerWidth コンテナ幅
+   * @param containerHeight コンテナ高さ
    * @returns PPTXGenJS インスタンス
    */
   async render(
-    elementsOrLayoutResult: any[] | LayoutResult,
-    layoutResults?: LayoutResult[],
-  ): Promise<PptxGenJS> {
+    element: any,
+    containerWidth: Pixels,
+    containerHeight: Pixels,
+  ): Promise<any> {
     // 新しいスライドを作成
-    this.currentSlide = this.pptx.addSlide();
+    this.pptxWrapper.addSlide();
 
-    // テスト用のオーバーロード処理
-    if (Array.isArray(elementsOrLayoutResult) && layoutResults) {
-      const layoutResult = layoutResults[0];
-      // スライドレベルの背景画像を先に描画
-      this.renderSlideBackground(layoutResult);
+    // 要素を前処理（pt→px変換）
+    const processedElement = this.preprocessElement(element);
 
-      // 相対座標を絶対座標に変換して平坦化
-      const flatElements = flattenLayout(layoutResult);
+    // レイアウト計算
+    const layoutResult = await this.layoutEngine.renderLayout(
+      processedElement,
+      containerWidth,
+      containerHeight,
+    );
 
-      // 各要素を絶対座標でレンダリング
-      for (const element of flatElements) {
-        await this.renderFlatElement(element);
-      }
-    } else {
-      const layoutResult = elementsOrLayoutResult as LayoutResult;
-      // スライドレベルの背景画像を先に描画
-      this.renderSlideBackground(layoutResult);
+    // スライドレベルの背景画像を先に描画
+    this.renderSlideBackground(layoutResult);
 
-      // 相対座標を絶対座標に変換して平坦化
-      const flatElements = flattenLayout(layoutResult);
+    // 相対座標を絶対座標に変換して平坦化
+    const flatElements = flattenLayout(layoutResult);
 
-      // 各要素を絶対座標でレンダリング
-      for (const element of flatElements) {
-        await this.renderFlatElement(element);
-      }
+    // 各要素を絶対座標でレンダリング
+    for (const element of flatElements) {
+      await this.renderFlatElement(element);
     }
 
-    return this.pptx;
+    return this.pptxWrapper;
   }
 
   /**
@@ -149,7 +182,7 @@ export class PPTXRenderer {
    * @param layoutResult レイアウト結果
    */
   private renderSlideBackground(layoutResult: LayoutResult): void {
-    if (!this.currentSlide) return;
+    if (!this.pptxWrapper.hasCurrentSlide()) return;
 
     const element = layoutResult.element;
     const style = element.style;
@@ -167,7 +200,10 @@ export class PPTXRenderer {
     if (style && "backgroundColor" in style && style.backgroundColor) {
       this.currentBackgroundColor = style.backgroundColor; // 背景色を保存
       // スライドの背景色を設定
-      this.currentSlide.background = { color: style.backgroundColor };
+      const currentSlide = this.pptxWrapper.getCurrentSlide();
+      if (currentSlide) {
+        currentSlide.background = { color: style.backgroundColor };
+      }
     }
   }
 
@@ -182,9 +218,9 @@ export class PPTXRenderer {
     backgroundSize: "cover" | "contain" | "fit" | "none" | undefined,
     layoutResult: LayoutResult,
   ): void {
-    if (!this.currentSlide) return;
+    if (!this.pptxWrapper.hasCurrentSlide()) return;
 
-    const position = this.pixelsToInches(layoutResult);
+    const position = this.pptxWrapper.createPositionFromLayout(layoutResult);
 
     // backgroundSizeに応じたsizingオプションを設定
     let sizingOption: any = undefined;
@@ -211,7 +247,10 @@ export class PPTXRenderer {
       imageOptions.sizing = sizingOption;
     }
 
-    this.currentSlide.addImage(imageOptions);
+    const currentSlide = this.pptxWrapper.getCurrentSlide();
+    if (currentSlide) {
+      currentSlide.addImage(imageOptions);
+    }
   }
 
   /**
@@ -238,7 +277,7 @@ export class PPTXRenderer {
    * @param layoutResult レイアウト結果（絶対座標）
    */
   private async renderFlatElement(layoutResult: LayoutResult): Promise<void> {
-    if (!this.currentSlide) {
+    if (!this.pptxWrapper.hasCurrentSlide()) {
       throw new Error("スライドが初期化されていません");
     }
 
@@ -290,9 +329,9 @@ export class PPTXRenderer {
     layoutResult: LayoutResult,
     element: FrameElement,
   ): Promise<void> {
-    if (!this.currentSlide) return;
+    if (!this.pptxWrapper.hasCurrentSlide()) return;
 
-    const position = this.pixelsToInches(layoutResult);
+    const position = this.pptxWrapper.createPositionFromLayout(layoutResult);
     const style = element.style;
 
     // SVGを生成してframeを描画
@@ -313,8 +352,8 @@ export class PPTXRenderer {
         svgOptions.backgroundBlur,
       );
       if (blurredImagePath) {
-        this.currentSlide.addImage({
-          path: blurredImagePath, // 既に絶対パス
+        this.pptxWrapper.addImage({
+          path: blurredImagePath,
           x: position.x,
           y: position.y,
           w: position.w,
@@ -330,7 +369,7 @@ export class PPTXRenderer {
     const dataUri = `data:image/svg+xml;base64,${svgBase64}`;
 
     // addImageでSVGを描画（ガラス効果オーバーレイ）
-    this.currentSlide.addImage({
+    this.pptxWrapper.addImage({
       data: dataUri,
       x: position.x,
       y: position.y,
@@ -348,9 +387,9 @@ export class PPTXRenderer {
     layoutResult: LayoutResult,
     element: ShapeElement,
   ): Promise<void> {
-    if (!this.currentSlide) return;
+    if (!this.pptxWrapper.hasCurrentSlide()) return;
 
-    const position = this.pixelsToInches(layoutResult);
+    const position = this.pptxWrapper.createPositionFromLayout(layoutResult);
     const style = element.style;
 
     // グラデーション背景がある場合はSVG描画、そうでなければ従来のshape描画
@@ -374,7 +413,7 @@ export class PPTXRenderer {
       const dataUri = `data:image/svg+xml;base64,${svgBase64}`;
 
       // addImageでSVGを描画
-      this.currentSlide.addImage({
+      this.pptxWrapper.addImage({
         data: dataUri,
         x: position.x,
         y: position.y,
@@ -383,11 +422,8 @@ export class PPTXRenderer {
       });
     } else {
       // 従来のshape描画（単色背景用）
-      const shapeOptions: Record<string, unknown> = {
-        x: position.x,
-        y: position.y,
-        w: position.w,
-        h: position.h,
+      const shapeOptions = {
+        ...position,
       };
 
       // 背景色設定
@@ -399,18 +435,18 @@ export class PPTXRenderer {
           style.background && typeof style.background === "string"
             ? style.background
             : style.backgroundColor;
-        shapeOptions.fill = { color };
+        (shapeOptions as any).fill = { color };
       }
 
       // ボーダー設定
       if (style?.borderColor && style?.borderWidth) {
-        shapeOptions.line = {
+        (shapeOptions as any).line = {
           color: style.borderColor,
           width: style.borderWidth,
           dashType: style?.borderStyle === "dashed" ? "dash" : "solid",
         };
       } else {
-        shapeOptions.line = { type: "none" };
+        (shapeOptions as any).line = { type: "none" };
       }
 
       // shapeTypeに応じてPowerPointシェイプを作成
@@ -429,7 +465,7 @@ export class PPTXRenderer {
           pptxShapeType = "rect";
       }
 
-      this.currentSlide.addShape(pptxShapeType as any, shapeOptions);
+      this.pptxWrapper.addShape(pptxShapeType, shapeOptions);
     }
   }
 
@@ -452,42 +488,62 @@ export class PPTXRenderer {
   }
 
   /**
+   * フォントサイズ文字列をpx値に変換（DPI対応）
+   * @param fontSize フォントサイズ文字列（"16px", "12pt"など）
+   * @returns px単位の数値
+   */
+  private parseFontSize(fontSize: string | undefined): number {
+    if (!fontSize) return 12; // デフォルト値
+
+    const match = fontSize.match(/^(\d+(?:\.\d+)?)(px|pt|em|rem)?$/);
+    if (!match) return 12;
+
+    const value = parseFloat(match[1]);
+    const unit = match[2] || 'px';
+
+    switch (unit) {
+      case 'pt':
+        // StyleConverterを使用してDPI対応のpt→px変換
+        const pxValue = this.styleConverter.convertDimensionUnit(fontSize, "fontSize");
+        return this.extractNumericValue(pxValue);
+      case 'em':
+      case 'rem':
+        // 1em/rem = 16px (デフォルト)
+        return value * 16;
+      case 'px':
+      default:
+        return value;
+    }
+  }
+
+  /**
    * textをレンダリング
    * @param layoutResult レイアウト結果
    * @param element text要素
    */
   private renderText(layoutResult: LayoutResult, element: TextElement): void {
-    if (!this.currentSlide) return;
+    if (!this.pptxWrapper.hasCurrentSlide()) return;
 
-    const position = this.pixelsToInches(layoutResult);
-    const fontSize =
-      this.extractNumericValue(element.style?.fontSize) ||
-      this.extractNumericValue(element.fontSize) ||
-      12;
+    const position = this.pptxWrapper.createPositionFromLayout(layoutResult);
+    const fontSize = this.parseFontSize(element.style?.fontSize);
     const padding = this.extractNumericValue(element.style?.padding) || 0;
 
-    const textOptions: any = {
+    const textOptions = {
       ...position,
-      fontSize,
-      fontFace: element.style?.fontFamily || element.fontFamily || "Arial",
-      color: element.style?.color || element.color || "000000",
+      fontSize: createPixels(fontSize), // px単位で渡す（wrapperでpt変換される）
+      fontFace: element.style?.fontFamily,
+      color: element.style?.color,
       bold: this.isBold(element.style?.fontWeight),
       italic: this.isItalic(element.style?.fontStyle),
-      // marginは要素間隔なのでaddTextに渡さない（レイアウトエンジンで処理済み）
-      // paddingのみをテキストフレーム内マージンとして適用
-      margin: padding, // paddingをPowerPointのmarginに適用（4pxグリッドシステム廃止のため乗算なし）
-      valign: "top" as const, // 縦位置を上揃えに設定
+      margin: padding,
+      valign: "top" as const,
       fill: element.style?.backgroundColor
         ? { color: element.style.backgroundColor }
-        : undefined, // 背景色設定（型定義に合わせてオブジェクト形式）
+        : undefined,
+      shadow: element.style?.textShadow ? this.convertTextShadow(element.style.textShadow) : undefined,
     };
 
-    // shadowプロパティが指定されている場合は追加
-    if (element.shadow) {
-      textOptions.shadow = this.convertTextShadow(element.shadow);
-    }
-
-    this.currentSlide.addText(element.content, textOptions);
+    this.pptxWrapper.addText(element.content, textOptions);
   }
 
   /**
@@ -499,47 +555,39 @@ export class PPTXRenderer {
     layoutResult: LayoutResult,
     element: HeadingElement,
   ): void {
-    if (!this.currentSlide) return;
+    if (!this.pptxWrapper.hasCurrentSlide()) return;
 
-    const position = this.pixelsToInches(layoutResult);
+    const position = this.pptxWrapper.createPositionFromLayout(layoutResult);
 
-    // レベルに応じたフォントサイズ
-    const fontSizeMap: Record<number, number> = {
-      1: 24,
-      2: 20,
-      3: 18,
-      4: 16,
-      5: 14,
-      6: 12,
+    // レベルに応じたデフォルトフォントサイズ（px単位）
+    const fontSizeMap: Record<number, string> = {
+      1: "24px",
+      2: "20px",
+      3: "18px",
+      4: "16px",
+      5: "14px",
+      6: "12px",
     };
     const level = element.level || 1;
-    const fontSize =
-      this.extractNumericValue(element.style?.fontSize) ||
-      this.extractNumericValue(element.fontSize) ||
-      fontSizeMap[level] ||
-      16;
+    const fontSize = this.parseFontSize(element.style?.fontSize || fontSizeMap[level]);
     const padding = this.extractNumericValue(element.style?.padding) || 0;
 
-    const textOptions: any = {
+    const textOptions = {
       ...position,
-      fontSize,
-      fontFace: element.style?.fontFamily || element.fontFamily || "Arial",
-      color: element.style?.color || element.color || "000000",
+      fontSize: createPixels(fontSize), // px単位で渡す（wrapperでpt変換される）
+      fontFace: element.style?.fontFamily,
+      color: element.style?.color,
       bold: this.isBold(element.style?.fontWeight, true), // headingはデフォルトでbold
       italic: this.isItalic(element.style?.fontStyle),
-      margin: padding, // paddingのみをPowerPointのmarginに適用（4pxグリッドシステム廃止のため乗算なし）
-      valign: "top" as const, // 縦位置を上揃えに設定
+      margin: padding,
+      valign: "top" as const,
       fill: element.style?.backgroundColor
         ? { color: element.style.backgroundColor }
-        : undefined, // 背景色設定（型定義に合わせてオブジェクト形式）
+        : undefined,
+      shadow: element.style?.textShadow ? this.convertTextShadow(element.style.textShadow) : undefined,
     };
 
-    // shadowプロパティが指定されている場合は追加
-    if (element.shadow) {
-      textOptions.shadow = this.convertTextShadow(element.shadow);
-    }
-
-    this.currentSlide.addText(element.content, textOptions);
+    this.pptxWrapper.addText(element.content, textOptions);
   }
 
   /**
@@ -606,7 +654,7 @@ export class PPTXRenderer {
    */
   async save(filename: string): Promise<string> {
     try {
-      const result = await this.pptx.writeFile({ fileName: filename });
+      const result = await this.pptxWrapper.writeFile(filename);
 
       // PPTX生成完了後に一時ファイルをクリーンアップ
       TempFileManager.getInstance().cleanupAll();
@@ -623,25 +671,20 @@ export class PPTXRenderer {
    * PPTXデータをバッファとして取得
    * @returns Promise<Buffer>
    */
-  async getBuffer(): Promise<Buffer> {
-    return this.pptx.write({ outputType: "nodebuffer" }) as Promise<Buffer>;
-  }
+  // getBuffer メソッドは削除（PPTXWrapperを直接使用）
 
   /**
    * 新しいスライドを追加
    * @returns 新しいSlideインスタンス
    */
-  addSlide(): PptxGenJS.Slide {
-    this.currentSlide = this.pptx.addSlide();
-    return this.currentSlide;
-  }
+  // addSlide メソッドは削除（renderメソッドで自動的に追加）
 
   /**
    * PPTXGenJSインスタンスを取得
    * @returns PPTXGenJSインスタンス
    */
-  getPptx(): PptxGenJS {
-    return this.pptx;
+  getPptxWrapper(): PPTXWrapper {
+    return this.pptxWrapper;
   }
 
   /**

@@ -105,13 +105,7 @@ export class CSSStyleParser {
       }
     }
 
-    // font-sizeでpt単位の場合、数値に変換（特例）
-    if (prop === "font-size" && value.endsWith("pt")) {
-      const numValue = parseFloat(value.replace("pt", ""));
-      if (!isNaN(numValue)) {
-        return numValue;
-      }
-    }
+    // pt単位も他の単位と同様に文字列として保持
 
     // 色関連プロパティで3桁16進カラーの場合、6桁に変換
     if (this.isColorProperty(prop) && this.isShortHexColor(value)) {

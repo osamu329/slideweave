@@ -1,5 +1,5 @@
 import { PPTXRenderer } from "../PPTXRenderer";
-import { LayoutResult } from "../../layout/ILayoutEngine";
+import { LayoutResult } from "../../layout/YogaLayoutEngine";
 import { FrameElement } from "../../types/elements";
 import { describe, it, expect, beforeEach, vi } from "vitest";
 
@@ -31,19 +31,21 @@ vi.mock("../../svg/SVGGenerator", () => ({
 let mockSlideInstance: any;
 
 vi.mock("pptxgenjs", () => {
-  return vi.fn().mockImplementation(() => {
-    mockSlideInstance = {
-      addImage: vi.fn(),
-      addShape: vi.fn(),
-      addText: vi.fn(),
-    };
+  return {
+    default: vi.fn().mockImplementation(() => {
+      mockSlideInstance = {
+        addImage: vi.fn(),
+        addShape: vi.fn(),
+        addText: vi.fn(),
+      };
 
-    return {
-      addSlide: vi.fn().mockReturnValue(mockSlideInstance),
-      defineLayout: vi.fn(),
-      layout: "SLIDEWEAVE_LAYOUT",
-    };
-  });
+      return {
+        addSlide: vi.fn().mockReturnValue(mockSlideInstance),
+        defineLayout: vi.fn(),
+        layout: "SLIDEWEAVE_LAYOUT",
+      };
+    })
+  };
 });
 
 describe("PPTXRenderer - Frame SVG rendering", () => {

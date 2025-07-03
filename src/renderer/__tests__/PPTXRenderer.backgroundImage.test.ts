@@ -1,6 +1,6 @@
 import { PPTXRenderer } from "../PPTXRenderer";
 import { SlideElement } from "../../types/elements";
-import { LayoutResult } from "../../layout/ILayoutEngine";
+import { LayoutResult } from "../../layout/YogaLayoutEngine";
 import PptxGenJS from "pptxgenjs";
 import { describe, it, expect, beforeEach, vi, test } from "vitest";
 

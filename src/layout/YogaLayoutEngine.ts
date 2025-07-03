@@ -3,21 +3,63 @@
  * Facebook製のレイアウトエンジンで、CSS Flexboxに準拠
  */
 
-import { Element } from "../types/elements";
-import { ILayoutEngine, LayoutResult } from "./ILayoutEngine";
-import { StyleConverter } from "./StyleConverter";
+import { Element, BaseStyle } from "../types/elements";
+import { Pixels, createPixels } from "../types/units";
 
 // yoga-layout v3のインポート（非同期）
 import yogaLayout from "yoga-layout";
 
-export class YogaLayoutEngine implements ILayoutEngine {
+
+export interface LayoutResult {
+  left: Pixels;
+  top: Pixels;
+  width: Pixels;
+  height: Pixels;
+  element: Element;
+  children?: LayoutResult[];
+}
+
+/**
+ * レイアウト結果を平坦化（絶対座標に変換）
+ */
+export function flattenLayout(
+  layoutResult: LayoutResult,
+  parentLeft: Pixels = createPixels(0),
+  parentTop: Pixels = createPixels(0),
+): LayoutResult[] {
+  const absoluteLeft = createPixels(parentLeft + layoutResult.left);
+  const absoluteTop = createPixels(parentTop + layoutResult.top);
+
+  const flattened: LayoutResult[] = [
+    {
+      ...layoutResult,
+      left: absoluteLeft,
+      top: absoluteTop,
+      children: undefined, // 平坦化では子要素は含めない
+    },
+  ];
+
+  if (layoutResult.children) {
+    for (const child of layoutResult.children) {
+      flattened.push(...flattenLayout(child, absoluteLeft, absoluteTop));
+    }
+  }
+
+  return flattened;
+}
+
+export class YogaLayoutEngine {
   readonly name = "yoga-layout";
   private yoga: any = null;
 
+  constructor() {
+    // レイアウト計算専用 - DPI情報は不要
+  }
+
   async renderLayout(
     element: Element,
-    containerWidth: number = 1280,
-    containerHeight: number = 720,
+    containerWidth: Pixels,
+    containerHeight: Pixels,
   ): Promise<LayoutResult> {
     // Yogaインスタンスの初期化
     if (!this.yoga) {
@@ -29,16 +71,16 @@ export class YogaLayoutEngine implements ILayoutEngine {
 
     // ルートノードに明示的なサイズがない場合のみコンテナサイズを設定
     if (!('width' in (element.style || {}))) {
-      yogaNode.setWidth(containerWidth);
+      yogaNode.setWidth(containerWidth as number);
     }
     if (!('height' in (element.style || {}))) {
-      yogaNode.setHeight(containerHeight);
+      yogaNode.setHeight(containerHeight as number);
     }
 
     // レイアウト計算実行
     yogaNode.calculateLayout(
-      containerWidth,
-      containerHeight,
+      containerWidth as number,
+      containerHeight as number,
       this.yoga.DIRECTION_LTR,
     );
 
@@ -101,98 +143,49 @@ export class YogaLayoutEngine implements ILayoutEngine {
 
     // Gap プロパティ: 単位付き文字列をYogaに直接渡す
     if (style.gap !== undefined) {
-      const gapValue = StyleConverter.convertSpacingUnit(style.gap, "gap");
-      node.setGap(this.yoga.GUTTER_ALL, gapValue);
+      node.setGap(this.yoga.GUTTER_ALL, this.validateCSSUnitForYoga(style.gap, "gap"));
     }
 
     // Spacing: 単位付き文字列をYogaに直接渡す
     if (style.margin !== undefined) {
-      const marginValue = StyleConverter.convertSpacingUnit(
-        style.margin,
-        "margin",
-      );
-      node.setMargin(this.yoga.EDGE_ALL, marginValue);
+      node.setMargin(this.yoga.EDGE_ALL, this.validateCSSUnitForYoga(style.margin, "margin"));
     }
     if (style.marginTop !== undefined) {
-      const marginTopValue = StyleConverter.convertSpacingUnit(
-        style.marginTop,
-        "marginTop",
-      );
-      node.setMargin(this.yoga.EDGE_TOP, marginTopValue);
+      node.setMargin(this.yoga.EDGE_TOP, this.validateCSSUnitForYoga(style.marginTop, "marginTop"));
     }
     if (style.marginRight !== undefined) {
-      const marginRightValue = StyleConverter.convertSpacingUnit(
-        style.marginRight,
-        "marginRight",
-      );
-      node.setMargin(this.yoga.EDGE_RIGHT, marginRightValue);
+      node.setMargin(this.yoga.EDGE_RIGHT, this.validateCSSUnitForYoga(style.marginRight, "marginRight"));
     }
     if (style.marginBottom !== undefined) {
-      const marginBottomValue = StyleConverter.convertSpacingUnit(
-        style.marginBottom,
-        "marginBottom",
-      );
-      node.setMargin(this.yoga.EDGE_BOTTOM, marginBottomValue);
+      node.setMargin(this.yoga.EDGE_BOTTOM, this.validateCSSUnitForYoga(style.marginBottom, "marginBottom"));
     }
     if (style.marginLeft !== undefined) {
-      const marginLeftValue = StyleConverter.convertSpacingUnit(
-        style.marginLeft,
-        "marginLeft",
-      );
-      node.setMargin(this.yoga.EDGE_LEFT, marginLeftValue);
+      node.setMargin(this.yoga.EDGE_LEFT, this.validateCSSUnitForYoga(style.marginLeft, "marginLeft"));
     }
 
     if (style.padding !== undefined) {
-      const paddingValue = StyleConverter.convertSpacingUnit(
-        style.padding,
-        "padding",
-      );
-      node.setPadding(this.yoga.EDGE_ALL, paddingValue);
+      node.setPadding(this.yoga.EDGE_ALL, this.validateCSSUnitForYoga(style.padding, "padding"));
     }
     if (style.paddingTop !== undefined) {
-      const paddingTopValue = StyleConverter.convertSpacingUnit(
-        style.paddingTop,
-        "paddingTop",
-      );
-      node.setPadding(this.yoga.EDGE_TOP, paddingTopValue);
+      node.setPadding(this.yoga.EDGE_TOP, this.validateCSSUnitForYoga(style.paddingTop, "paddingTop"));
     }
     if (style.paddingRight !== undefined) {
-      const paddingRightValue = StyleConverter.convertSpacingUnit(
-        style.paddingRight,
-        "paddingRight",
-      );
-      node.setPadding(this.yoga.EDGE_RIGHT, paddingRightValue);
+      node.setPadding(this.yoga.EDGE_RIGHT, this.validateCSSUnitForYoga(style.paddingRight, "paddingRight"));
     }
     if (style.paddingBottom !== undefined) {
-      const paddingBottomValue = StyleConverter.convertSpacingUnit(
-        style.paddingBottom,
-        "paddingBottom",
-      );
-      node.setPadding(this.yoga.EDGE_BOTTOM, paddingBottomValue);
+      node.setPadding(this.yoga.EDGE_BOTTOM, this.validateCSSUnitForYoga(style.paddingBottom, "paddingBottom"));
     }
     if (style.paddingLeft !== undefined) {
-      const paddingLeftValue = StyleConverter.convertSpacingUnit(
-        style.paddingLeft,
-        "paddingLeft",
-      );
-      node.setPadding(this.yoga.EDGE_LEFT, paddingLeftValue);
+      node.setPadding(this.yoga.EDGE_LEFT, this.validateCSSUnitForYoga(style.paddingLeft, "paddingLeft"));
     }
 
     // Dimensions: 単位付き文字列をYogaに直接渡す
     if (style.width !== undefined) {
-      const widthValue = StyleConverter.convertDimensionUnit(
-        style.width,
-        "width",
-      );
       // YogaライブラリのsetWidthに文字列を渡す（Yogaが適切に処理）
-      node.setWidth(widthValue);
+      node.setWidth(this.validateCSSUnitForYoga(style.width, "width"));
     }
     if (style.height !== undefined) {
-      const heightValue = StyleConverter.convertDimensionUnit(
-        style.height,
-        "height",
-      );
-      node.setHeight(heightValue);
+      node.setHeight(this.validateCSSUnitForYoga(style.height, "height"));
     }
 
     // Flex
@@ -229,20 +222,71 @@ export class YogaLayoutEngine implements ILayoutEngine {
     }
   }
 
+
   /**
-   * CSS単位付き値から数値を抽出
+   * フォントサイズをPixels単位に変換（実行時エラー版）
    */
-  private extractNumericValue(value: string | number | undefined): number {
-    if (typeof value === "number") {
-      return value;
+  private parseFontSizeToPixels(style: any): Pixels {
+    // fontSizeInPixelがあればそれを優先
+    if ((style as any).fontSizeInPixel) {
+      return (style as any).fontSizeInPixel;
     }
+
+    // fontSizeの存在チェック（実行時）
+    const fontSize = style.fontSize;
+    if (!fontSize) {
+      throw new Error("SYSTEM BUG: fontSize is missing");
+    }
+    
+    const match = fontSize.match(/^(\d+(?:\.\d+)?)(px|pt|em|rem)?$/);
+    if (!match) {
+      throw new Error(`Invalid fontSize format: ${fontSize}`);
+    }
+
+    const value = parseFloat(match[1]);
+    const unit = match[2] || 'px';
+
+    switch (unit) {
+      case 'pt':
+        throw new Error(
+          `pt units not supported in layout engine: ${fontSize}. ` +
+          `Use fontSizeInPixel field for pt conversion.`
+        );
+      case 'em':
+      case 'rem':
+        // 1em/rem = 16px (デフォルト)
+        return createPixels(value * 16);
+      case 'px':
+      default:
+        return createPixels(value);
+    }
+  }
+
+  /**
+   * YogaライブラリのためにCSS単位を検証
+   * pt単位はYogaでサポートされていないため警告を表示
+   */
+  private validateCSSUnitForYoga(value: string | number, propertyName: string): string | number {
+    if (typeof value === "number") {
+      console.warn(
+        `⚠️  Unitless values are not supported for ${propertyName}. Use "px", "%", "vw", "vh" units instead. Received: ${value}`,
+      );
+      return `${value}px`; // フォールバック
+    }
+    
     if (typeof value === "string") {
-      const numMatch = value.match(/^(\d+(?:\.\d+)?)/);
-      if (numMatch) {
-        return parseFloat(numMatch[1]);
+      const trimmed = value.trim();
+      // pt単位の場合は警告のみ（レンダラーで処理される）
+      if (trimmed.endsWith("pt")) {
+        console.warn(
+          `⚠️  pt units in ${propertyName} should be handled by renderer, not layout engine. Value: ${value}`,
+        );
+        // pt単位はレイアウトでは無視（レンダラーで処理）
+        return "0px";
       }
     }
-    return 0;
+    
+    return value; // Yogaに直接渡す
   }
 
   /**
@@ -324,6 +368,7 @@ export class YogaLayoutEngine implements ILayoutEngine {
       "borderBottomStyle",
       "color",
       "fontSize",
+      "fontSizeInPixel", // 内部変換用フィールド
       "fontWeight",
       "fontStyle",
       "fontFamily",
@@ -372,41 +417,16 @@ export class YogaLayoutEngine implements ILayoutEngine {
    * テキスト要素のメジャー関数を設定
    */
   private setupTextMeasurement(node: any, element: Element): void {
-    // テキスト・見出し要素の型チェック
-    let fontSize = 14; // デフォルト値
-
-    if ("fontSize" in element) {
-      // element.fontSizeプロパティから取得
-      fontSize = this.extractNumericValue(element.fontSize) || 14;
+    if (!element.style || !('fontSize' in element.style) || !(element.style as any).fontSize) {
+      throw new Error(
+        `SYSTEM BUG: fontSize missing for ${element.type} element. ` +
+        `SlideDataLoader should have applied default fontSize.`
+      );
     }
+    
+    const fontSizePixels = this.parseFontSizeToPixels(element.style);
 
-    if (
-      element.style &&
-      "fontSize" in element.style &&
-      element.style.fontSize
-    ) {
-      // element.style.fontSizeから取得（こちらを優先）
-      fontSize = this.extractNumericValue(element.style.fontSize) || fontSize;
-    }
-
-    // headingの場合のデフォルトフォントサイズ
-    if (element.type === "heading" && "level" in element) {
-      const fontSizeMap: Record<number, number> = {
-        1: 24,
-        2: 20,
-        3: 18,
-        4: 16,
-        5: 14,
-        6: 12,
-      };
-      const level = element.level || 1;
-      // fontSizeが明示的に設定されていない場合のみデフォルト値を使用
-      if (!element.style?.fontSize && !("fontSize" in element)) {
-        fontSize = fontSizeMap[level] || 16;
-      }
-    }
-
-    const content = "content" in element ? element.content || "" : "";
+    const content = "content" in element ? (element as any).content || "" : "";
 
     node.setMeasureFunc(
       (
@@ -416,9 +436,9 @@ export class YogaLayoutEngine implements ILayoutEngine {
         _heightMode: number,
       ) => {
         // フォントメトリクス計算（言語別文字幅係数適用）
-        const charWidth = this.getCharWidth(content, fontSize);
-        const lineHeight = fontSize * 1.0;
-        const naturalWidth = content.length * charWidth;
+        const charWidth = this.getCharWidth(content, fontSizePixels);
+        const lineHeight = fontSizePixels * 1.0;
+        const naturalWidth = (content as string).length * charWidth;
 
         let resultWidth = naturalWidth;
         let resultHeight = lineHeight;
@@ -448,8 +468,8 @@ export class YogaLayoutEngine implements ILayoutEngine {
           : Math.ceil(resultHeight / 8) * 4;
 
         return {
-          width: alignedWidth,
-          height: alignedHeight,
+          width: createPixels(alignedWidth),
+          height: createPixels(alignedHeight),
         };
       },
     );
@@ -463,10 +483,10 @@ export class YogaLayoutEngine implements ILayoutEngine {
     originalElement: Element,
   ): LayoutResult {
     const result: LayoutResult = {
-      left: yogaNode.getComputedLeft(),
-      top: yogaNode.getComputedTop(),
-      width: yogaNode.getComputedWidth(),
-      height: yogaNode.getComputedHeight(),
+      left: createPixels(yogaNode.getComputedLeft()),
+      top: createPixels(yogaNode.getComputedTop()),
+      width: createPixels(yogaNode.getComputedWidth()),
+      height: createPixels(yogaNode.getComputedHeight()),
       element: originalElement,
     };
 
@@ -482,15 +502,15 @@ export class YogaLayoutEngine implements ILayoutEngine {
   }
 
   /**
-   * 言語別の文字幅係数を取得
+   * 言語別の文字幅係数を取得（Branded Type対応）
    */
-  private getCharWidth(content: string, fontSize: number): number {
+  private getCharWidth(content: string, fontSizePixels: Pixels): number {
     // 日本語文字（ひらがな、カタカナ、漢字）の検出
     const hasJapanese = /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/.test(
       content,
     );
-    const ratio = hasJapanese ? 1.2 : 0.8; // 日本語: 1.2（全角+余裕）, 英語: 0.8（半角）
-    return fontSize * ratio;
+    const ratio = hasJapanese ? 1.4 : 0.8; // 日本語: 1.4（全角+余裕）, 英語: 0.8（半角）
+    return fontSizePixels * ratio;
   }
 
   /**

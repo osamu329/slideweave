@@ -29,6 +29,7 @@ describe("Frame Background Color Rendering", () => {
         {
           type: "text" as const,
           content: "Test Text",
+          style: { fontSize: "14pt" },
           color: "FFFFFF",
         },
       ],
@@ -77,6 +78,7 @@ describe("Frame Background Color Rendering", () => {
         {
           type: "text" as const,
           content: "Test Text",
+          style: { fontSize: "14pt" },
           color: "FFFFFF",
         },
       ],

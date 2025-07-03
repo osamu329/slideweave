@@ -1,10 +1,12 @@
 import { PPTXRenderer } from '../src/renderer/PPTXRenderer';
-import { renderLayout } from '../src/layout/LayoutEngine';
+import { YogaLayoutEngine } from '../src/layout/YogaLayoutEngine';
+import { createPixels } from '../src/types/units';
 import { TextElement, ContainerElement } from '../src/types/elements';
 import { SLIDE_FORMATS } from '../src/utils/SlideFormats';
 
 describe('PPTXRenderer', () => {
   let renderer: PPTXRenderer;
+  let layoutEngine: YogaLayoutEngine;
 
   beforeEach(() => {
     renderer = new PPTXRenderer({
@@ -12,41 +14,42 @@ describe('PPTXRenderer', () => {
       heightPx: SLIDE_FORMATS.wide.heightPx,
       dpi: SLIDE_FORMATS.wide.dpi
     });
+    layoutEngine = new YogaLayoutEngine();
   });
 
   describe('基本レンダリング', () => {
-    test('textコンポーネントが指定座標に正確に配置される', () => {
+    test('textコンポーネントが指定座標に正確に配置される', async () => {
       const element: TextElement = {
         type: 'text',
         content: 'Hello World'
       };
 
-      const layoutResult = renderLayout(element, 720, 540);
-      const pptx = renderer.render(layoutResult);
+      const layoutResult = await layoutEngine.renderLayout(element, createPixels(720), createPixels(540));
+      const pptxWrapper = await renderer.render(layoutResult);
 
       // PPTXGenJSインスタンスが生成されることを確認
-      expect(pptx).toBeDefined();
-      expect(typeof pptx.writeFile).toBe('function');
+      expect(pptxWrapper).toBeDefined();
+      expect(typeof pptxWrapper.writeFile).toBe('function');
     });
 
-    test('日本語テキストが正しく表示される', () => {
+    test('日本語テキストが正しく表示される', async () => {
       const element: TextElement = {
         type: 'text',
         content: 'こんにちは世界'
       };
 
-      const layoutResult = renderLayout(element, 720, 540);
-      const pptx = renderer.render(layoutResult);
+      const layoutResult = await layoutEngine.renderLayout(element, createPixels(720), createPixels(540));
+      const pptxWrapper = await renderer.render(layoutResult);
 
-      expect(pptx).toBeDefined();
+      expect(pptxWrapper).toBeDefined();
     });
 
-    test('containerに背景色が設定される場合、正しく描画される', () => {
+    test('containerに背景色が設定される場合、正しく描画される', async () => {
       const element: ContainerElement = {
         type: 'container',
         style: {
           backgroundColor: '#FF0000',
-          padding: 2
+          padding: '8px'
         },
         children: [
           {
@@ -56,85 +59,87 @@ describe('PPTXRenderer', () => {
         ]
       };
 
-      const layoutResult = renderLayout(element, 720, 540);
-      const pptx = renderer.render(layoutResult);
+      const layoutResult = await layoutEngine.renderLayout(element, createPixels(720), createPixels(540));
+      const pptxWrapper = await renderer.render(layoutResult);
 
-      expect(pptx).toBeDefined();
+      expect(pptxWrapper).toBeDefined();
     });
   });
 
   describe('座標変換', () => {
-    test('ピクセル座標がインチに正しく変換される', () => {
+    test('ピクセル座標がインチに正しく変換される', async () => {
       const element: TextElement = {
         type: 'text',
         content: 'Position Test'
       };
 
       // 特定位置にレイアウト
-      const layoutResult = renderLayout(element, 720, 540);
-      const pptx = renderer.render(layoutResult);
+      const layoutResult = await layoutEngine.renderLayout(element, createPixels(720), createPixels(540));
+      const pptxWrapper = await renderer.render(layoutResult);
 
-      expect(pptx).toBeDefined();
+      expect(pptxWrapper).toBeDefined();
     });
   });
 
   describe('PPTXGenJSマージン問題', () => {
-    test('margin: 0 でマージンが無効化される', () => {
+    test('margin: 0 でマージンが無効化される', async () => {
       const element: TextElement = {
         type: 'text',
         content: 'No Margin Test'
       };
 
-      const layoutResult = renderLayout(element, 720, 540);
-      const pptx = renderer.render(layoutResult);
+      const layoutResult = await layoutEngine.renderLayout(element, createPixels(720), createPixels(540));
+      const pptxWrapper = await renderer.render(layoutResult);
 
       // PPTXGenJSのデフォルトオプションが適用されていることを確認
-      expect(pptx).toBeDefined();
+      expect(pptxWrapper).toBeDefined();
     });
   });
 
   describe('フォント設定', () => {
-    test('カスタムフォント設定が適用される', () => {
+    test('カスタムフォント設定が適用される', async () => {
       const element: TextElement = {
         type: 'text',
         content: 'Custom Font',
-        fontSize: 16,
-        fontFamily: 'Helvetica',
-        color: '0000FF',
-        bold: true,
-        italic: true
+        style: {
+          fontSize: '16pt',
+          fontFamily: 'Helvetica',
+          color: '#0000FF',
+          fontWeight: 'bold',
+          fontStyle: 'italic'
+        }
       };
 
-      const layoutResult = renderLayout(element, 720, 540);
-      const pptx = renderer.render(layoutResult);
+      const layoutResult = await layoutEngine.renderLayout(element, createPixels(720), createPixels(540));
+      const pptxWrapper = await renderer.render(layoutResult);
 
-      expect(pptx).toBeDefined();
+      expect(pptxWrapper).toBeDefined();
     });
   });
 
   describe('heading要素', () => {
-    test('headingレベルに応じたフォントサイズが設定される', () => {
+    test('headingレベルに応じたフォントサイズが設定される', async () => {
       const elements = [1, 2, 3, 4, 5, 6].map(level => ({
         type: 'heading' as const,
         content: `Heading Level ${level}`,
         level: level as 1 | 2 | 3 | 4 | 5 | 6
       }));
 
-      elements.forEach(element => {
-        const layoutResult = renderLayout(element, 720, 540);
-        const pptx = renderer.render(layoutResult);
-        expect(pptx).toBeDefined();
-      });
+      for (const element of elements) {
+        const layoutResult = await layoutEngine.renderLayout(element, createPixels(720), createPixels(540));
+        const pptxWrapper = await renderer.render(layoutResult);
+        expect(pptxWrapper).toBeDefined();
+      }
     });
   });
 
   describe('複数要素レンダリング', () => {
-    test('containerと子要素が正しくレンダリングされる', () => {
+    test('containerと子要素が正しくレンダリングされる', async () => {
       const element: ContainerElement = {
         type: 'container',
         style: {
-          padding: 2,
-          direction: 'column',
+          padding: '8px',
+          flexDirection: 'column',
           backgroundColor: '#F0F0F0'
         },
         children: [
@@ -154,10 +159,10 @@ describe('PPTXRenderer', () => {
         ]
       };
 
-      const layoutResult = renderLayout(element, 720, 540);
-      const pptx = renderer.render(layoutResult);
+      const layoutResult = await layoutEngine.renderLayout(element, createPixels(720), createPixels(540));
+      const pptxWrapper = await renderer.render(layoutResult);
 
-      expect(pptx).toBeDefined();
+      expect(pptxWrapper).toBeDefined();
     });
   });
 
@@ -170,10 +175,11 @@ describe('PPTXRenderer', () => {
         content: 'Export Test'
       };
 
-      const layoutResult = renderLayout(element, 720, 540);
-      renderer.render(layoutResult);
+      const layoutResult = await layoutEngine.renderLayout(element, createPixels(720), createPixels(540));
+      await renderer.render(layoutResult);
 
-      const buffer = await renderer.getBuffer();
+      const pptxWrapper = renderer.getPptxWrapper();
+      const buffer = await pptxWrapper.getBuffer();
       expect(buffer).toBeInstanceOf(Buffer);
       expect(buffer.length).toBeGreaterThan(0);
     });
@@ -181,14 +187,15 @@ describe('PPTXRenderer', () => {
 
   describe('スライド管理', () => {
     test('新しいスライドを追加できる', () => {
-      const slide = renderer.addSlide();
-      expect(slide).toBeDefined();
+      // PPTXWrapper経由でスライド追加されることを確認
+      const pptxWrapper = renderer.getPptxWrapper();
+      expect(pptxWrapper).toBeDefined();
     });
 
-    test('PPTXGenJSインスタンスを取得できる', () => {
-      const pptx = renderer.getPptx();
-      expect(pptx).toBeDefined();
-      expect(typeof pptx.addSlide).toBe('function');
+    test('PPTXWrapperインスタンスを取得できる', () => {
+      const pptxWrapper = renderer.getPptxWrapper();
+      expect(pptxWrapper).toBeDefined();
+      expect(typeof pptxWrapper.addSlide).toBe('function');
     });
   });
 });

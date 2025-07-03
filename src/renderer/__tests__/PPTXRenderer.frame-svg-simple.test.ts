@@ -1,5 +1,5 @@
 import { PPTXRenderer } from "../PPTXRenderer";
-import { LayoutResult } from "../../layout/ILayoutEngine";
+import { LayoutResult } from "../../layout/YogaLayoutEngine";
 import { FrameElement } from "../../types/elements";
 
 describe("PPTXRenderer Frame SVG - Simple Test", () => {

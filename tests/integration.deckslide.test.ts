@@ -3,12 +3,19 @@
  * 新しいDeckElement形式に対応した end-to-end テスト
  */
 
-import { renderLayout } from '../src/layout/LayoutEngine';
+import { YogaLayoutEngine } from '../src/layout/YogaLayoutEngine';
+import { createPixels } from '../src/types/units';
 import { PPTXRenderer } from '../src/renderer/PPTXRenderer';
 import { SchemaValidator } from '../src/elements/SchemaValidator';
 import { DeckElement, SlideElement } from '../src/types/elements';
 
 describe('SlideWeave Integration Test (Deck/Slide Structure)', () => {
+  let layoutEngine: YogaLayoutEngine;
+
+  beforeEach(() => {
+    layoutEngine = new YogaLayoutEngine();
+  });
+
   describe('基本的なdeck/slide統合', () => {
     test('should validate, layout, and render deck with single slide', async () => {
       const deckData: DeckElement = {
@@ -40,9 +47,10 @@ describe('SlideWeave Integration Test (Deck/Slide Structure)', () => {
       // 2. Layout calculation for each slide
       const slide = deckData.slides[0];
       const layoutResults = [];
+      const layoutEngine = new YogaLayoutEngine();
       
       for (const child of slide.children || []) {
-        const layoutResult = await renderLayout(child, 720, 540);
+        const layoutResult = await layoutEngine.renderLayout(child, createPixels(720), createPixels(540));
         layoutResults.push(layoutResult);
       }
 
@@ -101,10 +109,11 @@ describe('SlideWeave Integration Test (Deck/Slide Structure)', () => {
       heightPx: 720,
       dpi: 96
     });
+      const layoutEngine = new YogaLayoutEngine();
       
       for (const slide of deckData.slides) {
         for (const child of slide.children || []) {
-          const layoutResult = await renderLayout(child, 720, 540);
+          const layoutResult = await layoutEngine.renderLayout(child, createPixels(720), createPixels(540));
           await renderer.render(layoutResult);
         }
       }
@@ -153,8 +162,9 @@ describe('SlideWeave Integration Test (Deck/Slide Structure)', () => {
       // Layout and render
       const slide = deckData.slides[0];
       const containerElement = slide.children![0];
+      const layoutEngine = new YogaLayoutEngine();
       
-      const layoutResult = await renderLayout(containerElement, 720, 540);
+      const layoutResult = await layoutEngine.renderLayout(containerElement, createPixels(720), createPixels(540));
       
       expect(layoutResult.element.type).toBe('container');
       expect(layoutResult.children).toHaveLength(2);

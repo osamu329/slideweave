@@ -5,7 +5,7 @@
 
 import fs from "fs";
 import path from "path";
-import { Element, DeckElement } from "../types/elements";
+import { Element, DeckElement, DeckDefaults } from "../types/elements";
 import { CSSStyleParser } from "../css-processor/CSSStyleParser";
 import {
   CSSStylesheetParser,
@@ -41,10 +41,17 @@ export class SlideDataLoader {
       // CSS文字列をパース
       const stylesheetRules = this.processStylesheet(data.css);
 
+      // デフォルト値を設定（メモリ内でのみ使用、JSONオブジェクトには追加しない）
+      const defaults: DeckDefaults = {
+        fontSize: "14pt"
+      };
+
       // 各スライドの子要素を処理
       data.slides.forEach((slide: any) => {
         if (slide.children) {
           this.processStyleStrings(slide.children, stylesheetRules);
+          // デフォルト値を適用
+          this.applyDefaults(slide.children, defaults);
         }
       });
 
@@ -93,10 +100,17 @@ export class SlideDataLoader {
       // 結合されたCSS文字列をパース
       const stylesheetRules = this.processStylesheet(combinedCSS);
 
+      // デフォルト値を設定（メモリ内でのみ使用、JSONオブジェクトには追加しない）
+      const defaults: DeckDefaults = {
+        fontSize: "14pt"
+      };
+
       // 各スライドの子要素を処理
       data.slides.forEach((slide: any) => {
         if (slide.children) {
           this.processStyleStrings(slide.children, stylesheetRules);
+          // デフォルト値を適用
+          this.applyDefaults(slide.children, defaults);
         }
       });
 
@@ -124,10 +138,17 @@ export class SlideDataLoader {
     // CSS文字列をパース
     const stylesheetRules = this.processStylesheet(jsonData.css);
 
+    // デフォルト値を設定（メモリ内でのみ使用、JSONオブジェクトには追加しない）
+    const defaults: DeckDefaults = {
+      fontSize: "14pt"
+    };
+
     // 各スライドの子要素を処理
     jsonData.slides.forEach((slide: any) => {
       if (slide.children) {
         this.processStyleStrings(slide.children, stylesheetRules);
+        // デフォルト値を適用
+        this.applyDefaults(slide.children, defaults);
       }
     });
 
@@ -263,6 +284,42 @@ export class SlideDataLoader {
       }
       element.style.fontStyle = element.italic ? "italic" : "normal";
       delete element.italic;
+    }
+  }
+
+  /**
+   * デフォルト値を要素に適用
+   * @param elements 要素の配列
+   * @param defaults デッキレベルのデフォルト値
+   */
+  private static applyDefaults(elements: Element[], defaults: DeckDefaults): void {
+    for (const element of elements) {
+      // text/heading要素にのみデフォルト値を適用
+      if (element.type === "text" || element.type === "heading") {
+        if (!element.style) {
+          element.style = {};
+        }
+
+        // fontSize
+        if (!element.style.fontSize && defaults.fontSize) {
+          element.style.fontSize = defaults.fontSize;
+        }
+
+        // fontFamily
+        if (!element.style.fontFamily && defaults.fontFamily) {
+          element.style.fontFamily = defaults.fontFamily;
+        }
+
+        // color
+        if (!element.style.color && defaults.color) {
+          element.style.color = defaults.color;
+        }
+      }
+
+      // 子要素にも再帰的に適用
+      if (element.children) {
+        this.applyDefaults(element.children, defaults);
+      }
     }
   }
 }

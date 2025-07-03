@@ -4,7 +4,7 @@
  */
 
 import { PPTXRenderer } from "../PPTXRenderer";
-import { LayoutResult } from "../../layout/LayoutEngine";
+import { LayoutResult } from "../../layout/YogaLayoutEngine";
 import { TextElement, HeadingElement } from "../../types/elements";
 import { describe, it, expect, beforeEach, vi } from "vitest";
 

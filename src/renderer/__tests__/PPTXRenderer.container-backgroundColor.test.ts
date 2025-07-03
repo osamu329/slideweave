@@ -3,7 +3,7 @@
  */
 
 import { PPTXRenderer } from "../PPTXRenderer";
-import { LayoutResult } from "../../layout/LayoutEngine";
+import { LayoutResult } from "../../layout/YogaLayoutEngine";
 import { ContainerElement } from "../../types/elements";
 
 describe("PPTXRenderer Container Background Color", () => {

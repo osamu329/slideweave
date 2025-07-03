@@ -18,7 +18,7 @@ export interface SlideWeaveConfig {
 
 const defaultConfig: SlideWeaveConfig = {
   output: {
-    directory: "./output",
+    directory: "./examples/output",
     filename: "[name].pptx",
   },
   css: {

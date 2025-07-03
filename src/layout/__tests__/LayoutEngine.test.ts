@@ -2,7 +2,8 @@
  * LayoutEngineのテスト
  */
 
-import { renderLayout, flattenLayout } from "../LayoutEngine";
+import { YogaLayoutEngine, flattenLayout } from "../YogaLayoutEngine";
+import { createPixels } from "../../types/units";
 import { SlideDataLoader } from "../../data/SlideDataLoader";
 import { PPTXRenderer } from "../../renderer/PPTXRenderer";
 import { SchemaValidator } from "../../elements/SchemaValidator";
@@ -10,12 +11,17 @@ import { RuntimeValidator } from "../../elements/RuntimeValidator";
 import * as path from "path";
 
 describe("LayoutEngine", () => {
+  let layoutEngine: YogaLayoutEngine;
+
+  beforeEach(() => {
+    layoutEngine = new YogaLayoutEngine();
+  });
   describe("JSONベーステストケース", () => {
-    test("test1-basic-layout.json の完全統合テスト", async () => {
+    test("test01-basic-layout-deck.json の完全統合テスト", async () => {
       // JSONファイルを読み込み
       const testFilePath = path.join(
         __dirname,
-        "../../../examples/test1-basic-layout.json",
+        "../../../examples/test01-basic-layout-deck.json",
       );
       const slideData = SlideDataLoader.loadFromFile(testFilePath);
 
@@ -24,19 +30,25 @@ describe("LayoutEngine", () => {
       const slideHeight = 405;
 
       const renderer = new PPTXRenderer({
-        slideWidth: 10,
-        slideHeight: 5.625,
+        widthPx: slideWidth,
+        heightPx: slideHeight,
+        dpi: 72
       });
 
       // スライドを処理
       const slide = slideData.slides[0];
 
-      // バリデーション
-      const validation = ElementValidator.validate(slide);
-      expect(validation.isValid).toBe(true);
+      // デックレベルのバリデーション
+      const schemaValidator = new SchemaValidator();
+      const schemaValidation = schemaValidator.validate(slideData);
+      expect(schemaValidation.isValid).toBe(true);
+      
+      const runtimeValidator = new RuntimeValidator();
+      const runtimeValidation = runtimeValidator.validate(slideData);
+      expect(runtimeValidation.isValid).toBe(true);
 
       // レイアウト計算
-      const slideLayout = renderLayout(slide, slideWidth, slideHeight);
+      const slideLayout = await layoutEngine.renderLayout(slide, createPixels(slideWidth), createPixels(slideHeight));
 
       // レンダリング（ファイル保存はJestではスキップ）
       renderer.render(slideLayout);
@@ -72,14 +84,14 @@ describe("LayoutEngine", () => {
       expect(textElement.height).toBe(96); // 日本語文字幅係数1.2適用による適切な行高
     });
 
-    test("テキスト幅がコンテナ幅を超えない", () => {
+    test("テキスト幅がコンテナ幅を超えない", async () => {
       const testFilePath = path.join(
         __dirname,
-        "../../../examples/test1-basic-layout.json",
+        "../../../examples/test01-basic-layout-deck.json",
       );
       const slideData = SlideDataLoader.loadFromFile(testFilePath);
 
-      const layoutResult = renderLayout(slideData.slides[0], 720, 405);
+      const layoutResult = await layoutEngine.renderLayout(slideData.slides[0], createPixels(720), createPixels(405));
 
       // 全要素を平坦化して検証
       const flatElements = flattenLayout(layoutResult);

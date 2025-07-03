@@ -17,6 +17,10 @@
       "type": "string",
       "description": "プレゼンテーションの説明"
     },
+    "css": {
+      "type": "string",
+      "description": "CSSライクスタイルシート（PostCSS対応）"
+    },
     "format": {
       "oneOf": [
         {
@@ -446,15 +450,15 @@
         { "type": "number" },
         { 
           "type": "string",
-          "pattern": "^\\d+(\\.\\d+)?(px|%|vw|vh|em|rem)$",
-          "description": "サイズ指定。対応単位: px, %, vw, vh, em, rem"
+          "pattern": "^\\d+(\\.\\d+)?(px|%|vw|vh|em|rem|pt)$",
+          "description": "サイズ指定。対応単位: px, %, vw, vh, em, rem, pt"
         }
       ]
     },
     "spacingValue": {
       "type": "string",
-      "pattern": "^\\d+(\\.\\d+)?(px|%|vw|vh|em|rem)$",
-      "description": "余白指定。対応単位: px, %, vw, vh, em, rem"
+      "pattern": "^\\d+(\\.\\d+)?(px|%|vw|vh|em|rem|pt)$",
+      "description": "余白指定。対応単位: px, %, vw, vh, em, rem, pt"
     },
     "deckStyle": {
       "type": "object",

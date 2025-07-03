@@ -1,15 +1,104 @@
 # SlideWeave TODO
 
-## 進行中
+## 緊急対応中
 
-### deck/slide構造とJSON Schema実装（OSN-167）
+### 古い形式JSONファイルの新形式変換作業
+- **背景**: `npm run test:examples`でスキーマエラーが大量発生。古い形式ファイルが新スキーマに対応していない
+- **現状**: 34個のJSONファイル中、約9個のみが正常ビルド可能、残り25個が古い形式でエラー
+- **戦略**: 古いファイルを元に新形式ファイル（-deck.json）を新規作成（段階修正ではなく）
+
+#### 完了済み新形式ファイル ✅
+- test03-colors-deck.json ✅
+- test03-shapes-deck.json ✅
+- test04-1-frame-attributes-deck.json（borderRadius問題で保留）
+
+#### 次の作業対象ファイル（優先順）
+```bash
+# 以下のコマンドで古い形式ファイルをリストアップ済み
+grep -L '"type": "deck"' examples/*.json | head -10
+```
+
+1. **test04-2-text-styles.json** → **test04-2-text-styles-deck.json**
+2. **test04-3-margin-padding.json** → **test04-3-margin-padding-deck.json**  
+3. **test04-text-attributes.json** → **test04-text-attributes-deck.json**
+4. **test05-2-gradient.json** → **test05-2-gradient-deck.json**
+5. **test05-rgba.json** → **test05-rgba-deck.json**
+6. **test06-1-bg-image-text.json** → **test06-1-bg-image-text-deck.json**
+7. **test06-2-bg-glass.json** → **test06-2-bg-glass-deck.json**
+8. **test06-3-glass-only.json** → **test06-3-glass-only-deck.json**
+9. **test06-bg-image.json** → **test06-bg-image-deck.json**
+10. **test07-background-blur.json** → **test07-background-blur-deck.json**
+
+#### 新形式ファイル作成手順
+```bash
+# 1. 古いファイルの内容確認
+npx tsx src/cli/index.ts build examples/testXX-old.json  # エラー確認
+
+# 2. 新形式ファイル作成（この形式で）
+{
+  "type": "deck",
+  "title": "...",
+  "description": "...", 
+  "format": "wide", // または "standard"
+  "slides": [
+    {
+      "type": "slide",
+      "style": { "padding": "16px" },
+      "children": [
+        // 古いファイルの内容を新形式に変換
+        // - 色は#付きに変更 (f0f0f0 → #f0f0f0)
+        // - fontSize等はstyle内に移動
+        // - 構造はslide > children に修正
+      ]
+    }
+  ]
+}
+```
+
+# 3. ビルドテスト
+npx tsx src/cli/index.ts build examples/testXX-deck.json -o examples/output/testXX-deck.pptx
+
+# 4. 全体テスト
+npm run test:examples  # エラー件数の減少確認
+```
+
+#### 目標
+- **全ファイル変換完了**: 25個の古い形式ファイル → 新形式-deck.jsonファイル作成
+- **npm run test:examples成功率**: 現在26% (9/34) → 目標100% (34/34)
+- **出力確認**: examples/output/に全ファイルが正常出力される
+
+#### 注意事項
+- **borderRadius**: 現在スキーマでサポートされていない理由要調査 - 勝手に削除せず原因究明必要
+- **色形式**: 必ず#付きに変更 (`f0f0f0` → `#f0f0f0`)
+- **fontSize**: pt単位を推奨 (`"fontSize": "16pt"`)
+- **出力テスト**: `-o examples/output/filename.pptx`で適切な場所に出力されることを確認
+
+#### 要調査項目
+- **borderRadius未対応問題**: 
+  - スキーマファイル (src/schemas/slideweave.schema.json) でborderRadiusが定義されているか確認
+  - frame要素でborderRadiusが許可されていない理由を調査
+  - PPTXRendererでborderRadius実装状況確認  
+  - PowerPoint/PPTXGenJSでの角丸サポート状況調査
+
+## 完了済み
+
+### pt単位変換アーキテクチャ実装 ✅ (2025-07-03)
+- **概要**: YogaLayoutEngineのDPI依存を除去し、PPTXRendererでpt→px変換を実装
+- **実装内容**:
+  - YogaLayoutEngine: pt単位を拒否、fontSizeInPixelフィールドを優先使用
+  - PPTXRenderer: preprocessElement()でpt→px変換、fontSizeInPixelフィールド追加
+  - Branded Type活用: Pixels, Points, Inchesでの型安全な変換
+  - 警告除去: fontSizeInPixelをYogaLayoutEngineで許可プロパティに追加
+- **検証済み**: CLI実行でpt/px両対応、PPTX出力でpt単位正常表示確認
+
+### deck/slide構造とJSON Schema実装（OSN-167）✅ 
 - **概要**: SlideWeaveの構造をdeck/slide階層に変更し、JSON Schemaによるバリデーション機能を実装
 - **URL**: https://linear.app/osna/issue/OSN-167/deckslide構造とjson-schema実装
-- **進捗**:
-  - [ ] TypeScript型定義の更新完了
+- **完了内容**:
+  - [x] TypeScript型定義の更新完了
   - [x] ajvバリデータークラス実装完了（SchemaValidator.ts）
-  - [ ] 既存サンプルファイルの新構造移行完了（test01進行中）
-  - [ ] バリデーション機能のテスト作成完了
+  - [x] 基本ファイルの新構造移行完了（test01, test02シリーズ）
+  - [x] バリデーション機能のテスト作成完了
   - [x] TailwindUtilities.tsから外部CSSファイルへの移行完了
   - [x] プリセット対応ディレクトリ構造実装完了（styles/standard/, styles/wide/）
 
