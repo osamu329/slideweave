@@ -2,6 +2,7 @@
   "type": "deck",
   "title": "Background Image with Text",
   "description": "背景画像 + 半透明フレーム + テキストの組み合わせテスト",
+  "format": "wide",
   "slides": [
     {
       "type": "slide",
@@ -24,10 +25,10 @@
               "type": "heading",
               "content": "美しい風景",
               "level": 1,
-              "bold": true,
               "style": {
                 "fontSize": "28px",
-                "color": "FFFFFF",
+                "fontWeight": "bold",
+                "color": "#FFFFFF",
                 "marginBottom": "8px"
               }
             },
@@ -36,7 +37,7 @@
               "content": "自然の雄大さと静寂が調和した絶景。透明度の高い湖面に映る空と雲が美しい。",
               "style": {
                 "fontSize": "16px",
-                "color": "E0E0E0"
+                "color": "#E0E0E0"
               }
             }
           ]

@@ -1,4 +1,5 @@
 {
+  "type": "deck",
   "title": "Background Color Utilities Test - Tailwind Classes",
   "description": "background-color系ユーティリティクラスの動作確認テスト（1パターン1スライド）",
   "slides": [

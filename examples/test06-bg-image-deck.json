@@ -2,6 +2,7 @@
   "type": "deck",
   "title": "Background Image Test",
   "description": "背景画像の表示機能テスト（最小限版）",
+  "format": "wide",
   "slides": [
     {
       "type": "slide",

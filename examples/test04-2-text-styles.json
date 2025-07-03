@@ -1,4 +1,5 @@
 {
+  "type": "deck",
   "title": "テキストスタイルのテスト",
   "description": "bold、italic属性の組み合わせテスト",
   "slides": [

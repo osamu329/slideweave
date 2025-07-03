@@ -1,6 +1,8 @@
 {
+  "type": "deck",
   "title": "Test2-1: 2段組み+1段組みレイアウトテスト",
   "description": "左右2段組みレイアウトでのコンテンツ配置検証用テストケース",
+  "format": "wide",
   "slides": [
     {
       "type": "slide",
@@ -12,8 +14,8 @@
           "type": "heading",
           "content": "2段組みレイアウトデモ",
           "level": 1,
-          "fontSize": "28px",
           "style": {
+            "fontSize": "28pt",
             "marginBottom": "32px",
             "width": "100%"
           }
@@ -37,15 +39,17 @@
                   "type": "heading",
                   "content": "左カラム",
                   "level": 3,
-                  "fontSize": "20px",
                   "style": {
+                    "fontSize": "20pt",
                     "marginBottom": "8px"
                   }
                 },
                 {
                   "type": "text",
                   "content": "これは左側のカラムです。2段組みレイアウトでは、コンテンツを左右に分割して表示します。この部分では主要な情報を記載します。",
-                  "fontSize": "14px"
+                  "style": {
+                    "fontSize": "14pt"
+                  }
                 }
               ]
             },
@@ -61,15 +65,17 @@
                   "type": "heading",
                   "content": "右カラム",
                   "level": 3,
-                  "fontSize": "20px",
                   "style": {
+                    "fontSize": "20pt",
                     "marginBottom": "8px"
                   }
                 },
                 {
                   "type": "text",
                   "content": "これは右側のカラムです。補足情報や詳細な説明、関連するデータなどを配置します。レイアウトエンジンの横並び配置機能をテストします。",
-                  "fontSize": "14px"
+                  "style": {
+                    "fontSize": "14pt"
+                  }
                 }
               ]
             }
@@ -81,22 +87,24 @@
             "flexDirection": "column",
             "width": "100%",
             "marginTop": "8px",
-            "backgroundColor": "000000"
+            "backgroundColor": "#aa0000"
           },
           "children": [
             {
               "type": "heading",
-              "content": "左カラム",
+              "content": "下段左カラム",
               "level": 3,
-              "fontSize": "20px",
               "style": {
+                "fontSize": "20pt",
                 "marginBottom": "8px"
               }
             },
             {
               "type": "text",
-              "content": "これは左側のカラムです。2段組みレイアウトでは、コンテンツを左右に分割して表示します。この部分では主要な情報を記載します。",
-              "fontSize": "14px"
+              "content": "これは下段左側のカラムです。2段組みレイアウトでは、コンテンツを左右に分割して表示します。この部分では主要な情報を記載します。",
+              "style": {
+                "fontSize": "14pt"
+              }
             }
           ]
         }

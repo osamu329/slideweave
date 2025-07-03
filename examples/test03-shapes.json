@@ -1,4 +1,5 @@
 {
+  "type": "deck",
   "title": "shape要素のテスト",
   "description": "rectangle、circle、ellipse shape要素が正しく描画されるかを確認するテスト",
   "slides": [

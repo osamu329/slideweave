@@ -1,4 +1,5 @@
 {
+  "type": "deck",
   "title": "Tailwind Utilities Demo - Built-in Classes",
   "description": "組み込みTailwindライクユーティリティクラス機能のデモンストレーション",
   "slides": [

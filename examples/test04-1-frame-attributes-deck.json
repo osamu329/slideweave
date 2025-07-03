@@ -1,0 +1,83 @@
+{
+  "type": "deck",
+  "title": "frame内テキスト属性のテスト",
+  "description": "frame要素内でのテキスト属性とpadding指定の動作確認",
+  "format": "wide",
+  "slides": [
+    {
+      "type": "slide",
+      "style": {
+        "padding": "22px"
+      },
+      "children": [
+        {
+          "type": "heading",
+          "level": 1,
+          "content": "frame内テキスト属性テスト（1/2）",
+          "style": {
+            "fontSize": "28pt",
+            "color": "#1e40af",
+            "marginBottom": "17px"
+          }
+        },
+        {
+          "type": "frame",
+          "style": {
+            "backgroundColor": "#f8fafc",
+            "padding": "16px",
+            "marginBottom": "16px"
+          },
+          "children": [
+            {
+              "type": "heading",
+              "level": 2,
+              "content": "フレーム内見出し",
+              "style": {
+                "fontSize": "20pt",
+                "color": "#374151",
+                "marginBottom": "8px"
+              }
+            },
+            {
+              "type": "text",
+              "content": "これはframe要素内のテキストです。背景色とpadding、borderRadiusが適用されています。",
+              "style": {
+                "fontSize": "14pt",
+                "color": "#6b7280"
+              }
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "style": {
+            "backgroundColor": "#fef3c7",
+            "padding": "20px",
+            "borderRadius": "12px",
+            "marginBottom": "16px"
+          },
+          "children": [
+            {
+              "type": "heading",
+              "level": 3,
+              "content": "異なるスタイルのフレーム",
+              "style": {
+                "fontSize": "18pt",
+                "color": "#92400e",
+                "marginBottom": "8px"
+              }
+            },
+            {
+              "type": "text",
+              "content": "こちらは異なる背景色とpaddingサイズを持つフレームです。",
+              "style": {
+                "fontSize": "14pt",
+                "color": "#78350f"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

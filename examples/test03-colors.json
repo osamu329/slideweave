@@ -1,6 +1,8 @@
 {
+  "type": "deck",
   "title": "色設定のテスト",
   "description": "背景色と前景色が正しく適用されるかを確認するテスト",
+  "format": "wide",
   "slides": [
     {
       "type": "frame",

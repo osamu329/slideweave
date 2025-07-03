@@ -1,0 +1,136 @@
+{
+  "type": "deck",
+  "title": "テキストスタイルのテスト",
+  "description": "bold、italic属性の組み合わせテスト",
+  "format": "wide",
+  "slides": [
+    {
+      "type": "slide",
+      "style": {
+        "padding": "16px"
+      },
+      "children": [
+        {
+          "type": "container",
+          "style": {
+            "width": "1280px",
+            "height": "720px",
+            "padding": "22px",
+            "flexDirection": "column",
+            "gap": "11px"
+          },
+          "children": [
+            {
+              "type": "text",
+              "content": "テキストスタイルテスト",
+              "style": {
+                "fontSize": "24pt",
+                "fontWeight": "bold",
+                "color": "#1e40af",
+                "marginBottom": "17px"
+              }
+            },
+            {
+              "type": "text",
+              "content": "通常テキスト",
+              "style": {
+                "fontSize": "22px",
+                "color": "#000000",
+                "marginBottom": "11px",
+                "padding": "6px"
+              }
+            },
+            {
+              "type": "text",
+              "content": "太字テキスト",
+              "style": {
+                "fontSize": "22px",
+                "fontWeight": "bold",
+                "color": "#000000",
+                "marginBottom": "11px",
+                "padding": "11px"
+              }
+            },
+            {
+              "type": "text",
+              "content": "斜体テキスト",
+              "style": {
+                "fontSize": "22px",
+                "fontStyle": "italic",
+                "color": "#000000",
+                "marginBottom": "11px",
+                "padding": "11px"
+              }
+            },
+            {
+              "type": "text",
+              "content": "太字＋斜体テキスト",
+              "style": {
+                "fontSize": "22px",
+                "fontWeight": "bold",
+                "fontStyle": "italic",
+                "color": "#000000",
+                "marginBottom": "11px",
+                "padding": "17px"
+              }
+            },
+            {
+              "type": "text",
+              "content": "見出しでのスタイル",
+              "style": {
+                "fontSize": "20pt",
+                "fontWeight": "bold",
+                "color": "#374151",
+                "marginBottom": "11px",
+                "padding": "11px"
+              }
+            },
+            {
+              "type": "text",
+              "content": "通常見出し",
+              "style": {
+                "fontSize": "18pt",
+                "color": "#374151",
+                "marginBottom": "6px",
+                "padding": "6px"
+              }
+            },
+            {
+              "type": "text",
+              "content": "太字見出し",
+              "style": {
+                "fontSize": "18pt",
+                "fontWeight": "bold",
+                "color": "#374151",
+                "marginBottom": "6px",
+                "padding": "6px"
+              }
+            },
+            {
+              "type": "text",
+              "content": "斜体見出し",
+              "style": {
+                "fontSize": "18pt",
+                "fontStyle": "italic",
+                "color": "#374151",
+                "marginBottom": "6px",
+                "padding": "6px"
+              }
+            },
+            {
+              "type": "text",
+              "content": "太字＋斜体見出し",
+              "style": {
+                "fontSize": "18pt",
+                "fontWeight": "bold",
+                "fontStyle": "italic",
+                "color": "#374151",
+                "padding": "11px"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

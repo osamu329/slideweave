@@ -1,11 +1,13 @@
 {
   "type": "deck",
-  "title": "色設定のテスト",
-  "description": "背景色と前景色が正しく適用されるかを確認するテスト",
-  "format": "wide",
+  "title": "RGBA Transparency Test",
+  "format": "standard",
   "slides": [
     {
       "type": "slide",
+      "style": {
+        "padding": "16px"
+      },
       "children": [
         {
           "type": "frame",
@@ -14,33 +16,32 @@
             "height": "720px",
             "backgroundColor": "#f0f0f0",
             "padding": "16px",
-            "flexDirection": "column"
+            "flexDirection": "column",
+            "gap": "12px"
           },
           "children": [
             {
               "type": "heading",
               "level": 1,
-              "content": "色設定のテスト",
+              "content": "RGBA Transparency Test",
               "style": {
-                "color": "#000080",
-                "margin": "8px"
+                "color": "#1a1a1a"
               }
             },
             {
               "type": "frame",
               "style": {
-                "backgroundColor": "#ff0000",
-                "padding": "8px",
-                "width": "400px",
-                "height": "100px"
+                "width": "160px",
+                "height": "80px",
+                "backgroundColor": "rgba(255,0,0,0.5)"
               },
               "children": [
                 {
                   "type": "text",
-                  "content": "赤背景に白文字のテキスト",
+                  "content": "50% Red",
                   "style": {
                     "color": "#ffffff",
-                    "fontSize": "14pt"
+                    "padding": "8px"
                   }
                 }
               ]
@@ -48,19 +49,17 @@
             {
               "type": "frame",
               "style": {
-                "backgroundColor": "#0000ff",
-                "padding": "8px",
-                "width": "400px",
-                "height": "100px",
-                "marginTop": "8px"
+                "width": "160px",
+                "height": "80px",
+                "backgroundColor": "rgba(0,255,0,0.3)"
               },
               "children": [
                 {
                   "type": "text",
-                  "content": "青背景に黄色文字のテキスト",
+                  "content": "30% Green",
                   "style": {
-                    "color": "#ffff00",
-                    "fontSize": "14pt"
+                    "color": "#000000",
+                    "padding": "8px"
                   }
                 }
               ]
@@ -68,20 +67,17 @@
             {
               "type": "frame",
               "style": {
-                "backgroundColor": "#008000",
-                "padding": "8px",
-                "width": "400px",
-                "height": "100px",
-                "marginTop": "8px"
+                "width": "160px",
+                "height": "80px",
+                "backgroundColor": "rgba(0,0,255,0.8)"
               },
               "children": [
                 {
-                  "type": "heading",
-                  "level": 2,
-                  "content": "緑背景に白文字の見出し",
+                  "type": "text",
+                  "content": "80% Blue",
                   "style": {
                     "color": "#ffffff",
-                    "fontWeight": "bold"
+                    "padding": "8px"
                   }
                 }
               ]

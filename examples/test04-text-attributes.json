@@ -1,4 +1,5 @@
 {
+  "type": "deck",
   "title": "テキスト属性のテスト",
   "description": "textオブジェクトの各種属性（fontSize、color、bold、italic、fontFamily、valign）の動作確認",
   "slides": [

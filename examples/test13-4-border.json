@@ -1,4 +1,5 @@
 {
+  "type": "deck",
   "title": "Border Utilities Test - Tailwind Classes",
   "description": "border系ユーティリティクラスの動作確認テスト（1パターン1スライド）",
   "css": ".border-2 { border: 2px solid #e5e7eb; }\n.border-4 { border: 4px solid #e5e7eb; }\n.border-8 { border: 8px solid #e5e7eb; }\n.border-black { border-color: #000000; }\n.border-white { border-color: #ffffff; }\n.border-red-500 { border-color: #dc2626; }\n.border-blue-500 { border-color: #2563eb; }\n.border-green-500 { border-color: #16a34a; }\n.rounded-lg { border-radius: 8px; }\n.rounded-xl { border-radius: 12px; }\n.rounded-2xl { border-radius: 16px; }\n.rounded-full { border-radius: 9999px; }",

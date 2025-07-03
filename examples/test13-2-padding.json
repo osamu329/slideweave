@@ -1,4 +1,5 @@
 {
+  "type": "deck",
   "title": "Padding Utilities Test - Tailwind Classes",
   "description": "padding系ユーティリティクラスの動作確認テスト（1パターン1スライド）",
   "slides": [

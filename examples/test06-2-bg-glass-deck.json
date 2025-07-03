@@ -1,7 +1,8 @@
 {
   "type": "deck",
-  "title": "Pure Glass Effect Test",
-  "description": "背景色なし・ガラス効果のみのテスト",
+  "title": "Glass Effect Background Test",
+  "description": "SVGガラス風効果背景のテスト",
+  "format": "wide",
   "slides": [
     {
       "type": "slide",
@@ -14,6 +15,7 @@
         {
           "type": "frame",
           "style": {
+            "backgroundColor": "rgba(255,255,255,0.1)",
             "glassEffect": true,
             "padding": "24px",
             "borderRadius": "16px",
@@ -22,21 +24,21 @@
           "children": [
             {
               "type": "heading",
-              "content": "純粋ガラス効果",
+              "content": "ガラス風効果",
               "level": 1,
-              "bold": true,
               "style": {
                 "fontSize": "32px",
-                "color": "FFFFFF",
+                "fontWeight": "bold",
+                "color": "#FFFFFF",
                 "marginBottom": "12px"
               }
             },
             {
               "type": "text",
-              "content": "背景色指定なし。ガラス効果のみで透過背景を実現。",
+              "content": "SVGで実現したガラス風の半透明効果。背景がぼかされて美しく透けて見えます。",
               "style": {
                 "fontSize": "16px",
-                "color": "F0F0F0"
+                "color": "#F0F0F0"
               }
             }
           ]

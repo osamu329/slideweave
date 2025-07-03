@@ -1,88 +1,31 @@
 /**
  * JSONベーステストランナー
  * JSON形式のスライドデータを読み込んでPPTXファイルを生成
+ * build.tsのロジックを再利用して一貫性を保つ
  */
 
-import { renderLayout } from '../src/layout/LayoutEngine';
-import { PPTXRenderer } from '../src/renderer/PPTXRenderer';
-import { ElementValidator } from '../src/elements/validator';
-import { SlideDataLoader } from '../src/data/SlideDataLoader';
-import { LayoutResult } from '../src/layout/LayoutEngine';
+import { buildSlides } from '../src/cli/commands/build.js';
 import * as path from 'path';
 import * as fs from 'fs';
-import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-
-
 async function runTest(testFileName: string) {
   try {
-    // JSONファイルを読み込み
-    const testFilePath = path.join(__dirname, testFileName);
-    const slideData = SlideDataLoader.loadFromFile(testFilePath);
-    
-    // 16:9レイアウト設定（HD解像度）
-    const slideWidth = 1280;
-    const slideHeight = 720;
-    
-    const renderer = new PPTXRenderer({
-      slideWidth: 13.333,
-      slideHeight: 7.5
-    });
-
-    // 各スライドを処理
-    for (let i = 0; i < slideData.slides.length; i++) {
-      const slide = slideData.slides[i];
-      
-      // バリデーション
-      const validation = ElementValidator.validate(slide);
-      if (!validation.isValid) {
-        console.error(`❌ スライド${i + 1}のバリデーションエラー:`, validation.errors);
-        throw new Error(`スライド${i + 1}のバリデーションに失敗しました`);
-      }
-      
-      // レイアウト計算
-      const slideLayout = await renderLayout(slide, slideWidth, slideHeight);
-      
-      // サイレント処理
-      
-      
-      // 最初のスライド、またはスライドを追加
-      if (i === 0) {
-        await renderer.render(slideLayout);
-      } else {
-        //renderer.addSlide();
-        await renderer.render(slideLayout);
-      }
-    }
-
-    // 出力ディレクトリを作成
-    const outputDir = path.join(__dirname, 'output');
-    if (!fs.existsSync(outputDir)) {
-      fs.mkdirSync(outputDir, { recursive: true });
-    }
-    
-    // ファイル保存
+    const inputPath = path.join(__dirname, testFileName);
     const outputFileName = testFileName.replace('.json', '.pptx');
-    const outputPath = path.join(outputDir, outputFileName);
-    await renderer.save(outputPath);
-    // サイレント完了
+    const outputPath = path.join(__dirname, 'output', outputFileName);
     
-    return renderer.getPptx();
+    // build.tsのロジックを再利用（format処理、バリデーション等すべて含む）
+    await buildSlides(inputPath, { output: outputPath });
     
+    console.log(`✅ PPTXファイルを保存しました: ${outputPath}`);
   } catch (error) {
     console.error('❌ テスト実行エラー:', error);
     throw error;
   }
-}
-
-// 直接実行時（ES Module）
-if (import.meta.url === `file://${process.argv[1]}`) {
-  const testFile = process.argv[2] || 'test1-basic-layout.json';
-  runTest(testFile).catch(console.error);
 }
 
 /**
@@ -128,6 +71,12 @@ async function runTsxTest(tsxFileName: string) {
     console.error('❌ TSXテスト実行エラー:', error);
     throw error;
   }
+}
+
+// 直接実行時（ES Module）
+if (import.meta.url === `file://${process.argv[1]}`) {
+  const testFile = process.argv[2] || 'test01-basic-layout-deck.json';
+  runTest(testFile).catch(console.error);
 }
 
 export { runTest, runTsxTest };

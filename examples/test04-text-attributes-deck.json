@@ -1,98 +1,85 @@
 {
   "type": "deck",
-  "title": "frame内テキスト属性のテスト",
-  "description": "frame要素内でのテキスト属性とpadding指定の動作確認",
+  "title": "テキスト属性のテスト",
+  "description": "textオブジェクトの各種属性（fontSize、color、bold、italic、fontFamily、valign）の動作確認",
+  "format": "wide",
   "slides": [
     {
-      "type": "container",
+      "type": "slide",
       "style": {
-        "width": "1280px",
-        "height": "720px",
-        "padding": "22px",
-        "flexDirection": "column",
-        "gap": "11px"
+        "padding": "16px"
       },
       "children": [
         {
-          "type": "heading",
-          "level": 1,
-          "content": "frame内テキスト属性テスト（1/2）",
+          "type": "container",
           "style": {
-            "color": "1e40af",
-            "marginBottom": "17px"
-          }
-        },
-        {
-          "type": "frame",
-          "style": {
-            "backgroundColor": "f8fafc",
-            "padding": "16px",
-            "borderRadius": "8px",
-            "marginBottom": "11px"
+            "width": "1280px",
+            "height": "720px",
+            "padding": "22px",
+            "flexDirection": "column",
+            "gap": "11px"
           },
           "children": [
+            {
+              "type": "heading",
+              "level": 1,
+              "content": "テキスト属性テスト（1/2）",
+              "style": {
+                "color": "#1e40af",
+                "marginBottom": "17px"
+              }
+            },
             {
               "type": "heading",
               "level": 2,
               "content": "1. フォントサイズテスト",
               "style": {
-                "color": "374151",
-                "marginBottom": "12px"
+                "color": "#374151",
+                "marginBottom": "11px"
               }
             },
             {
               "type": "text",
               "content": "10pt テキスト",
               "style": {
-                "fontSize": "14px",
-                "color": "000000",
-                "marginBottom": "8px"
+                "fontSize": "10pt",
+                "color": "#000000",
+                "marginBottom": "6px"
               }
             },
             {
               "type": "text",
               "content": "14pt テキスト (デフォルト)",
               "style": {
-                "fontSize": "20px",
-                "color": "000000",
-                "marginBottom": "8px"
+                "fontSize": "14pt",
+                "color": "#000000",
+                "marginBottom": "6px"
               }
             },
             {
               "type": "text",
               "content": "18pt テキスト",
               "style": {
-                "fontSize": "25px",
-                "color": "000000",
-                "marginBottom": "8px"
+                "fontSize": "18pt",
+                "color": "#000000",
+                "marginBottom": "6px"
               }
             },
             {
               "type": "text",
               "content": "24pt テキスト",
               "style": {
-                "fontSize": "34px",
-                "color": "000000",
-                "padding": "8px"
+                "fontSize": "24pt",
+                "color": "#000000",
+                "marginBottom": "11px"
               }
-            }
-          ]
-        },
-        {
-          "type": "frame",
-          "style": {
-            "backgroundColor": "fef3c7",
-            "padding": "16px",
-            "borderRadius": "8px",
-            "marginBottom": "11px"
-          },
-          "children": [
+            },
             {
               "type": "heading",
               "level": 2,
               "content": "2. カラーテスト",
               "style": {
-                "color": "374151",
+                "color": "#374151",
                 "marginBottom": "11px"
               }
             },
@@ -101,7 +88,7 @@
               "content": "黒色テキスト (デフォルト)",
               "style": {
                 "fontSize": "20px",
-                "color": "000000",
+                "color": "#000000",
                 "marginBottom": "6px"
               }
             },
@@ -110,7 +97,7 @@
               "content": "赤色テキスト",
               "style": {
                 "fontSize": "20px",
-                "color": "dc2626",
+                "color": "#dc2626",
                 "marginBottom": "6px"
               }
             },
@@ -119,7 +106,7 @@
               "content": "青色テキスト",
               "style": {
                 "fontSize": "20px",
-                "color": "2563eb",
+                "color": "#2563eb",
                 "marginBottom": "6px"
               }
             },
@@ -128,48 +115,16 @@
               "content": "緑色テキスト",
               "style": {
                 "fontSize": "20px",
-                "color": "16a34a",
-                "padding": "6px"
+                "color": "#16a34a",
+                "marginBottom": "11px"
               }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "container",
-      "style": {
-        "width": "1280px",
-        "height": "720px",
-        "padding": "22px",
-        "flexDirection": "column",
-        "gap": "11px"
-      },
-      "children": [
-        {
-          "type": "heading",
-          "level": 1,
-          "content": "frame内テキスト属性テスト（2/2）",
-          "style": {
-            "color": "1e40af",
-            "marginBottom": "17px"
-          }
-        },
-        {
-          "type": "frame",
-          "style": {
-            "backgroundColor": "fce7f3",
-            "padding": "16px",
-            "borderRadius": "8px",
-            "marginBottom": "11px"
-          },
-          "children": [
+            },
             {
               "type": "heading",
               "level": 2,
               "content": "3. スタイルテスト",
               "style": {
-                "color": "374151",
+                "color": "#374151",
                 "marginBottom": "11px"
               }
             },
@@ -178,61 +133,77 @@
               "content": "通常テキスト",
               "style": {
                 "fontSize": "20px",
-                "color": "000000",
-                "marginBottom": "6px",
-                "padding": "6px"
+                "color": "#000000",
+                "marginBottom": "6px"
               }
             },
             {
               "type": "text",
               "content": "太字テキスト",
-              "fontSize": "20px",
-              "color": "000000",
-              "bold": true,
               "style": {
-                "marginBottom": "6px",
-                "padding": "6px"
+                "fontSize": "20px",
+                "fontWeight": "bold",
+                "color": "#000000",
+                "marginBottom": "6px"
               }
             },
             {
               "type": "text",
               "content": "斜体テキスト",
-              "fontSize": "20px",
-              "color": "000000",
-              "italic": true,
               "style": {
-                "marginBottom": "6px",
-                "padding": "6px"
+                "fontSize": "20px",
+                "fontStyle": "italic",
+                "color": "#000000",
+                "marginBottom": "6px"
               }
             },
             {
               "type": "text",
               "content": "太字＋斜体テキスト",
-              "fontSize": "20px",
-              "color": "000000",
-              "bold": true,
-              "italic": true,
               "style": {
-                "padding": "6px"
+                "fontSize": "20px",
+                "fontWeight": "bold",
+                "fontStyle": "italic",
+                "color": "#000000",
+                "marginBottom": "11px"
               }
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "style": {
+        "padding": "16px"
+      },
+      "children": [
         {
-          "type": "frame",
+          "type": "container",
           "style": {
-            "backgroundColor": "ecfdf5",
-            "padding": "16px",
-            "borderRadius": "8px"
+            "width": "1280px",
+            "height": "720px",
+            "padding": "22px",
+            "flexDirection": "column",
+            "gap": "11px"
           },
           "children": [
+            {
+              "type": "heading",
+              "level": 1,
+              "content": "テキスト属性テスト（2/2）",
+              "style": {
+                "color": "#1e40af",
+                "marginBottom": "17px"
+              }
+            },
             {
               "type": "heading",
               "level": 2,
               "content": "4. フォントファミリーテスト",
               "style": {
-                "color": "374151",
-                "marginBottom": "12px"
+                "color": "#374151",
+                "marginBottom": "11px"
               }
             },
             {
@@ -240,9 +211,9 @@
               "content": "Arial フォント (デフォルト)",
               "style": {
                 "fontSize": "20px",
-                "color": "000000",
+                "color": "#000000",
                 "fontFamily": "Arial",
-                "marginBottom": "8px"
+                "marginBottom": "6px"
               }
             },
             {
@@ -250,9 +221,9 @@
               "content": "Times New Roman フォント",
               "style": {
                 "fontSize": "20px",
-                "color": "000000",
+                "color": "#000000",
                 "fontFamily": "Times New Roman",
-                "marginBottom": "8px"
+                "marginBottom": "6px"
               }
             },
             {
@@ -260,9 +231,9 @@
               "content": "Courier New フォント (等幅)",
               "style": {
                 "fontSize": "20px",
-                "color": "000000",
+                "color": "#000000",
                 "fontFamily": "Courier New",
-                "marginBottom": "8px"
+                "marginBottom": "6px"
               }
             },
             {
@@ -270,7 +241,7 @@
               "content": "Calibri フォント",
               "style": {
                 "fontSize": "20px",
-                "color": "000000",
+                "color": "#000000",
                 "fontFamily": "Calibri"
               }
             }

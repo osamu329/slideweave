@@ -1,4 +1,5 @@
 {
+  "type": "deck",
   "title": "Margin Utilities Test - Tailwind Classes",
   "description": "margin系ユーティリティクラスの動作確認テスト（1パターン1スライド）",
   "slides": [

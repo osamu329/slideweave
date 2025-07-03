@@ -2,11 +2,12 @@
   "type": "deck",
   "title": "Background Color Blur Glass Effect Test",
   "description": "背景色をブラーしてガラス効果を実現するテスト",
+  "format": "wide",
   "slides": [
     {
       "type": "slide",
       "style": {
-        "backgroundColor": "4472C4",
+        "backgroundColor": "#4472C4",
         "padding": "32px"
       },
       "children": [
@@ -14,7 +15,7 @@
           "type": "frame",
           "style": {
             "glassEffect": true,
-            "backgroundColor": "FF6B6B",
+            "backgroundColor": "#FF6B6B",
             "padding": "24px",
             "borderRadius": "16px",
             "width": "60%"
@@ -24,10 +25,10 @@
               "type": "heading",
               "content": "背景色ブラーガラス効果",
               "level": 1,
-              "bold": true,
               "style": {
                 "fontSize": "32px",
-                "color": "FFFFFF",
+                "fontWeight": "bold",
+                "color": "#FFFFFF",
                 "marginBottom": "12px"
               }
             },
@@ -36,7 +37,7 @@
               "content": "背景色もクロップ・ブラーしてガラス効果を実現。画像がなくても動作する。",
               "style": {
                 "fontSize": "16px",
-                "color": "F0F0F0"
+                "color": "#F0F0F0"
               }
             }
           ]
@@ -45,7 +46,7 @@
           "type": "frame",
           "style": {
             "glassEffect": true,
-            "backgroundColor": "32CD32",
+            "backgroundColor": "#32CD32",
             "padding": "24px",
             "borderRadius": "16px",
             "width": "60%",
@@ -56,18 +57,20 @@
               "type": "heading",
               "content": "2つ目のフレーム",
               "level": 2,
-              "fontSize": "24px",
-              "color": "FFFFFF",
-              "bold": true,
               "style": {
+                "fontSize": "24px",
+                "fontWeight": "bold",
+                "color": "#FFFFFF",
                 "marginBottom": "8px"
               }
             },
             {
               "type": "text",
               "content": "複数のガラスフレームでブラー効果をテスト。",
-              "fontSize": "14px",
-              "color": "F0F0F0"
+              "style": {
+                "fontSize": "14px",
+                "color": "#F0F0F0"
+              }
             }
           ]
         }

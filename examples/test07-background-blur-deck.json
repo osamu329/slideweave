@@ -2,6 +2,7 @@
   "type": "deck",
   "title": "Background Blur Glass Effect Test",
   "description": "背景画像をクロップ・ブラーしてガラス効果を実現するテスト",
+  "format": "wide",
   "slides": [
     {
       "type": "slide",
@@ -24,10 +25,10 @@
               "type": "heading",
               "content": "背景ブラーガラス効果",
               "level": 1,
-              "bold": true,
               "style": {
                 "fontSize": "32px",
-                "color": "FFFFFF",
+                "fontWeight": "bold",
+                "color": "#FFFFFF",
                 "marginBottom": "12px"
               }
             },
@@ -36,7 +37,7 @@
               "content": "背景画像をクロップ・ブラーしてリアルなガラス効果を実現。PowerPointでも自然な透過背景。",
               "style": {
                 "fontSize": "16px",
-                "color": "F0F0F0"
+                "color": "#F0F0F0"
               }
             }
           ]
@@ -55,21 +56,23 @@
               "type": "heading",
               "content": "右側フレーム",
               "level": 2,
-              "fontSize": "24px",
-              "color": "FFFFFF",
-              "bold": true,
               "style": {
+                "fontSize": "24px",
+                "fontWeight": "bold",
+                "color": "#FFFFFF",
                 "marginBottom": "8px"
               }
             },
             {
               "type": "text",
               "content": "複数フレームでの背景画像ブラー効果をテスト。",
-              "fontSize": "14px",
-              "color": "F0F0F0",
+              "style": {
+                "fontSize": "14px",
+                "color": "#F0F0F0"
+              },
               "shadow": {
                 "type": "outer",
-                "color": "000000",
+                "color": "#000000",
                 "blur": 6,
                 "offset": 2,
                 "angle": 315
