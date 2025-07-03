@@ -8,11 +8,15 @@
       "title": "Position: relative",
       "children": [
         {
-          "type": "container",
+          "type": "frame",
           "style": {
             "width": "200px",
             "height": "200px",
-            "padding": "10px"
+            "padding": "10px",
+            "margin": "50px",
+            "borderWidth": "1px",
+            "borderStyle": "solid",
+            "borderColor": "#666666"
           },
           "children": [
             {

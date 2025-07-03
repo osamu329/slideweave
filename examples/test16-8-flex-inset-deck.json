@@ -8,10 +8,14 @@
       "title": "Inset: top/left positioning",
       "children": [
         {
-          "type": "container",
+          "type": "frame",
           "style": {
             "width": "200px",
-            "height": "200px"
+            "height": "200px",
+            "margin": "50px",
+            "borderWidth": "1px",
+            "borderStyle": "solid",
+            "borderColor": "#666666"
           },
           "children": [
             {
@@ -22,33 +26,6 @@
                 "top": "50px",
                 "left": "50px",
                 "backgroundColor": "#FF6B6B"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "slide",
-      "title": "Inset: shorthand positioning",
-      "children": [
-        {
-          "type": "container",
-          "style": {
-            "width": "200px",
-            "height": "200px"
-          },
-          "children": [
-            {
-              "type": "frame",
-              "style": {
-                "height": "50px",
-                "width": "50px",
-                "top": "50px",
-                "right": "50px",
-                "bottom": "50px",
-                "left": "50px",
-                "backgroundColor": "#4ECDC4"
               }
             }
           ]

@@ -8,13 +8,17 @@
       "title": "AlignContent: flex-start",
       "children": [
         {
-          "type": "container",
+          "type": "frame",
           "style": {
             "width": "200px",
             "height": "250px",
             "padding": "10px",
+            "margin": "50px",
             "alignContent": "flex-start",
-            "flexWrap": "wrap"
+            "flexWrap": "wrap",
+            "borderWidth": "1px",
+            "borderStyle": "solid",
+            "borderColor": "#666666"
           },
           "children": [
             {

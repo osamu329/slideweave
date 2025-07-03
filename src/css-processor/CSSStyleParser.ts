@@ -5,7 +5,7 @@
 
 import postcss from "postcss";
 import valueParser from "postcss-value-parser";
-import { borderShorthandExpand } from "./postcss-border-shorthand-expand.js";
+import { shorthandExpand } from "./postcss-shorthand-expand.js";
 
 export interface ParsedStyle {
   [key: string]: string | number;
@@ -28,8 +28,8 @@ export class CSSStyleParser {
     const wrappedCSS = `.dummy { ${cssString} }`;
 
     try {
-      // PostCSSでパース（border shorthand expand プラグイン適用）
-      const root = postcss([borderShorthandExpand()]).process(wrappedCSS).root;
+      // PostCSSでパース（shorthand expand プラグイン適用）
+      const root = postcss([shorthandExpand()]).process(wrappedCSS).root;
       const rule = root.first;
 
       if (rule && rule.type === "rule") {

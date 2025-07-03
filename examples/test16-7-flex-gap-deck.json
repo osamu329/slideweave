@@ -8,13 +8,17 @@
       "title": "Gap: 10px with flexWrap",
       "children": [
         {
-          "type": "container",
+          "type": "frame",
           "style": {
             "width": "200px",
             "height": "250px",
             "padding": "10px",
+            "margin": "50px",
             "flexWrap": "wrap",
-            "gap": "10px"
+            "gap": "10px",
+            "borderWidth": "1px",
+            "borderStyle": "solid",
+            "borderColor": "#666666"
           },
           "children": [
             {

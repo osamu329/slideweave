@@ -381,6 +381,8 @@
         "paddingBottom": { "$ref": "#/definitions/spacingValue" },
         "paddingLeft": { "$ref": "#/definitions/spacingValue" },
         "gap": { "$ref": "#/definitions/spacingValue" },
+        "rowGap": { "$ref": "#/definitions/spacingValue" },
+        "columnGap": { "$ref": "#/definitions/spacingValue" },
         "width": { "$ref": "#/definitions/dimension" },
         "height": { "$ref": "#/definitions/dimension" },
         "minWidth": { "$ref": "#/definitions/dimensionNoPt" },
@@ -392,20 +394,55 @@
           "minimum": 0,
           "description": "flex成長率。小数点も有効（例: 0.5, 1.5）"
         },
+        "flexGrow": { 
+          "type": "number",
+          "minimum": 0,
+          "description": "flex成長率。flexと同じ機能（例: 0, 1, 2）"
+        },
+        "flexShrink": { 
+          "type": "number",
+          "minimum": 0,
+          "description": "flex縮小率。0で縮小しない（例: 0, 1）"
+        },
+        "flexBasis": { 
+          "$ref": "#/definitions/dimensionNoPt",
+          "description": "flex基準サイズ。対応単位: px, %, em, rem"
+        },
         "flexDirection": { 
-          "enum": ["row", "column"] 
+          "enum": ["row", "column", "row-reverse", "column-reverse"] 
         },
         "flexWrap": { 
-          "enum": ["nowrap", "wrap"] 
+          "enum": ["nowrap", "wrap", "wrap-reverse"] 
         },
         "justifyContent": { 
-          "enum": ["flex-start", "flex-end", "center", "space-between", "space-around"] 
+          "enum": ["flex-start", "flex-end", "center", "space-between", "space-around", "space-evenly"] 
         },
         "alignItems": { 
-          "enum": ["flex-start", "flex-end", "center", "stretch"] 
+          "enum": ["flex-start", "flex-end", "center", "stretch", "baseline"] 
         },
         "alignSelf": { 
-          "enum": ["auto", "flex-start", "flex-end", "center", "stretch"] 
+          "enum": ["auto", "flex-start", "flex-end", "center", "stretch", "baseline"] 
+        },
+        "alignContent": { 
+          "enum": ["flex-start", "flex-end", "center", "stretch", "space-between", "space-around", "space-evenly"] 
+        },
+        "display": { 
+          "enum": ["flex", "none"],
+          "default": "flex",
+          "description": "要素の表示方法。flex（デフォルト）またはnone（非表示）"
+        },
+        "position": { 
+          "enum": ["relative", "absolute", "static"],
+          "default": "relative",
+          "description": "要素の配置方法。relative（デフォルト）、absolute（絶対配置）、static（フロー配置）"
+        },
+        "top": { "$ref": "#/definitions/dimensionNoPt" },
+        "right": { "$ref": "#/definitions/dimensionNoPt" },
+        "bottom": { "$ref": "#/definitions/dimensionNoPt" },
+        "left": { "$ref": "#/definitions/dimensionNoPt" },
+        "inset": { 
+          "type": "string",
+          "description": "top, right, bottom, leftの一括指定。1〜4つの値で指定（例: '10px', '10px 20px', '10px 20px 30px 40px'）"
         },
         "backgroundColor": { "$ref": "#/definitions/colorValue" },
         "background": { "$ref": "#/definitions/background" },
@@ -517,7 +554,7 @@
         "paddingBottom": { "$ref": "#/definitions/spacingValue" },
         "paddingLeft": { "$ref": "#/definitions/spacingValue" },
         "flexDirection": { 
-          "enum": ["row", "column"] 
+          "enum": ["row", "column", "row-reverse", "column-reverse"] 
         },
         "gap": { "$ref": "#/definitions/dimension" },
         "backgroundImage": { 

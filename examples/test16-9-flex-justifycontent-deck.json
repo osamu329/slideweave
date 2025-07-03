@@ -8,12 +8,16 @@
       "title": "JustifyContent: flex-start",
       "children": [
         {
-          "type": "container",
+          "type": "frame",
           "style": {
             "width": "200px",
             "height": "200px",
             "padding": "10px",
-            "justifyContent": "flex-start"
+            "margin": "50px",
+            "justifyContent": "flex-start",
+            "borderWidth": "1px",
+            "borderStyle": "solid",
+            "borderColor": "#666666"
           },
           "children": [
             {

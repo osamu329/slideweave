@@ -8,11 +8,15 @@
       "title": "FlexShrink: 5 vs 10",
       "children": [
         {
-          "type": "container",
+          "type": "frame",
           "style": {
             "width": "200px",
             "height": "200px",
-            "padding": "10px"
+            "padding": "10px",
+            "margin": "50px",
+            "borderWidth": "1px",
+            "borderStyle": "solid",
+            "borderColor": "#666666"
           },
           "children": [
             {

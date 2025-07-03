@@ -8,12 +8,15 @@
       "title": "Min-Max Width and Height",
       "children": [
         {
-          "type": "container",
+          "type": "frame",
           "style": {
             "width": "200px",
             "height": "250px",
             "padding": "10px",
-            "flexDirection": "column"
+            "margin": "50px",
+            "borderWidth": "1px",
+            "borderStyle": "solid",
+            "borderColor": "#666666"
           },
           "children": [
             {

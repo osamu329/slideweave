@@ -137,13 +137,124 @@ export class YogaLayoutEngine {
     // FlexDirection
     if (style.flexDirection === "row") {
       node.setFlexDirection(this.yoga.FLEX_DIRECTION_ROW);
+    } else if (style.flexDirection === "row-reverse") {
+      node.setFlexDirection(this.yoga.FLEX_DIRECTION_ROW_REVERSE);
+    } else if (style.flexDirection === "column-reverse") {
+      node.setFlexDirection(this.yoga.FLEX_DIRECTION_COLUMN_REVERSE);
     } else {
       node.setFlexDirection(this.yoga.FLEX_DIRECTION_COLUMN);
+    }
+
+    // FlexWrap
+    if (style.flexWrap === "wrap") {
+      node.setFlexWrap(this.yoga.WRAP_WRAP);
+    } else if (style.flexWrap === "wrap-reverse") {
+      node.setFlexWrap(this.yoga.WRAP_WRAP_REVERSE);
+    } else {
+      node.setFlexWrap(this.yoga.WRAP_NO_WRAP);
+    }
+
+    // JustifyContent (main axis alignment)
+    if (style.justifyContent) {
+      const justifyMap: Record<string, any> = {
+        'flex-start': this.yoga.JUSTIFY_FLEX_START,
+        'flex-end': this.yoga.JUSTIFY_FLEX_END,
+        'center': this.yoga.JUSTIFY_CENTER,
+        'space-between': this.yoga.JUSTIFY_SPACE_BETWEEN,
+        'space-around': this.yoga.JUSTIFY_SPACE_AROUND,
+        'space-evenly': this.yoga.JUSTIFY_SPACE_EVENLY,
+      };
+      if (justifyMap[style.justifyContent]) {
+        node.setJustifyContent(justifyMap[style.justifyContent]);
+      }
+    }
+
+    // AlignItems (cross axis alignment)
+    if (style.alignItems) {
+      const alignItemsMap: Record<string, any> = {
+        'flex-start': this.yoga.ALIGN_FLEX_START,
+        'flex-end': this.yoga.ALIGN_FLEX_END,
+        'center': this.yoga.ALIGN_CENTER,
+        'stretch': this.yoga.ALIGN_STRETCH,
+        'baseline': this.yoga.ALIGN_BASELINE,
+      };
+      if (alignItemsMap[style.alignItems]) {
+        node.setAlignItems(alignItemsMap[style.alignItems]);
+      }
+    }
+
+    // AlignSelf (individual item alignment)
+    if (style.alignSelf) {
+      const alignSelfMap: Record<string, any> = {
+        'auto': this.yoga.ALIGN_AUTO,
+        'flex-start': this.yoga.ALIGN_FLEX_START,
+        'flex-end': this.yoga.ALIGN_FLEX_END,
+        'center': this.yoga.ALIGN_CENTER,
+        'stretch': this.yoga.ALIGN_STRETCH,
+        'baseline': this.yoga.ALIGN_BASELINE,
+      };
+      if (alignSelfMap[style.alignSelf]) {
+        node.setAlignSelf(alignSelfMap[style.alignSelf]);
+      }
+    }
+
+    // AlignContent (multi-line alignment)
+    if (style.alignContent) {
+      const alignContentMap: Record<string, any> = {
+        'flex-start': this.yoga.ALIGN_FLEX_START,
+        'flex-end': this.yoga.ALIGN_FLEX_END,
+        'center': this.yoga.ALIGN_CENTER,
+        'stretch': this.yoga.ALIGN_STRETCH,
+        'space-between': this.yoga.ALIGN_SPACE_BETWEEN,
+        'space-around': this.yoga.ALIGN_SPACE_AROUND,
+        'space-evenly': this.yoga.ALIGN_SPACE_EVENLY,
+      };
+      if (alignContentMap[style.alignContent]) {
+        node.setAlignContent(alignContentMap[style.alignContent]);
+      }
+    }
+
+    // Display (Yogaサポート: flex, none)
+    if (style.display === "none") {
+      node.setDisplay(this.yoga.DISPLAY_NONE);
+    } else {
+      // デフォルトはflex
+      node.setDisplay(this.yoga.DISPLAY_FLEX);
+    }
+
+    // Position (Yogaサポート: relative, absolute, static)
+    if (style.position === "absolute") {
+      node.setPositionType(this.yoga.POSITION_TYPE_ABSOLUTE);
+    } else if (style.position === "static") {
+      node.setPositionType(this.yoga.POSITION_TYPE_STATIC);
+    } else {
+      // デフォルトはrelative
+      node.setPositionType(this.yoga.POSITION_TYPE_RELATIVE);
+    }
+
+    // Position coordinates (top, right, bottom, left)
+    if (style.top !== undefined) {
+      node.setPosition(this.yoga.EDGE_TOP, this.validateCSSUnitForYoga(style.top, "top"));
+    }
+    if (style.right !== undefined) {
+      node.setPosition(this.yoga.EDGE_RIGHT, this.validateCSSUnitForYoga(style.right, "right"));
+    }
+    if (style.bottom !== undefined) {
+      node.setPosition(this.yoga.EDGE_BOTTOM, this.validateCSSUnitForYoga(style.bottom, "bottom"));
+    }
+    if (style.left !== undefined) {
+      node.setPosition(this.yoga.EDGE_LEFT, this.validateCSSUnitForYoga(style.left, "left"));
     }
 
     // Gap プロパティ: 単位付き文字列をYogaに直接渡す
     if (style.gap !== undefined) {
       node.setGap(this.yoga.GUTTER_ALL, this.validateCSSUnitForYoga(style.gap, "gap"));
+    }
+    if (style.rowGap !== undefined) {
+      node.setGap(this.yoga.GUTTER_ROW, this.validateCSSUnitForYoga(style.rowGap, "rowGap"));
+    }
+    if (style.columnGap !== undefined) {
+      node.setGap(this.yoga.GUTTER_COLUMN, this.validateCSSUnitForYoga(style.columnGap, "columnGap"));
     }
 
     // Spacing: 単位付き文字列をYogaに直接渡す
@@ -188,9 +299,32 @@ export class YogaLayoutEngine {
       node.setHeight(this.validateCSSUnitForYoga(style.height, "height"));
     }
 
-    // Flex
+    // Min/Max Constraints: 単位付き文字列をYogaに直接渡す
+    if (style.minWidth !== undefined) {
+      node.setMinWidth(this.validateCSSUnitForYoga(style.minWidth, "minWidth"));
+    }
+    if (style.maxWidth !== undefined) {
+      node.setMaxWidth(this.validateCSSUnitForYoga(style.maxWidth, "maxWidth"));
+    }
+    if (style.minHeight !== undefined) {
+      node.setMinHeight(this.validateCSSUnitForYoga(style.minHeight, "minHeight"));
+    }
+    if (style.maxHeight !== undefined) {
+      node.setMaxHeight(this.validateCSSUnitForYoga(style.maxHeight, "maxHeight"));
+    }
+
+    // Flex Properties
     if (style.flex !== undefined) {
       node.setFlex(style.flex);
+    }
+    if (style.flexGrow !== undefined) {
+      node.setFlexGrow(style.flexGrow);
+    }
+    if (style.flexShrink !== undefined) {
+      node.setFlexShrink(style.flexShrink);
+    }
+    if (style.flexBasis !== undefined) {
+      node.setFlexBasis(this.validateCSSUnitForYoga(style.flexBasis, "flexBasis"));
     }
 
     // 要素タイプ別の設定
