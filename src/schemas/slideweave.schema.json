@@ -404,6 +404,7 @@
           "enum": ["auto", "flex-start", "flex-end", "center", "stretch"] 
         },
         "backgroundColor": { "$ref": "#/definitions/colorValue" },
+        "background": { "$ref": "#/definitions/background" },
         "backgroundImage": { 
           "type": "string",
           "description": "背景画像のパス。対応フォーマット: jpg, jpeg, png, gif, svg"
@@ -568,6 +569,60 @@
       "type": "string",
       "pattern": "^\\d+(\\.\\d+)?px$",
       "description": "px単位必須の数値（PowerPoint制約）。例: \"10px\", \"2.5px\""
+    },
+    "gradientStop": {
+      "type": "object",
+      "properties": {
+        "color": { "$ref": "#/definitions/colorValue" },
+        "offset": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "グラデーション位置（0-1の範囲）"
+        }
+      },
+      "required": ["color", "offset"],
+      "additionalProperties": false
+    },
+    "linearGradient": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "linearGradient" },
+        "direction": {
+          "type": "string",
+          "description": "グラデーション方向。\"to right\", \"to left\", \"to bottom\", \"to top\", または角度 (\"45deg\", \"90deg\" など)"
+        },
+        "stops": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/gradientStop" },
+          "minItems": 2,
+          "description": "グラデーションの色停止点"
+        }
+      },
+      "required": ["type", "direction", "stops"],
+      "additionalProperties": false
+    },
+    "radialGradient": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "radialGradient" },
+        "stops": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/gradientStop" },
+          "minItems": 2,
+          "description": "グラデーションの色停止点"
+        }
+      },
+      "required": ["type", "stops"],
+      "additionalProperties": false
+    },
+    "background": {
+      "oneOf": [
+        { "$ref": "#/definitions/colorValue" },
+        { "$ref": "#/definitions/linearGradient" },
+        { "$ref": "#/definitions/radialGradient" }
+      ],
+      "description": "背景色またはグラデーション"
     }
   }
 }
