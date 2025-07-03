@@ -1,0 +1,182 @@
+{
+  "type": "deck",
+  "format": "wide",
+  "slides": [
+    {
+      "type": "slide",
+      "children": [
+        {
+          "type": "container",
+          "style": {
+            "flexDirection": "column",
+            "width": "100%",
+            "height": "100%",
+            "padding": "40px",
+            "alignItems": "stretch"
+          },
+          "children": [
+            {
+              "type": "frame",
+              "style": {
+                "backgroundColor": "#E3F2FD",
+                "padding": "20px",
+                "marginBottom": "20px",
+                "height": "100px"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "content": "Header Section",
+                  "style": {
+                    "fontSize": "24pt",
+                    "color": "#1976D2",
+                    "textAlign": "center"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "style": {
+                "backgroundColor": "#F5F5F5",
+                "padding": "20px",
+                "flex": 1,
+                "marginBottom": "20px"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "content": "Main Content Area\n\nThis section expands to fill available space using flex: 1",
+                  "style": {
+                    "fontSize": "18pt",
+                    "color": "#424242"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "style": {
+                "backgroundColor": "#E8F5E9",
+                "padding": "20px",
+                "height": "80px"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "content": "Footer Section",
+                  "style": {
+                    "fontSize": "16pt",
+                    "color": "#2E7D32",
+                    "textAlign": "center"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "slide",
+      "children": [
+        {
+          "type": "container",
+          "style": {
+            "flexDirection": "column",
+            "width": "100%",
+            "height": "100%",
+            "padding": "40px",
+            "alignItems": "center",
+            "justifyContent": "space-between"
+          },
+          "children": [
+            {
+              "type": "text",
+              "content": "Flex Column with Space Between",
+              "style": {
+                "fontSize": "28pt",
+                "color": "#1565C0"
+              }
+            },
+            {
+              "type": "container",
+              "style": {
+                "flexDirection": "column",
+                "alignItems": "center",
+                "gap": "15px"
+              },
+              "children": [
+                {
+                  "type": "frame",
+                  "style": {
+                    "backgroundColor": "#FFECB3",
+                    "padding": "15px",
+                    "width": "400px",
+                    "borderRadius": "8px"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "Item 1",
+                      "style": {
+                        "textAlign": "center",
+                        "color": "#F57C00"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "style": {
+                    "backgroundColor": "#FFECB3",
+                    "padding": "15px",
+                    "width": "400px",
+                    "borderRadius": "8px"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "Item 2",
+                      "style": {
+                        "textAlign": "center",
+                        "color": "#F57C00"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "style": {
+                    "backgroundColor": "#FFECB3",
+                    "padding": "15px",
+                    "width": "400px",
+                    "borderRadius": "8px"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "Item 3",
+                      "style": {
+                        "textAlign": "center",
+                        "color": "#F57C00"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "content": "Column layout stacks elements vertically",
+              "style": {
+                "fontSize": "14pt",
+                "color": "#757575"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
