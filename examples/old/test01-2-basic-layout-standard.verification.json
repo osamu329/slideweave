@@ -1,0 +1,41 @@
+=== PPTX Verification: examples/output/test01-2-basic-layout-standard.pptx ===
+
+Slide Size: 10.0" x 7.5"
+Number of Slides: 1
+
+=== Slide 1 ===
+Shapes: 2
+Shape: Text 0
+  Position: (0.11", 0.11")
+  Size: 9.61" x 0.33"
+  Vertical Anchor: middle
+  Text Margins (inches): L:0.000 T:0.000 R:0.000 B:0.000
+  Text: "レイアウトテスト用スライド (Standard)"
+    Font Color: #000000
+    Font Size: 24.0pt
+    Bold: True
+    Italic: None
+    Font Family: Arial
+Shape: Text 1
+  Position: (0.22", 0.89")
+  Size: 9.56" x 0.89"
+  Vertical Anchor: middle
+  Text Margins (inches): L:0.000 T:0.000 R:0.000 B:0.000
+  Text: "これは複数行にわたる長いテキストです。この文章は意図的に長くして、テキストの折り返し処理とレイアウトエンジンの動作を確認するために作成されています。日本語の文字幅計算や改行処理が正しく動作するかをテストします。標準形式（4:3、72 DPI）でのレイアウトを確認しています。"
+    Font Color: #374151
+    Font Size: 16.0pt
+    Bold: None
+    Italic: None
+    Font Family: Arial
+
+Verification report saved to: examples/output/test01-2-basic-layout-standard.verification.json
+�をテストします。標準形式（4:3、72 DPI）でのレイアウトを確認しています。",
+        "font_color": "374151",
+        "font_size": 16.0,
+        "font_bold": null,
+        "font_italic": null,
+        "font_family": "Arial"
+      }
+    ]
+  }
+]

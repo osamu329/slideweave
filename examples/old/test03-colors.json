@@ -1,0 +1,92 @@
+{
+  "type": "deck",
+  "title": "色設定のテスト",
+  "description": "背景色と前景色が正しく適用されるかを確認するテスト",
+  "format": "wide",
+  "slides": [
+    {
+      "type": "frame",
+      "style": {
+        "width": "960px",
+        "height": "720px",
+        "backgroundColor": "f0f0f0",
+        "padding": "16px",
+        "flexDirection": "column",
+        "justifyContent": "flex-start",
+        "alignItems": "flex-start",
+        "gap": "8px"
+      },
+      "children": [
+        {
+          "type": "heading",
+          "level": 1,
+          "content": "色設定のテスト",
+          "style": {
+            "color": "000080",
+            "margin": "8px"
+          }
+        },
+        {
+          "type": "frame",
+          "style": {
+            "backgroundColor": "ff0000",
+            "padding": "8px",
+            "width": "400px",
+            "height": "100px"
+          },
+          "children": [
+            {
+              "type": "text",
+              "content": "赤背景に白文字のテキスト",
+              "style": {
+                "color": "ffffff",
+                "fontSize": "14px"
+              }
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "style": {
+            "backgroundColor": "0000ff",
+            "padding": "8px",
+            "width": "400px",
+            "height": "100px",
+            "marginTop": "8px"
+          },
+          "children": [
+            {
+              "type": "text",
+              "content": "青背景に黄色文字のテキスト",
+              "style": {
+                "color": "ffff00",
+                "fontSize": "14px"
+              }
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "style": {
+            "backgroundColor": "008000",
+            "padding": "8px",
+            "width": "400px",
+            "height": "100px",
+            "marginTop": "8px"
+          },
+          "children": [
+            {
+              "type": "heading",
+              "level": 2,
+              "content": "緑背景に白文字の見出し",
+              "bold": true,
+              "style": {
+                "color": "ffffff"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
