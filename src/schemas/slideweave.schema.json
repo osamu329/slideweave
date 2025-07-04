@@ -35,6 +35,7 @@
       "default": "wide"
     },
     "style": { "$ref": "#/definitions/deckStyle" },
+    "defaults": { "$ref": "#/definitions/deckDefaults" },
     "slides": {
       "type": "array",
       "items": { "$ref": "#/definitions/slide" },
@@ -536,6 +537,15 @@
         "paddingRight": { "$ref": "#/definitions/spacingValue" },
         "paddingBottom": { "$ref": "#/definitions/spacingValue" },
         "paddingLeft": { "$ref": "#/definitions/spacingValue" }
+      },
+      "additionalProperties": false
+    },
+    "deckDefaults": {
+      "type": "object",
+      "properties": {
+        "fontSize": { "$ref": "#/definitions/dimension" },
+        "fontFamily": { "type": "string" },
+        "color": { "$ref": "#/definitions/colorValue" }
       },
       "additionalProperties": false
     },

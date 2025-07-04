@@ -61,6 +61,8 @@ export interface BaseStyle {
   paddingBottom?: number | string;
   paddingLeft?: number | string;
   gap?: number | string;
+  rowGap?: number | string;
+  columnGap?: number | string;
 
   // Positioning
   top?: number | string;
@@ -81,6 +83,9 @@ export interface BaseStyle {
   flex?: number;
   flexDirection?: "row" | "column";
   flexWrap?: "nowrap" | "wrap";
+  flexGrow?: number;
+  flexShrink?: number;
+  flexBasis?: number | string;
   justifyContent?:
     | "flex-start"
     | "flex-end"
@@ -90,6 +95,13 @@ export interface BaseStyle {
     | "space-evenly";
   alignItems?: "flex-start" | "flex-end" | "center" | "stretch";
   alignSelf?: "auto" | "flex-start" | "flex-end" | "center" | "stretch";
+  alignContent?:
+    | "flex-start"
+    | "flex-end"
+    | "center"
+    | "stretch"
+    | "space-between"
+    | "space-around";
 
   // Background
   backgroundColor?: string; // #RRGGBB format
