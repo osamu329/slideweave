@@ -50,34 +50,34 @@ export interface TextShadow {
 
 export interface BaseStyle {
   // Spacing
-  margin?: number | string;
-  marginTop?: number | string;
-  marginRight?: number | string;
-  marginBottom?: number | string;
-  marginLeft?: number | string;
-  padding?: number | string;
-  paddingTop?: number | string;
-  paddingRight?: number | string;
-  paddingBottom?: number | string;
-  paddingLeft?: number | string;
-  gap?: number | string;
-  rowGap?: number | string;
-  columnGap?: number | string;
+  margin?: string | 0;
+  marginTop?: string | 0;
+  marginRight?: string | 0;
+  marginBottom?: string | 0;
+  marginLeft?: string | 0;
+  padding?: string | 0;
+  paddingTop?: string | 0;
+  paddingRight?: string | 0;
+  paddingBottom?: string | 0;
+  paddingLeft?: string | 0;
+  gap?: string | 0;
+  rowGap?: string | 0;
+  columnGap?: string | 0;
 
   // Positioning
-  top?: number | string;
-  right?: number | string;
-  bottom?: number | string;
-  left?: number | string;
+  top?: string | 0;
+  right?: string | 0;
+  bottom?: string | 0;
+  left?: string | 0;
   position?: "relative" | "absolute" | "static";
 
   // Dimensions
   width?: string | 0; // 0のみ数値として許可、他は単位付き文字列
-  height?: number | string;
-  minWidth?: number | string;
-  minHeight?: number | string;
-  maxWidth?: number | string;
-  maxHeight?: number | string;
+  height?: string | 0; // 0のみ数値として許可、他は単位付き文字列
+  minWidth?: string | 0;
+  minHeight?: string | 0;
+  maxWidth?: string | 0;
+  maxHeight?: string | 0;
 
   // Flexbox Layout
   flex?: number;
@@ -85,7 +85,7 @@ export interface BaseStyle {
   flexWrap?: "nowrap" | "wrap";
   flexGrow?: number;
   flexShrink?: number;
-  flexBasis?: number | string;
+  flexBasis?: string | 0;
   justifyContent?:
     | "flex-start"
     | "flex-end"
@@ -142,11 +142,11 @@ export interface DeckElement extends BaseElement {
 }
 
 export interface DeckStyle {
-  padding?: number | string;
-  paddingTop?: number | string;
-  paddingRight?: number | string;
-  paddingBottom?: number | string;
-  paddingLeft?: number | string;
+  padding?: string | 0;
+  paddingTop?: string | 0;
+  paddingRight?: string | 0;
+  paddingBottom?: string | 0;
+  paddingLeft?: string | 0;
 }
 
 export interface HeaderElement extends BaseElement {
@@ -170,11 +170,11 @@ export interface SlideElement extends BaseElement {
 }
 
 export interface SlideStyle {
-  padding?: number | string;
-  paddingTop?: number | string;
-  paddingRight?: number | string;
-  paddingBottom?: number | string;
-  paddingLeft?: number | string;
+  padding?: string | 0;
+  paddingTop?: string | 0;
+  paddingRight?: string | 0;
+  paddingBottom?: string | 0;
+  paddingLeft?: string | 0;
 }
 
 export interface SlideBackground {
@@ -189,8 +189,8 @@ export interface ContainerElement extends BaseElement {
 
 export interface FrameStyle extends BaseStyle {
   borderColor?: string; // #RRGGBB format
-  borderWidth?: string; // px unit required
-  borderRadius?: string; // px unit required
+  borderWidth?: string | 0; // px unit required or 0
+  borderRadius?: string | 0; // px unit required or 0
   borderStyle?: "solid" | "dashed" | "dotted";
   glassEffect?: boolean;
   // グラデーション対応
@@ -266,7 +266,7 @@ export type ShapeType = "rectangle" | "circle" | "ellipse";
 
 export interface ShapeStyle extends BaseStyle {
   borderColor?: string; // #RRGGBB format
-  borderWidth?: string; // px unit required
+  borderWidth?: string | 0; // px unit required or 0
   borderStyle?: "solid" | "dashed" | "dotted";
   // グラデーション対応
   background?: Background;
