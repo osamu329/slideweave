@@ -3,7 +3,7 @@
  * test16シリーズのflexプロパティテストケースをdeck JSX要素で実装
  */
 
-import { createSlideElement, Fragment, Deck } from '../../src/jsx/index';
+import { createSlideElement, Fragment, Deck, Heading, Frame, Slide } from '../../src/jsx/index';
 
 // React未定義エラー回避
 global.React = { createElement: createSlideElement, Fragment };
@@ -25,7 +25,7 @@ const titleStyle = {
 
 // ColorBoxコンポーネント（ローカルコンポーネント）
 const ColorBox = ({ color, style = {} }: { color: string; style?: any }) => (
-  <frame style={{
+  <Frame style={{
     margin: "5px",
     height: "50px",
     width: "50px",
@@ -47,9 +47,9 @@ const slideData = (
     }}
   >
     {/* 1. test16-1-flex-aligncontent-deck.json */}
-    <slide title="AlignContent: flex-start">
-      <heading level={1} style={titleStyle}>AlignContent: flex-start</heading>
-      <frame
+    <Slide title="AlignContent: flex-start">
+      <Heading level={1} style={titleStyle}>AlignContent: flex-start</Heading>
+      <Frame
         style={{
           ...frameContainerStyle,
           width: "200px",
@@ -62,13 +62,13 @@ const slideData = (
         <ColorBox color="#4ECDC4" />
         <ColorBox color="#45B7D1" />
         <ColorBox color="#96CEB4" />
-      </frame>
-    </slide>
+      </Frame>
+    </Slide>
 
     {/* 2. test16-2-flex-alignself-deck.json */}
-    <slide title="AlignSelf: center">
-      <heading level={1} style={titleStyle}>AlignSelf: center</heading>
-      <frame
+    <Slide title="AlignSelf: center">
+      <Heading level={1} style={titleStyle}>AlignSelf: center</Heading>
+      <Frame
         style={{
           ...frameContainerStyle,
           width: "200px",
@@ -78,13 +78,13 @@ const slideData = (
       >
         <ColorBox color="#FF6B6B" style={{ alignSelf: "center" }} />
         <ColorBox color="#4ECDC4" />
-      </frame>
-    </slide>
+      </Frame>
+    </Slide>
 
     {/* 3. test16-3-flex-flexbasis-deck.json */}
-    <slide title="FlexBasis: 50px">
-      <heading level={1} style={titleStyle}>FlexBasis: 50px</heading>
-      <frame
+    <Slide title="FlexBasis: 50px">
+      <Heading level={1} style={titleStyle}>FlexBasis: 50px</Heading>
+      <Frame
         style={{
           ...frameContainerStyle,
           width: "200px",
@@ -92,13 +92,13 @@ const slideData = (
         }}
       >
         <ColorBox color="#FF6B6B" style={{ flexBasis: "50px" }} />
-      </frame>
-    </slide>
+      </Frame>
+    </Slide>
 
     {/* 4. test16-4-flex-flexgrow-deck.json */}
-    <slide title="FlexGrow: 0.25 vs 0.75">
-      <heading level={1} style={titleStyle}>FlexGrow: 0.25 vs 0.75</heading>
-      <frame
+    <Slide title="FlexGrow: 0.25 vs 0.75">
+      <Heading level={1} style={titleStyle}>FlexGrow: 0.25 vs 0.75</Heading>
+      <Frame
         style={{
           ...frameContainerStyle,
           width: "200px",
@@ -107,13 +107,13 @@ const slideData = (
       >
         <ColorBox color="#FF6B6B" style={{ flexGrow: 0.25 }} />
         <ColorBox color="#4ECDC4" style={{ flexGrow: 0.75 }} />
-      </frame>
-    </slide>
+      </Frame>
+    </Slide>
 
     {/* 5. test16-5-flex-flexshrink-deck.json */}
-    <slide title="FlexShrink: 5 vs 10">
-      <heading level={1} style={titleStyle}>FlexShrink: 5 vs 10</heading>
-      <frame
+    <Slide title="FlexShrink: 5 vs 10">
+      <Heading level={1} style={titleStyle}>FlexShrink: 5 vs 10</Heading>
+      <Frame
         style={{
           ...frameContainerStyle,
           width: "200px",
@@ -122,13 +122,13 @@ const slideData = (
       >
         <ColorBox color="#FF6B6B" style={{ flexShrink: 5, height: "150px" }} />
         <ColorBox color="#4ECDC4" style={{ flexShrink: 10, height: "150px" }} />
-      </frame>
-    </slide>
+      </Frame>
+    </Slide>
 
     {/* 6. test16-6-flex-flexdirection-deck.json */}
-    <slide title="FlexDirection: column">
-      <heading level={1} style={titleStyle}>FlexDirection: column</heading>
-      <frame
+    <Slide title="FlexDirection: column">
+      <Heading level={1} style={titleStyle}>FlexDirection: column</Heading>
+      <Frame
         style={{
           ...frameContainerStyle,
           width: "200px",
@@ -138,13 +138,13 @@ const slideData = (
       >
         <ColorBox color="#FF6B6B" />
         <ColorBox color="#4ECDC4" />
-      </frame>
-    </slide>
+      </Frame>
+    </Slide>
 
     {/* 7. test16-7-flex-gap-deck.json */}
-    <slide title="Gap: 10px with flexWrap">
-      <heading level={1} style={titleStyle}>Gap: 10px with flexWrap</heading>
-      <frame
+    <Slide title="Gap: 10px with flexWrap">
+      <Heading level={1} style={titleStyle}>Gap: 10px with flexWrap</Heading>
+      <Frame
         style={{
           ...frameContainerStyle,
           width: "200px",
@@ -158,13 +158,13 @@ const slideData = (
         <ColorBox color="#45B7D1" />
         <ColorBox color="#96CEB4" />
         <ColorBox color="#FFEAA7" />
-      </frame>
-    </slide>
+      </Frame>
+    </Slide>
 
     {/* 8. test16-8-flex-inset-deck.json */}
-    <slide title="Inset: top/left positioning">
-      <heading level={1} style={titleStyle}>Inset: top/left positioning</heading>
-      <frame
+    <Slide title="Inset: top/left positioning">
+      <Heading level={1} style={titleStyle}>Inset: top/left positioning</Heading>
+      <Frame
         style={{
           ...frameContainerStyle,
           width: "200px",
@@ -172,13 +172,13 @@ const slideData = (
         }}
       >
         <ColorBox color="#FF6B6B" style={{ top: "50px", left: "50px" }} />
-      </frame>
-    </slide>
+      </Frame>
+    </Slide>
 
     {/* 9. test16-9-flex-justifycontent-deck.json */}
-    <slide title="JustifyContent: flex-start">
-      <heading level={1} style={titleStyle}>JustifyContent: flex-start</heading>
-      <frame
+    <Slide title="JustifyContent: flex-start">
+      <Heading level={1} style={titleStyle}>JustifyContent: flex-start</Heading>
+      <Frame
         style={{
           ...frameContainerStyle,
           width: "200px",
@@ -188,13 +188,13 @@ const slideData = (
       >
         <ColorBox color="#FF6B6B" />
         <ColorBox color="#4ECDC4" />
-      </frame>
-    </slide>
+      </Frame>
+    </Slide>
 
     {/* 10. test16-10-flex-position-deck.json */}
-    <slide title="Position: relative">
-      <heading level={1} style={titleStyle}>Position: relative</heading>
-      <frame
+    <Slide title="Position: relative">
+      <Heading level={1} style={titleStyle}>Position: relative</Heading>
+      <Frame
         style={{
           ...frameContainerStyle,
           width: "200px",
@@ -202,31 +202,31 @@ const slideData = (
         }}
       >
         <ColorBox color="#FF6B6B" style={{ top: "20px", position: "relative" }} />
-      </frame>
-    </slide>
+      </Frame>
+    </Slide>
 
     {/* 11. test16-11-flex-minmax-deck.json */}
-    <slide title="Min-Max Width and Height">
-      <heading level={1} style={titleStyle}>Min-Max Width and Height</heading>
-      <frame
+    <Slide title="Min-Max Width and Height">
+      <Heading level={1} style={titleStyle}>Min-Max Width and Height</Heading>
+      <Frame
         style={{
           ...frameContainerStyle,
           width: "200px",
           height: "250px"
         }}
       >
-        <frame style={{ margin: "5px", height: "25px", backgroundColor: "#FF6B6B" }} />
-        <frame style={{ margin: "5px", height: "100px", maxHeight: "25px", backgroundColor: "#4ECDC4" }} />
-        <frame style={{ margin: "5px", height: "25px", minHeight: "50px", backgroundColor: "#45B7D1" }} />
-        <frame style={{ margin: "5px", height: "25px", maxWidth: "25px", backgroundColor: "#96CEB4" }} />
-        <frame style={{ margin: "5px", height: "25px", width: "25px", minWidth: "50px", backgroundColor: "#FFEAA7" }} />
-      </frame>
-    </slide>
+        <Frame style={{ margin: "5px", height: "25px", backgroundColor: "#FF6B6B" }} />
+        <Frame style={{ margin: "5px", height: "100px", maxHeight: "25px", backgroundColor: "#4ECDC4" }} />
+        <Frame style={{ margin: "5px", height: "25px", minHeight: "50px", backgroundColor: "#45B7D1" }} />
+        <Frame style={{ margin: "5px", height: "25px", maxWidth: "25px", backgroundColor: "#96CEB4" }} />
+        <Frame style={{ margin: "5px", height: "25px", width: "25px", minWidth: "50px", backgroundColor: "#FFEAA7" }} />
+      </Frame>
+    </Slide>
 
     {/* 12. 新しいプロパティのテスト: rowGap/columnGap */}
-    <slide title="RowGap and ColumnGap">
-      <heading level={1} style={titleStyle}>RowGap: 20px, ColumnGap: 10px</heading>
-      <frame
+    <Slide title="RowGap and ColumnGap">
+      <Heading level={1} style={titleStyle}>RowGap: 20px, ColumnGap: 10px</Heading>
+      <Frame
         style={{
           ...frameContainerStyle,
           width: "300px",
@@ -236,12 +236,12 @@ const slideData = (
           columnGap: "10px"
         }}
       >
-        <frame style={{ height: "50px", width: "80px", backgroundColor: "#FF6B6B" }} />
-        <frame style={{ height: "50px", width: "80px", backgroundColor: "#4ECDC4" }} />
-        <frame style={{ height: "50px", width: "80px", backgroundColor: "#45B7D1" }} />
-        <frame style={{ height: "50px", width: "80px", backgroundColor: "#96CEB4" }} />
-      </frame>
-    </slide>
+        <Frame style={{ height: "50px", width: "80px", backgroundColor: "#FF6B6B" }} />
+        <Frame style={{ height: "50px", width: "80px", backgroundColor: "#4ECDC4" }} />
+        <Frame style={{ height: "50px", width: "80px", backgroundColor: "#45B7D1" }} />
+        <Frame style={{ height: "50px", width: "80px", backgroundColor: "#96CEB4" }} />
+      </Frame>
+    </Slide>
   </Deck>
 );
 

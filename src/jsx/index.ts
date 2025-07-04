@@ -176,3 +176,11 @@ declare global {
 
 // Deckコンポーネントのエクスポート
 export { Deck } from './components/Deck.js';
+
+// 大文字コンポーネント名のエクスポート（Reactライクな記述用）
+export const Heading = (props: any) => createSlideElement('heading', props, ...(props.children ? [props.children] : []));
+export const Text = (props: any) => createSlideElement('text', props, ...(props.children ? [props.children] : []));
+export const Frame = (props: any) => createSlideElement('frame', props, ...(props.children || []));
+export const Container = (props: any) => createSlideElement('container', props, ...(props.children || []));
+export const Shape = (props: any) => createSlideElement('shape', props, ...(props.children || []));
+export const Slide = (props: any) => createSlideElement('slide', props, ...(props.children || []));
