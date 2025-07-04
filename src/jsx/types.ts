@@ -5,6 +5,7 @@
 
 import type {
   BaseStyle,
+  DeckDefaults,
   SlideElement,
   ContainerElement,
   FrameElement,
@@ -24,27 +25,36 @@ import type {
   TextShadow,
 } from "../types/elements";
 
-// 共通のJSXプロパティ
+
+// 共通のJSXプロパティ（childrenは各要素で個別定義）
 interface BaseJSXProps {
-  children?: React.ReactNode;
   class?: string;
   className?: string; // classNameもサポート（classに変換される）
   style?: BaseStyle | string; // オブジェクトまたはCSS文字列
 }
 
 // 各要素のJSXプロパティ型定義
+export interface DeckProps extends BaseJSXProps {
+  title?: string;
+  description?: string;
+  format?: "wide" | "standard";
+  defaults?: DeckDefaults;
+  children?: React.ReactNode;
+}
+
 export interface SlideProps extends BaseJSXProps {
   title?: string;
   layout?: "title" | "content" | "blank";
-  style?: BaseStyle | string;
+  children?: React.ReactNode;
 }
 
 export interface ContainerProps extends BaseJSXProps {
-  style?: BaseStyle | string;
+  children?: React.ReactNode;
 }
 
 export interface FrameProps extends BaseJSXProps {
   style?: (BaseStyle & FrameStyle) | string;
+  children?: React.ReactNode;
 }
 
 export interface TextProps extends BaseJSXProps {
@@ -55,7 +65,7 @@ export interface TextProps extends BaseJSXProps {
   bold?: boolean;
   italic?: boolean;
   shadow?: TextShadow;
-  style?: BaseStyle | string;
+  children?: string; // テキスト要素は文字列のchildrenを受け取る
 }
 
 export interface HeadingProps extends BaseJSXProps {
@@ -67,40 +77,41 @@ export interface HeadingProps extends BaseJSXProps {
   bold?: boolean;
   italic?: boolean;
   shadow?: TextShadow;
-  style?: BaseStyle | string;
+  children?: string; // ヘディング要素は文字列のchildrenを受け取る
 }
 
 export interface ShapeProps extends BaseJSXProps {
   shapeType: ShapeType;
   style?: (BaseStyle & ShapeStyle) | string;
+  children?: never; // シェイプ要素は子要素を持たない
 }
 
 export interface ListProps extends BaseJSXProps {
   listType?: "bullet" | "number";
-  style?: BaseStyle | string;
+  children?: React.ReactNode;
 }
 
 export interface ListItemProps extends BaseJSXProps {
   content?: string; // contentがない場合はchildren使用
   indentLevel?: number;
-  style?: BaseStyle | string;
+  children?: never; // リストアイテム要素は子要素を持たない
 }
 
 export interface TableProps extends BaseJSXProps {
   columns?: number;
   rows?: number;
-  style?: BaseStyle | string;
+  children?: React.ReactNode;
 }
 
 export interface TableRowProps extends BaseJSXProps {
-  style?: BaseStyle | string;
+  children?: React.ReactNode;
 }
 
 export interface TableCellProps extends BaseJSXProps {
   content?: string; // contentがない場合はchildren使用
   colSpan?: number;
   rowSpan?: number;
-  style?: BaseStyle | string;
+  children?: never; // テーブルセル要素は子要素を持たない
 }
 
 export interface ImageProps extends BaseJSXProps {
@@ -108,20 +119,21 @@ export interface ImageProps extends BaseJSXProps {
   alt?: string;
   width?: number;
   height?: number;
-  style?: BaseStyle | string;
+  children?: never; // 画像要素は子要素を持たない
 }
 
 export interface SvgProps extends BaseJSXProps {
   content?: string; // contentがない場合はchildren使用
   width?: number;
   height?: number;
-  style?: BaseStyle | string;
+  children?: never; // SVG要素は子要素を持たない
 }
 
 // JSX namespace declaration
 declare global {
   namespace JSX {
     interface IntrinsicElements {
+      deck: DeckProps;
       slide: SlideProps;
       container: ContainerProps;
       frame: FrameProps;
@@ -143,7 +155,7 @@ declare global {
   }
 }
 
-// React.ReactNode の簡易定義（React非依存）
+// React.ReactNode と ReactElement の簡易定義（React非依存）
 declare global {
   namespace React {
     type ReactNode =
@@ -154,8 +166,18 @@ declare global {
       | undefined
       | ReactNode[]
       | { [key: string]: any };
+    
+    interface ReactElement<P = any, T extends string | JSXElementConstructor<any> = string | JSXElementConstructor<any>> {
+      type: T;
+      props: P;
+      key: string | number | null;
+    }
   }
 }
+
+// JSXElementConstructor型定義
+type JSXElementConstructor<P> = ((props: P) => React.ReactElement<any, any> | null) | (new (props: P) => Component<P, any>);
+interface Component<P = {}, S = {}> {}
 
 // 関数コンポーネントサポート
 declare global {
