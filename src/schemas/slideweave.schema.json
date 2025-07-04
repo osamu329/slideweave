@@ -371,25 +371,25 @@
         {
           "type": "object",
           "properties": {
-        "margin": { "$ref": "#/definitions/spacingValue" },
-        "marginTop": { "$ref": "#/definitions/spacingValue" },
-        "marginRight": { "$ref": "#/definitions/spacingValue" },
-        "marginBottom": { "$ref": "#/definitions/spacingValue" },
-        "marginLeft": { "$ref": "#/definitions/spacingValue" },
-        "padding": { "$ref": "#/definitions/spacingValue" },
-        "paddingTop": { "$ref": "#/definitions/spacingValue" },
-        "paddingRight": { "$ref": "#/definitions/spacingValue" },
-        "paddingBottom": { "$ref": "#/definitions/spacingValue" },
-        "paddingLeft": { "$ref": "#/definitions/spacingValue" },
-        "gap": { "$ref": "#/definitions/spacingValue" },
-        "rowGap": { "$ref": "#/definitions/spacingValue" },
-        "columnGap": { "$ref": "#/definitions/spacingValue" },
-        "width": { "$ref": "#/definitions/dimension" },
-        "height": { "$ref": "#/definitions/dimension" },
-        "minWidth": { "$ref": "#/definitions/dimensionNoPt" },
-        "minHeight": { "$ref": "#/definitions/dimensionNoPt" },
-        "maxWidth": { "$ref": "#/definitions/dimensionNoPt" },
-        "maxHeight": { "$ref": "#/definitions/dimensionNoPt" },
+        "margin": { "$ref": "#/definitions/spacingValueWithZero" },
+        "marginTop": { "$ref": "#/definitions/spacingValueWithZero" },
+        "marginRight": { "$ref": "#/definitions/spacingValueWithZero" },
+        "marginBottom": { "$ref": "#/definitions/spacingValueWithZero" },
+        "marginLeft": { "$ref": "#/definitions/spacingValueWithZero" },
+        "padding": { "$ref": "#/definitions/spacingValueWithZero" },
+        "paddingTop": { "$ref": "#/definitions/spacingValueWithZero" },
+        "paddingRight": { "$ref": "#/definitions/spacingValueWithZero" },
+        "paddingBottom": { "$ref": "#/definitions/spacingValueWithZero" },
+        "paddingLeft": { "$ref": "#/definitions/spacingValueWithZero" },
+        "gap": { "$ref": "#/definitions/spacingValueWithZero" },
+        "rowGap": { "$ref": "#/definitions/spacingValueWithZero" },
+        "columnGap": { "$ref": "#/definitions/spacingValueWithZero" },
+        "width": { "$ref": "#/definitions/dimensionWithZero" },
+        "height": { "$ref": "#/definitions/dimensionWithZero" },
+        "minWidth": { "$ref": "#/definitions/dimensionNoPtWithZero" },
+        "minHeight": { "$ref": "#/definitions/dimensionNoPtWithZero" },
+        "maxWidth": { "$ref": "#/definitions/dimensionNoPtWithZero" },
+        "maxHeight": { "$ref": "#/definitions/dimensionNoPtWithZero" },
         "flex": { 
           "type": "number",
           "minimum": 0,
@@ -406,7 +406,7 @@
           "description": "flex縮小率。0で縮小しない（例: 0, 1）"
         },
         "flexBasis": { 
-          "$ref": "#/definitions/dimensionNoPt",
+          "$ref": "#/definitions/dimensionNoPtWithZero",
           "description": "flex基準サイズ。対応単位: px, %, em, rem"
         },
         "flexDirection": { 
@@ -437,10 +437,10 @@
           "default": "relative",
           "description": "要素の配置方法。relative（デフォルト）、absolute（絶対配置）、static（フロー配置）"
         },
-        "top": { "$ref": "#/definitions/dimensionNoPt" },
-        "right": { "$ref": "#/definitions/dimensionNoPt" },
-        "bottom": { "$ref": "#/definitions/dimensionNoPt" },
-        "left": { "$ref": "#/definitions/dimensionNoPt" },
+        "top": { "$ref": "#/definitions/dimensionNoPtWithZero" },
+        "right": { "$ref": "#/definitions/dimensionNoPtWithZero" },
+        "bottom": { "$ref": "#/definitions/dimensionNoPtWithZero" },
+        "left": { "$ref": "#/definitions/dimensionNoPtWithZero" },
         "inset": { 
           "type": "string",
           "description": "top, right, bottom, leftの一括指定。1〜4つの値で指定（例: '10px', '10px 20px', '10px 20px 30px 40px'）"
@@ -479,8 +479,8 @@
           "type": "object",
           "properties": {
             "borderColor": { "$ref": "#/definitions/colorValue" },
-            "borderWidth": { "$ref": "#/definitions/pixelValue" },
-            "borderRadius": { "$ref": "#/definitions/pixelValue" },
+            "borderWidth": { "$ref": "#/definitions/pixelValueWithZero" },
+            "borderRadius": { "$ref": "#/definitions/pixelValueWithZero" },
             "borderStyle": { 
               "enum": ["solid", "dashed", "dotted"] 
             },
@@ -496,7 +496,7 @@
           "type": "object",
           "properties": {
             "borderColor": { "$ref": "#/definitions/colorValue" },
-            "borderWidth": { "$ref": "#/definitions/pixelValue" },
+            "borderWidth": { "$ref": "#/definitions/pixelValueWithZero" },
             "borderStyle": { 
               "enum": ["solid", "dashed", "dotted"] 
             }
@@ -514,9 +514,37 @@
         }
       ]
     },
+    "dimensionWithZero": {
+      "oneOf": [
+        { 
+          "type": "number",
+          "enum": [0],
+          "description": "0のみ許可される数値"
+        },
+        { 
+          "type": "string",
+          "pattern": "^\\d+(\\.\\d+)?(px|%|vw|vh|em|rem|pt)$",
+          "description": "サイズ指定。対応単位: px, %, vw, vh, em, rem, pt"
+        }
+      ]
+    },
     "dimensionNoPt": {
       "oneOf": [
         { "type": "number" },
+        { 
+          "type": "string",
+          "pattern": "^\\d+(\\.\\d+)?(px|%|em|rem)$",
+          "description": "サイズ指定。対応単位: px, %, em, rem (pt, vh, vw不可)"
+        }
+      ]
+    },
+    "dimensionNoPtWithZero": {
+      "oneOf": [
+        { 
+          "type": "number",
+          "enum": [0],
+          "description": "0のみ許可される数値"
+        },
         { 
           "type": "string",
           "pattern": "^\\d+(\\.\\d+)?(px|%|em|rem)$",
@@ -528,6 +556,20 @@
       "type": "string",
       "pattern": "^\\d+(\\.\\d+)?(px|%|vw|vh|em|rem|pt)$",
       "description": "余白指定。対応単位: px, %, vw, vh, em, rem, pt"
+    },
+    "spacingValueWithZero": {
+      "oneOf": [
+        { 
+          "type": "number",
+          "enum": [0],
+          "description": "0のみ許可される数値"
+        },
+        { 
+          "type": "string",
+          "pattern": "^\\d+(\\.\\d+)?(px|%|vw|vh|em|rem|pt)$",
+          "description": "余白指定。対応単位: px, %, vw, vh, em, rem, pt"
+        }
+      ]
     },
     "deckStyle": {
       "type": "object",
@@ -634,6 +676,20 @@
       "type": "string",
       "pattern": "^\\d+(\\.\\d+)?px$",
       "description": "px単位必須の数値（PowerPoint制約）。例: \"10px\", \"2.5px\""
+    },
+    "pixelValueWithZero": {
+      "oneOf": [
+        { 
+          "type": "number",
+          "enum": [0],
+          "description": "0のみ許可される数値"
+        },
+        { 
+          "type": "string",
+          "pattern": "^\\d+(\\.\\d+)?px$",
+          "description": "px単位必須の数値（PowerPoint制約）。例: \"10px\", \"2.5px\""
+        }
+      ]
     },
     "gradientStop": {
       "type": "object",

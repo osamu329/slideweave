@@ -341,8 +341,8 @@ export class PPTXRenderer {
       height: layoutResult.height, // 実際のレイアウトサイズ（ピクセル）
       backgroundColor: style?.backgroundColor,
       background: style?.background, // グラデーション対応
-      borderRadius: style?.borderRadius, // 既に"8px"形式
-      borderWidth: style?.borderWidth, // "2px"形式のボーダー幅
+      borderRadius: typeof style?.borderRadius === 'number' ? `${style.borderRadius}px` : style?.borderRadius, // 0を"0px"に変換
+      borderWidth: typeof style?.borderWidth === 'number' ? `${style.borderWidth}px` : style?.borderWidth, // 0を"0px"に変換
       borderColor: style?.borderColor, // "#ff0000"形式のボーダー色
       borderStyle: style?.borderStyle, // "solid" | "dashed" | "dotted"
       glassEffect: style?.glassEffect, // ガラス風効果

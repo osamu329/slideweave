@@ -117,15 +117,15 @@ export interface TableCellProps extends BaseJSXProps {
 export interface ImageProps extends BaseJSXProps {
   src: string;
   alt?: string;
-  width?: number;
-  height?: number;
+  width?: string | 0; // 0のみ数値として許可、他は単位付き文字列
+  height?: string | 0; // 0のみ数値として許可、他は単位付き文字列
   children?: never; // 画像要素は子要素を持たない
 }
 
 export interface SvgProps extends BaseJSXProps {
   content?: string; // contentがない場合はchildren使用
-  width?: number;
-  height?: number;
+  width?: string | 0; // 0のみ数値として許可、他は単位付き文字列
+  height?: string | 0; // 0のみ数値として許可、他は単位付き文字列
   children?: never; // SVG要素は子要素を持たない
 }
 
