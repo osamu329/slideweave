@@ -59,25 +59,29 @@ export function createSlideElement(
     children: processedChildren,
   } as Element;
 
-  // text/heading要素の特別処理: childrenのtext要素をcontentに統合
+  // text/heading要素の特別処理: childrenをcontentに統合
   if ((type === "text" || type === "heading") && processedChildren) {
-    const textElements = processedChildren
-      .filter(
-        (child) => child && typeof child === "object" && child.type === "text",
-      )
-      .map((child) => (child as any).content)
-      .filter((content) => content);
+    // 文字列のchildrenを直接contentに統合
+    const textContent = processedChildren
+      .map((child) => {
+        if (typeof child === "string") {
+          return child;
+        }
+        if (child && typeof child === "object" && child.type === "text") {
+          return (child as any).content;
+        }
+        return null;
+      })
+      .filter(content => content !== null)
+      .join("");
 
-    if (textElements.length > 0 && !(element as any).content) {
-      (element as any).content = textElements.join("");
-      // text要素はchildrenから除外（非text要素のみ残す）
-      const nonTextChildren = processedChildren.filter(
-        (child) =>
-          !(child && typeof child === "object" && child.type === "text"),
-      );
-      (element as any).children =
-        nonTextChildren.length > 0 ? nonTextChildren : undefined;
+    // contentプロパティが未指定で、文字列のchildrenがある場合にcontentを設定
+    if (textContent && !(element as any).content) {
+      (element as any).content = textContent;
     }
+    
+    // text/heading要素はchildrenを持たないため、childrenを削除
+    (element as any).children = undefined;
   }
 
   return element;

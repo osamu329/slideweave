@@ -65,7 +65,7 @@ export interface TextProps extends BaseJSXProps {
   bold?: boolean;
   italic?: boolean;
   shadow?: TextShadow;
-  children?: never; // テキスト要素は子要素を持たない
+  children?: string; // テキスト要素は文字列のchildrenを受け取る
 }
 
 export interface HeadingProps extends BaseJSXProps {
@@ -77,7 +77,7 @@ export interface HeadingProps extends BaseJSXProps {
   bold?: boolean;
   italic?: boolean;
   shadow?: TextShadow;
-  children?: never; // ヘディング要素は子要素を持たない
+  children?: string; // ヘディング要素は文字列のchildrenを受け取る
 }
 
 export interface ShapeProps extends BaseJSXProps {
