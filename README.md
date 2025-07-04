@@ -1,120 +1,180 @@
 # SlideWeave
 
-TypeScriptベースのPowerPointスライド作成ライブラリ。8pxグリッドシステムとFlexbox風レイアウトによる構造化されたスライド生成を実現します。
+TypeScriptベースのPowerPointスライド作成ツール。Yoga LayoutエンジンによるFlexbox風レイアウトで構造化されたスライド生成を実現します。
 
 ## 特徴
 
-- 🎯 **8pxグリッドシステム**: 精密な座標計算とデザイン整合性
-- 📐 **Flexbox風レイアウト**: 直感的な縦積み・横並びレイアウト
-- 🎨 **型安全性**: TypeScriptによる堅牢な型定義
+- 🎯 **明示的CSS単位**: px, %, vw, vh, ptによる精密な座標計算
+- 📐 **Yoga Layout Engine**: Facebook製のFlexboxライクなレイアウト
+- 🎨 **型安全性**: TypeScriptによる堅牢な型定義とBranded Type
 - 📄 **PPTXGenJS統合**: PowerPointファイルの直接生成
-- ✅ **バリデーション**: 要素の検証とエラーハンドリング
+- ✅ **スキーマバリデーション**: JSON Schema準拠の要素検証
+- 🎭 **CSS-like記法**: PostCSS処理でのスタイル指定
+- 🖥️ **CLI機能**: コマンドライン操作でのファイル生成
 
 ## インストール
 
 ```bash
-npm install css-layout pptxgenjs
+npm install
 ```
+
+### 必要な依存関係
+
+- `pptxgenjs`: PowerPoint生成
+- `yoga-layout`: レイアウト計算  
+- `postcss`: CSS処理
+- `commander`: CLI機能
 
 ## 基本的な使用方法
 
+### CLI（推奨）
+
+```bash
+# JSON → PPTX生成
+npx tsx src/cli/index.ts build examples/test01-basic-layout.json
+
+# カスタム出力パス
+npx tsx src/cli/index.ts build examples/test01-basic-layout.json -o output.pptx
+
+# 詳細ログ
+npx tsx src/cli/index.ts build examples/test01-basic-layout.json --verbose
+```
+
+### プログラム的使用方法
+
 ```typescript
-import { LayoutEngine } from './src/layout/LayoutEngine';
-import { PPTXRenderer } from './src/renderer/PPTXRenderer';
-import { ElementValidator } from './src/elements/validator';
+import { buildSlides } from './src/cli/commands/build.js';
 
-// 1. 要素を定義
-const element = {
-  type: 'container',
-  style: { padding: 2 },
-  children: [
-    { type: 'text', content: 'Hello' },
-    { type: 'text', content: 'World' }
-  ]
-};
+// JSONファイルからPPTX生成
+await buildSlides('input.json', { 
+  output: 'output.pptx',
+  verbose: true 
+});
+```
 
-// 2. バリデーション
-const validation = ElementValidator.validate(element);
-if (!validation.isValid) {
-  console.error('Validation errors:', validation.errors);
-  return;
+### JSON形式の例
+
+```json
+{
+  "type": "deck",
+  "slides": [{
+    "layout": "standard",
+    "elements": [{
+      "type": "container",
+      "style": { 
+        "flexDirection": "column",
+        "padding": "8px"
+      },
+      "children": [
+        { "type": "heading", "content": "タイトル", "level": 1 },
+        { "type": "text", "content": "本文テキスト" }
+      ]
+    }]
+  }]
 }
-
-// 3. レイアウト計算
-const layout = LayoutEngine.render(element, 720, 540);
-
-// 4. PPTX生成
-const renderer = new PPTXRenderer();
-const pptx = renderer.render(layout);
-
-// 5. ファイル保存
-await renderer.save('output.pptx');
 ```
 
 ## アーキテクチャ
 
 ### コアコンポーネント
 
-- **GridSystem**: 8px単位の座標系管理
-- **ElementValidator**: 要素タイプの検証
-- **LayoutEngine**: css-layoutを使用したレイアウト計算
-- **PPTXRenderer**: PPTXGenJSを使用したファイル生成
+- **YogaLayoutEngine**: Facebook Yoga（Flexbox実装）を使用したレイアウト計算
+- **SchemaValidator**: JSON Schema準拠の要素バリデーション
+- **PPTXRenderer**: PPTXGenJSを使用したPowerPoint生成
+- **SVGGenerator**: 複雑な装飾（背景色、ボーダー等）のSVG生成
+- **SlideDataLoader**: JSON入力の前処理とデフォルト値適用
+- **PostCSS処理**: CSS-like記法のサポート
+- **DPIConverter**: 単位変換（px⇔inch⇔pt）の統一管理
 
 ### 対応要素タイプ
 
-- `container`: レイアウト基本単位
+- `deck`: スライドデッキ（複数スライドのコンテナ）
+- `slide`: 個別スライド
+- `container`: レイアウト専用コンテナ（描画なし）
+- `frame`: 装飾付きコンテナ（背景色・ボーダー等）
 - `text`: 基本テキスト表示
 - `heading`: レベル付き見出し (1-6)
-- `slide`, `slideHeader`, `slideBody`, `slideFooter`: スライド構造
+- `shape`: 図形（rectangle, circle, ellipse等）
+- `image`: 画像表示
 
-## 8pxグリッドシステム
+## 単位システム
+
+SlideWeaveは明示的CSS単位（px, %, vw, vh, pt）をサポートします。
+
+```json
+{
+  "style": {
+    "width": "640px",
+    "height": "480px", 
+    "margin": "16px",
+    "padding": "8px",
+    "fontSize": "14pt"
+  }
+}
+```
+
+### Branded Type システム
 
 ```typescript
-import { GridSystem } from './src/grid/GridSystem';
+import { DPIConverter } from './src/utils/DPIConverter';
 
-// グリッド単位 → ポイント変換
-GridSystem.toPoints(2); // 12pt (16px)
+const converter = new DPIConverter();
 
-// ポイント → インチ変換
-GridSystem.toInches(72); // 1.00in
+// px → inch （PowerPoint座標用）
+converter.pxToInch(640); // 6.67 inch
 
-// PPTXGenJS用座標生成
-GridSystem.getPositionOptions(1, 2, 10, 5);
-// { x: 0.08, y: 0.17, w: 0.83, h: 0.42 }
+// px → pt （フォントサイズ用）
+converter.pxToPt(16); // 12 pt
 ```
 
 ## レイアウト例
 
-### 縦積みレイアウト
+### 縦積みレイアウト（Column）
 
-```typescript
-const verticalLayout = {
-  type: 'container',
-  style: { 
-    direction: 'column',
-    padding: 2 
+```json
+{
+  "type": "container",
+  "style": { 
+    "flexDirection": "column",
+    "padding": "8px"
   },
-  children: [
-    { type: 'heading', content: 'タイトル', level: 1 },
-    { type: 'text', content: '本文テキスト' }
+  "children": [
+    { "type": "heading", "content": "タイトル", "level": 1 },
+    { "type": "text", "content": "本文テキスト" }
   ]
-};
+}
 ```
 
-### 横並びレイアウト
+### 横並びレイアウト（Row）
 
-```typescript
-const horizontalLayout = {
-  type: 'container',
-  style: { 
-    direction: 'row',
-    padding: 1 
+```json
+{
+  "type": "container", 
+  "style": { 
+    "flexDirection": "row",
+    "padding": "4px"
   },
-  children: [
-    { type: 'text', content: '左側' },
-    { type: 'text', content: '右側' }
+  "children": [
+    { "type": "text", "content": "左側" },
+    { "type": "text", "content": "右側" }
   ]
-};
+}
+```
+
+### 装飾付きフレーム
+
+```json
+{
+  "type": "frame",
+  "style": {
+    "backgroundColor": "#f0f0f0",
+    "borderRadius": "8px",
+    "padding": "16px"
+  },
+  "children": [
+    { "type": "text", "content": "背景色付きフレーム" }
+  ]
+}
 ```
 
 ## 開発・テスト
@@ -129,37 +189,66 @@ npm run build
 # テスト実行
 npm run test
 
+# サンプル実行（全テスト）
+npm run test:examples
+
+# サンプル実行（個別）
+npx tsx examples/runTest.ts test01-basic-layout.json
+
 # 型チェック
 npm run typecheck
 
 # Lint
 npm run lint
+
+# PPTX検証（python-pptx使用）
+uv run scripts/verify-pptx.py examples/output/test01-basic-layout.pptx
 ```
 
-## テスト結果
+## 現在のテスト状況
 
-- **単体テスト**: 55件中54件通過（1件スキップ）
-- **統合テスト**: end-to-endテスト完備
-- **パフォーマンス**: 100要素レンダリング < 1秒
+- **型チェック**: ✅ エラーなし
+- **テスト実行**: ⚠️ 219/310 通過（28%失敗）
+- **主要課題**: 
+  - fontSizeのpt単位サポート問題
+  - 無次元数値の警告
+  - PPTXRendererの一部API不整合
 - **品質**: TypeScript厳格モード、ESLint準拠
 
 ## プロジェクト構造
 
 ```
 src/
-├── grid/           # 8pxグリッドシステム
-├── types/          # TypeScript型定義
-├── elements/       # 要素定義・バリデーション
-├── layout/         # css-layoutラッパー
-└── renderer/       # PPTXGenJS統合
+├── cli/                  # CLI機能
+│   ├── commands/         # buildコマンド等
+│   └── utils/           # ログ・設定・エラーハンドリング
+├── css-processor/       # PostCSS処理
+├── data/               # JSONデータローダー
+├── elements/           # スキーマ・ランタイムバリデーション
+├── jsx/                # JSX記法サポート（実験的）
+├── layout/             # Yogaレイアウトエンジン
+├── renderer/           # PPTXGenJS統合
+├── svg/                # SVG生成（背景・装飾）
+├── types/              # TypeScript型定義
+└── utils/              # DPI変換・ファイル管理
 
-tests/              # テストファイル
-├── integration.test.ts  # 統合テスト
-├── GridSystem.test.ts
-├── ElementValidator.test.ts
-├── LayoutEngine.test.ts
-└── PPTXRenderer.test.ts
+examples/               # テストケース・サンプル
+├── output/             # 生成されたPPTXファイル
+├── runTest.ts          # 個別テスト実行
+└── runAllTests.ts      # 全テスト実行
+
+tests/                  # 統合テスト
+scripts/                # Python検証スクリプト
+docs/                   # PPTXGenJS APIドキュメント
 ```
+
+### 主要ファイル
+
+- `src/cli/index.ts`: CLIエントリーポイント
+- `src/layout/YogaLayoutEngine.ts`: レイアウト計算
+- `src/renderer/PPTXRenderer.ts`: PowerPoint生成
+- `src/svg/SVGGenerator.ts`: SVG装飾生成
+- `examples/test01-basic-layout.json`: 基本例
 
 ## ライセンス
 

@@ -80,14 +80,16 @@
 
 ## プロジェクト概要
 
-TypeScriptベースのPowerPointスライド作成ツール。4pxグリッドシステムとFlexbox風レイアウトを使用した構造化されたスライド生成を実現。
+TypeScriptベースのPowerPointスライド作成ツール。Yoga LayoutエンジンによるFlexbox風レイアウトで構造化されたスライド生成を実現。
 
 ## 技術スタック
 
 - **言語**: TypeScript
-- **ライブラリ**: PPTXGenJS, css-layout, PostCSS
-- **テスト**: Jest
+- **ライブラリ**: PPTXGenJS, yoga-layout, PostCSS, Sharp
+- **テスト**: Vitest (主要), Jest (レガシー)
 - **Lint**: ESLint
+- **CLI**: Commander.js, Chalk, Ora
+- **バリデーション**: AJV (JSON Schema)
 
 ## ビルド・テストコマンド
 
@@ -181,16 +183,11 @@ src/
 ├── data/                 # データローダー
 │   └── SlideDataLoader.ts
 ├── elements/             # 要素定義・バリデーション
-│   └── validator.ts
-├── grid/                 # 4pxグリッドシステム
-│   └── GridSystem.ts
+│   ├── SchemaValidator.ts
+│   └── RuntimeValidator.ts
 ├── layout/               # レイアウトエンジン
-│   ├── ILayoutEngine.ts  # インターフェース定義
-│   ├── LayoutEngine.ts   # メインレイアウトエンジン
-│   ├── CSSLayoutEngine.ts # css-layoutラッパー
-│   ├── YogaLayoutEngine.ts # Yogaレイアウトエンジン
-│   ├── css-layout-debug.js # デバッグ用
-│   ├── css-layout-debug.d.ts
+│   ├── YogaLayoutEngine.ts # Yogaレイアウトエンジン（メイン）
+│   ├── StyleConverter.ts   # スタイル変換
 │   └── __tests__/
 │       └── LayoutEngine.test.ts
 ├── renderer/             # PPTXGenJS統合
@@ -204,7 +201,8 @@ src/
 │   └── TempFileManager.ts
 └── types/                # TypeScript型定義
     ├── elements.ts       # 要素型定義
-    └── css-layout.d.ts   # css-layout型定義
+    ├── units.ts          # Branded Type単位システム
+    └── css-layout.d.ts   # css-layout型定義（レガシー）
 
 bin/
 └── slideweave.js         # CLI実行ファイル
@@ -286,8 +284,10 @@ SlideWeaveは明示的CSS単位のみをサポートします：
 
 ## 実装注意点
 
-- css-layoutの動作は、検索せずに実装を確認すること。
+- yoga-layoutの動作は、検索せずに実装を確認すること。
 - レイアウト計算を独自に実装しないこと。レンダリングエンジンの責務を理解することが大事です。
+- 現在のテスト状況: 219/310テスト通過（28%失敗率）
+- 主要課題: fontSizeのpt単位サポート、無次元数値警告、PPTXRendererの一部API不整合
 
 ## margin/padding適用戦略
 
@@ -295,21 +295,21 @@ SlideWeaveは明示的CSS単位のみをサポートします：
 - **margin**: レイアウトレベルで処理（要素間隔）
 - **padding**: PowerPointレベルで処理（テキストフレーム内マージン）
 
-### レイアウトエンジン（YogaLayoutEngine/CSSLayoutEngine）
-- **margin**: 4px単位をピクセルに変換してレイアウト計算
-- **padding**: 4px単位をピクセルに変換してレイアウト計算
+### レイアウトエンジン（YogaLayoutEngine）
+- **margin**: CSS単位文字列をYogaライブラリでレイアウト計算
+- **padding**: CSS単位文字列をYogaライブラリでレイアウト計算
 - 両方ともLayoutResultの座標計算に反映
 
 ### PPTXRenderer
 - **margin**: レイアウトエンジンで処理済みのため、PowerPointには渡さない
-- **padding**: element.style.paddingを4px単位でPowerPointのmarginオプションに適用
+- **padding**: element.style.paddingをPowerPointのmarginオプションに適用
 
 ### 実装例
 ```typescript
 // 正しい実装（text/heading共通）
 const textOptions = {
   ...position,
-  margin: element.style?.padding !== undefined ? element.style.padding * 4 : 0, // paddingのみ適用
+  margin: element.style?.padding, // paddingのみ適用
   // marginプロパティは使用しない（レイアウトエンジンで処理済み）
 };
 ```
