@@ -384,7 +384,7 @@
         "gap": { "$ref": "#/definitions/spacingValue" },
         "rowGap": { "$ref": "#/definitions/spacingValue" },
         "columnGap": { "$ref": "#/definitions/spacingValue" },
-        "width": { "$ref": "#/definitions/dimension" },
+        "width": { "$ref": "#/definitions/dimensionWithZero" },
         "height": { "$ref": "#/definitions/dimension" },
         "minWidth": { "$ref": "#/definitions/dimensionNoPt" },
         "minHeight": { "$ref": "#/definitions/dimensionNoPt" },
@@ -507,6 +507,20 @@
     "dimension": {
       "oneOf": [
         { "type": "number" },
+        { 
+          "type": "string",
+          "pattern": "^\\d+(\\.\\d+)?(px|%|vw|vh|em|rem|pt)$",
+          "description": "サイズ指定。対応単位: px, %, vw, vh, em, rem, pt"
+        }
+      ]
+    },
+    "dimensionWithZero": {
+      "oneOf": [
+        { 
+          "type": "number",
+          "enum": [0],
+          "description": "0のみ許可される数値"
+        },
         { 
           "type": "string",
           "pattern": "^\\d+(\\.\\d+)?(px|%|vw|vh|em|rem|pt)$",

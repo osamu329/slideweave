@@ -29,10 +29,7 @@ export class StyleConverter {
     propertyName: string = "property",
   ): string {
     if (typeof value === "number") {
-      console.warn(
-        `⚠️  Unitless values are not supported for ${propertyName}. Use "px", "%", "vw", "vh" units instead. Received: ${value}`,
-      );
-      // フォールバック: px単位として扱う
+      // 数値はpx単位として扱う
       return `${value}px`;
     }
 

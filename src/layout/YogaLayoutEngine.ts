@@ -405,10 +405,8 @@ export class YogaLayoutEngine {
    */
   private validateCSSUnitForYoga(value: string | number, propertyName: string): string | number {
     if (typeof value === "number") {
-      console.warn(
-        `⚠️  Unitless values are not supported for ${propertyName}. Use "px", "%", "vw", "vh" units instead. Received: ${value}`,
-      );
-      return `${value}px`; // フォールバック
+      // 数値はそのままYogaに渡す（Yogaがpx単位として処理する）
+      return value;
     }
     
     if (typeof value === "string") {

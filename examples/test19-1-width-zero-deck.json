@@ -1,0 +1,55 @@
+{
+  "type": "deck",
+  "title": "Width Zero Support Test",
+  "slides": [
+    {
+      "type": "slide",
+      "title": "Width Zero Support Test", 
+      "children": [
+        {
+          "type": "frame",
+          "style": {
+            "width": 0,
+            "height": "50px",
+            "backgroundColor": "#ff0000",
+            "borderWidth": "0px",
+            "margin": "10px"
+          },
+          "children": [
+            {
+              "type": "text",
+              "content": "width: 0 frame"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "style": {
+            "width": "100px",
+            "height": "50px", 
+            "backgroundColor": "#00ff00",
+            "borderWidth": "0px",
+            "margin": "10px"
+          },
+          "children": [
+            {
+              "type": "text",
+              "content": "width: 100px frame"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "style": {
+            "width": 0,
+            "height": "30px",
+            "backgroundColor": "#0000ff",
+            "borderWidth": "0px",
+            "margin": "10px"
+          },
+          "children": []
+        }
+      ]
+    }
+  ]
+}

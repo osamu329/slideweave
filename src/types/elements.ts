@@ -72,7 +72,7 @@ export interface BaseStyle {
   position?: "relative" | "absolute" | "static";
 
   // Dimensions
-  width?: number | string;
+  width?: string | 0; // 0のみ数値として許可、他は単位付き文字列
   height?: number | string;
   minWidth?: number | string;
   minHeight?: number | string;
