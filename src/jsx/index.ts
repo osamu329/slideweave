@@ -21,6 +21,7 @@ export function createSlideElement(
     return processComponent(type, props, children);
   }
 
+
   // propsがnullの場合は空オブジェクトに変換
   const safeProps = props || {};
 
@@ -168,3 +169,6 @@ declare global {
     }
   }
 }
+
+// Deckコンポーネントのエクスポート
+export { Deck } from './components/Deck.js';
