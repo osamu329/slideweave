@@ -6,7 +6,7 @@ TypeScriptベースのPowerPointスライド作成ツール。Yoga Layoutエン�
 
 - 🎯 **明示的CSS単位**: px, %, vw, vh, ptによる精密な座標計算
 - 📐 **Yoga Layout Engine**: Facebook製のFlexboxライクなレイアウト
-- 🎨 **型安全性**: TypeScriptによる堅牢な型定義とBranded Type
+- 🎨 **型安全性**: TypeScriptによる堅牢な型定義
 - 📄 **PPTXGenJS統合**: PowerPointファイルの直接生成
 - ✅ **スキーマバリデーション**: JSON Schema準拠の要素検証
 - 🎭 **CSS-like記法**: PostCSS処理でのスタイル指定
@@ -113,19 +113,6 @@ SlideWeaveは明示的CSS単位（px, %, vw, vh, pt）をサポートします�
 }
 ```
 
-### Branded Type システム
-
-```typescript
-import { DPIConverter } from './src/utils/DPIConverter';
-
-const converter = new DPIConverter();
-
-// px → inch （PowerPoint座標用）
-converter.pxToInch(640); // 6.67 inch
-
-// px → pt （フォントサイズ用）
-converter.pxToPt(16); // 12 pt
-```
 
 ## レイアウト例
 
